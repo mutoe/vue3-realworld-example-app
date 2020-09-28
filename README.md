@@ -19,3 +19,16 @@ yarn install
 yarn dev
 yarn build
 ```
+
+# What works?
+
+- [x] [Vite](https://github.com/vitejs/vite)
+- [x] [Composition API](https://composition-api.vuejs.org/)
+- [x] [TypeScript](https://www.typescriptlang.org/)
+- [x] [ESLint](https://eslint.vuejs.org/)
+- [ ] [Vue router](https://next.router.vuejs.org/)
+- [ ] [Vuex](https://vuex.vuejs.org/)
+- [ ] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
+- [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
+- [ ] E2E test ([Cypress](https://docs.cypress.io))
+- [ ] [SFC Script Setup](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md)
