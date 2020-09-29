@@ -4,3 +4,4 @@ dist
 *.local
 .idea
 *.iml
+cypress/videos
