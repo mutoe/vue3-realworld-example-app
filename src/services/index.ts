@@ -1,13 +1,12 @@
-import FetchRequest from './utils/request'
-import parseStorageGet from './utils/parse-storage-get'
+import FetchRequest from '../utils/request'
+import parseStorageGet from '../utils/parse-storage-get'
 
 export const limit = 10
 
 export const request = new FetchRequest({
-  prefix: `${process.env.API_HOST}/api`,
+  prefix: `${import.meta.env.VITE_API_HOST}/api`,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Token ${parseStorageGet('user')?.token}`,
   },
 })
 
@@ -32,31 +31,9 @@ export async function getAllTags() {
   return request.get<TagsResponse>('/tags').then(res => res.tags)
 }
 
-interface PostArticleForm {
-  title: string;
-  description: string;
-  body: string;
-  tagList: string[];
-}
 
-export async function postArticle(form: PostArticleForm) {
-  return request.post<ArticleResponse>('/articles', { article: form })
-    .then(res => res.article)
-}
 
-export async function getArticle(slug: string) {
-  return request.get<ArticleResponse>(`/articles/${slug}`).then(res => res.article)
-}
 
-export async function putArticle(slug: string, form: PostArticleForm) {
-  return request.put<ArticleResponse>(`/articles/${slug}`, { article: form })
-    .then(res => res.article)
-}
-
-export async function getArticles(page = 1) {
-  const params = { limit, offset: (page - 1) * limit }
-  return request.get<ArticlesResponse>('/articles', { params })
-}
 
 export async function getFeeds(page = 1) {
   const params = { limit, offset: (page - 1) * limit }

@@ -1,3 +1,5 @@
+import parseStorageGet from './parse-storage-get'
+
 interface FetchRequestOptions {
   prefix: string;
   headers: Record<string, any>;
@@ -48,6 +50,10 @@ export default class FetchRequest {
   }
 
   get<T = any>(url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+    options.headers = options.headers ?? {}
+    const token = parseStorageGet('user')?.token
+    if (token) options.headers['Authorization'] = `Token ${token}`
+
     const finalUrl = this.generateFinalUrl(url, options)
     return fetch(finalUrl, {
       method: 'GET',
@@ -57,6 +63,10 @@ export default class FetchRequest {
   }
 
   post<T = any>(url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+    options.headers = options.headers ?? {}
+    const token = parseStorageGet('user')?.token
+    if (token) options.headers['Authorization'] = `Token ${token}`
+
     const finalUrl = this.generateFinalUrl(url, options)
 
     return fetch(finalUrl, {
@@ -68,6 +78,10 @@ export default class FetchRequest {
   }
 
   delete<T = any>(url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+    options.headers = options.headers ?? {}
+    const token = parseStorageGet('user')?.token
+    if (token) options.headers['Authorization'] = `Token ${token}`
+
     const finalUrl = this.generateFinalUrl(url, options)
 
     return fetch(finalUrl, {
@@ -78,6 +92,10 @@ export default class FetchRequest {
   }
 
   put<T = any>(url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+    options.headers = options.headers ?? {}
+    const token = parseStorageGet('user')?.token
+    if (token) options.headers['Authorization'] = `Token ${token}`
+
     const finalUrl = this.generateFinalUrl(url, options)
 
     return fetch(finalUrl, {
@@ -89,6 +107,10 @@ export default class FetchRequest {
   }
 
   patch<T = any>(url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+    options.headers = options.headers ?? {}
+    const token = parseStorageGet('user')?.token
+    if (token) options.headers['Authorization'] = `Token ${token}`
+
     const finalUrl = this.generateFinalUrl(url, options)
 
     return fetch(finalUrl, {

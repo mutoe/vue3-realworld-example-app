@@ -1,11 +1,11 @@
 <template>
-  <img
-    alt="Vue logo"
-    src="./assets/logo.png"
-  >
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <RouterView></RouterView>
 </template>
 
-<script lang="ts" setup>
-export { default as HelloWorld } from './components/HelloWorld.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'App',
+})
 </script>
