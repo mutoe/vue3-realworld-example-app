@@ -1,6 +1,6 @@
 <template>
   <AppNavigation />
-  <RouterView />
+  <RouterView></RouterView>
 </template>
 
 <script lang="ts">
