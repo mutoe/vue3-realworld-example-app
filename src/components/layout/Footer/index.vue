@@ -1,0 +1,32 @@
+<template>
+  <footer>
+    <div class="container">
+      <RouterLink
+        to="/"
+        class="logo-font"
+      >
+        conduit
+      </RouterLink>
+      <span class="attribution">
+        An interactive learning project from <a href="https://thinkster.io">Thinkster</a>. Code &amp; design licensed under MIT.
+      </span>
+    </div>
+    <div class="container">
+      <span
+        class="attribution"
+        style="margin: 0"
+      >
+        <a href="https://github.com/mutoe/vue3-realworld-example-app">Real world app</a> implementation using Vue v3 with Typescript and Composition Api
+      </span>
+    </div>
+  </footer>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'AppFooter',
+})
+</script>
+
