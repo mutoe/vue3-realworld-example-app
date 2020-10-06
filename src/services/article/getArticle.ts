@@ -17,7 +17,6 @@ export function useArticles () {
 
   async function fetchArticles () {
     articles.value = []
-    articlesCount.value = 0
 
     const response = await getArticles(page.value)
     articles.value = response.articles

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint --ext .ts,.vue,.js \"{src,cypress/integration}/**\"",
+    "lint": "eslint \"{src,cypress/integration}/**/*.{js,ts,vue}\"",
     "test:unit": "jest",
     "test:e2e": "cypress run",
     "test": "yarn tsc && yarn lint && yarn test:unit && yarn test:e2e"
@@ -67,7 +67,9 @@
       ],
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/ban-ts-comment": "off"
+      "@typescript-eslint/ban-ts-comment": "off",
+      "vue/require-prop-types": "off",
+      "vue/require-explicit-emits": "off"
     }
   },
   "jest": {

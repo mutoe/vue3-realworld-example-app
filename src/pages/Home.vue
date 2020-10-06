@@ -35,7 +35,7 @@
             class="article-preview"
           >
             <div class="article-meta">
-              <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg"></a>
+              <a href=""><img :src="article.author.image"></a>
               <div class="info">
                 <a
                   href=""
@@ -56,6 +56,12 @@
               <span>Read more...</span>
             </a>
           </div>
+
+          <Pagination
+            :count="articlesCount"
+            :page="page"
+            @page-change="onPageChange"
+          />
         </div>
 
         <div class="col-md-3">
@@ -105,16 +111,27 @@
 
 <script lang="ts">
 import { useArticles } from '../services/article/getArticle'
+import Pagination from '../components/Pagination.vue'
+
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Home',
+  components: {
+    Pagination,
+  },
   setup () {
-    const { articlesCount, articles } = useArticles()
+    const { articlesCount, articles, page } = useArticles()
+
+    const onPageChange = (index: number) => {
+      page.value = index
+    }
 
     return {
       articles,
       articlesCount,
+      page,
+      onPageChange,
     }
   },
 })
