@@ -29,20 +29,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue'
-
-interface ArticlePreviewProps {
-  article: Article,
-}
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   name: 'ArticlePreview',
-  props: ['article'],
-  setup (props: ArticlePreviewProps) {
-    const { article } = toRefs(props)
-    return {
-      article,
-    }
+  props: {
+    article: { type: Object as PropType<Article>, required: true },
   },
 })
 </script>

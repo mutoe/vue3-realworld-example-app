@@ -17,15 +17,16 @@
 import { defineComponent, computed, toRefs } from 'vue'
 import { limit } from '../services'
 
-interface PaginationProps {
-  count: number;
-  page: number
-}
-
 export default defineComponent({
   name: 'Pagination',
-  props: ['count', 'page'],
-  setup (props: PaginationProps, { emit }) {
+  props: {
+    page: { type: Number, required: true },
+    count: { type: Number, required: true },
+  },
+  emits: {
+    'page-change': (index: number) => typeof index === 'number',
+  },
+  setup (props, { emit }) {
     const { count, page } = toRefs(props)
     const pagesCount = computed(() => Math.ceil(count.value / limit))
     const isActive = (index: number) => page.value === index
