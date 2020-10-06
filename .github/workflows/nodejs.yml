@@ -30,22 +30,12 @@ jobs:
       - name: install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-#       - name: lint
-#         run: yarn lint
-#
-#       - name: lint
-#         run: yarn test --coverage
-#
-#       - name: collect coverage
-#         uses: coverallsapp/github-action@v1.0.1
-#         with:
-#           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: lint
+        run: yarn tsc && yarn lint
 
       - name: build
-        run: |
-          cp .env .env.local
-          sed -i "/BASE_URL/s#/#/vue3-realworld-example-app/#" .env.local
-          yarn build
+        run: yarn build --base=/vue3-realworld-example-app/
+
       - name: deploy
         uses: s0/git-publish-subdir-action@master
         env:
