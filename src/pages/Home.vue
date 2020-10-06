@@ -48,37 +48,14 @@
 
             <div class="tag-list">
               <a
-                href=""
+                v-for="tag in tags"
+                :key="tag"
+                :href="tag"
                 class="tag-pill tag-default"
-              >programming</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >javascript</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >emberjs</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >angularjs</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >react</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >mean</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >node</a>
-              <a
-                href=""
-                class="tag-pill tag-default"
-              >rails</a>
+                @click.prevent="chooseTag(tag)"
+              >
+                {{ tag }}
+              </a>
             </div>
           </div>
         </div>
@@ -91,6 +68,7 @@
 import ArticlePreview from '../components/ArticlePreview.vue'
 import Pagination from '../components/Pagination.vue'
 import { useArticles } from '../services/article/getArticle'
+import { useTags } from '../services/tag/getTags'
 
 import { defineComponent } from 'vue'
 
@@ -102,6 +80,7 @@ export default defineComponent({
   },
   setup () {
     const { articlesCount, articles, page } = useArticles()
+    const { tags } = useTags()
 
     const onPageChange = (index: number) => {
       page.value = index
@@ -112,6 +91,7 @@ export default defineComponent({
       articlesCount,
       page,
       onPageChange,
+      tags,
     }
   },
 })
