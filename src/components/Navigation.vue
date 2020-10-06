@@ -38,14 +38,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import useLinks from './links'
+import { useNavigationLinks } from './NavigationHooks'
 
 export default defineComponent({
   name: 'AppNavigation',
   setup () {
     const isUserAuthorized = ref(false)
 
-    const { navLinks } = useLinks({ isUserAuthorized })
+    const { navLinks } = useNavigationLinks({ isUserAuthorized })
 
     return {
       isUserAuthorized,

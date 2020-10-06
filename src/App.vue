@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AppFooter from './components/layout/Footer/index.vue'
-import AppNavigation from './components/layout/Navigation/index.vue'
+import AppFooter from './components/Footer.vue'
+import AppNavigation from './components/Navigation.vue'
 
 export default defineComponent({
   name: 'App',

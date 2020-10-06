@@ -11,7 +11,7 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
-export default function useLinks ({ isUserAuthorized }: UseLinksProps) {
+export function useNavigationLinks ({ isUserAuthorized }: UseLinksProps) {
   const displayStatus = computed(() => isUserAuthorized.value ? 'anonym' : 'authorized')
 
   const allNavLinks: NavLink[] = [
