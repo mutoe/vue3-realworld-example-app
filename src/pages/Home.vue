@@ -29,33 +29,11 @@
             </ul>
           </div>
 
-          <div
+          <ArticlePreview
             v-for="article in articles"
             :key="article.slug"
-            class="article-preview"
-          >
-            <div class="article-meta">
-              <a href=""><img :src="article.author.image"></a>
-              <div class="info">
-                <a
-                  href=""
-                  class="author"
-                >{{ article.author.username }}</a>
-                <span class="date">{{ new Date(article.createdAt).toDateString() }}</span>
-              </div>
-              <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart" /> {{ article.favoritesCount }}
-              </button>
-            </div>
-            <a
-              href=""
-              class="preview-link"
-            >
-              <h1>{{ article.title }}</h1>
-              <p>{{ article.description }}</p>
-              <span>Read more...</span>
-            </a>
-          </div>
+            :article="article"
+          />
 
           <Pagination
             :count="articlesCount"
@@ -110,14 +88,16 @@
 </template>
 
 <script lang="ts">
-import { useArticles } from '../services/article/getArticle'
+import ArticlePreview from '../components/ArticlePreview.vue'
 import Pagination from '../components/Pagination.vue'
+import { useArticles } from '../services/article/getArticle'
 
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
+    ArticlePreview,
     Pagination,
   },
   setup () {

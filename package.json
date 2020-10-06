@@ -61,6 +61,7 @@
       "plugin:vue/vue3-recommended"
     ],
     "rules": {
+      "no-undef": "off",
       "comma-dangle": [
         "warn",
         "always-multiline"
@@ -69,7 +70,8 @@
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
       "vue/require-prop-types": "off",
-      "vue/require-explicit-emits": "off"
+      "vue/require-explicit-emits": "off",
+      "vue/no-dupe-keys": "off"
     }
   },
   "jest": {
