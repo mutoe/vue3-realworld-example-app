@@ -8,6 +8,6 @@ describe('View the system by guest', () => {
 
   it('should highlight Global Feed when home page loaded', () => {
     cy.get('.nav').get('.nav-link.active')
-      .should('contain.text','Global Feed')
+      .should('contain.text', 'Global Feed')
   })
 })
