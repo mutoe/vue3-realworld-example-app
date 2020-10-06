@@ -1,5 +1,4 @@
 import FetchRequest from '../utils/request'
-import parseStorageGet from '../utils/parse-storage-get'
 
 export const limit = 10
 
@@ -15,7 +14,7 @@ export interface PostLoginForm {
   password: string;
 }
 
-export async function postLogin(form: PostLoginForm) {
+export async function postLogin (form: PostLoginForm) {
   return request.post<UserResponse>('/users/login', { user: form }).then(res => res.user)
 }
 
@@ -23,71 +22,67 @@ interface PostRegisterForm extends PostLoginForm {
   username: string;
 }
 
-export async function postRegister(form: PostRegisterForm) {
+export async function postRegister (form: PostRegisterForm) {
   return request.post<UserResponse>('/users', { user: form }).then(res => res.user)
 }
 
-export async function getAllTags() {
+export async function getAllTags () {
   return request.get<TagsResponse>('/tags').then(res => res.tags)
 }
 
-
-
-
-
-export async function getFeeds(page = 1) {
+export async function getFeeds (page = 1) {
   const params = { limit, offset: (page - 1) * limit }
   return request.get<ArticlesResponse>('/articles/feed', { params })
 }
 
-export async function getArticlesByTag(tagName: string, page = 1) {
+export async function getArticlesByTag (tagName: string, page = 1) {
   const params = { tag: tagName, limit, offset: (page - 1) * limit }
   return request.get<ArticlesResponse>('/articles', { params })
 }
 
-export async function getProfileArticles(username: string, page = 1) {
+export async function getProfileArticles (username: string, page = 1) {
   const params = { limit, offset: (page - 1) * limit, author: username }
   return request.get<ArticlesResponse>('/articles', { params })
 }
 
-export async function getFavoritedArticles(username: string, page = 1) {
+export async function getFavoritedArticles (username: string, page = 1) {
   const params = { limit, offset: (page - 1) * limit, favorited: username }
   return request.get<ArticlesResponse>('/articles', { params })
 }
 
-export async function getCommentsByArticle(slug: string) {
+export async function getCommentsByArticle (slug: string) {
   return request.get<CommentsResponse>(`/articles/${slug}/comments`).then(res => res.comments)
 }
 
-export async function deleteComment(slug: string, commentId: number) {
+export async function deleteComment (slug: string, commentId: number) {
   return request.delete(`/articles/${slug}/comments/${commentId}`)
 }
 
-export async function postComment(slug: string, body: string) {
+export async function postComment (slug: string, body: string) {
   return request.post<CommentResponse>(`/articles/${slug}/comments`, { comment: { body } })
     .then(res => res.comment)
 }
 
-export async function postFavoriteArticle(slug: string) {
+export async function postFavoriteArticle (slug: string) {
   return request.post<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
 }
 
-export async function deleteFavoriteArticle(slug: string) {
+export async function deleteFavoriteArticle (slug: string) {
   return request.delete<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
 }
 
-export async function getProfile(username: string) {
+export async function getProfile (username: string) {
   return request.get<ProfileResponse>(`/profiles/${username}`).then(res => res.profile)
 }
 
-export async function putProfile(form: Partial<Profile>) {
+export async function putProfile (form: Partial<Profile>) {
   return request.put<ProfileResponse>('/user', form).then(res => res.profile)
 }
 
-export async function postFollowProfile(username: string) {
+export async function postFollowProfile (username: string) {
   return request.post<ProfileResponse>(`/profiles/${username}/follow`).then(res => res.profile)
 }
 
-export async function deleteFollowProfile(username: string) {
+export async function deleteFollowProfile (username: string) {
   return request.delete<ProfileResponse>(`/profiles/${username}/follow`).then(res => res.profile)
 }

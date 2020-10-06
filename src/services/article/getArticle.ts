@@ -1,21 +1,21 @@
 import { ref, watchEffect } from 'vue'
 import { limit, request } from '../index'
 
-export async function getArticle(slug: string) {
+export async function getArticle (slug: string) {
   return request.get<ArticleResponse>(`/articles/${slug}`).then(res => res.article)
 }
 
-export async function getArticles(page = 1) {
+export async function getArticles (page = 1) {
   const params = { limit, offset: (page - 1) * limit }
   return request.get<ArticlesResponse>('/articles', { params })
 }
 
-export function useArticles() {
+export function useArticles () {
   const articles = ref<Article[]>([])
   const articlesCount = ref(0)
   const page = ref(1)
 
-  async function fetchArticles() {
+  async function fetchArticles () {
     articles.value = []
     articlesCount.value = 0
 
@@ -31,6 +31,6 @@ export function useArticles() {
   return {
     articles,
     articlesCount,
-    page
+    page,
   }
 }

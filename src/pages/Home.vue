@@ -105,12 +105,12 @@
 
 <script lang="ts">
 import { useArticles } from '../services/article/getArticle'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Home',
-  setup() {
-    const { page, articlesCount, articles } = useArticles()
+  setup () {
+    const { articlesCount, articles } = useArticles()
 
     return {
       articles,
@@ -120,4 +120,3 @@ export default defineComponent({
 })
 
 </script>
-

@@ -29,4 +29,3 @@ export default defineComponent({
   name: 'AppFooter',
 })
 </script>
-

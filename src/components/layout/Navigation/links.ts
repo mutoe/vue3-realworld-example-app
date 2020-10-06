@@ -11,20 +11,20 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
-export default function useLinks({isUserAuthorized}: UseLinksProps) {
-  const displayStatus= computed(() => isUserAuthorized.value ? 'anonym' : 'authorized')
-  
+export default function useLinks ({ isUserAuthorized }: UseLinksProps) {
+  const displayStatus = computed(() => isUserAuthorized.value ? 'anonym' : 'authorized')
+
   const allNavLinks: NavLink[] = [
-    {to: '/', title: 'Home', display: 'all'},
-    {to: '/login', title: 'Sign in', display: 'anonym'},
-    {to: '/register', title: 'Sign up', display: 'anonym'},
-    {to: '/editor', title: 'New Post', display: 'authorized', icon: 'ion-compose'},
-    {to: '/settings', title: 'Settings', display: 'authorized', icon: 'ion-gear-a'},
-    {to: '/profile/USERNAME', title: 'USERNAME', display: 'authorized'},
+    { to: '/', title: 'Home', display: 'all' },
+    { to: '/login', title: 'Sign in', display: 'anonym' },
+    { to: '/register', title: 'Sign up', display: 'anonym' },
+    { to: '/editor', title: 'New Post', display: 'authorized', icon: 'ion-compose' },
+    { to: '/settings', title: 'Settings', display: 'authorized', icon: 'ion-gear-a' },
+    { to: '/profile/USERNAME', title: 'USERNAME', display: 'authorized' },
   ]
 
   const navLinks = computed(() => allNavLinks.filter(
-    l => l.display == displayStatus.value || l.display == 'all'
+    l => l.display === displayStatus.value || l.display === 'all',
   ))
 
   return {

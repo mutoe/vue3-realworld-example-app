@@ -21,6 +21,11 @@
     "@vue/compiler-sfc": "^3.0.0-rc.1",
     "cypress": "^5.3.0",
     "eslint": "^7.10.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^7.0.0-beta.4",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
@@ -48,18 +53,15 @@
       "sourceType": "module"
     },
     "extends": [
+      "standard",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:vue/vue3-recommended"
     ],
     "rules": {
-      "semi": [
-        "error",
-        "never"
-      ],
-      "quotes": [
-        "error",
-        "single"
+      "comma-dangle": [
+        "warn",
+        "always-multiline"
       ],
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-explicit-any": "off",

@@ -42,10 +42,10 @@ import useLinks from './links'
 
 export default defineComponent({
   name: 'AppNavigation',
-  setup() {
+  setup () {
     const isUserAuthorized = ref(false)
 
-    const {navLinks} = useLinks({isUserAuthorized})
+    const { navLinks } = useLinks({ isUserAuthorized })
 
     return {
       isUserAuthorized,

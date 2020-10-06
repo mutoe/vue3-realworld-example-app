@@ -4,7 +4,7 @@ beforeEach(() => {
   global.fetch = jest.fn().mockResolvedValue({
     ok: true,
     status: 200,
-    async json() {
+    async json () {
       return {}
     },
   })
@@ -15,7 +15,6 @@ afterEach(() => {
 })
 
 describe('# Request GET', function () {
-
   it('should implement GET method', async function () {
     const request = new FetchRequest()
     await request.get('/path')
@@ -51,7 +50,7 @@ describe('# Request GET', function () {
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
       status: 200,
-      async json() {
+      async json () {
         return {
           foo: 'bar',
         }
@@ -68,7 +67,7 @@ describe('# Request GET', function () {
       ok: true,
       status: 400,
       statusText: 'Bad request',
-      async json() {
+      async json () {
         return {}
       },
     })
@@ -80,7 +79,6 @@ describe('# Request GET', function () {
 })
 
 describe('# Request POST', function () {
-
   it('should implement POST method', async function () {
     const request = new FetchRequest()
     await request.post('/path')
@@ -125,7 +123,7 @@ describe('# Request POST', function () {
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
       status: 200,
-      async json() {
+      async json () {
         return {
           foo: 'bar',
         }
@@ -142,7 +140,7 @@ describe('# Request POST', function () {
       ok: true,
       status: 400,
       statusText: 'Bad request',
-      async json() {
+      async json () {
         return {}
       },
     })
@@ -156,10 +154,10 @@ describe('# Request POST', function () {
     global.fetch = jest.fn().mockReturnValue({
       ok: true,
       status: 422,
-      async json() {
+      async json () {
         return {
           errors: {
-            some: [ 'error' ],
+            some: ['error'],
           },
         }
       },
