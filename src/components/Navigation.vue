@@ -1,12 +1,12 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <a
+      <RouterLink
         class="navbar-brand"
-        href="index.html"
+        to="/"
       >
         conduit
-      </a>
+      </RouterLink>
 
       <!-- FOR TEST, remove after user auth logic will be implemented -->
       <button @click="isUserAuthorized=!isUserAuthorized">
