@@ -26,10 +26,6 @@ export async function postRegister (form: PostRegisterForm) {
   return request.post<UserResponse>('/users', { user: form }).then(res => res.user)
 }
 
-export async function getAllTags () {
-  return request.get<TagsResponse>('/tags').then(res => res.tags)
-}
-
 export async function getFeeds (page = 1) {
   const params = { limit, offset: (page - 1) * limit }
   return request.get<ArticlesResponse>('/articles/feed', { params })
