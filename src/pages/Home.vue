@@ -44,19 +44,7 @@
 
         <div class="col-md-3">
           <div class="sidebar">
-            <p>Popular Tags</p>
-
-            <div class="tag-list">
-              <a
-                v-for="tag in tags"
-                :key="tag"
-                :href="tag"
-                class="tag-pill tag-default"
-                @click.prevent="chooseTag(tag)"
-              >
-                {{ tag }}
-              </a>
-            </div>
+            <PopularTags />
           </div>
         </div>
       </div>
@@ -67,9 +55,8 @@
 <script lang="ts">
 import ArticlePreview from '../components/ArticlePreview.vue'
 import Pagination from '../components/Pagination.vue'
+import PopularTags from '../components/PopularTags.vue'
 import { useArticles } from '../services/article/getArticle'
-import { useTags } from '../services/tag/getTags'
-
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -77,10 +64,10 @@ export default defineComponent({
   components: {
     ArticlePreview,
     Pagination,
+    PopularTags,
   },
   setup () {
     const { articlesCount, articles, page } = useArticles()
-    const { tags } = useTags()
 
     const onPageChange = (index: number) => {
       page.value = index
@@ -91,7 +78,6 @@ export default defineComponent({
       articlesCount,
       page,
       onPageChange,
-      tags,
     }
   },
 })
