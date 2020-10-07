@@ -7,6 +7,7 @@ const router = createRouter({
     { path: '/', component: Home },
     { path: '/my-feeds', component: Home },
     { path: '/tag/:tag', component: Home },
+    { path: '/article/:slug', component: () => import('./pages/Article.vue') },
   ],
 })
 
