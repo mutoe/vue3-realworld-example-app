@@ -1,7 +1,7 @@
 import { computed, Ref } from 'vue'
 
 interface UseLinksProps {
-  isUserAuthorized: Ref<boolean>
+  user: Ref<User | null>
 }
 
 interface NavLink {
@@ -11,8 +11,9 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
-export function useNavigationLinks ({ isUserAuthorized }: UseLinksProps) {
-  const displayStatus = computed(() => isUserAuthorized.value ? 'anonym' : 'authorized')
+export function useNavigationLinks ({ user }: UseLinksProps) {
+  const username = computed(() => user.value?.username)
+  const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
 
   const allNavLinks: NavLink[] = [
     { to: '/', title: 'Home', display: 'all' },
@@ -20,7 +21,7 @@ export function useNavigationLinks ({ isUserAuthorized }: UseLinksProps) {
     { to: '/register', title: 'Sign up', display: 'anonym' },
     { to: '/editor', title: 'New Post', display: 'authorized', icon: 'ion-compose' },
     { to: '/settings', title: 'Settings', display: 'authorized', icon: 'ion-gear-a' },
-    { to: '/@USERNAME', title: 'USERNAME', display: 'authorized' },
+    { to: `/@${username.value}`, title: username.value || '', display: 'authorized' },
   ]
 
   const navLinks = computed(() => allNavLinks.filter(

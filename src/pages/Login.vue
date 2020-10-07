@@ -22,7 +22,7 @@
           </ul>
 
           <form
-            :ref="formRef"
+            ref="formRef"
             @submit.prevent="onLogin"
           >
             <fieldset
@@ -62,6 +62,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import store from '../store'
 
 export default defineComponent({
   name: 'Login',
@@ -74,8 +75,7 @@ export default defineComponent({
 
     const onLogin = () => {
       if (!formRef.value?.checkValidity()) return
-
-      console.log('login', form)
+      store.dispatch('login', form)
     }
 
     return {
