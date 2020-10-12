@@ -13,20 +13,15 @@
       <div class="row">
         <div class="col-md-9">
           <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
-                <a
-                  class="nav-link disabled"
-                  href=""
-                >Your Feed</a>
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  href=""
-                >Global Feed</a>
-              </li>
-            </ul>
+            <!-- use-author and use-favorited just for test now -->
+            <!-- use them for profile page -->
+            <ArticlesNavigation
+              use-global-feed
+              :use-my-feed="userAuthorized"
+              :use-tag="tag"
+              :use-author="username"
+              :use-favorited="username"
+            />
           </div>
 
           <ArticlePreview
@@ -54,10 +49,13 @@
 
 <script lang="ts">
 import ArticlePreview from '../components/ArticlePreview.vue'
+import ArticlesNavigation from '../components/ArticlesNavigation.vue'
 import Pagination from '../components/Pagination.vue'
 import PopularTags from '../components/PopularTags.vue'
 import { useArticles } from '../services/article/getArticle'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Home',
@@ -65,9 +63,18 @@ export default defineComponent({
     ArticlePreview,
     Pagination,
     PopularTags,
+    ArticlesNavigation,
   },
   setup () {
     const { articlesCount, articles, page } = useArticles()
+    const route = useRoute()
+    const store = useStore()
+
+    const tag = computed<string>(() => route.params.tag as string)
+
+    const userAuthorized = computed<boolean>(() => store.state.user !== null)
+
+    const username = computed<string>(() => (store.state.user?.username as string) ?? '')
 
     const onPageChange = (index: number) => {
       page.value = index
@@ -78,6 +85,9 @@ export default defineComponent({
       articlesCount,
       page,
       onPageChange,
+      tag,
+      userAuthorized,
+      username,
     }
   },
 })
