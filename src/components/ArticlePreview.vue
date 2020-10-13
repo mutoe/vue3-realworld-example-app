@@ -1,12 +1,12 @@
 <template>
   <div class="article-preview">
     <div class="article-meta">
-      <RouterLink :to="`/@${article.author.username}`">
+      <RouterLink :to="`/profile/${article.author.username}`">
         <img :src="article.author.image">
       </RouterLink>
       <div class="info">
         <RouterLink
-          :to="`/@${article.author.username}`"
+          :to="`/profile/${article.author.username}`"
           class="author"
         >
           {{ article.author.username }}

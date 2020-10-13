@@ -4,7 +4,7 @@
 
     <div class="info">
       <RouterLink
-        :to="`/@${article.author?.username}`"
+        :to="`/profile/${article.author?.username}`"
         class="author"
       >
         {{ article.author?.username }}

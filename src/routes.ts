@@ -10,8 +10,8 @@ const router = createRouter({
     { path: '/article/:slug', component: () => import('./pages/Article.vue') },
     { path: '/login', component: () => import('./pages/Login.vue') },
     { path: '/register', component: () => import('./pages/Register.vue') },
-    { path: '/@:username', component: () => import('./pages/Profile.vue') },
-    { path: '/@:username/favorites', component: () => import('./pages/Profile.vue') },
+    { path: '/profile/:username', component: () => import('./pages/Profile.vue') },
+    { path: '/profile/:username/favorites', component: () => import('./pages/Profile.vue') },
   ],
 })
 
