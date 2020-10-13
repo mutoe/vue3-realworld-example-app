@@ -67,10 +67,6 @@ export async function deleteFavoriteArticle (slug: string) {
   return request.delete<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
 }
 
-export async function getProfile (username: string) {
-  return request.get<ProfileResponse>(`/profiles/${username}`).then(res => res.profile)
-}
-
 export async function putProfile (form: Partial<Profile>) {
   return request.put<ProfileResponse>('/user', form).then(res => res.profile)
 }
