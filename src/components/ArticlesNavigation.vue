@@ -47,8 +47,8 @@ export default defineComponent({
       { type: 'globalFeed', href: '/', title: 'Global Feed' },
       { type: 'myFeed', href: '/my-feeds', title: 'Your Feed' },
       { type: 'tag', href: `/tag/${useTag.value}`, title: useTag.value, icon: 'ion-pound' },
-      { type: 'author', href: `/@${useAuthor.value}`, title: 'My articles' },
-      { type: 'favorited', href: `/@${useFavorited.value}/favorites`, title: 'Favorited Articles' },
+      { type: 'author', href: `/profile/${useAuthor.value}`, title: 'My articles' },
+      { type: 'favorited', href: `/profile/${useFavorited.value}/favorites`, title: 'Favorited Articles' },
     ])
 
     const show = computed<Record<ArticleNavLinkType, boolean>>(() => ({
