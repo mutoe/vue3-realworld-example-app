@@ -21,7 +21,7 @@ export function useNavigationLinks ({ user }: UseLinksProps) {
     { to: '/register', title: 'Sign up', display: 'anonym' },
     { to: '/editor', title: 'New Post', display: 'authorized', icon: 'ion-compose' },
     { to: '/settings', title: 'Settings', display: 'authorized', icon: 'ion-gear-a' },
-    { to: `/@${username.value}`, title: username.value || '', display: 'authorized' },
+    { to: `/profile/${username.value}`, title: username.value || '', display: 'authorized' },
   ]
 
   const navLinks = computed(() => allNavLinks.filter(
