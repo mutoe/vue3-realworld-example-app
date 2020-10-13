@@ -22,7 +22,7 @@
           </ul>
 
           <form
-            :ref="formRef"
+            ref="formRef"
             @submit.prevent="onRegister"
           >
             <fieldset class="form-group">
@@ -54,6 +54,7 @@
               >
             </fieldset>
             <button
+              type="submit"
               class="btn btn-lg btn-primary pull-xs-right"
               :disabled="!(form.email && form.username && form.password)"
             >
@@ -68,10 +69,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Register',
   setup () {
+    const store = useStore()
+
     const formRef = ref<HTMLFormElement | null>(null)
     const form = reactive({
       username: '',
@@ -81,8 +85,7 @@ export default defineComponent({
 
     const onRegister = () => {
       if (!formRef.value?.checkValidity()) return
-
-      console.log(form)
+      store.dispatch('register', form)
     }
 
     return {
