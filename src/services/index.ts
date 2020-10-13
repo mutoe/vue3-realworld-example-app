@@ -18,7 +18,7 @@ export async function postLogin (form: PostLoginForm) {
   return request.post<UserResponse>('/users/login', { user: form }).then(res => res.user)
 }
 
-interface PostRegisterForm extends PostLoginForm {
+export interface PostRegisterForm extends PostLoginForm {
   username: string;
 }
 
