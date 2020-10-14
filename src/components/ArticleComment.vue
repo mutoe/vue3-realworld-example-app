@@ -7,24 +7,26 @@
     </div>
 
     <div class="card-footer">
-      <RouterLink
-        :to="`/profile/${comment.author.username}`"
+      <AppLink
+        name="profile"
+        :params="{username: comment.author.username}"
         class="comment-author"
       >
         <img
           :src="comment.author.image"
           class="comment-author-img"
         >
-      </RouterLink>
+      </AppLink>
 
       &nbsp;
 
-      <RouterLink
-        :to="`/profile/${comment.author.username}`"
+      <AppLink
+        name="profile"
+        :params="{username: comment.author.username}"
         class="comment-author"
       >
         {{ comment.author.username }}
-      </RouterLink>
+      </AppLink>
 
       <span class="date-posted">{{ (new Date(comment.createdAt)).toLocaleDateString() }}</span>
 

@@ -5,28 +5,32 @@
       :key="link.type"
       class="nav-item"
     >
-      <RouterLink
+      <AppLink
         class="nav-link"
         active-class="active"
-        :to="link.href"
+        :name="link.name"
+        :params="link.params"
       >
         <i
           v-if="link.icon"
           :class="link.icon"
         /> {{ link.title }}
-      </RouterLink>
+      </AppLink>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, toRefs } from 'vue'
+import type { RouteParams } from 'vue-router'
+import type { AppRouteNames } from '../routes'
 
 type ArticleNavLinkType = 'globalFeed' | 'myFeed' | 'tag' | 'author' | 'favorited'
 
 interface ArticleNavLink {
+  name: AppRouteNames
+  params?: Partial<RouteParams>
   type: ArticleNavLinkType
-  href: string
   title: string
   icon?: string
 }
@@ -44,11 +48,36 @@ export default defineComponent({
     const { useGlobalFeed, useMyFeed, useTag, useAuthor, useFavorited } = toRefs(props)
 
     const allLinks = computed<ArticleNavLink[]>(() => [
-      { type: 'globalFeed', href: '/', title: 'Global Feed' },
-      { type: 'myFeed', href: '/my-feeds', title: 'Your Feed' },
-      { type: 'tag', href: `/tag/${useTag.value}`, title: useTag.value, icon: 'ion-pound' },
-      { type: 'author', href: `/profile/${useAuthor.value}`, title: 'My articles' },
-      { type: 'favorited', href: `/profile/${useFavorited.value}/favorites`, title: 'Favorited Articles' },
+      {
+        type: 'globalFeed',
+        name: 'global-feed',
+        title: 'Global Feed',
+      },
+      {
+        type: 'myFeed',
+        name: 'my-feed',
+        title: 'Your Feed',
+      },
+
+      {
+        type: 'author',
+        name: 'profile',
+        params: { username: useAuthor.value },
+        title: 'My articles',
+      },
+      {
+        type: 'tag',
+        name: 'tag',
+        params: { tag: useTag.value },
+        title: useTag.value,
+        icon: 'ion-pound',
+      },
+      {
+        type: 'favorited',
+        name: 'profile-favorites',
+        params: { username: useFavorited.value },
+        title: 'Favorited Articles',
+      },
     ])
 
     const show = computed<Record<ArticleNavLinkType, boolean>>(() => ({

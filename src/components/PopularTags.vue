@@ -2,14 +2,15 @@
   <p>Popular Tags</p>
 
   <div class="tag-list">
-    <RouterLink
+    <AppLink
       v-for="tag in tags"
       :key="tag"
-      :to="`/tag/${tag}`"
+      name="tag"
+      :params="{tag}"
       class="tag-pill tag-default"
     >
       {{ tag }}
-    </RouterLink>
+    </AppLink>
   </div>
 </template>
 
