@@ -1,6 +1,17 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './pages/Home.vue'
 
+export type AppRouteNames = 'global-feed'
+  |'my-feed'
+  |'tag'
+  |'article'
+  |'login'
+  |'register'
+  |'profile'
+  |'profile-favorites'
+  |'editor'
+  |'settings'
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
