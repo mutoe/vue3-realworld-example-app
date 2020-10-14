@@ -1,11 +1,14 @@
 import { computed, Ref } from 'vue'
+import type { RouteParams } from 'vue-router'
+import type { AppRouteNames } from '../routes'
 
 interface UseLinksProps {
   user: Ref<User | null>
 }
 
 interface NavLink {
-  to: string
+  name: AppRouteNames
+  params?: Partial<RouteParams>
   title: string
   icon?: string
   display: 'all' | 'anonym' | 'authorized'
@@ -16,12 +19,39 @@ export function useNavigationLinks ({ user }: UseLinksProps) {
   const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
 
   const allNavLinks: NavLink[] = [
-    { to: '/', title: 'Home', display: 'all' },
-    { to: '/login', title: 'Sign in', display: 'anonym' },
-    { to: '/register', title: 'Sign up', display: 'anonym' },
-    { to: '/editor', title: 'New Post', display: 'authorized', icon: 'ion-compose' },
-    { to: '/settings', title: 'Settings', display: 'authorized', icon: 'ion-gear-a' },
-    { to: `/profile/${username.value}`, title: username.value || '', display: 'authorized' },
+    {
+      name: 'global-feed',
+      title: 'Home',
+      display: 'all',
+    },
+    {
+      name: 'login',
+      title: 'Sign in',
+      display: 'anonym',
+    },
+    {
+      name: 'register',
+      title: 'Sign up',
+      display: 'anonym',
+    },
+    {
+      name: 'editor',
+      title: 'New Post',
+      display: 'authorized',
+      icon: 'ion-compose',
+    },
+    {
+      name: 'settings',
+      title: 'Settings',
+      display: 'authorized',
+      icon: 'ion-gear-a',
+    },
+    {
+      name: 'profile',
+      params: { username: username.value },
+      title: username.value || '',
+      display: 'authorized',
+    },
   ]
 
   const navLinks = computed(() => allNavLinks.filter(
