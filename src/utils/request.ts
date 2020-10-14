@@ -1,4 +1,4 @@
-import parseStorageGet from './parse-storage-get'
+import merge from 'deepmerge'
 
 interface FetchRequestOptions {
   prefix: string;
@@ -8,17 +8,17 @@ interface FetchRequestOptions {
 }
 
 export default class FetchRequest {
-  defaultOptions: FetchRequestOptions = {
+  private defaultOptions: FetchRequestOptions = {
     prefix: '',
     headers: {},
     params: {},
     responseInterceptor: (response) => response,
   }
 
-  public options: FetchRequestOptions
+  private options: FetchRequestOptions
 
   constructor (options: Partial<FetchRequestOptions> = {}) {
-    this.options = Object.assign({}, this.defaultOptions, options)
+    this.options = merge(this.defaultOptions, options)
   }
 
   private generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}) => {
@@ -32,6 +32,10 @@ export default class FetchRequest {
     }
 
     return finalUrl
+  }
+
+  private generateFinalHeaders = (options: Partial<FetchRequestOptions> = {}) => {
+    return merge(this.options.headers, options.headers ?? {})
   }
 
   private handleResponse = (response: Response) => {
@@ -51,73 +55,59 @@ export default class FetchRequest {
   }
 
   get<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    options.headers = options.headers ?? {}
-    const token = parseStorageGet('user')?.token
-    if (token) options.headers.Authorization = `Token ${token}`
-
     const finalUrl = this.generateFinalUrl(url, options)
+    const headers = this.generateFinalHeaders(options)
+
     return fetch(finalUrl, {
       method: 'GET',
-      headers: this.options.headers,
+      headers,
     })
       .then(this.handleResponse)
   }
 
   post<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    options.headers = options.headers ?? {}
-    const token = parseStorageGet('user')?.token
-    if (token) options.headers.Authorization = `Token ${token}`
-
     const finalUrl = this.generateFinalUrl(url, options)
+    const headers = this.generateFinalHeaders(options)
 
     return fetch(finalUrl, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: this.options.headers,
+      headers,
     })
       .then(this.handleResponse)
   }
 
   delete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    options.headers = options.headers ?? {}
-    const token = parseStorageGet('user')?.token
-    if (token) options.headers.Authorization = `Token ${token}`
-
     const finalUrl = this.generateFinalUrl(url, options)
+    const headers = this.generateFinalHeaders(options)
 
     return fetch(finalUrl, {
       method: 'DELETE',
-      headers: this.options.headers,
+      headers,
     })
       .then(this.handleResponse)
   }
 
   put<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    options.headers = options.headers ?? {}
-    const token = parseStorageGet('user')?.token
-    if (token) options.headers.Authorization = `Token ${token}`
-
     const finalUrl = this.generateFinalUrl(url, options)
+    const headers = this.generateFinalHeaders(options)
 
     return fetch(finalUrl, {
       method: 'PUT',
       body: JSON.stringify(data),
-      headers: this.options.headers,
+      headers,
     })
       .then(this.handleResponse)
   }
 
   patch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    options.headers = options.headers ?? {}
-    const token = parseStorageGet('user')?.token
-    if (token) options.headers.Authorization = `Token ${token}`
-
     const finalUrl = this.generateFinalUrl(url, options)
+    const headers = this.generateFinalHeaders(options)
 
     return fetch(finalUrl, {
       method: 'PATCH',
       body: JSON.stringify(data),
-      headers: this.options.headers,
+      headers,
     })
       .then(this.handleResponse)
   }

@@ -241,3 +241,25 @@ describe('# Authorization header', function () {
     }))
   })
 })
+
+describe('# Headers', function () {
+  it('should add headers', async function () {
+    const options = { headers: { h1: 'h1', h2: 'h2' } }
+    const request = new FetchRequest(options)
+
+    await request.get('/path')
+
+    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining(options))
+  })
+
+  it('should merge headers', async function () {
+    const options = { headers: { h1: 'h1', h2: 'h2' } }
+    const localOptions = { headers: { h1: 'h11', h3: 'h3' } }
+    const expectedOptions = { headers: { h1: 'h11', h2: 'h2', h3: 'h3' } }
+    const request = new FetchRequest(options)
+
+    await request.get('/path', localOptions)
+
+    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining(expectedOptions))
+  })
+})
