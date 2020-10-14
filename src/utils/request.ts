@@ -121,4 +121,13 @@ export default class FetchRequest {
     })
       .then(this.handleResponse)
   }
+
+  public setAuthorizationHeader (token: string): void {
+    if (!this.options.headers) this.options.headers = {}
+    this.options.headers.Authorization = `Token ${token}`
+  }
+
+  public deleteAuthorizationHeader (): void {
+    delete this.options?.headers?.Authorization
+  }
 }

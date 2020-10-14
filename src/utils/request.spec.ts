@@ -206,3 +206,38 @@ describe('# Request PATCH', function () {
     }))
   })
 })
+
+describe('# Authorization header', function () {
+  it('should add authorization header', async function () {
+    const token = 'token'
+    const request = new FetchRequest()
+    await request.setAuthorizationHeader(token)
+    await request.get('/path')
+
+    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
+      headers: { Authorization: `Token ${token}` },
+    }))
+  })
+
+  it('should remove authorization header', async function () {
+    const token = 'token'
+    const request = new FetchRequest({
+      headers: { Authorization: `Token ${token}` },
+    })
+
+    await request.get('/path')
+
+    expect(global.fetch).toBeCalledTimes(1)
+    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
+      headers: { Authorization: `Token ${token}` },
+    }))
+
+    await request.deleteAuthorizationHeader()
+    await request.get('/path')
+
+    expect(global.fetch).toBeCalledTimes(2)
+    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
+      headers: { },
+    }))
+  })
+})
