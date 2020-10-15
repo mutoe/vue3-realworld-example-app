@@ -1,4 +1,5 @@
 import merge from 'deepmerge'
+import params2query from './params-to-query'
 
 interface FetchRequestOptions {
   prefix: string;
@@ -22,14 +23,11 @@ export default class FetchRequest {
   }
 
   private generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}) => {
-    const prefix = options.prefix || this.options.prefix || ''
-    const params = options.params || {}
+    const prefix = options.prefix ?? this.options.prefix
+    const params = merge(this.options.params, options.params ?? {})
 
     let finalUrl = `${prefix}${url}`
-    if (Object.keys(params).length) {
-      const queryString = Object.keys(params).map(key => `${key}=${params[key]}`).join('&')
-      finalUrl += `?${queryString}`
-    }
+    if (Object.keys(params).length) finalUrl += `?${params2query(params)}`
 
     return finalUrl
   }
