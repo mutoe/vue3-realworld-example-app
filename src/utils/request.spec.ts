@@ -1,208 +1,186 @@
 import FetchRequest from 'src/utils/request'
 
+import params2query from 'src/utils/params-to-query'
+import mockFetch from 'src/utils/test/mock-fetch'
+import wrapTests from 'src/utils/test/wrap-tests'
+
 beforeEach(() => {
-  global.fetch = jest.fn().mockResolvedValue({
-    ok: true,
-    status: 200,
-    async json () {
-      return {}
-    },
-  })
+  mockFetch({ type: 'body' })
 })
 
 afterEach(() => {
   jest.clearAllMocks()
 })
 
-describe('# Request GET', function () {
-  it('should implement GET method', async function () {
-    const request = new FetchRequest()
-    await request.get('/path')
+const PREFIX = '/prefix'
+const SUB_PREFIX = '/sub-prefix'
+const PATH = '/path'
+const PARAMS = { q1: 'q1', q2: 'q2' }
 
-    expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      method: 'GET',
-    }))
+type SafeMethod = 'get' | 'delete'
+type UnsafeMethod = 'post' | 'put' | 'patch'
+type Method = SafeMethod | UnsafeMethod
+
+const SAFE_METHODS: SafeMethod[] = ['get', 'delete']
+const UNSAFE_METHODS: UnsafeMethod[] = ['post', 'put', 'patch']
+
+function isSafe (method: Method): method is SafeMethod {
+  return ['get', 'delete'].includes(method)
+}
+
+async function triggerMethod<T = any> (request: FetchRequest, method: Method, options?: any): Promise<T> {
+  let body: T
+  if (isSafe(method)) body = await request[method]<T>(PATH, options)
+  else body = await request[method]<T>(PATH, {}, options)
+  return body
+}
+
+function forAllMethods (task: string, fn: (method: Method) => void): void {
+  wrapTests<Method>({
+    task,
+    fn,
+    list: [...UNSAFE_METHODS, ...SAFE_METHODS],
+    testName: method => `for method: ${method}`,
+  })
+}
+
+forAllMethods('# Should be implemented', async (method) => {
+  const request = new FetchRequest()
+
+  triggerMethod(request, method)
+
+  expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining({
+    method: method.toUpperCase(),
+  }))
+})
+
+describe('# Should implement prefix', () => {
+  forAllMethods('should implement global prefix', async (method) => {
+    const request = new FetchRequest({ prefix: PREFIX })
+
+    triggerMethod(request, method)
+
+    expect(global.fetch).toBeCalledWith(`${PREFIX}${PATH}`, expect.any(Object))
   })
 
-  it('should can set prefix of request url with global', async function () {
-    const request = new FetchRequest({ prefix: '/prefix' })
-    await request.get('/path')
-
-    expect(global.fetch).toBeCalledWith('/prefix/path', expect.any(Object))
-  })
-
-  it('should can be set prefix of request url with single request', async function () {
-    const request = new FetchRequest()
-    await request.get('/path', { prefix: '/prefix' })
-
-    expect(global.fetch).toBeCalledWith('/prefix/path', expect.any(Object))
-  })
-
-  it('can be convert query object to query string in request url', async function () {
-    const request = new FetchRequest()
-    await request.get('/path', { params: { foo: 'bar' } })
-
-    expect(global.fetch).toBeCalledWith('/path?foo=bar', expect.any(Object))
-  })
-
-  it('should converted response body to json', async function () {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      async json () {
-        return {
-          foo: 'bar',
-        }
-      },
-    })
-    const request = new FetchRequest()
-    const response = await request.get('/path')
-
-    expect(response).toMatchObject({ foo: 'bar' })
-  })
-
-  it('should throw Error with response when request status code is not 2xx', async function () {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      status: 400,
-      statusText: 'Bad request',
-      async json () {
-        return {}
-      },
-    })
-
+  forAllMethods('should implement local prefix', async (method) => {
     const request = new FetchRequest()
 
-    await expect(request.post('/path')).rejects.toThrow('Bad request')
+    triggerMethod(request, method, { prefix: SUB_PREFIX })
+
+    expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
+  })
+
+  forAllMethods('should implement global + local prefix', async (method) => {
+    const request = new FetchRequest({ prefix: PREFIX })
+
+    triggerMethod(request, method, { prefix: SUB_PREFIX })
+
+    expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
   })
 })
 
-describe('# Request POST', function () {
-  it('should implement POST method', async function () {
-    const request = new FetchRequest()
-    await request.post('/path')
+describe('# Should convert query object to query string in request url', () => {
+  forAllMethods('should implement global query', async (method) => {
+    const request = new FetchRequest({ params: PARAMS })
 
-    expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      method: 'POST',
-    }))
+    triggerMethod(request, method)
+
+    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
   })
 
-  it('should can set prefix of request url with global', async function () {
-    const request = new FetchRequest({ prefix: '/prefix' })
-    await request.post('/path')
-
-    expect(global.fetch).toBeCalledWith('/prefix/path', expect.any(Object))
-  })
-
-  it('should can be set prefix of request url with single request', async function () {
-    const request = new FetchRequest()
-    await request.post('/path', {}, { prefix: '/prefix' })
-
-    expect(global.fetch).toBeCalledWith('/prefix/path', expect.any(Object))
-  })
-
-  it('should can be send json data in request body', async function () {
-    const request = new FetchRequest()
-    await request.post('/path', { foo: 'bar' })
-
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      body: JSON.stringify({ foo: 'bar' }),
-    }))
-  })
-
-  it('can be convert query object to query string in request url', async function () {
-    const request = new FetchRequest()
-    await request.post('/path', {}, { params: { foo: 'bar' } })
-
-    expect(global.fetch).toBeCalledWith('/path?foo=bar', expect.any(Object))
-  })
-
-  it('should converted response body to json', async function () {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      status: 200,
-      async json () {
-        return {
-          foo: 'bar',
-        }
-      },
-    })
-    const request = new FetchRequest()
-    const response = await request.post('/path')
-
-    expect(response).toMatchObject({ foo: 'bar' })
-  })
-
-  it('should throw Error with response when request status code is not 2xx', async function () {
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      status: 400,
-      statusText: 'Bad request',
-      async json () {
-        return {}
-      },
-    })
-
+  forAllMethods('should implement local query', async (method) => {
     const request = new FetchRequest()
 
-    await expect(request.post('/path')).rejects.toThrow('Bad request')
+    triggerMethod(request, method, { params: PARAMS })
+
+    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
   })
 
-  it('should throw Error with 4xx code', function () {
-    global.fetch = jest.fn().mockReturnValue({
-      ok: true,
-      status: 422,
-      async json () {
-        return {
-          errors: {
-            some: ['error'],
-          },
-        }
-      },
-    })
+  forAllMethods('should implement global + local query', async (method) => {
+    const options = { params: { q1: 'q1', q2: 'q2' } }
+    const localOptions = { params: { q1: 'q11', q3: 'q3' } }
+    const expectedOptions = { params: { q1: 'q11', q2: 'q2', q3: 'q3' } }
+    const request = new FetchRequest(options)
 
-    const request = new FetchRequest()
+    triggerMethod(request, method, localOptions)
 
-    expect(() => {
-      request.get('/')
-    }).toThrow()
+    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(expectedOptions.params)}`, expect.any(Object))
   })
 })
 
-describe('# Request DELETE', function () {
-  it('should implement DELETE method', async function () {
-    const request = new FetchRequest()
-    await request.delete('/path')
+describe('# Should work with headers', function () {
+  forAllMethods('should add headers', async function (method) {
+    const options = { headers: { h1: 'h1', h2: 'h2' } }
+    const request = new FetchRequest(options)
 
-    expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      method: 'DELETE',
-    }))
+    await triggerMethod(request, method)
+
+    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(options))
+  })
+
+  forAllMethods('should merge headers', async function (method) {
+    const options = { headers: { h1: 'h1', h2: 'h2' } }
+    const localOptions = { headers: { h1: 'h11', h3: 'h3' } }
+    const expectedOptions = { headers: { h1: 'h11', h2: 'h2', h3: 'h3' } }
+    const request = new FetchRequest(options)
+
+    await triggerMethod(request, method, localOptions)
+
+    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(expectedOptions))
   })
 })
 
-describe('# Request PUT', function () {
-  it('should implement PUT method', async function () {
-    const request = new FetchRequest()
-    await request.put('/path')
+forAllMethods('# Should converted response body to json', async function (method) {
+  const DATA = { foo: 'bar' }
+  mockFetch({ type: 'body', ...DATA })
+  const request = new FetchRequest()
 
-    expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      method: 'PUT',
-    }))
-  })
+  const body = await triggerMethod(request, method)
+
+  expect(body).toMatchObject(DATA)
 })
 
-describe('# Request PATCH', function () {
-  it('should implement PATCH method', async function () {
+forAllMethods('# Should throw Error with response when request status code is not 2xx', async function (method) {
+  mockFetch({
+    type: 'full',
+    ok: false,
+    status: 400,
+    statusText: 'Bad request',
+    json: async () => ({}),
+  })
+  const request = new FetchRequest()
+
+  await expect(triggerMethod(request, method)).rejects.toThrow('Bad request')
+})
+
+describe('# Authorization header', function () {
+  const TOKEN = 'token'
+  const OPTIONS = { headers: { Authorization: `Token ${TOKEN}` } }
+
+  forAllMethods('should add authorization header', async function (method) {
     const request = new FetchRequest()
-    await request.patch('/path')
+    request.setAuthorizationHeader(TOKEN)
+
+    triggerMethod(request, method)
+
+    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
+  })
+
+  forAllMethods('should remove authorization header', async function (method) {
+    const request = new FetchRequest(OPTIONS)
+
+    await triggerMethod(request, method)
 
     expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith('/path', expect.objectContaining({
-      method: 'PATCH',
+    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
+
+    request.deleteAuthorizationHeader()
+    await triggerMethod(request, method)
+
+    expect(global.fetch).toBeCalledTimes(2)
+    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining({
+      headers: {},
     }))
   })
 })
