@@ -3,12 +3,13 @@
     <a href=""><img :src="article.author?.image"></a>
 
     <div class="info">
-      <RouterLink
-        :to="`/profile/${article.author?.username}`"
+      <AppLink
+        name="profile"
+        :params="{username: article.author?.username}"
         class="author"
       >
         {{ article.author?.username }}
-      </RouterLink>
+      </AppLink>
 
       <span class="date">{{ (new Date(article.createdAt)).toLocaleDateString() }}</span>
     </div>
@@ -30,12 +31,13 @@
 
     &nbsp;&nbsp;
 
-    <RouterLink
+    <AppLink
       class="btn btn-outline-secondary btn-sm"
-      :to="`/editor/${article.slug}`"
+      name="editor"
+      :params="{slug: article.slug}"
     >
       <i class="ion-edit" /> Edit Article
-    </RouterLink>
+    </AppLink>
 
     &nbsp;&nbsp;
 

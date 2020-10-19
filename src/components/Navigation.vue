@@ -1,29 +1,30 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <RouterLink
+      <AppLink
         class="navbar-brand"
-        to="/"
+        name="global-feed"
       >
         conduit
-      </RouterLink>
+      </AppLink>
 
       <ul class="nav navbar-nav pull-xs-right">
         <li
           v-for="link in navLinks"
-          :key="link.to"
+          :key="link.name"
           class="nav-item"
         >
-          <RouterLink
+          <AppLink
             class="nav-link"
             active-class="active"
-            :to="link.to"
+            :name="link.name"
+            :params="link.params"
           >
             <i
               v-if="link.icon"
               :class="link.icon"
             /> {{ link.title }}
-          </RouterLink>
+          </AppLink>
         </li>
         <!-- TODO: remove logout link -->
         <li

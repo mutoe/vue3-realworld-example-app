@@ -7,9 +7,9 @@
             Sign in
           </h1>
           <p class="text-xs-center">
-            <RouterLink to="/register">
+            <AppLink name="register">
               Need an account?
-            </RouterLink>
+            </AppLink>
           </p>
 
           <ul class="error-messages">
