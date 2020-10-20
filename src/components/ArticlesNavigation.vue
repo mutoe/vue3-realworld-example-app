@@ -58,19 +58,19 @@ export default defineComponent({
         name: 'my-feed',
         title: 'Your Feed',
       },
-
-      {
-        type: 'author',
-        name: 'profile',
-        params: { username: useAuthor.value },
-        title: 'My articles',
-      },
       {
         type: 'tag',
         name: 'tag',
         params: { tag: useTag.value },
         title: useTag.value,
         icon: 'ion-pound',
+      },
+
+      {
+        type: 'author',
+        name: 'profile',
+        params: { username: useAuthor.value },
+        title: 'My articles',
       },
       {
         type: 'favorited',

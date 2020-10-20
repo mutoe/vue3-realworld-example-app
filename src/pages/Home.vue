@@ -13,14 +13,10 @@
       <div class="row">
         <div class="col-md-9">
           <div class="feed-toggle">
-            <!-- use-author and use-favorited just for test now -->
-            <!-- use them for profile page -->
             <ArticlesNavigation
               use-global-feed
               :use-my-feed="userAuthorized"
               :use-tag="tag"
-              :use-author="username"
-              :use-favorited="username"
             />
           </div>
 
