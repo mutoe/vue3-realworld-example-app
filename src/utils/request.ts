@@ -112,7 +112,7 @@ export default class FetchRequest {
 
   public setAuthorizationHeader (token: string): void {
     if (!this.options.headers) this.options.headers = {}
-    this.options.headers.Authorization = `Token ${token}`
+    if (token) this.options.headers.Authorization = `Token ${token}`
   }
 
   public deleteAuthorizationHeader (): void {
