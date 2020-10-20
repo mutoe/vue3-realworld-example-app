@@ -35,7 +35,7 @@ export function useNavigationLinks ({ user }: UseLinksProps) {
       display: 'anonym',
     },
     {
-      name: 'editor',
+      name: 'create-article',
       title: 'New Post',
       display: 'authorized',
       icon: 'ion-compose',

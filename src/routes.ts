@@ -2,15 +2,16 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './pages/Home.vue'
 
 export type AppRouteNames = 'global-feed'
-  |'my-feed'
-  |'tag'
-  |'article'
-  |'login'
-  |'register'
-  |'profile'
-  |'profile-favorites'
-  |'editor'
-  |'settings'
+  | 'my-feed'
+  | 'tag'
+  | 'article'
+  | 'create-article'
+  | 'edit-article'
+  | 'login'
+  | 'register'
+  | 'profile'
+  | 'profile-favorites'
+  | 'settings'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -36,6 +37,16 @@ const router = createRouter({
       component: () => import('./pages/Article.vue'),
     },
     {
+      name: 'edit-article',
+      path: '/article/:slug/edit',
+      component: () => import('./pages/EditArticle.vue'),
+    },
+    {
+      name: 'create-article',
+      path: '/article/create',
+      component: () => import('./pages/EditArticle.vue'),
+    },
+    {
       name: 'login',
       path: '/login',
       component: () => import('./pages/Login.vue'),
@@ -54,11 +65,6 @@ const router = createRouter({
       name: 'profile-favorites',
       path: '/profile/:username/favorites',
       component: () => import('./pages/Profile.vue'),
-    },
-    {
-      name: 'editor',
-      path: '/editor',
-      redirect: '/',
     },
     {
       name: 'settings',

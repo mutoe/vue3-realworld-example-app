@@ -26,20 +26,18 @@
     </button>
 
     <AppLink
+      v-if="displayEditButton"
       class="btn btn-outline-secondary btn-sm space"
-      name="editor"
+      name="edit-article"
       :params="{slug: article.slug}"
     >
       <i class="ion-edit space" /> Edit Article
     </AppLink>
 
-    <button class="btn btn-outline-danger btn-sm">
-      <i class="ion-trash-a" /> Delete Article
-    </button>
-    //
     <button
-      class="btn btn-outline-danger btn-sm disabled"
-      disabled
+      v-if="displayEditButton"
+      class="btn btn-outline-danger btn-sm"
+      @click="onDelete"
     >
       <i class="ion-trash-a" /> Delete Article
     </button>
@@ -47,12 +45,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { deleteArticle } from '../services/article/deleteArticle'
+import { Store } from '../store'
 
 export default defineComponent({
   name: 'ArticleMeta',
   props: {
     article: { type: Object as PropType<Article>, required: true },
+  },
+  setup (props) {
+    const router = useRouter()
+    const store = useStore<Store>()
+    const user = computed<Store['user']>(() => store.state.user)
+
+    const displayEditButton = computed(() => user.value.username === props.article.author?.username)
+
+    const onDelete = async () => {
+      await deleteArticle(props.article.slug)
+      return router.push({ name: 'global-feed' })
+    }
+
+    return { displayEditButton, onDelete }
   },
 })
 </script>
