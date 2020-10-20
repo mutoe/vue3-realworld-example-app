@@ -12,12 +12,20 @@
             <p v-if="profile.bio">
               {{ profile.bio }}
             </p>
-            <button
+
+            <AppLink
               v-if="isUserAuthorized"
               class="btn btn-sm btn-outline-secondary action-btn"
+              name="settings"
             >
-              <i class="ion-plus-round" />
-              &nbsp;
+              <i class="ion-gear-a space" />
+              Edit profile settings
+            </AppLink>
+            <button
+              v-else
+              class="btn btn-sm btn-outline-secondary action-btn"
+            >
+              <i class="ion-plus-round space" />
               Follow {{ profile.username }}
             </button>
           </div>
@@ -129,3 +137,9 @@ export default defineComponent({
 })
 
 </script>
+
+<style scoped>
+.space {
+  margin-right: 4px;
+}
+</style>
