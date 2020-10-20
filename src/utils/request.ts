@@ -3,8 +3,8 @@ import params2query from './params-to-query'
 
 interface FetchRequestOptions {
   prefix: string;
-  headers: Record<string, any>;
-  params: Record<string, any>;
+  headers: Record<string, string>;
+  params: Record<string, string | number | boolean>;
   responseInterceptor: (response: Response) => void;
 }
 
