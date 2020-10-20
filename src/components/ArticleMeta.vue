@@ -14,32 +14,24 @@
       <span class="date">{{ (new Date(article.createdAt)).toLocaleDateString() }}</span>
     </div>
 
-    <button class="btn btn-sm btn-outline-secondary">
-      <i class="ion-plus-round" />
-      &nbsp;
+    <button class="btn btn-sm btn-outline-secondary space">
+      <i class="ion-plus-round space" />
       Follow {{ article.author?.username }}
     </button>
 
-    &nbsp;&nbsp;
-
-    <button class="btn btn-sm btn-outline-primary">
-      <i class="ion-heart" />
-            &nbsp;
-      {{ article.favorited ? "Unfavorite" : "Favorite" }} Article
+    <button class="btn btn-sm btn-outline-primary space">
+      <i class="ion-heart space" />
+      {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
       <span class="counter">({{ article.favoritesCount }})</span>
     </button>
 
-    &nbsp;&nbsp;
-
     <AppLink
-      class="btn btn-outline-secondary btn-sm"
+      class="btn btn-outline-secondary btn-sm space"
       name="editor"
       :params="{slug: article.slug}"
     >
-      <i class="ion-edit" /> Edit Article
+      <i class="ion-edit space" /> Edit Article
     </AppLink>
-
-    &nbsp;&nbsp;
 
     <button class="btn btn-outline-danger btn-sm">
       <i class="ion-trash-a" /> Delete Article
@@ -64,3 +56,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+.space {
+  margin-right: 8px;
+}
+</style>
