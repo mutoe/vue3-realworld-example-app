@@ -26,7 +26,7 @@
               class="btn btn-sm btn-outline-secondary action-btn"
             >
               <i class="ion-plus-round space" />
-              {{ profile.following ? 'Unfollow':'Follow' }} {{ profile.username }}
+              {{ profile.following ? 'Unfollow' : 'Follow' }} {{ profile.username }}
             </button>
           </div>
         </div>
@@ -40,7 +40,8 @@
             <ul class="nav nav-pills outline-active">
               <li class="nav-item">
                 <AppLink
-                  class="nav-link active"
+                  class="nav-link"
+                  :class="{active: routeName === 'profile'}"
                   name="profile"
                   :params="{ username }"
                 >
@@ -48,11 +49,14 @@
                 </AppLink>
               </li>
               <li class="nav-item">
-                <!-- TODO -->
-                <a
+                <AppLink
                   class="nav-link"
-                  href=""
-                >Favorited Articles</a>
+                  :class="{active: routeName === 'profile-favorites'}"
+                  name="profile-favorites"
+                  :params="{ username }"
+                >
+                  Favorited Articles
+                </AppLink>
               </li>
             </ul>
           </div>
@@ -79,6 +83,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import ArticlePreview from '../components/ArticlePreview.vue'
 import Pagination from '../components/Pagination.vue'
+import { useFavoritedArticles } from '../services/article/getFavoritedArticles'
 import { useProfileArticles } from '../services/article/getProfileArticles'
 import { useProfile } from '../services/profile/getProfile'
 
@@ -94,17 +99,19 @@ export default defineComponent({
 
     const username = computed<string>(() => route.params.username as string)
     const { profile } = useProfile(username.value)
-    const { articles, articlesCount, page } = useProfileArticles(username.value)
 
-    const isUserAuthorized = computed(() => store.state.user !== null)
+    // FIXME: Here no request is triggered when the type changes
+    const fetcher = route.name === 'profile' ? useProfileArticles : useFavoritedArticles
+    const { articles, articlesCount, page } = fetcher(username.value)
 
     return {
       username,
       profile,
-      isUserAuthorized,
       articles,
       articlesCount,
       page,
+      isUserAuthorized: computed(() => store.state.user !== null),
+      routeName: computed(() => route.name),
     }
   },
 })
