@@ -8,7 +8,7 @@ export const MUTATION = {
 }
 
 const mutations: MutationTree<Store> = {
-  [MUTATION.UPDATE_USER] (state, user: User|null) {
+  [MUTATION.UPDATE_USER] (state, user: User | null) {
     if (!user) {
       localStorage.removeItem('user')
       request.deleteAuthorizationHeader()
