@@ -26,19 +26,6 @@
             /> {{ link.title }}
           </AppLink>
         </li>
-        <!-- TODO: remove logout link -->
-        <li
-          v-if="store.state.user?.username"
-          class="nav-item"
-        >
-          <a
-            href="javascript:"
-            class="nav-link"
-            @click="onLogout"
-          >
-            Logout
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
