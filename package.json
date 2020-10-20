@@ -11,6 +11,7 @@
     "test": "yarn tsc && yarn lint && yarn test:unit && yarn test:e2e"
   },
   "dependencies": {
+    "deepmerge": "^4.2.2",
     "dompurify": "^2.1.1",
     "marked": "^1.2.0",
     "vue": "^3.0.0",
