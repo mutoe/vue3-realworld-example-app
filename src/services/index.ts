@@ -36,11 +36,6 @@ export async function getArticlesByTag (tagName: string, page = 1) {
   return request.get<ArticlesResponse>('/articles', { params })
 }
 
-export async function getProfileArticles (username: string, page = 1) {
-  const params = { limit, offset: (page - 1) * limit, author: username }
-  return request.get<ArticlesResponse>('/articles', { params })
-}
-
 export async function getFavoritedArticles (username: string, page = 1) {
   const params = { limit, offset: (page - 1) * limit, favorited: username }
   return request.get<ArticlesResponse>('/articles', { params })
