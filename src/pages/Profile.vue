@@ -44,9 +44,10 @@
           </div>
 
           <ArticlePreview
-            v-for="article in articles"
+            v-for="(article, index) in articles"
             :key="article.slug"
             :article="article"
+            @update="onArticleUpdate(index, $event)"
           />
 
           <Pagination
@@ -88,12 +89,17 @@ export default defineComponent({
     const fetcher = route.name === 'profile' ? useProfileArticles : useFavoritedArticles
     const { articles, articlesCount, page } = fetcher(username.value)
 
+    const onArticleUpdate = (index: number, article: Article) => {
+      articles.value[index] = article
+    }
+
     return {
       username,
       profile,
       articles,
       articlesCount,
       page,
+      onArticleUpdate,
       isUserAuthorized: computed(() => store.state.user !== null),
       routeName: computed(() => route.name),
     }

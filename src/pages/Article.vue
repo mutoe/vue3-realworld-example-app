@@ -4,7 +4,10 @@
       <div class="container">
         <h1>{{ article.title }}</h1>
 
-        <ArticleMeta :article="article" />
+        <ArticleMeta
+          :article="article"
+          @update="onUpdateArticle"
+        />
       </div>
     </div>
 
@@ -21,7 +24,10 @@
       <hr>
 
       <div class="article-actions">
-        <ArticleMeta :article="article" />
+        <ArticleMeta
+          :article="article"
+          @update="onUpdateArticle"
+        />
       </div>
 
       <div class="row">
@@ -57,16 +63,16 @@
 </template>
 
 <script lang="ts">
+import DOMPurify from 'dompurify'
+import md2html from 'marked'
 import { computed, defineComponent, reactive, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import md2html from 'marked'
-import DOMPurify from 'dompurify'
-
-import { getArticle } from '../services/article/getArticle'
-import { getCommentsByArticle } from '../services'
+import ArticleComment from '../components/ArticleComment.vue'
 
 import ArticleMeta from '../components/ArticleMeta.vue'
-import ArticleComment from '../components/ArticleComment.vue'
+import { getCommentsByArticle } from '../services'
+
+import { getArticle } from '../services/article/getArticle'
 
 export default defineComponent({
   name: 'Article',
@@ -84,18 +90,22 @@ export default defineComponent({
       const articleData = await getArticle(slug)
       Object.assign(article, articleData)
 
-      const commentsData = await getCommentsByArticle(slug)
-      comments.value = commentsData
+      comments.value = await getCommentsByArticle(slug)
     })
 
     const articleHandledBody = computed(
       () => !article.body ? '' : md2html(article.body, { sanitizer: DOMPurify.sanitize }),
     )
 
+    const onUpdateArticle = (newArticle: Article) => {
+      Object.assign(article, newArticle)
+    }
+
     return {
       article,
       articleHandledBody,
       comments,
+      onUpdateArticle,
     }
   },
 })

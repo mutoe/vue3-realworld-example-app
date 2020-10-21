@@ -49,14 +49,6 @@ export async function postComment (slug: string, body: string) {
     .then(res => res.comment)
 }
 
-export async function postFavoriteArticle (slug: string) {
-  return request.post<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
-}
-
-export async function deleteFavoriteArticle (slug: string) {
-  return request.delete<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
-}
-
 export async function postFollowProfile (username: string) {
   return request.post<ProfileResponse>(`/profiles/${username}/follow`).then(res => res.profile)
 }

@@ -17,10 +17,16 @@
         </AppLink>
         <span class="date">{{ new Date(article.createdAt).toDateString() }}</span>
       </div>
-      <button class="btn btn-outline-primary btn-sm pull-xs-right">
+
+      <button
+        class="btn btn-sm pull-xs-right"
+        :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
+        @click="onFavoriteArticle"
+      >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
     </div>
+
     <AppLink
       name="article"
       :params="{slug: article.slug}"
@@ -34,12 +40,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
+import { useFavoriteArticle } from '../services/article/favoriteArticle'
 
 export default defineComponent({
   name: 'ArticlePreview',
   props: {
     article: { type: Object as PropType<Article>, required: true },
+  },
+  emits: {
+    update: (article: Article) => !!article.slug,
+  },
+  setup (props, { emit }) {
+    const isFavorited = computed<boolean>(() => props.article.favorited)
+
+    const { onFavoriteArticle } = useFavoriteArticle(props.article, newArticle => emit('update', newArticle))
+
+    return { onFavoriteArticle, isFavorited }
   },
 })
 </script>

@@ -19,7 +19,11 @@
       Follow {{ article.author?.username }}
     </button>
 
-    <button class="btn btn-sm btn-outline-primary space">
+    <button
+      class="btn btn-sm space"
+      :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
+      @click="onFavoriteArticle"
+    >
       <i class="ion-heart space" />
       {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
       <span class="counter">({{ article.favoritesCount }})</span>
@@ -49,6 +53,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { deleteArticle } from '../services/article/deleteArticle'
+import { useFavoriteArticle } from '../services/article/favoriteArticle'
 import { Store } from '../store'
 
 export default defineComponent({
@@ -56,19 +61,24 @@ export default defineComponent({
   props: {
     article: { type: Object as PropType<Article>, required: true },
   },
-  setup (props) {
+  emits: {
+    update: (article: Article) => !!article.slug,
+  },
+  setup (props, { emit }) {
     const router = useRouter()
     const store = useStore<Store>()
     const user = computed<Store['user']>(() => store.state.user)
 
     const displayEditButton = computed(() => user.value.username === props.article.author?.username)
 
+    const { onFavoriteArticle } = useFavoriteArticle(props.article, newArticle => emit('update', newArticle))
+
     const onDelete = async () => {
       await deleteArticle(props.article.slug)
       return router.push({ name: 'global-feed' })
     }
 
-    return { displayEditButton, onDelete }
+    return { displayEditButton, onDelete, onFavoriteArticle }
   },
 })
 </script>

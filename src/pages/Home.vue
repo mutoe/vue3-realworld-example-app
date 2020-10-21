@@ -21,9 +21,10 @@
           </div>
 
           <ArticlePreview
-            v-for="article in articles"
+            v-for="(article, index) in articles"
             :key="article.slug"
             :article="article"
+            @update="onArticleUpdate(index, $event)"
           />
 
           <Pagination
@@ -66,14 +67,12 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
 
-    const tag = computed<string>(() => route.params.tag as string)
-
-    const userAuthorized = computed<boolean>(() => store.state.user !== null)
-
-    const username = computed<string>(() => (store.state.user?.username as string) ?? '')
-
     const onPageChange = (index: number) => {
       page.value = index
+    }
+
+    const onArticleUpdate = (index: number, article: Article) => {
+      articles.value[index] = article
     }
 
     return {
@@ -81,9 +80,10 @@ export default defineComponent({
       articlesCount,
       page,
       onPageChange,
-      tag,
-      userAuthorized,
-      username,
+      onArticleUpdate,
+      tag: computed<string>(() => route.params.tag as string),
+      userAuthorized: computed<boolean>(() => store.state.user !== null),
+      username: computed<string>(() => (store.state.user?.username as string) ?? ''),
     }
   },
 })
