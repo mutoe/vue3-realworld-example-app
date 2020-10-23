@@ -35,6 +35,15 @@
       <h1>{{ article.title }}</h1>
       <p>{{ article.description }}</p>
       <span>Read more...</span>
+      <ul class="tag-list">
+        <li
+          v-for="tag in article.tagList"
+          :key="tag"
+          class="tag-default tag-pill tag-outline"
+        >
+          {{ tag }}
+        </li>
+      </ul>
     </AppLink>
   </div>
 </template>
