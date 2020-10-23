@@ -30,13 +30,26 @@
             </fieldset>
             <fieldset class="form-group">
               <input
-                :value="form.tagList.join(' ')"
+                v-model="newTag"
                 type="text"
                 class="form-control"
                 placeholder="Enter tags"
-                @input="value => (form.tagList = value.split(' '))"
+                @change="addTag"
+                @keypress.enter.prevent="addTag"
               >
-              <div class="tag-list" />
+              <div class="tag-list">
+                <span
+                  v-for="tag in form.tagList"
+                  :key="tag"
+                  class="tag-default tag-pill"
+                >
+                  <i
+                    class="ion-close-round"
+                    @click="removeTag(tag)"
+                  />
+                  {{ tag }}
+                </span>
+              </div>
             </fieldset>
             <button
               class="btn btn-lg pull-xs-right btn-primary"
@@ -53,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, reactive } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getArticle } from '../services/article/getArticle'
 import { postArticle, putArticle } from '../services/article/postArticle'
@@ -79,6 +92,15 @@ export default defineComponent({
       tagList: [],
     })
 
+    const newTag = ref<string>('')
+    const addTag = () => {
+      form.tagList.push(newTag.value.trim())
+      newTag.value = ''
+    }
+    const removeTag = (tag: string) => {
+      form.tagList = form.tagList.filter(t => t !== tag)
+    }
+
     async function fetchArticle (slug: string) {
       const article = await getArticle(slug)
 
@@ -103,7 +125,13 @@ export default defineComponent({
       return router.push({ name: 'article', params: { slug: article.slug } })
     }
 
-    return { form, onSubmit }
+    return {
+      form,
+      onSubmit,
+      newTag,
+      addTag,
+      removeTag,
+    }
   },
 })
 </script>
