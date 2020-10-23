@@ -19,6 +19,15 @@
           v-html="articleHandledBody"
         />
         <!-- eslint-enable vue/no-v-html  -->
+        <ul class="tag-list">
+          <li
+            v-for="tag in article.tagList"
+            :key="tag"
+            class="tag-default tag-pill tag-outline"
+          >
+            {{ tag }}
+          </li>
+        </ul>
       </div>
 
       <hr>
