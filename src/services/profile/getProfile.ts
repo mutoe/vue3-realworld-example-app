@@ -10,6 +10,10 @@ export function useProfile (username: string) {
 
   async function fetchProfile () {
     const profileData = await getProfile(username)
+    updateProfile(profileData)
+  }
+
+  async function updateProfile (profileData: Profile) {
     Object.assign(profile, profileData)
   }
 
@@ -19,5 +23,6 @@ export function useProfile (username: string) {
 
   return {
     profile,
+    updateProfile,
   }
 }

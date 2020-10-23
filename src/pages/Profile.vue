@@ -14,7 +14,7 @@
             </p>
 
             <AppLink
-              v-if="isUserAuthorized"
+              v-if="isMyProfile"
               class="btn btn-sm btn-outline-secondary action-btn"
               name="settings"
             >
@@ -22,11 +22,13 @@
               Edit profile settings
             </AppLink>
             <button
-              v-else
+              v-if="isNotMyProfile"
               class="btn btn-sm btn-outline-secondary action-btn"
+              :disabled="followProcessGoing"
+              @click="toggleFollow"
             >
               <i class="ion-plus-round space" />
-              {{ profile.following ? 'Unfollow' : 'Follow' }} {{ profile.username }}
+              {{ profile.following ? "Unfollow" : "Follow" }} {{ profile.username }}
             </button>
           </div>
         </div>
@@ -70,6 +72,7 @@ import Pagination from '../components/Pagination.vue'
 import { useFavoritedArticles } from '../services/article/getFavoritedArticles'
 import { useProfileArticles } from '../services/article/getProfileArticles'
 import { useProfile } from '../services/profile/getProfile'
+import { useFollow } from '../services/profile/followProfile'
 
 export default defineComponent({
   name: 'Profile',
@@ -83,7 +86,17 @@ export default defineComponent({
     const route = useRoute()
 
     const username = computed<string>(() => route.params.username as string)
-    const { profile } = useProfile(username.value)
+    const user = computed<User>(() => store.state.user)
+
+    const { profile, updateProfile } = useProfile(username.value)
+    const { followProcessGoing, toggleFollow: toggleFollowUser } = useFollow({
+      following: computed<boolean>(() => profile.following),
+      username: username.value,
+    })
+
+    const isUserAuthorized = computed<boolean>(() => store.state.user !== null)
+    const isMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username === username.value)
+    const isNotMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username !== username.value)
 
     // FIXME: Here no request is triggered when the type changes (include home page articles navigation)
     const fetcher = route.name === 'profile' ? useProfileArticles : useFavoritedArticles
@@ -93,6 +106,11 @@ export default defineComponent({
       articles.value[index] = article
     }
 
+    async function toggleFollow () {
+      const newProfileData = await toggleFollowUser()
+      updateProfile(newProfileData)
+    }
+
     return {
       username,
       profile,
@@ -100,8 +118,11 @@ export default defineComponent({
       articlesCount,
       page,
       onArticleUpdate,
-      isUserAuthorized: computed(() => store.state.user !== null),
+      isMyProfile,
+      isNotMyProfile,
       routeName: computed(() => route.name),
+      followProcessGoing,
+      toggleFollow,
     }
   },
 })
