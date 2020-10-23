@@ -21,7 +21,8 @@
       <button
         class="btn btn-sm pull-xs-right"
         :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
-        @click="onFavoriteArticle"
+        :disabled="favoriteProcessGoing"
+        @click="favoriteArticle"
       >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
@@ -51,6 +52,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { useFavoriteArticle } from '../services/article/favoriteArticle'
+import createAsyncProcess from '../utils/create-async-process'
 
 export default defineComponent({
   name: 'ArticlePreview',
@@ -63,9 +65,20 @@ export default defineComponent({
   setup (props, { emit }) {
     const isFavorited = computed<boolean>(() => props.article.favorited)
 
-    const { onFavoriteArticle } = useFavoriteArticle(props.article, newArticle => emit('update', newArticle))
+    const updateArticle = (newArticle: Article): void => emit('update', newArticle)
 
-    return { onFavoriteArticle, isFavorited }
+    const { onFavoriteArticle } = useFavoriteArticle({
+      isFavorited,
+      articleSlug: props.article.slug,
+      updateArticle,
+    })
+
+    const { active, run } = createAsyncProcess(onFavoriteArticle)
+
+    return {
+      favoriteProcessGoing: active,
+      favoriteArticle: run,
+    }
   },
 })
 </script>

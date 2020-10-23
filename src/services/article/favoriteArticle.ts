@@ -1,3 +1,4 @@
+import { ComputedRef } from 'vue'
 import { request } from '../index'
 
 async function postFavoriteArticle (slug: string) {
@@ -8,13 +9,19 @@ async function deleteFavoriteArticle (slug: string) {
   return request.delete<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
 }
 
-export const useFavoriteArticle = (article: Article, updateArticle: (newArticle: Article) => void) => {
+interface useFavoriteArticleProps {
+  isFavorited : ComputedRef<boolean>
+  articleSlug: string
+  updateArticle: (newArticle: Article) => void
+}
+
+export const useFavoriteArticle = ({ isFavorited, articleSlug, updateArticle }: useFavoriteArticleProps) => {
   const onFavoriteArticle = async () => {
     let newArticle: Article
-    if (article.favorited) {
-      newArticle = await deleteFavoriteArticle(article.slug)
+    if (isFavorited.value) {
+      newArticle = await deleteFavoriteArticle(articleSlug)
     } else {
-      newArticle = await postFavoriteArticle(article.slug)
+      newArticle = await postFavoriteArticle(articleSlug)
     }
     updateArticle(newArticle)
   }
