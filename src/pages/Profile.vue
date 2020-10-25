@@ -101,7 +101,7 @@ export default defineComponent({
     const { profile, updateProfile } = useProfile(username.value)
     const { followProcessGoing, toggleFollow: toggleFollowUser } = useFollow({
       following: computed<boolean>(() => profile.following),
-      username: username.value,
+      username,
     })
 
     const isUserAuthorized = computed<boolean>(() => store.state.user !== null)
