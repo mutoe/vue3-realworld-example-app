@@ -19,9 +19,13 @@
       <span class="date">{{ (new Date(article.createdAt)).toLocaleDateString() }}</span>
     </div>
 
-    <button class="btn btn-sm btn-outline-secondary space">
+    <button
+      class="btn btn-sm btn-outline-secondary space"
+      :disabled="followProcessGoing"
+      @click="toggleFollow"
+    >
       <i class="ion-plus-round space" />
-      Follow {{ article.author?.username }}
+      {{ article.author?.following ? "Unfollow" : "Follow" }} {{ article.author?.username }}
     </button>
 
     <button
@@ -59,6 +63,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { deleteArticle } from '../services/article/deleteArticle'
 import { useFavoriteArticle } from '../services/article/favoriteArticle'
+import { useFollow } from '../services/profile/followProfile'
 import { Store } from '../store'
 
 export default defineComponent({
@@ -88,7 +93,24 @@ export default defineComponent({
       return router.push({ name: 'global-feed' })
     }
 
-    return { displayEditButton, onDelete, onFavoriteArticle }
+    const { followProcessGoing, toggleFollow: toggleFollowAuthor } = useFollow({
+      following: computed(() => article.value.author.following),
+      username: computed(() => article.value.author.username),
+    })
+
+    async function toggleFollow () {
+      const author = await toggleFollowAuthor()
+      const newArticle = { ...article.value, author }
+      emit('update', newArticle)
+    }
+
+    return {
+      displayEditButton,
+      onDelete,
+      onFavoriteArticle,
+      followProcessGoing,
+      toggleFollow,
+    }
   },
 })
 </script>
