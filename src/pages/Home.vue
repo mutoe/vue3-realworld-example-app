@@ -20,18 +20,26 @@
             />
           </div>
 
-          <ArticlePreview
-            v-for="(article, index) in articles"
-            :key="article.slug"
-            :article="article"
-            @update="onArticleUpdate(index, $event)"
-          />
+          <div
+            v-if="articlesDownloading"
+            class="article-preview"
+          >
+            Articles are downloading...
+          </div>
+          <template v-else>
+            <ArticlePreview
+              v-for="(article, index) in articles"
+              :key="article.slug"
+              :article="article"
+              @update="updateArticle(index, $event)"
+            />
 
-          <Pagination
-            :count="articlesCount"
-            :page="page"
-            @page-change="onPageChange"
-          />
+            <Pagination
+              :count="articlesCount"
+              :page="page"
+              @page-change="changePage"
+            />
+          </template>
         </div>
 
         <div class="col-md-3">
@@ -49,10 +57,11 @@ import ArticlePreview from '../components/ArticlePreview.vue'
 import ArticlesNavigation from '../components/ArticlesNavigation.vue'
 import Pagination from '../components/Pagination.vue'
 import PopularTags from '../components/PopularTags.vue'
-import { useArticles } from '../services/article/getArticle'
+import { useArticles } from '../services/article/getArticles'
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { AppRouteNames } from 'src/routes'
 
 export default defineComponent({
   name: 'Home',
@@ -63,27 +72,30 @@ export default defineComponent({
     ArticlesNavigation,
   },
   setup () {
-    const { articlesCount, articles, page } = useArticles()
     const route = useRoute()
     const store = useStore()
 
-    const onPageChange = (index: number) => {
-      page.value = index
-    }
+    const routeName = computed<AppRouteNames>(() => route.name as AppRouteNames)
+    const tag = computed<string | undefined>(() => (
+      typeof route.params.tag === 'string' ? route.params.tag : undefined
+    ))
 
-    const onArticleUpdate = (index: number, article: Article) => {
-      articles.value[index] = article
-    }
+    const userAuthorized = computed<boolean>(() => store.state.user !== null)
+
+    const { articlesDownloading, articlesCount, articles, page, changePage, updateArticle } = useArticles({
+      routeName,
+      tag,
+    })
 
     return {
+      articlesDownloading,
       articles,
       articlesCount,
       page,
-      onPageChange,
-      onArticleUpdate,
-      tag: computed<string>(() => route.params.tag as string),
-      userAuthorized: computed<boolean>(() => store.state.user !== null),
-      username: computed<string>(() => (store.state.user?.username as string) ?? ''),
+      changePage,
+      updateArticle,
+      tag,
+      userAuthorized,
     }
   },
 })

@@ -45,17 +45,26 @@
             />
           </div>
 
-          <ArticlePreview
-            v-for="(article, index) in articles"
-            :key="article.slug"
-            :article="article"
-            @update="onArticleUpdate(index, $event)"
-          />
+          <div
+            v-if="articlesDownloading"
+            class="article-preview"
+          >
+            Articles are downloading...
+          </div>
+          <template v-else>
+            <ArticlePreview
+              v-for="(article, index) in articles"
+              :key="article.slug"
+              :article="article"
+              @update="updateArticle(index, $event)"
+            />
 
-          <Pagination
-            :count="articlesCount"
-            :page="page"
-          />
+            <Pagination
+              :count="articlesCount"
+              :page="page"
+              @page-change="changePage"
+            />
+          </template>
         </div>
       </div>
     </div>
@@ -69,10 +78,10 @@ import { useStore } from 'vuex'
 import ArticlePreview from '../components/ArticlePreview.vue'
 import ArticlesNavigation from '../components/ArticlesNavigation.vue'
 import Pagination from '../components/Pagination.vue'
-import { useFavoritedArticles } from '../services/article/getFavoritedArticles'
-import { useProfileArticles } from '../services/article/getProfileArticles'
 import { useProfile } from '../services/profile/getProfile'
 import { useFollow } from '../services/profile/followProfile'
+import { useArticles } from '../services/article/getArticles'
+import { AppRouteNames } from '../routes'
 
 export default defineComponent({
   name: 'Profile',
@@ -85,6 +94,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
 
+    const routeName = computed<AppRouteNames>(() => route.name as AppRouteNames)
     const username = computed<string>(() => route.params.username as string)
     const user = computed<User>(() => store.state.user)
 
@@ -98,13 +108,10 @@ export default defineComponent({
     const isMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username === username.value)
     const isNotMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username !== username.value)
 
-    // FIXME: Here no request is triggered when the type changes (include home page articles navigation)
-    const fetcher = route.name === 'profile' ? useProfileArticles : useFavoritedArticles
-    const { articles, articlesCount, page } = fetcher(username.value)
-
-    const onArticleUpdate = (index: number, article: Article) => {
-      articles.value[index] = article
-    }
+    const { articlesDownloading, articlesCount, articles, page, changePage, updateArticle } = useArticles({
+      routeName,
+      username,
+    })
 
     async function toggleFollow () {
       const newProfileData = await toggleFollowUser()
@@ -114,13 +121,15 @@ export default defineComponent({
     return {
       username,
       profile,
+      articlesDownloading,
       articles,
       articlesCount,
       page,
-      onArticleUpdate,
+      changePage,
+      updateArticle,
       isMyProfile,
       isNotMyProfile,
-      routeName: computed(() => route.name),
+      routeName,
       followProcessGoing,
       toggleFollow,
     }
