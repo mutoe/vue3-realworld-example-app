@@ -2,15 +2,20 @@
   <p>Popular Tags</p>
 
   <div class="tag-list">
-    <AppLink
-      v-for="tag in tags"
-      :key="tag"
-      name="tag"
-      :params="{tag}"
-      class="tag-pill tag-default"
-    >
-      {{ tag }}
-    </AppLink>
+    <div v-if="tagsDownloading">
+      Tags are downloading...
+    </div>
+    <template v-else>
+      <AppLink
+        v-for="tag in tags"
+        :key="tag"
+        name="tag"
+        :params="{tag}"
+        class="tag-pill tag-default"
+      >
+        {{ tag }}
+      </AppLink>
+    </template>
   </div>
 </template>
 
@@ -21,9 +26,10 @@ import { useTags } from '../services/tag/getTags'
 export default defineComponent({
   name: 'PopularTags',
   setup () {
-    const { tags } = useTags()
+    const { tags, tagsDownloading } = useTags()
 
     return {
+      tagsDownloading,
       tags,
     }
   },
