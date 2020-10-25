@@ -26,16 +26,6 @@ export async function postRegister (form: PostRegisterForm) {
   return request.post<UserResponse>('/users', { user: form }).then(res => res.user)
 }
 
-export async function getFeeds (page = 1) {
-  const params = { limit, offset: (page - 1) * limit }
-  return request.get<ArticlesResponse>('/articles/feed', { params })
-}
-
-export async function getArticlesByTag (tagName: string, page = 1) {
-  const params = { tag: tagName, limit, offset: (page - 1) * limit }
-  return request.get<ArticlesResponse>('/articles', { params })
-}
-
 export async function getCommentsByArticle (slug: string) {
   return request.get<CommentsResponse>(`/articles/${slug}/comments`).then(res => res.comments)
 }
