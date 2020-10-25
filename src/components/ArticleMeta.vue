@@ -1,6 +1,11 @@
 <template>
   <div class="article-meta">
-    <a href=""><img :src="article.author?.image"></a>
+    <AppLink
+      name="profile"
+      :params="{username: article.author?.username}"
+    >
+      <img :src="article.author?.image">
+    </AppLink>
 
     <div class="info">
       <AppLink
