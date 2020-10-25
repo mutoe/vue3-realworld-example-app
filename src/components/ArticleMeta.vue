@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { deleteArticle } from '../services/article/deleteArticle'
@@ -68,13 +68,18 @@ export default defineComponent({
     const router = useRouter()
     const store = useStore<Store>()
     const user = computed<Store['user']>(() => store.state.user)
+    const { article } = toRefs(props)
 
-    const displayEditButton = computed(() => user.value.username === props.article.author?.username)
+    const displayEditButton = computed(() => user.value?.username === article.value.author?.username)
 
-    const { onFavoriteArticle } = useFavoriteArticle(props.article, newArticle => emit('update', newArticle))
+    const { onFavoriteArticle } = useFavoriteArticle({
+      isFavorited: computed(() => article.value.favorited),
+      articleSlug: article.value.slug,
+      updateArticle: newArticle => emit('update', newArticle),
+    })
 
     const onDelete = async () => {
-      await deleteArticle(props.article.slug)
+      await deleteArticle(article.value.slug)
       return router.push({ name: 'global-feed' })
     }
 
