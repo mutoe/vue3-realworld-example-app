@@ -11,7 +11,7 @@ export async function deleteFollowProfile (username: string) {
 }
 
 interface UseFollowProps {
-  username: string
+  username: ComputedRef<string>
   following: ComputedRef<boolean>
 }
 
@@ -20,9 +20,9 @@ export function useFollow ({ username, following }: UseFollowProps) {
     let profile = null
 
     if (following.value === true) {
-      profile = await deleteFollowProfile(username)
+      profile = await deleteFollowProfile(username.value)
     } else {
-      profile = await postFollowProfile(username)
+      profile = await postFollowProfile(username.value)
     }
 
     return profile
