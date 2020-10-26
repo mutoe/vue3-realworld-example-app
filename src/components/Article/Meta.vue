@@ -2,18 +2,18 @@
   <div class="article-meta">
     <AppLink
       name="profile"
-      :params="{username: article.author?.username}"
+      :params="{username: article.author.username}"
     >
-      <img :src="article.author?.image">
+      <img :src="article.author.image">
     </AppLink>
 
     <div class="info">
       <AppLink
         name="profile"
-        :params="{username: article.author?.username}"
+        :params="{username: article.author.username}"
         class="author"
       >
-        {{ article.author?.username }}
+        {{ article.author.username }}
       </AppLink>
 
       <span class="date">{{ (new Date(article.createdAt)).toLocaleDateString() }}</span>
@@ -26,7 +26,7 @@
       @click="toggleFollow"
     >
       <i class="ion-plus-round space" />
-      {{ article.author?.following ? "Unfollow" : "Follow" }} {{ article.author?.username }}
+      {{ article.author.following ? "Unfollow" : "Follow" }} {{ article.author.username }}
     </button>
 
     <button
@@ -63,10 +63,12 @@
 import { computed, defineComponent, PropType, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { deleteArticle } from '../services/article/deleteArticle'
-import { useFavoriteArticle } from '../services/article/favoriteArticle'
-import { useFollow } from '../services/profile/followProfile'
-import { Store } from '../store'
+
+import { deleteArticle } from '../../services/article/deleteArticle'
+import { useFavoriteArticle } from '../../services/article/favoriteArticle'
+import { useFollow } from '../../services/profile/followProfile'
+
+import { Store } from '../../store'
 
 export default defineComponent({
   name: 'ArticleMeta',
@@ -82,7 +84,7 @@ export default defineComponent({
     const user = computed<Store['user']>(() => store.state.user)
     const { article } = toRefs(props)
 
-    const displayEditButton = computed(() => user.value?.username === article.value.author?.username)
+    const displayEditButton = computed(() => user.value?.username === article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
@@ -108,7 +110,7 @@ export default defineComponent({
 
     const displayFollow = computed(() => (
       user.value !== null &&
-      user.value.username !== article.value.author?.username
+      user.value.username !== article.value.author.username
     ))
 
     return {
