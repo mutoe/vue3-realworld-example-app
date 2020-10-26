@@ -2,20 +2,15 @@
   <p>Popular Tags</p>
 
   <div class="tag-list">
-    <div v-if="tagsDownloading">
-      Tags are downloading...
-    </div>
-    <template v-else>
-      <AppLink
-        v-for="tag in tags"
-        :key="tag"
-        name="tag"
-        :params="{tag}"
-        class="tag-pill tag-default"
-      >
-        {{ tag }}
-      </AppLink>
-    </template>
+    <AppLink
+      v-for="tag in tags"
+      :key="tag"
+      name="tag"
+      :params="{tag}"
+      class="tag-pill tag-default"
+    >
+      {{ tag }}
+    </AppLink>
   </div>
 </template>
 
@@ -25,11 +20,12 @@ import { useTags } from '../services/tag/getTags'
 
 export default defineComponent({
   name: 'PopularTags',
-  setup () {
-    const { tags, tagsDownloading } = useTags()
+  async setup () {
+    const { tags, fetchTags } = useTags()
+
+    await fetchTags()
 
     return {
-      tagsDownloading,
       tags,
     }
   },

@@ -1,6 +1,5 @@
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { request } from '../index'
-import createAsyncProcess from '../../utils/create-async-process'
 
 export async function getAllTags () {
   return request.get<TagsResponse>('/tags').then(res => res.tags)
@@ -11,18 +10,11 @@ export function useTags () {
 
   async function fetchTags () {
     tags.value = []
-
     tags.value = await getAllTags()
   }
 
-  const { active, run } = createAsyncProcess(fetchTags)
-
-  watchEffect(() => {
-    run()
-  })
-
   return {
-    tagsDownloading: active,
+    fetchTags,
     tags,
   }
 }

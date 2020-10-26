@@ -44,7 +44,14 @@
 
         <div class="col-md-3">
           <div class="sidebar">
-            <PopularTags />
+            <Suspense>
+              <template #default>
+                <PopularTags />
+              </template>
+              <template #fallback>
+                Popular tags are downloading...
+              </template>
+            </Suspense>
           </div>
         </div>
       </div>
