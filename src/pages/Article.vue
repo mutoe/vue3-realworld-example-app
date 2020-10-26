@@ -50,6 +50,8 @@
             v-for="comment in comments"
             :key="comment.id"
             :comment="comment"
+            :username="username"
+            @remove-comment="removeComment(comment.id)"
           />
         </div>
       </div>
@@ -67,8 +69,10 @@ import ArticleCommentForm from '../components/ArticleCommentForm.vue'
 
 import ArticleMeta from '../components/ArticleMeta.vue'
 import { getCommentsByArticle } from '../services/comment/getComments'
+import { deleteComment } from '../services/comment/postComment'
 
 import { getArticle } from '../services/article/getArticle'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Article',
@@ -80,6 +84,8 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const slug = route.params.slug as string
+    const store = useStore()
+    const username = computed(() => store.state.user?.username)
     const article = reactive<Article>({} as Article)
     const comments = ref<ArticleComment[]>([])
 
@@ -102,12 +108,19 @@ export default defineComponent({
       comments.value.unshift(comment)
     }
 
+    const removeComment = async (commentId: number) => {
+      await deleteComment(slug, commentId)
+      comments.value = comments.value.filter(c => c.id !== commentId)
+    }
+
     return {
       article,
       articleHandledBody,
       comments,
       slug,
+      username,
       addComment,
+      removeComment,
       onUpdateArticle,
     }
   },
