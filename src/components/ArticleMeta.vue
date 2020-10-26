@@ -84,7 +84,7 @@ export default defineComponent({
 
     const { onFavoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
-      articleSlug: article.value.slug,
+      articleSlug: computed(() => article.value.slug),
       updateArticle: newArticle => emit('update', newArticle),
     })
 

@@ -63,13 +63,11 @@ export default defineComponent({
     update: (article: Article) => !!article.slug,
   },
   setup (props, { emit }) {
-    const isFavorited = computed<boolean>(() => props.article.favorited)
-
     const updateArticle = (newArticle: Article): void => emit('update', newArticle)
 
     const { onFavoriteArticle } = useFavoriteArticle({
-      isFavorited,
-      articleSlug: props.article.slug,
+      isFavorited: computed(() => props.article.favorited),
+      articleSlug: computed(() => props.article.slug),
       updateArticle,
     })
 
