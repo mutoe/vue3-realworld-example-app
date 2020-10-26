@@ -41,24 +41,10 @@
 
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
-          <form class="card comment-form">
-            <div class="card-block">
-              <textarea
-                class="form-control"
-                placeholder="Write a comment..."
-                rows="3"
-              />
-            </div>
-            <div class="card-footer">
-              <img
-                :src="article.author?.image"
-                class="comment-author-img"
-              >
-              <button class="btn btn-sm btn-primary">
-                Post Comment
-              </button>
-            </div>
-          </form>
+          <ArticleCommentForm
+            :article-slug="slug"
+            @add-comment="addComment"
+          />
 
           <ArticleComment
             v-for="comment in comments"
@@ -77,6 +63,7 @@ import md2html from 'marked'
 import { computed, defineComponent, reactive, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleComment from '../components/ArticleComment.vue'
+import ArticleCommentForm from '../components/ArticleCommentForm.vue'
 
 import ArticleMeta from '../components/ArticleMeta.vue'
 import { getCommentsByArticle } from '../services/comment/getComments'
@@ -88,6 +75,7 @@ export default defineComponent({
   components: {
     ArticleMeta,
     ArticleComment,
+    ArticleCommentForm,
   },
   setup () {
     const route = useRoute()
@@ -110,10 +98,16 @@ export default defineComponent({
       Object.assign(article, newArticle)
     }
 
+    const addComment = async (comment: ArticleComment) => {
+      comments.value.unshift(comment)
+    }
+
     return {
       article,
       articleHandledBody,
       comments,
+      slug,
+      addComment,
       onUpdateArticle,
     }
   },
