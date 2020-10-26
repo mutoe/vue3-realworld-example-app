@@ -1,0 +1,62 @@
+<template>
+  <CommentForm
+    :article-slug="slug"
+    @add-comment="addComment"
+  />
+
+  <Comment
+    v-for="comment in comments"
+    :key="comment.id"
+    :comment="comment"
+    :username="username"
+    @remove-comment="removeComment(comment.id)"
+  />
+</template>
+
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+
+import CommentForm from './Form.vue'
+import Comment from './Comment.vue'
+
+import { getCommentsByArticle } from '../../../services/comment/getComments'
+import { deleteComment } from '../../../services/comment/postComment'
+
+export default defineComponent({
+  name: 'ArticleComments',
+  components: {
+    CommentForm,
+    Comment,
+  },
+  async setup () {
+    const route = useRoute()
+    const slug = route.params.slug as string
+
+    const store = useStore()
+    const username = computed(() => store.state.user?.username)
+
+    const comments = ref<ArticleComment[]>([])
+
+    const addComment = async (comment: ArticleComment) => {
+      comments.value.unshift(comment)
+    }
+
+    const removeComment = async (commentId: number) => {
+      await deleteComment(slug, commentId)
+      comments.value = comments.value.filter(c => c.id !== commentId)
+    }
+
+    comments.value = await getCommentsByArticle(slug)
+
+    return {
+      comments,
+      slug,
+      username,
+      addComment,
+      removeComment,
+    }
+  },
+})
+</script>

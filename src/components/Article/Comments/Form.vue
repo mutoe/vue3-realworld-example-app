@@ -39,11 +39,11 @@
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 
-import { useProfile } from '../services/profile/getProfile'
-import { postComment } from '../services/comment/postComment'
+import { useProfile } from '../../../services/profile/getProfile'
+import { postComment } from '../../../services/comment/postComment'
 
 export default defineComponent({
-  name: 'ArticleCommentForm',
+  name: 'ArticleCommentsForm',
   props: {
     articleSlug: { type: String, required: true },
   },
@@ -61,8 +61,8 @@ export default defineComponent({
 
     const comment = ref('')
 
-    async function submitComment () {
-      const newComment: ArticleComment = await postComment(props.articleSlug, comment.value)
+    const submitComment = async () => {
+      const newComment = await postComment(props.articleSlug, comment.value)
       emit('add-comment', newComment)
       comment.value = ''
     }
