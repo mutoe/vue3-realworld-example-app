@@ -20,6 +20,7 @@
     </div>
 
     <button
+      v-if="displayFollow"
       class="btn btn-sm btn-outline-secondary space"
       :disabled="followProcessGoing"
       @click="toggleFollow"
@@ -104,7 +105,13 @@ export default defineComponent({
       emit('update', newArticle)
     }
 
+    const displayFollow = computed(() => (
+      user.value !== null &&
+      user.value.username !== article.value.author?.username
+    ))
+
     return {
+      displayFollow,
       displayEditButton,
       onDelete,
       onFavoriteArticle,
