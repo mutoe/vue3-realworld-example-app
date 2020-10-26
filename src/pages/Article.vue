@@ -79,7 +79,7 @@ import { useRoute } from 'vue-router'
 import ArticleComment from '../components/ArticleComment.vue'
 
 import ArticleMeta from '../components/ArticleMeta.vue'
-import { getCommentsByArticle } from '../services'
+import { getCommentsByArticle } from '../services/comment/getComments'
 
 import { getArticle } from '../services/article/getArticle'
 
