@@ -26,7 +26,7 @@ describe('View the homepage by guest', () => {
       .should('contain.text', 'abc123')
   })
 
-  it.only('it should display correct tags when page loaded', () => {
+  it('it should display correct tags when page loaded', () => {
     cy.wait('@getTags')
 
     cy.get('div.tag-list')
