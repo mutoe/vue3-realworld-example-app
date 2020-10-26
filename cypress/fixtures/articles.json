@@ -1,0 +1,181 @@
+{
+  "articles": [
+    {
+      "title": "abc123",
+      "slug": "aaaaaaaaaassssssss-344qc2",
+      "body": "saaaaaaaaaaassssss",
+      "createdAt": "2020-10-26T12:56:58.876Z",
+      "updatedAt": "2020-10-26T12:56:58.876Z",
+      "tagList": [],
+      "description": "aaaaaaaaaaassssssssss",
+      "author": {
+        "username": "maili",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 1
+    },
+    {
+      "title": "BTS Army",
+      "slug": "bts-army-xcs21l",
+      "body": "Don't force people to listen to that boring stuff.\nDynamite was lit though.",
+      "createdAt": "2020-10-26T12:56:11.674Z",
+      "updatedAt": "2020-10-26T12:56:11.674Z",
+      "tagList": [
+        "pop",
+        "btsArmy",
+        "bts"
+      ],
+      "description": "Criticising a band",
+      "author": {
+        "username": "abdulhanjra",
+        "bio": "Bleh",
+        "image": "https://64.media.tumblr.com/57fbc054bf2fa0c6dd6c626f1741ec19/tumblr_pbgjd1SeR51qcpciyo1_400.png",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "6969",
+      "slug": "6969-bc71bu",
+      "body": "what else",
+      "createdAt": "2020-10-26T12:28:46.374Z",
+      "updatedAt": "2020-10-26T12:28:46.374Z",
+      "tagList": [],
+      "description": "69 and 69",
+      "author": {
+        "username": "daria",
+        "bio": "lknkjnkjb",
+        "image": "",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "This is a title",
+      "slug": "this-is-a-title-q6gg23",
+      "body": "This is a body of the article",
+      "createdAt": "2020-10-26T12:26:29.750Z",
+      "updatedAt": "2020-10-26T12:26:29.750Z",
+      "tagList": [],
+      "description": "This is a description",
+      "author": {
+        "username": "josemmg87",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "This is a title",
+      "slug": "this-is-a-title-9e9k35",
+      "body": "This is a body of the article",
+      "createdAt": "2020-10-26T12:24:01.290Z",
+      "updatedAt": "2020-10-26T12:24:01.290Z",
+      "tagList": [],
+      "description": "This is a description",
+      "author": {
+        "username": "josemmg87",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "Minim doloribus opti",
+      "slug": "minim-doloribus-opti-po2w7g",
+      "body": "Exercitationem inven",
+      "createdAt": "2020-10-26T12:12:27.127Z",
+      "updatedAt": "2020-10-26T12:12:27.127Z",
+      "tagList": [],
+      "description": "Id in sit vero aute",
+      "author": {
+        "username": "Bettie72",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "tyui",
+      "slug": "tyui-qi9qdw",
+      "body": "tiuo",
+      "createdAt": "2020-10-26T12:12:07.490Z",
+      "updatedAt": "2020-10-26T12:12:07.490Z",
+      "tagList": [
+        "tuio"
+      ],
+      "description": "tyui",
+      "author": {
+        "username": "vasiliy12",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "This is a title",
+      "slug": "this-is-a-title-l74nrw",
+      "body": "This is a body of the article",
+      "createdAt": "2020-10-26T12:09:58.427Z",
+      "updatedAt": "2020-10-26T12:09:58.427Z",
+      "tagList": [],
+      "description": "This is a description",
+      "author": {
+        "username": "josemmg87",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "This is a title",
+      "slug": "this-is-a-title-fd8luz",
+      "body": "This is a body of the article",
+      "createdAt": "2020-10-26T12:07:43.563Z",
+      "updatedAt": "2020-10-26T12:07:43.563Z",
+      "tagList": [],
+      "description": "This is a description",
+      "author": {
+        "username": "josemmg87",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    },
+    {
+      "title": "1234567QA",
+      "slug": "1234567qa-6xcwvb",
+      "body": "1234567QA",
+      "createdAt": "2020-10-26T12:03:27.571Z",
+      "updatedAt": "2020-10-26T12:03:27.571Z",
+      "tagList": [],
+      "description": "1234567QA",
+      "author": {
+        "username": "Antonette74",
+        "bio": null,
+        "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+        "following": false
+      },
+      "favorited": false,
+      "favoritesCount": 0
+    }
+  ],
+  "articlesCount": 500
+}
