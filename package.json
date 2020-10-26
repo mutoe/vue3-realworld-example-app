@@ -52,7 +52,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,vue}": "eslint --fix"
+    "src/**/*.{ts,vue}": "eslint --fix",
+    "cypress/**/*.js": "eslint --fix"
   },
   "eslintConfig": {
     "parser": "vue-eslint-parser",

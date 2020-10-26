@@ -5,7 +5,6 @@ describe('View the homepage by guest', () => {
     cy.route2('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
 
     cy.visit('/')
-    
   })
 
   it('should can access home page', () => {
@@ -21,21 +20,21 @@ describe('View the homepage by guest', () => {
 
   it('should display article when page loaded', () => {
     cy.wait('@getArticles')
-    
+
     cy.get('.article-preview:first')
       .find('h1')
       .should('contain.text', 'abc123')
   })
 
-  it.only('it should display correct tags when page loaded',()=>{
+  it.only('it should display correct tags when page loaded', () => {
     cy.wait('@getTags')
-    
+
     cy.get('div.tag-list')
       .find('a.tag-pill.tag-default')
-      .should('have.length',8)
-    
+      .should('have.length', 8)
+
     cy.get('div.tag-list')
       .find('a.tag-pill.tag-default:nth-child(3)')
-      .should('contain.text','HITLER')
+      .should('contain.text', 'HITLER')
   })
 })
