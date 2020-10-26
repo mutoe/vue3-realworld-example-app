@@ -26,19 +26,6 @@ export async function postRegister (form: PostRegisterForm) {
   return request.post<UserResponse>('/users', { user: form }).then(res => res.user)
 }
 
-export async function getCommentsByArticle (slug: string) {
-  return request.get<CommentsResponse>(`/articles/${slug}/comments`).then(res => res.comments)
-}
-
-export async function deleteComment (slug: string, commentId: number) {
-  return request.delete(`/articles/${slug}/comments/${commentId}`)
-}
-
-export async function postComment (slug: string, body: string) {
-  return request.post<CommentResponse>(`/articles/${slug}/comments`, { comment: { body } })
-    .then(res => res.comment)
-}
-
 export async function postFavoriteArticle (slug: string) {
   return request.post<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
 }
