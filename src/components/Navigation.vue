@@ -34,14 +34,65 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useNavigationLinks } from './NavigationHooks'
+import type { RouteParams } from 'vue-router'
+
+import type { AppRouteNames } from '../routes'
+
+interface NavLink {
+  name: AppRouteNames
+  params?: Partial<RouteParams>
+  title: string
+  icon?: string
+  display: 'all' | 'anonym' | 'authorized'
+}
 
 export default defineComponent({
   name: 'AppNavigation',
   setup () {
     const store = useStore()
     const user = computed<User | null>(() => store.state.user)
-    const { navLinks } = useNavigationLinks({ user })
+    const username = computed(() => user.value?.username)
+    const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
+
+    const allNavLinks: NavLink[] = [
+      {
+        name: 'global-feed',
+        title: 'Home',
+        display: 'all',
+      },
+      {
+        name: 'login',
+        title: 'Sign in',
+        display: 'anonym',
+      },
+      {
+        name: 'register',
+        title: 'Sign up',
+        display: 'anonym',
+      },
+      {
+        name: 'create-article',
+        title: 'New Post',
+        display: 'authorized',
+        icon: 'ion-compose',
+      },
+      {
+        name: 'settings',
+        title: 'Settings',
+        display: 'authorized',
+        icon: 'ion-gear-a',
+      },
+      {
+        name: 'profile',
+        params: { username: username.value },
+        title: username.value || '',
+        display: 'authorized',
+      },
+    ]
+
+    const navLinks = computed(() => allNavLinks.filter(
+      l => l.display === displayStatus.value || l.display === 'all',
+    ))
 
     const onLogout = () => {
       store.dispatch('logout')
