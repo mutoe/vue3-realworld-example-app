@@ -32,7 +32,8 @@
     <button
       class="btn btn-sm space"
       :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
-      @click="onFavoriteArticle"
+      :disabled="favoriteProcessGoing"
+      @click="favoriteArticle"
     >
       <i class="ion-heart space" />
       {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
@@ -83,7 +84,7 @@ export default defineComponent({
 
     const displayEditButton = computed(() => user.value?.username === article.value.author?.username)
 
-    const { onFavoriteArticle } = useFavoriteArticle({
+    const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
       articleSlug: computed(() => article.value.slug),
       updateArticle: newArticle => emit('update', newArticle),
@@ -114,7 +115,8 @@ export default defineComponent({
       displayFollow,
       displayEditButton,
       onDelete,
-      onFavoriteArticle,
+      favoriteProcessGoing,
+      favoriteArticle,
       followProcessGoing,
       toggleFollow,
     }
