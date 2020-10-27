@@ -1,29 +1,31 @@
 <template>
-  <ul class="nav nav-pills outline-active">
-    <li
-      v-for="link in links"
-      :key="link.type"
-      class="nav-item"
-    >
-      <AppLink
-        class="nav-link"
-        active-class="active"
-        :name="link.name"
-        :params="link.params"
+  <div class="feed-toggle">
+    <ul class="nav nav-pills outline-active">
+      <li
+        v-for="link in links"
+        :key="link.type"
+        class="nav-item"
       >
-        <i
-          v-if="link.icon"
-          :class="link.icon"
-        /> {{ link.title }}
-      </AppLink>
-    </li>
-  </ul>
+        <AppLink
+          class="nav-link"
+          active-class="active"
+          :name="link.name"
+          :params="link.params"
+        >
+          <i
+            v-if="link.icon"
+            :class="link.icon"
+          /> {{ link.title }}
+        </AppLink>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, toRefs } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../routes'
+import type { AppRouteNames } from '../../routes'
 
 type ArticleNavLinkType = 'globalFeed' | 'myFeed' | 'tag' | 'author' | 'favorited'
 
@@ -36,7 +38,7 @@ interface ArticleNavLink {
 }
 
 export default defineComponent({
-  name: 'ArticleNavigation',
+  name: 'ArticlesNavigation',
   props: {
     useGlobalFeed: { type: Boolean, default: false },
     useMyFeed: { type: Boolean, default: false },

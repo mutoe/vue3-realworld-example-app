@@ -1,5 +1,5 @@
 import { ComputedRef, ref, watch } from 'vue'
-import { AppRouteNames } from '../../routes'
+import type { AppRouteNames } from '../../routes'
 import { limit, request } from '../index'
 import createAsyncProcess from '../../utils/create-async-process'
 
@@ -76,18 +76,15 @@ export function useArticles ({ routeName, username, tag }: UseArticlesProps) {
 
   const { active, run } = createAsyncProcess(fetchArticles)
 
-  watch(
-    routeName,
-    () => {
-      if (page.value !== 1) changePage(1)
-      else run()
-    },
-    { immediate: true },
-  )
+  watch(routeName, () => {
+    if (page.value !== 1) changePage(1)
+    else run()
+  })
 
   watch(page, run)
 
   return {
+    fetchArticles: run,
     articlesDownloading: active,
     articles,
     articlesCount,
