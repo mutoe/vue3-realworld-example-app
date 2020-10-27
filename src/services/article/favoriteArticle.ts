@@ -1,5 +1,6 @@
 import { ComputedRef } from 'vue'
 import { request } from '../index'
+import createAsyncProcess from '../../utils/create-async-process'
 
 async function postFavoriteArticle (slug: string) {
   return request.post<ArticleResponse>(`/articles/${slug}/favorite`).then(res => res.article)
@@ -16,7 +17,7 @@ interface useFavoriteArticleProps {
 }
 
 export const useFavoriteArticle = ({ isFavorited, articleSlug, updateArticle }: useFavoriteArticleProps) => {
-  const onFavoriteArticle = async () => {
+  const favoriteArticle = async () => {
     let newArticle: Article
     if (isFavorited.value) {
       newArticle = await deleteFavoriteArticle(articleSlug.value)
@@ -26,5 +27,10 @@ export const useFavoriteArticle = ({ isFavorited, articleSlug, updateArticle }: 
     updateArticle(newArticle)
   }
 
-  return { onFavoriteArticle }
+  const { active, run } = createAsyncProcess(favoriteArticle)
+
+  return {
+    favoriteProcessGoing: active,
+    favoriteArticle: run,
+  }
 }
