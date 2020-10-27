@@ -52,7 +52,6 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { useFavoriteArticle } from '../services/article/favoriteArticle'
-import createAsyncProcess from '../utils/create-async-process'
 
 export default defineComponent({
   name: 'ArticlePreview',
@@ -65,17 +64,15 @@ export default defineComponent({
   setup (props, { emit }) {
     const updateArticle = (newArticle: Article): void => emit('update', newArticle)
 
-    const { onFavoriteArticle } = useFavoriteArticle({
+    const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => props.article.favorited),
       articleSlug: computed(() => props.article.slug),
       updateArticle,
     })
 
-    const { active, run } = createAsyncProcess(onFavoriteArticle)
-
     return {
-      favoriteProcessGoing: active,
-      favoriteArticle: run,
+      favoriteProcessGoing,
+      favoriteArticle,
     }
   },
 })
