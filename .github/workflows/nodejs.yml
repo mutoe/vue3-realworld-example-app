@@ -34,7 +34,9 @@ jobs:
         run: yarn tsc && yarn lint
 
       - name: build
-        run: yarn build --base=/vue3-realworld-example-app/
+        run: |
+          yarn build --base=/vue3-realworld-example-app/
+          echo > dist/.nojekyll
 
       - name: deploy
         uses: s0/git-publish-subdir-action@master
