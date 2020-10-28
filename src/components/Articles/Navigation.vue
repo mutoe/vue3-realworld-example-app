@@ -1,5 +1,5 @@
 <template>
-  <div class="feed-toggle">
+  <div class="articles-toggle">
     <ul class="nav nav-pills outline-active">
       <li
         v-for="link in links"
