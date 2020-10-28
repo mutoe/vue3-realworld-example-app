@@ -32,3 +32,11 @@ yarn build
 - [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (Temporarily unavailable)
 - [ ] E2E test ([Cypress](https://docs.cypress.io))
 - [ ] [SFC Script Setup](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md) (Unstable)
+
+# Contributors
+
+<a href="https://github.com/mutoe/vue3-realworld-example-app/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=mutoe/vue3-realworld-example-app" />
+</a>
+
+Made with [contributors-img](https://contributors-img.web.app).
