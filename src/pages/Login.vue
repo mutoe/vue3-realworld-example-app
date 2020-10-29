@@ -66,7 +66,7 @@ import { redirect } from '../router'
 
 import { postLogin, PostLoginForm } from '../services/auth/postLogin'
 
-import store from '../store/main'
+import store from '../store'
 
 export default defineComponent({
   name: 'Login',

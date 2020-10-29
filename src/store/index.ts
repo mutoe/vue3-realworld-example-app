@@ -1,20 +1,5 @@
-import { createStore } from 'vuex'
-import parseStorageGet from '../utils/parse-storage-get'
-import actions from './actions'
-import mutations from './mutations'
+import useUser from './user'
 
-export interface Store {
-  user: User | null;
+export default {
+  user: useUser(),
 }
-
-const store = createStore<Store>({
-  state () {
-    return {
-      user: parseStorageGet<User>('user') || null,
-    }
-  },
-  mutations,
-  actions,
-})
-
-export default store

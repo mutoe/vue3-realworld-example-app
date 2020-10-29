@@ -73,7 +73,7 @@ import { redirect } from '../router'
 
 import { postRegister, PostRegisterForm } from '../services/auth/postRegister'
 
-import store from '../store/main'
+import store from '../store'
 
 export default defineComponent({
   name: 'Register',

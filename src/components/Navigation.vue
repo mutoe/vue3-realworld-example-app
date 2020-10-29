@@ -37,7 +37,7 @@ import type { RouteParams } from 'vue-router'
 
 import type { AppRouteNames } from '../router'
 
-import store from '../store/main'
+import store from '../store'
 
 interface NavLink {
   name: AppRouteNames

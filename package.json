@@ -15,8 +15,7 @@
     "dompurify": "^2.1.1",
     "marked": "^1.2.0",
     "vue": "^3.0.2",
-    "vue-router": "^4.0.0-rc.1",
-    "vuex": "^4.0.0-beta.4"
+    "vue-router": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7",

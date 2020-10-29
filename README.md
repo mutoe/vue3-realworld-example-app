@@ -27,7 +27,7 @@ yarn build
 - [x] [TypeScript](https://www.typescriptlang.org/)
 - [x] [ESLint](https://eslint.vuejs.org/)
 - [x] [Vue router](https://next.router.vuejs.org/)
-- [x] [Vuex](https://vuex.vuejs.org/)
+- [ ] [Vuex](https://vuex.vuejs.org/) (await Vuex v5, [#15](https://github.com/mutoe/vue3-realworld-example-app/issues/15))
 - [ ] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
 - [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (Temporarily unavailable)
 - [ ] E2E test ([Cypress](https://docs.cypress.io))

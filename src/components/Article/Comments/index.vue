@@ -23,7 +23,7 @@ import Comment from './Comment.vue'
 import { getCommentsByArticle } from '../../../services/comment/getComments'
 import { deleteComment } from '../../../services/comment/postComment'
 
-import store from '../../../store/main'
+import store from '../../../store'
 
 export default defineComponent({
   name: 'ArticleComments',

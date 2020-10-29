@@ -67,7 +67,7 @@ import { deleteArticle } from '../../services/article/deleteArticle'
 import { useFavoriteArticle } from '../../services/article/favoriteArticle'
 import { useFollow } from '../../services/profile/followProfile'
 
-import store from '../../store/main'
+import store from '../../store'
 
 export default defineComponent({
   name: 'ArticleMeta',

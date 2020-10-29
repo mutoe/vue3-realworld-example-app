@@ -34,7 +34,7 @@ import Pagination from '../Pagination.vue'
 
 import { useArticles } from '../../services/article/getArticles'
 
-import store from '../../store/main'
+import store from '../../store'
 
 export default defineComponent({
   name: 'Articles',

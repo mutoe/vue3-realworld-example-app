@@ -41,7 +41,7 @@ import { defineComponent, ref } from 'vue'
 import { useProfile } from '../../../services/profile/getProfile'
 import { postComment } from '../../../services/comment/postComment'
 
-import store from '../../../store/main'
+import store from '../../../store'
 
 export default defineComponent({
   name: 'ArticleCommentsForm',

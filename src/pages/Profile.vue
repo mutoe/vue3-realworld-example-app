@@ -75,7 +75,7 @@ import Articles from '../components/Articles/index.vue'
 import { useProfile } from '../services/profile/getProfile'
 import { useFollow } from '../services/profile/followProfile'
 
-import store from '../store/main'
+import store from '../store'
 
 export default defineComponent({
   name: 'Profile',

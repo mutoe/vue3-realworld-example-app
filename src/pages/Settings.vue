@@ -79,7 +79,7 @@ import { redirect } from '../router'
 
 import { putProfile, PutProfileForm } from '../services/profile/putProfile'
 
-import store from '../store/main'
+import store from '../store'
 
 export default defineComponent({
   name: 'Settings',
