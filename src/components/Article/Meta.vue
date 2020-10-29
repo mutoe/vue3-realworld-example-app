@@ -62,13 +62,12 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 
 import { deleteArticle } from '../../services/article/deleteArticle'
 import { useFavoriteArticle } from '../../services/article/favoriteArticle'
 import { useFollow } from '../../services/profile/followProfile'
 
-import { Store } from '../../store'
+import store from '../../store/main'
 
 export default defineComponent({
   name: 'ArticleMeta',
@@ -80,11 +79,10 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const router = useRouter()
-    const store = useStore<Store>()
-    const user = computed<Store['user']>(() => store.state.user)
-    const { article } = toRefs(props)
+    const { user, isAuthorized } = store.user
 
-    const displayEditButton = computed(() => user.value?.username === article.value.author.username)
+    const { article } = toRefs(props)
+    const isMyArticle = computed(() => isAuthorized(user) && user.value.username === article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
@@ -108,14 +106,9 @@ export default defineComponent({
       emit('update', newArticle)
     }
 
-    const displayFollow = computed(() => (
-      user.value !== null &&
-      user.value.username !== article.value.author.username
-    ))
-
     return {
-      displayFollow,
-      displayEditButton,
+      displayFollow: computed(() => !isMyArticle.value),
+      displayEditButton: computed(() => isMyArticle.value),
       onDelete,
       favoriteProcessGoing,
       favoriteArticle,

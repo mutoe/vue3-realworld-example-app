@@ -26,8 +26,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-
 import type { AppRouteNames } from '../../router'
 
 import Navigation from './Navigation.vue'
@@ -35,6 +33,8 @@ import ArticlePreview from './Preview.vue'
 import Pagination from '../Pagination.vue'
 
 import { useArticles } from '../../services/article/getArticles'
+
+import store from '../../store/main'
 
 export default defineComponent({
   name: 'Articles',
@@ -52,9 +52,8 @@ export default defineComponent({
   },
   async setup (props) {
     const route = useRoute()
-    const store = useStore()
-
     const routeName = computed<AppRouteNames>(() => route.name as AppRouteNames)
+    const { user, isAuthorized } = store.user
 
     const tag = computed<string | undefined>(() => (
       typeof route.params.tag === 'string' ? route.params.tag : undefined
@@ -64,7 +63,7 @@ export default defineComponent({
       typeof route.params.username === 'string' ? route.params.username : undefined
     ))
 
-    const userAuthorized = computed<boolean>(() => store.state.user !== null)
+    const userAuthorized = computed<boolean>(() => isAuthorized(user))
 
     const navigationUseProps = computed(() => ({
       useGlobalFeed: props.useGlobalFeed,

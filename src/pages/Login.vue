@@ -23,7 +23,7 @@
 
           <form
             ref="formRef"
-            @submit.prevent="onLogin"
+            @submit.prevent="login"
           >
             <fieldset
               class="form-group"
@@ -62,26 +62,40 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import store from '../store'
+import { redirect } from '../router'
+
+import { postLogin, PostLoginForm } from '../services/auth/postLogin'
+
+import store from '../store/main'
 
 export default defineComponent({
   name: 'Login',
   setup () {
+    const { updateUser } = store.user
+
     const formRef = ref<HTMLFormElement | null>(null)
-    const form = reactive({
+    const form = reactive<PostLoginForm>({
       email: '',
       password: '',
     })
 
-    const onLogin = () => {
+    const login = async () => {
       if (!formRef.value?.checkValidity()) return
-      store.dispatch('login', form)
+
+      try {
+        const userData = await postLogin(form)
+        updateUser(userData)
+        redirect('global-feed')
+      } catch (e) {
+        // TODO: add error handling
+        console.error(e)
+      }
     }
 
     return {
       formRef,
       form,
-      onLogin,
+      login,
       errors: [],
     }
   },

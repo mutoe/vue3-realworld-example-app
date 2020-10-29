@@ -69,30 +69,42 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { useStore } from 'vuex'
+import { redirect } from '../router'
+
+import { postRegister, PostRegisterForm } from '../services/auth/postRegister'
+
+import store from '../store/main'
 
 export default defineComponent({
   name: 'Register',
   setup () {
-    const store = useStore()
+    const { updateUser } = store.user
 
     const formRef = ref<HTMLFormElement | null>(null)
-    const form = reactive({
+    const form = reactive<PostRegisterForm>({
       username: '',
       email: '',
       password: '',
     })
 
-    const onRegister = () => {
+    const register = async () => {
       if (!formRef.value?.checkValidity()) return
-      store.dispatch('register', form)
+
+      try {
+        const userData = await postRegister(form)
+        updateUser(userData)
+        redirect('global-feed')
+      } catch (e) {
+        // TODO: add error handling
+        console.error(e)
+      }
     }
 
     return {
       formRef,
       form,
+      register,
       errors: [],
-      onRegister,
     }
   },
 })

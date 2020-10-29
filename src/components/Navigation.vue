@@ -33,10 +33,11 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
 import type { RouteParams } from 'vue-router'
 
 import type { AppRouteNames } from '../router'
+
+import store from '../store/main'
 
 interface NavLink {
   name: AppRouteNames
@@ -49,8 +50,7 @@ interface NavLink {
 export default defineComponent({
   name: 'AppNavigation',
   setup () {
-    const store = useStore()
-    const user = computed<User | null>(() => store.state.user)
+    const { user } = store.user
     const username = computed(() => user.value?.username)
     const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
 

@@ -69,12 +69,13 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 import Articles from '../components/Articles/index.vue'
 
 import { useProfile } from '../services/profile/getProfile'
 import { useFollow } from '../services/profile/followProfile'
+
+import store from '../store/main'
 
 export default defineComponent({
   name: 'Profile',
@@ -82,11 +83,10 @@ export default defineComponent({
     Articles,
   },
   setup () {
-    const store = useStore()
     const route = useRoute()
-
     const username = computed<string>(() => route.params.username as string)
-    const user = computed<User>(() => store.state.user)
+
+    const { user, isAuthorized } = store.user
 
     const { profile, updateProfile } = useProfile(username.value)
     const { followProcessGoing, toggleFollow: toggleFollowUser } = useFollow({
@@ -94,9 +94,8 @@ export default defineComponent({
       username,
     })
 
-    const isUserAuthorized = computed<boolean>(() => store.state.user !== null)
-    const isMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username === username.value)
-    const isNotMyProfile = computed<boolean>(() => isUserAuthorized.value && user.value.username !== username.value)
+    const isMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
+    const isNotMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username !== username.value)
 
     async function toggleFollow () {
       const newProfileData = await toggleFollowUser()

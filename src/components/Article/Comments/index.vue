@@ -16,13 +16,14 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 import CommentForm from './Form.vue'
 import Comment from './Comment.vue'
 
 import { getCommentsByArticle } from '../../../services/comment/getComments'
 import { deleteComment } from '../../../services/comment/postComment'
+
+import store from '../../../store/main'
 
 export default defineComponent({
   name: 'ArticleComments',
@@ -34,8 +35,8 @@ export default defineComponent({
     const route = useRoute()
     const slug = route.params.slug as string
 
-    const store = useStore()
-    const username = computed(() => store.state.user?.username)
+    const { user } = store.user
+    const username = computed(() => user.value?.username)
 
     const comments = ref<ArticleComment[]>([])
 

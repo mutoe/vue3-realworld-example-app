@@ -75,33 +75,32 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { redirect } from '../router'
+
 import { putProfile, PutProfileForm } from '../services/profile/putProfile'
-import { Store } from '../store'
-import { MUTATION } from '../store/mutations'
+
+import store from '../store/main'
 
 export default defineComponent({
   name: 'Settings',
   setup () {
-    const router = useRouter()
-    const store = useStore<Store>()
-    const user = computed<Store['user']>(() => store.state.user)
+    const { user, isAuthorized, updateUser } = store.user
 
     const form = reactive<PutProfileForm>({})
 
     const onSubmit = async () => {
       const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
-      const profile = await putProfile(filteredForm)
-      store.commit(MUTATION.UPDATE_USER, profile)
+      const userData = await putProfile(filteredForm)
+      updateUser(userData)
     }
 
     const onLogout = () => {
-      store.dispatch('logout')
+      updateUser(null)
+      redirect('global-feed')
     }
 
     onMounted(() => {
-      if (!user.value) return router.push({ name: 'login' })
+      if (!isAuthorized(user)) return redirect('login')
 
       form.image = user.value.image
       form.username = user.value.username
@@ -117,7 +116,12 @@ export default defineComponent({
       !form.password
     ))
 
-    return { form, onSubmit, isButtonDisabled, onLogout }
+    return {
+      form,
+      onSubmit,
+      isButtonDisabled,
+      onLogout,
+    }
   },
 })
 </script>
