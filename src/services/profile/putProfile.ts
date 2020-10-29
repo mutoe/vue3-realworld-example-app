@@ -1,5 +1,13 @@
 import { request } from '../index'
 
-export async function putProfile (form: Partial<Profile>) {
+export interface PutProfileForm {
+  username?: string;
+  bio?: string;
+  image?: string;
+  email?: string;
+  password?: string;
+}
+
+export async function putProfile (form: PutProfileForm) {
   return request.put<UserResponse>('/user', form).then(res => res.user)
 }

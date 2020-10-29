@@ -77,17 +77,9 @@
 import { computed, defineComponent, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { putProfile } from '../services/profile/putProfile'
+import { putProfile, PutProfileForm } from '../services/profile/putProfile'
 import { Store } from '../store'
 import { MUTATION } from '../store/mutations'
-
-interface FormState {
-  username?: string;
-  bio?: string;
-  image?: string;
-  email?: string;
-  password?: string;
-}
 
 export default defineComponent({
   name: 'Settings',
@@ -96,7 +88,7 @@ export default defineComponent({
     const store = useStore<Store>()
     const user = computed<Store['user']>(() => store.state.user)
 
-    const form = reactive<FormState>({})
+    const form = reactive<PutProfileForm>({})
 
     const onSubmit = async () => {
       const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
