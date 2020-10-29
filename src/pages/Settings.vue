@@ -109,10 +109,13 @@ export default defineComponent({
       form.email = user.value.email
     })
 
-    const isButtonDisabled = computed(() => form.image === user.value?.image &&
-      form.username === user.value?.email &&
+    const isButtonDisabled = computed(() => (
+      form.image === user.value?.image &&
+      form.username === user.value?.username &&
       form.bio === user.value?.bio &&
-      !form.password)
+      form.email === user.value?.email &&
+      !form.password
+    ))
 
     return { form, onSubmit, isButtonDisabled, onLogout }
   },
