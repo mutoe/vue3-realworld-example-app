@@ -1,5 +1,5 @@
 import { ActionTree } from 'vuex'
-import router from '../routes'
+import { router } from '../router'
 import { postLogin, PostLoginForm } from '../services/auth/postLogin'
 import { postRegister, PostRegisterForm } from '../services/auth/postRegister'
 import { Store } from './index'

@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteParams } from 'vue-router'
 import Home from './pages/Home.vue'
 
 export type AppRouteNames = 'global-feed'
@@ -13,7 +13,7 @@ export type AppRouteNames = 'global-feed'
   | 'profile-favorites'
   | 'settings'
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
@@ -74,4 +74,7 @@ const router = createRouter({
   ],
 })
 
-export default router
+export function redirect (name: AppRouteNames, params?: RouteParams) {
+  if (params) router.push({ name, params })
+  else router.push({ name })
+}

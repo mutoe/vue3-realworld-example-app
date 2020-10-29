@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../routes'
+import type { AppRouteNames } from '../router'
 
 export default defineComponent({
   name: 'AppLink',

@@ -1,5 +1,5 @@
 import { ComputedRef, ref, watch } from 'vue'
-import type { AppRouteNames } from '../../routes'
+import type { AppRouteNames } from '../../router'
 import { limit, request } from '../index'
 import createAsyncProcess from '../../utils/create-async-process'
 

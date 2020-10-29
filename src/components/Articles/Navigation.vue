@@ -25,7 +25,7 @@
 <script lang="ts">
 import { computed, defineComponent, toRefs } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../../routes'
+import type { AppRouteNames } from '../../router'
 
 type ArticleNavLinkType = 'globalFeed' | 'myFeed' | 'tag' | 'author' | 'favorited'
 

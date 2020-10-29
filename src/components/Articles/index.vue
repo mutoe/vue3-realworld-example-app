@@ -28,7 +28,7 @@ import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
-import type { AppRouteNames } from '../../routes'
+import type { AppRouteNames } from '../../router'
 
 import Navigation from './Navigation.vue'
 import ArticlePreview from './Preview.vue'
