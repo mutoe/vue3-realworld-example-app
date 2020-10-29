@@ -94,13 +94,8 @@ export default defineComponent({
       l => l.display === displayStatus.value || l.display === 'all',
     ))
 
-    const onLogout = () => {
-      store.dispatch('logout')
-    }
-
     return {
       navLinks,
-      onLogout,
       store,
     }
   },
