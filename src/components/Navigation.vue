@@ -54,7 +54,7 @@ export default defineComponent({
     const username = computed(() => user.value?.username)
     const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
 
-    const allNavLinks: NavLink[] = [
+    const allNavLinks = computed<NavLink[]>(() => [
       {
         name: 'global-feed',
         title: 'Home',
@@ -88,9 +88,9 @@ export default defineComponent({
         title: username.value || '',
         display: 'authorized',
       },
-    ]
+    ])
 
-    const navLinks = computed(() => allNavLinks.filter(
+    const navLinks = computed(() => allNavLinks.value.filter(
       l => l.display === displayStatus.value || l.display === 'all',
     ))
 
