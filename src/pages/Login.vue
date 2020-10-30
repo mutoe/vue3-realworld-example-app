@@ -14,10 +14,10 @@
 
           <ul class="error-messages">
             <li
-              v-for="[field, errors] in errors"
+              v-for="(error, field) in errors"
               :key="field"
             >
-              {{ field }} {{ errors[0] }}
+              {{ field }} {{ error[0] }}
             </li>
           </ul>
 
@@ -64,7 +64,7 @@
 import { defineComponent, reactive, ref } from 'vue'
 import { redirect } from '../router'
 
-import { postLogin, PostLoginForm } from '../services/auth/postLogin'
+import { postLogin, PostLoginForm, PostLoginErrors } from '../services/auth/postLogin'
 
 import store from '../store'
 
@@ -79,16 +79,17 @@ export default defineComponent({
       password: '',
     })
 
+    const errors = ref<PostLoginErrors>({})
+
     const login = async () => {
       if (!formRef.value?.checkValidity()) return
 
-      try {
-        const userData = await postLogin(form)
-        updateUser(userData)
+      const response = await postLogin(form)
+      if (response.status === 'ok') {
+        updateUser(response.data)
         redirect('global-feed')
-      } catch (e) {
-        // TODO: add error handling
-        console.error(e)
+      } else {
+        errors.value = response.data
       }
     }
 
@@ -96,7 +97,7 @@ export default defineComponent({
       formRef,
       form,
       login,
-      errors: [],
+      errors,
     }
   },
 })

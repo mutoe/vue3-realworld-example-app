@@ -5,6 +5,13 @@ export interface PostRegisterForm extends PostLoginForm {
   username: string;
 }
 
-export async function postRegister (form: PostRegisterForm) {
-  return request.post<UserResponse>('/users', { user: form }).then(res => res.user)
+export type PostRegisterErrors = Partial<Record<keyof PostRegisterForm, string[]>>
+
+export async function postRegister (form: PostRegisterForm): Promise<{status: 'error', data: PostRegisterErrors} | {status: 'ok', data: User}> {
+  try {
+    const response = await request.post<UserResponse>('/users', { user: form })
+    return { status: 'ok', data: response.user }
+  } catch (e) {
+    return { status: 'error', data: e.errors as PostRegisterErrors }
+  }
 }

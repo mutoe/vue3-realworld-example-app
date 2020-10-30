@@ -14,16 +14,16 @@
 
           <ul class="error-messages">
             <li
-              v-for="[field, errors] in errors"
+              v-for="(error, field) in errors"
               :key="field"
             >
-              {{ field }} {{ errors[0] }}
+              {{ field }} {{ error[0] }}
             </li>
           </ul>
 
           <form
             ref="formRef"
-            @submit.prevent="onRegister"
+            @submit.prevent="register"
           >
             <fieldset class="form-group">
               <input
@@ -71,7 +71,7 @@
 import { defineComponent, reactive, ref } from 'vue'
 import { redirect } from '../router'
 
-import { postRegister, PostRegisterForm } from '../services/auth/postRegister'
+import { postRegister, PostRegisterForm, PostRegisterErrors } from '../services/auth/postRegister'
 
 import store from '../store'
 
@@ -87,16 +87,17 @@ export default defineComponent({
       password: '',
     })
 
+    const errors = ref<PostRegisterErrors>({})
+
     const register = async () => {
       if (!formRef.value?.checkValidity()) return
 
-      try {
-        const userData = await postRegister(form)
-        updateUser(userData)
+      const response = await postRegister(form)
+      if (response.status === 'ok') {
+        updateUser(response.data)
         redirect('global-feed')
-      } catch (e) {
-        // TODO: add error handling
-        console.error(e)
+      } else {
+        errors.value = response.data
       }
     }
 
@@ -104,7 +105,7 @@ export default defineComponent({
       formRef,
       form,
       register,
-      errors: [],
+      errors,
     }
   },
 })
