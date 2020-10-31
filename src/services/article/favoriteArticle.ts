@@ -13,10 +13,10 @@ async function deleteFavoriteArticle (slug: string) {
 interface useFavoriteArticleProps {
   isFavorited: ComputedRef<boolean>
   articleSlug: ComputedRef<string>
-  updateArticle: (newArticle: Article) => void
+  onUpdate: (newArticle: Article) => void
 }
 
-export const useFavoriteArticle = ({ isFavorited, articleSlug, updateArticle }: useFavoriteArticleProps) => {
+export const useFavoriteArticle = ({ isFavorited, articleSlug, onUpdate }: useFavoriteArticleProps) => {
   const favoriteArticle = async () => {
     let newArticle: Article
     if (isFavorited.value) {
@@ -24,7 +24,7 @@ export const useFavoriteArticle = ({ isFavorited, articleSlug, updateArticle }: 
     } else {
       newArticle = await postFavoriteArticle(articleSlug.value)
     }
-    updateArticle(newArticle)
+    onUpdate(newArticle)
   }
 
   const { active, run } = createAsyncProcess(favoriteArticle)

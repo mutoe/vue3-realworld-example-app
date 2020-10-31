@@ -62,12 +62,10 @@ export default defineComponent({
     update: (article: Article) => !!article.slug,
   },
   setup (props, { emit }) {
-    const updateArticle = (newArticle: Article): void => emit('update', newArticle)
-
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => props.article.favorited),
       articleSlug: computed(() => props.article.slug),
-      updateArticle,
+      onUpdate: (newArticle: Article): void => emit('update', newArticle),
     })
 
     return {

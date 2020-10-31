@@ -86,7 +86,7 @@ export default defineComponent({
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
       articleSlug: computed(() => article.value.slug),
-      updateArticle: newArticle => emit('update', newArticle),
+      onUpdate: newArticle => emit('update', newArticle),
     })
 
     const onDelete = async () => {
