@@ -13,10 +13,11 @@ export async function deleteFollowProfile (username: string) {
 interface UseFollowProps {
   username: ComputedRef<string>
   following: ComputedRef<boolean>
+  onUpdate: (profile: Profile) => void
 }
 
-export function useFollow ({ username, following }: UseFollowProps) {
-  async function toggleFollow (): Promise<Profile> {
+export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
+  async function toggleFollow () {
     let profile = null
 
     if (following.value === true) {
@@ -25,7 +26,7 @@ export function useFollow ({ username, following }: UseFollowProps) {
       profile = await postFollowProfile(username.value)
     }
 
-    return profile
+    onUpdate(profile)
   }
 
   const { active, run } = createAsyncProcess(toggleFollow)

@@ -95,16 +95,14 @@ export default defineComponent({
       await routerPush('global-feed')
     }
 
-    const { followProcessGoing, toggleFollow: toggleFollowAuthor } = useFollow({
+    const { followProcessGoing, toggleFollow } = useFollow({
       following: computed(() => article.value.author.following),
       username: computed(() => article.value.author.username),
+      onUpdate: (author: Profile) => {
+        const newArticle = { ...article.value, author }
+        emit('update', newArticle)
+      },
     })
-
-    async function toggleFollow () {
-      const author = await toggleFollowAuthor()
-      const newArticle = { ...article.value, author }
-      emit('update', newArticle)
-    }
 
     return {
       displayEditButton,
