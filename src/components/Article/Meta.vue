@@ -61,13 +61,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { deleteArticle } from '../../services/article/deleteArticle'
 import { useFavoriteArticle } from '../../services/article/favoriteArticle'
 import { useFollow } from '../../services/profile/followProfile'
 
 import store from '../../store'
+import { redirect } from '../../router'
 
 export default defineComponent({
   name: 'ArticleMeta',
@@ -78,7 +78,6 @@ export default defineComponent({
     update: (article: Article) => !!article.slug,
   },
   setup (props, { emit }) {
-    const router = useRouter()
     const { user, isAuthorized } = store.user
 
     const { article } = toRefs(props)
@@ -92,7 +91,7 @@ export default defineComponent({
 
     const onDelete = async () => {
       await deleteArticle(article.value.slug)
-      return router.push({ name: 'global-feed' })
+      redirect('global-feed')
     }
 
     const { followProcessGoing, toggleFollow: toggleFollowAuthor } = useFollow({
