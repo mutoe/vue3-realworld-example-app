@@ -20,7 +20,6 @@
     </div>
 
     <button
-      v-if="displayFollow"
       class="btn btn-sm btn-outline-secondary space"
       :disabled="followProcessGoing"
       @click="toggleFollow"
@@ -81,7 +80,7 @@ export default defineComponent({
     const { user, isAuthorized } = store.user
 
     const { article } = toRefs(props)
-    const isMyArticle = computed(() => isAuthorized(user) && user.value.username === article.value.author.username)
+    const displayEditButton = computed(() => isAuthorized(user) && user.value.username === article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
@@ -94,20 +93,17 @@ export default defineComponent({
       redirect('global-feed')
     }
 
-    const { followProcessGoing, toggleFollow: toggleFollowAuthor } = useFollow({
+    const { followProcessGoing, toggleFollow } = useFollow({
       following: computed(() => article.value.author.following),
       username: computed(() => article.value.author.username),
+      onUpdate: (author: Profile) => {
+        const newArticle = { ...article.value, author }
+        emit('update', newArticle)
+      },
     })
 
-    async function toggleFollow () {
-      const author = await toggleFollowAuthor()
-      const newArticle = { ...article.value, author }
-      emit('update', newArticle)
-    }
-
     return {
-      displayFollow: computed(() => !isMyArticle.value),
-      displayEditButton: computed(() => isMyArticle.value),
+      displayEditButton,
       onDelete,
       favoriteProcessGoing,
       favoriteArticle,

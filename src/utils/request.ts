@@ -1,11 +1,14 @@
 import merge from 'deepmerge'
+
+import { NetworkError } from '../types/error'
+
+import { Either, fail, success } from './either'
 import params2query from './params-to-query'
 
 interface FetchRequestOptions {
   prefix: string;
   headers: Record<string, string>;
   params: Record<string, string | number | boolean>;
-  responseInterceptor: (response: Response) => void;
 }
 
 export default class FetchRequest {
@@ -13,7 +16,6 @@ export default class FetchRequest {
     prefix: '',
     headers: {},
     params: {},
-    responseInterceptor: (response) => response,
   }
 
   private options: FetchRequestOptions
@@ -36,78 +38,78 @@ export default class FetchRequest {
     return merge(this.options.headers, options.headers ?? {})
   }
 
-  private handleResponse = (response: Response) => {
-    this.options.responseInterceptor(response)
+  private handleResponse = <T>(response: Response): Promise<Either<NetworkError, T>> => {
+    if (response.ok) {
+      return response.json().then(json => success(json as T))
+    }
+
+    return Promise.resolve(fail(new NetworkError(response)))
+  }
+
+  private handleCorrectResponse = <T>(response: Response): Promise<T> => {
     return response.json()
-      .then(json => {
-        if (response.status >= 200 && response.status < 300) {
-          return json
-        }
-        const error = new Error(response.statusText)
-        Object.assign(error, json, {
-          status: response.status,
-          statusText: response.statusText,
-        })
-        throw error
-      })
   }
 
-  get<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  private runFetch ({ method, url, data, options }: {
+      method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH',
+      url: string,
+      data?: Record<string, any>,
+      options: Partial<FetchRequestOptions>
+    }) {
     const finalUrl = this.generateFinalUrl(url, options)
     const headers = this.generateFinalHeaders(options)
 
-    return fetch(finalUrl, {
-      method: 'GET',
-      headers,
-    })
-      .then(this.handleResponse)
+    const fetchOptions: any = { method, headers }
+    if (data) fetchOptions.body = JSON.stringify(data)
+    return fetch(finalUrl, fetchOptions)
   }
 
-  post<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    const finalUrl = this.generateFinalUrl(url, options)
-    const headers = this.generateFinalHeaders(options)
-
-    return fetch(finalUrl, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers,
-    })
-      .then(this.handleResponse)
+  private runSafeFetch (method: 'GET' | 'DELETE', url:string, options: Partial<FetchRequestOptions>) {
+    return this.runFetch({ method, url, options })
   }
 
-  delete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    const finalUrl = this.generateFinalUrl(url, options)
-    const headers = this.generateFinalHeaders(options)
-
-    return fetch(finalUrl, {
-      method: 'DELETE',
-      headers,
-    })
-      .then(this.handleResponse)
+  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url:string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions>) {
+    return this.runFetch({ method, url, options, data })
   }
 
-  put<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    const finalUrl = this.generateFinalUrl(url, options)
-    const headers = this.generateFinalHeaders(options)
-
-    return fetch(finalUrl, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers,
-    })
-      .then(this.handleResponse)
+  get<T = any> (url: string, options: Partial<FetchRequestOptions> = {}) {
+    return this.runSafeFetch('GET', url, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  patch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
-    const finalUrl = this.generateFinalUrl(url, options)
-    const headers = this.generateFinalHeaders(options)
+  checkableGet<T = any> (url: string, options: Partial<FetchRequestOptions> = {}) {
+    return this.runSafeFetch('GET', url, options).then(r => this.handleResponse<T>(r))
+  }
 
-    return fetch(finalUrl, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-      headers,
-    })
-      .then(this.handleResponse)
+  post<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('POST', url, data, options).then(r => this.handleCorrectResponse<T>(r))
+  }
+
+  checkablePost<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('POST', url, data, options).then(r => this.handleResponse<T>(r))
+  }
+
+  delete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}) {
+    return this.runSafeFetch('DELETE', url, options).then(r => this.handleCorrectResponse<T>(r))
+  }
+
+  checkableDelete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}) {
+    return this.runSafeFetch('DELETE', url, options).then(r => this.handleResponse<T>(r))
+  }
+
+  put<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('PUT', url, data, options).then(r => this.handleCorrectResponse<T>(r))
+  }
+
+  checkablePut<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('PUT', url, data, options).then(r => this.handleResponse<T>(r))
+  }
+
+  patch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('PATCH', url, data, options).then(r => this.handleCorrectResponse<T>(r))
+  }
+
+  checkablePatch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+    return this.runUnsafeFetch('PATCH', url, data, options).then(r => this.handleResponse<T>(r))
   }
 
   public setAuthorizationHeader (token: string): void {

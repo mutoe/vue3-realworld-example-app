@@ -23,7 +23,7 @@
               </p>
 
               <AppLink
-                v-if="isMyProfile"
+                v-if="showEdit"
                 class="btn btn-sm btn-outline-secondary action-btn"
                 name="settings"
               >
@@ -32,7 +32,7 @@
               </AppLink>
 
               <button
-                v-if="isNotMyProfile"
+                v-if="showFollow"
                 class="btn btn-sm btn-outline-secondary action-btn"
                 :disabled="followProcessGoing"
                 @click="toggleFollow"
@@ -89,23 +89,20 @@ export default defineComponent({
     const { user, isAuthorized } = store.user
 
     const { profile, updateProfile } = useProfile(username.value)
-    const { followProcessGoing, toggleFollow: toggleFollowUser } = useFollow({
+
+    const { followProcessGoing, toggleFollow } = useFollow({
       following: computed<boolean>(() => profile.following),
       username,
+      onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
     })
 
-    const isMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
-    const isNotMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username !== username.value)
-
-    async function toggleFollow () {
-      const newProfileData = await toggleFollowUser()
-      updateProfile(newProfileData)
-    }
+    const showEdit = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
+    const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
     return {
       profile,
-      isMyProfile,
-      isNotMyProfile,
+      showEdit,
+      showFollow,
       followProcessGoing,
       toggleFollow,
     }
