@@ -1,5 +1,5 @@
 import type { ComputedRef } from 'vue'
-import { redirect } from '../router'
+import { routerPush } from '../router'
 
 import type { AuthorizationError } from '../types/error'
 
@@ -25,7 +25,7 @@ export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
     }
 
     if (response.isOk()) onUpdate(response.value)
-    else redirect('login')
+    else await routerPush('login')
   }
 
   const { active, run } = createAsyncProcess(toggleFollow)
