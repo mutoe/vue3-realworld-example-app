@@ -20,6 +20,7 @@
     </div>
 
     <button
+      v-if="displayFollowButton"
       class="btn btn-sm btn-outline-secondary space"
       :disabled="followProcessGoing"
       @click="toggleFollow"
@@ -81,6 +82,7 @@ export default defineComponent({
 
     const { article } = toRefs(props)
     const displayEditButton = computed(() => isAuthorized(user) && user.value.username === article.value.author.username)
+    const displayFollowButton = computed(() => user.value?.username !== article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),
@@ -104,6 +106,7 @@ export default defineComponent({
 
     return {
       displayEditButton,
+      displayFollowButton,
       onDelete,
       favoriteProcessGoing,
       favoriteArticle,
