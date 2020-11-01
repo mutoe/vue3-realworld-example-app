@@ -1,4 +1,4 @@
-describe('View the homepage by guest', () => {
+describe('test for tag mode', () => {
   beforeEach(() => {
     cy.server()
     cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
