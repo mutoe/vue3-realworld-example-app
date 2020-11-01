@@ -38,7 +38,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { useProfile } from '../../../services/profile/getProfile'
+import { useProfile } from '../../../composable/useProfile'
+
 import { postComment } from '../../../services/comment/postComment'
 
 import store from '../../../store'

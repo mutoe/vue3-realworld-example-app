@@ -72,8 +72,8 @@ import { useRoute } from 'vue-router'
 
 import Articles from '../components/Articles/index.vue'
 
-import { useProfile } from '../services/profile/getProfile'
-import { useFollow } from '../services/profile/followProfile'
+import { useProfile } from '../composable/useProfile'
+import { useFollow } from '../composable/useFollowProfile'
 
 import store from '../store'
 
