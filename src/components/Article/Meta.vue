@@ -63,8 +63,9 @@
 import { computed, defineComponent, PropType, toRefs } from 'vue'
 
 import { deleteArticle } from '../../services/article/deleteArticle'
-import { useFavoriteArticle } from '../../services/article/favoriteArticle'
-import { useFollow } from '../../services/profile/followProfile'
+
+import { useFavoriteArticle } from '../../composable/useFavoriteArticle'
+import { useFollow } from '../../composable/useFollowProfile'
 
 import store from '../../store'
 import { routerPush } from '../../router'

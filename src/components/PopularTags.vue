@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useTags } from '../services/tag/getTags'
+import { useTags } from '../composable/useTags'
 
 export default defineComponent({
   name: 'PopularTags',

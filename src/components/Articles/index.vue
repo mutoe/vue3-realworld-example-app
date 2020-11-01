@@ -32,7 +32,7 @@ import Navigation from './Navigation.vue'
 import ArticlePreview from './Preview.vue'
 import Pagination from '../Pagination.vue'
 
-import { useArticles } from '../../services/article/getArticles'
+import { useArticles } from '../../composable/useArticles'
 
 import store from '../../store'
 
