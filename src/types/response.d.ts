@@ -1,11 +1,3 @@
-declare interface ResponseError {
-  [field: string]: string[];
-}
-
-declare interface Response {
-  errors: ResponseError;
-}
-
 declare interface UserResponse {
   user: User;
 }
