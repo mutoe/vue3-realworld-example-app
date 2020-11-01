@@ -23,7 +23,7 @@
               </p>
 
               <AppLink
-                v-if="isMyProfile"
+                v-if="showEdit"
                 class="btn btn-sm btn-outline-secondary action-btn"
                 name="settings"
               >
@@ -32,7 +32,7 @@
               </AppLink>
 
               <button
-                v-if="isNotMyProfile"
+                v-if="showFollow"
                 class="btn btn-sm btn-outline-secondary action-btn"
                 :disabled="followProcessGoing"
                 @click="toggleFollow"
@@ -96,13 +96,13 @@ export default defineComponent({
       onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
     })
 
-    const isMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
-    const isNotMyProfile = computed<boolean>(() => isAuthorized(user) && user.value.username !== username.value)
+    const showEdit = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
+    const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
     return {
       profile,
-      isMyProfile,
-      isNotMyProfile,
+      showEdit,
+      showFollow,
       followProcessGoing,
       toggleFollow,
     }
