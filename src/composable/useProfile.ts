@@ -1,12 +1,16 @@
-import { reactive, watchEffect } from 'vue'
+import { ComputedRef, reactive, watch } from 'vue'
 
 import { getProfile } from '../services/profile/getProfile'
 
-export function useProfile (username: string) {
+interface UseProfileProps {
+  username: ComputedRef<string>
+}
+
+export function useProfile ({ username }: UseProfileProps) {
   const profile = reactive<Profile>({} as Profile)
 
   async function fetchProfile () {
-    const profileData = await getProfile(username)
+    const profileData = await getProfile(username.value)
     updateProfile(profileData)
   }
 
@@ -14,9 +18,7 @@ export function useProfile (username: string) {
     Object.assign(profile, profileData)
   }
 
-  watchEffect(() => {
-    fetchProfile()
-  })
+  watch(username, fetchProfile, { immediate: true })
 
   return {
     profile,
