@@ -47,7 +47,11 @@ export default class FetchRequest {
   }
 
   private handleCorrectResponse = <T>(response: Response): Promise<T> => {
-    return response.json()
+    if (response.ok) {
+      return response.json()
+    }
+
+    throw new NetworkError(response)
   }
 
   private runFetch ({ method, url, data, options }: {
