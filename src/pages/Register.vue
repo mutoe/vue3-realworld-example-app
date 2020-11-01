@@ -92,12 +92,12 @@ export default defineComponent({
     const register = async () => {
       if (!formRef.value?.checkValidity()) return
 
-      const response = await postRegister(form)
-      if (response.status === 'ok') {
-        updateUser(response.data)
+      const result = await postRegister(form)
+      if (result.isOk()) {
+        updateUser(result.value)
         await routerPush('global-feed')
       } else {
-        errors.value = response.data
+        errors.value = await result.value.getErrors()
       }
     }
 
