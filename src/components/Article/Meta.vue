@@ -67,7 +67,7 @@ import { useFavoriteArticle } from '../../services/article/favoriteArticle'
 import { useFollow } from '../../services/profile/followProfile'
 
 import store from '../../store'
-import { redirect } from '../../router'
+import { routerPush } from '../../router'
 
 export default defineComponent({
   name: 'ArticleMeta',
@@ -91,7 +91,7 @@ export default defineComponent({
 
     const onDelete = async () => {
       await deleteArticle(article.value.slug)
-      redirect('global-feed')
+      await routerPush('global-feed')
     }
 
     const { followProcessGoing, toggleFollow: toggleFollowAuthor } = useFollow({

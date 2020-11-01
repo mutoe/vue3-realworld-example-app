@@ -74,7 +74,7 @@ export const router = createRouter({
   ],
 })
 
-export function redirect (name: AppRouteNames, params?: RouteParams) {
-  if (params) router.push({ name, params })
-  else router.push({ name })
+export function routerPush (name: AppRouteNames, params?: RouteParams) {
+  if (params) return router.push({ name, params })
+  else return router.push({ name })
 }

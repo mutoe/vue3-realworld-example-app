@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { redirect } from '../router'
+import { routerPush } from '../router'
 
 import { postLogin, PostLoginForm, PostLoginErrors } from '../services/auth/postLogin'
 
@@ -87,7 +87,7 @@ export default defineComponent({
       const response = await postLogin(form)
       if (response.status === 'ok') {
         updateUser(response.data)
-        redirect('global-feed')
+        await routerPush('global-feed')
       } else {
         errors.value = response.data
       }
