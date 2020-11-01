@@ -1,0 +1,19 @@
+{
+    "article": {
+        "title": "статья",
+        "slug": "-45l18w",
+        "body": "уцауцауц",
+        "createdAt": "2020-11-01T14:59:39.404Z",
+        "updatedAt": "2020-11-01T14:59:39.404Z",
+        "tagList": [],
+        "description": "цуцуа",
+        "author": {
+            "username": "sdfsdfsadsdfsdf",
+            "bio": null,
+            "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+            "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+    }
+}
