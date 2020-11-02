@@ -25,16 +25,12 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import type { AppRouteNames } from '../router'
 
 import ArticlesListNavigation from './ArticlesListNavigation.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import AppPagination from './AppPagination.vue'
 
 import { useArticles } from '../composable/useArticles'
-
-import store from '../store'
 
 export default defineComponent({
   name: 'ArticlesList',
@@ -43,6 +39,7 @@ export default defineComponent({
     AppPagination,
     ArticlesListNavigation,
   },
+
   props: {
     useGlobalFeed: { type: Boolean, default: false },
     useMyFeed: { type: Boolean, default: false },
@@ -50,34 +47,22 @@ export default defineComponent({
     useAuthor: { type: Boolean, default: false },
     useFavorited: { type: Boolean, default: false },
   },
+
   async setup (props) {
-    const route = useRoute()
-    const routeName = computed<AppRouteNames>(() => route.name as AppRouteNames)
-    const { user, isAuthorized } = store.user
-
-    const tag = computed<string | undefined>(() => (
-      typeof route.params.tag === 'string' ? route.params.tag : undefined
-    ))
-
-    const username = computed<string | undefined>(() => (
-      typeof route.params.username === 'string' ? route.params.username : undefined
-    ))
-
-    const userAuthorized = computed<boolean>(() => isAuthorized(user))
+    const {
+      fetchArticles, articlesDownloading,
+      articlesCount, articles, updateArticle,
+      page, changePage,
+      articlesTypeInfo,
+    } = useArticles()
 
     const navigationUseProps = computed(() => ({
-      useGlobalFeed: props.useGlobalFeed,
-      useMyFeed: props.useMyFeed ? userAuthorized.value : false,
-      useTag: props.useTag ? tag.value : '',
-      useAuthor: props.useAuthor ? username.value : '',
-      useFavorited: props.useFavorited ? username.value : '',
+      useGlobalFeed: props.useGlobalFeed && articlesTypeInfo.value.globalFeed,
+      useMyFeed: props.useMyFeed && articlesTypeInfo.value.myFeed,
+      useTag: props.useTag ? articlesTypeInfo.value.tag ?? '' : '',
+      useAuthor: props.useAuthor ? articlesTypeInfo.value.author ?? '' : '',
+      useFavorited: props.useFavorited ? articlesTypeInfo.value.favorited ?? '' : '',
     }))
-
-    const { fetchArticles, articlesDownloading, articlesCount, articles, page, changePage, updateArticle } = useArticles({
-      routeName,
-      tag,
-      username,
-    })
 
     await fetchArticles()
 
@@ -92,5 +77,4 @@ export default defineComponent({
     }
   },
 })
-
 </script>
