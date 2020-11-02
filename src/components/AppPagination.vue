@@ -18,7 +18,7 @@ import { defineComponent, computed, toRefs } from 'vue'
 import { limit } from '../services'
 
 export default defineComponent({
-  name: 'Pagination',
+  name: 'AppPagination',
   props: {
     page: { type: Number, required: true },
     count: { type: Number, required: true },

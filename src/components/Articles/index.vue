@@ -37,7 +37,7 @@ import { useArticles } from '../../composable/useArticles'
 import store from '../../store'
 
 export default defineComponent({
-  name: 'Articles',
+  name: 'ArticlesList',
   components: {
     ArticlePreview,
     Pagination,

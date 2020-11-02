@@ -50,7 +50,7 @@ import Articles from '../components/Articles/index.vue'
 import PopularTags from '../components/PopularTags.vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'HomePage',
   components: {
     Articles,
     PopularTags,
