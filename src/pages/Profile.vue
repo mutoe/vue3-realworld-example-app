@@ -78,7 +78,7 @@ import { useFollow } from '../composable/useFollowProfile'
 import store from '../store'
 
 export default defineComponent({
-  name: 'Profile',
+  name: 'ProfilePage',
   components: {
     Articles,
   },

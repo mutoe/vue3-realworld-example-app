@@ -82,7 +82,7 @@ import { putProfile, PutProfileForm } from '../services/profile/putProfile'
 import store from '../store'
 
 export default defineComponent({
-  name: 'Settings',
+  name: 'SettingsPage',
   setup () {
     const { user, isAuthorized, updateUser } = store.user
 

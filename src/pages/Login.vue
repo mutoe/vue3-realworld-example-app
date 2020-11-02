@@ -69,7 +69,7 @@ import { postLogin, PostLoginForm, PostLoginErrors } from '../services/auth/post
 import store from '../store'
 
 export default defineComponent({
-  name: 'Login',
+  name: 'LoginPage',
   setup () {
     const { updateUser } = store.user
 

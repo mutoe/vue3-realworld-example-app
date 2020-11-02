@@ -76,7 +76,7 @@ import { postRegister, PostRegisterForm, PostRegisterErrors } from '../services/
 import store from '../store'
 
 export default defineComponent({
-  name: 'Register',
+  name: 'RegisterPage',
   setup () {
     const { updateUser } = store.user
 

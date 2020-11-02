@@ -51,7 +51,7 @@ import ArticleMeta from './Meta.vue'
 import { getArticle } from '../../services/article/getArticle'
 
 export default defineComponent({
-  name: 'Article',
+  name: 'ArticleDetail',
   components: {
     ArticleMeta,
   },
