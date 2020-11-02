@@ -14,7 +14,7 @@
         <div class="col-md-9">
           <Suspense>
             <template #default>
-              <Articles
+              <ArticlesList
                 use-global-feed
                 use-my-feed
                 use-tag
@@ -46,13 +46,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import Articles from '../components/Articles/index.vue'
+import ArticlesList from '../components/ArticlesList.vue'
 import PopularTags from '../components/PopularTags.vue'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
-    Articles,
+    ArticlesList,
     PopularTags,
   },
 })

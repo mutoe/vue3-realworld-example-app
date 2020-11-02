@@ -51,7 +51,7 @@
         <div class="col-xs-12 col-md-10 offset-md-1">
           <Suspense>
             <template #default>
-              <Articles
+              <ArticlesList
                 use-author
                 use-favorited
               />
@@ -70,7 +70,7 @@
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
-import Articles from '../components/Articles/index.vue'
+import ArticlesList from '../components/ArticlesList.vue'
 
 import { useProfile } from '../composable/useProfile'
 import { useFollow } from '../composable/useFollowProfile'
@@ -80,7 +80,7 @@ import store from '../store'
 export default defineComponent({
   name: 'ProfilePage',
   components: {
-    Articles,
+    ArticlesList,
   },
   setup () {
     const route = useRoute()

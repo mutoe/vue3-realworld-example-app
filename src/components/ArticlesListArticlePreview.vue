@@ -51,10 +51,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { useFavoriteArticle } from '../../composable/useFavoriteArticle'
+import { useFavoriteArticle } from '../composable/useFavoriteArticle'
 
 export default defineComponent({
-  name: 'ArticlePreview',
+  name: 'ArticlesListArticlePreview',
   props: {
     article: { type: Object as PropType<Article>, required: true },
   },

@@ -25,7 +25,7 @@
 <script lang="ts">
 import { computed, defineComponent, toRefs } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../../router'
+import type { AppRouteNames } from '../router'
 
 type ArticleNavLinkType = 'globalFeed' | 'myFeed' | 'tag' | 'author' | 'favorited'
 
@@ -38,7 +38,7 @@ interface ArticleNavLink {
 }
 
 export default defineComponent({
-  name: 'ArticlesNavigation',
+  name: 'ArticlesListNavigation',
   props: {
     useGlobalFeed: { type: Boolean, default: false },
     useMyFeed: { type: Boolean, default: false },

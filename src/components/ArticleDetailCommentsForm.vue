@@ -38,14 +38,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import { useProfile } from '../../../composable/useProfile'
+import { useProfile } from '../composable/useProfile'
 
-import { postComment } from '../../../services/comment/postComment'
+import { postComment } from '../services/comment/postComment'
 
-import store from '../../../store'
+import store from '../store'
 
 export default defineComponent({
-  name: 'ArticleCommentsForm',
+  name: 'ArticleDetailCommentsForm',
   props: {
     articleSlug: { type: String, required: true },
   },

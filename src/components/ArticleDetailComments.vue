@@ -1,10 +1,10 @@
 <template>
-  <CommentForm
+  <ArticleDetailCommentsForm
     :article-slug="slug"
     @add-comment="addComment"
   />
 
-  <Comment
+  <ArticleDetailComment
     v-for="comment in comments"
     :key="comment.id"
     :comment="comment"
@@ -17,19 +17,19 @@
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import CommentForm from './Form.vue'
-import Comment from './Comment.vue'
+import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
+import ArticleDetailComment from './ArticleDetailComment.vue'
 
-import { getCommentsByArticle } from '../../../services/comment/getComments'
-import { deleteComment } from '../../../services/comment/postComment'
+import { getCommentsByArticle } from '../services/comment/getComments'
+import { deleteComment } from '../services/comment/postComment'
 
-import store from '../../../store'
+import store from '../store'
 
 export default defineComponent({
-  name: 'ArticleComments',
+  name: 'ArticleDetailComments',
   components: {
-    CommentForm,
-    Comment,
+    ArticleDetailCommentsForm,
+    ArticleDetailComment,
   },
   async setup () {
     const route = useRoute()

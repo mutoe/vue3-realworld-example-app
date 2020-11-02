@@ -1,5 +1,5 @@
 <template>
-  <Navigation v-bind="navigationUseProps" />
+  <ArticlesListNavigation v-bind="navigationUseProps" />
 
   <div
     v-if="articlesDownloading"
@@ -26,22 +26,22 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import type { AppRouteNames } from '../../router'
+import type { AppRouteNames } from '../router'
 
-import Navigation from './Navigation.vue'
-import ArticlePreview from './Preview.vue'
-import AppPagination from '../AppPagination.vue'
+import ArticlesListNavigation from './ArticlesListNavigation.vue'
+import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
+import AppPagination from './AppPagination.vue'
 
-import { useArticles } from '../../composable/useArticles'
+import { useArticles } from '../composable/useArticles'
 
-import store from '../../store'
+import store from '../store'
 
 export default defineComponent({
   name: 'ArticlesList',
   components: {
-    ArticlePreview,
+    ArticlePreview: ArticlesListArticlePreview,
     AppPagination,
-    Navigation,
+    ArticlesListNavigation,
   },
   props: {
     useGlobalFeed: { type: Boolean, default: false },
