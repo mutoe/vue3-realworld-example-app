@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 
 import { useProfile } from '../composable/useProfile'
 
@@ -57,7 +57,8 @@ export default defineComponent({
 
     let profile
     if (isAuthorized(user)) {
-      profile = useProfile(user.value.username).profile
+      const username = computed(() => user.value.username)
+      profile = useProfile({ username }).profile
     }
 
     const comment = ref('')
