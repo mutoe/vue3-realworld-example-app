@@ -15,7 +15,7 @@
       @update="updateArticle(index, $event)"
     />
 
-    <Pagination
+    <AppPagination
       :count="articlesCount"
       :page="page"
       @page-change="changePage"
@@ -30,7 +30,7 @@ import type { AppRouteNames } from '../../router'
 
 import Navigation from './Navigation.vue'
 import ArticlePreview from './Preview.vue'
-import Pagination from '../Pagination.vue'
+import AppPagination from '../AppPagination.vue'
 
 import { useArticles } from '../../composable/useArticles'
 
@@ -40,7 +40,7 @@ export default defineComponent({
   name: 'ArticlesList',
   components: {
     ArticlePreview,
-    Pagination,
+    AppPagination,
     Navigation,
   },
   props: {
