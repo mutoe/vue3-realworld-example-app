@@ -35,9 +35,9 @@ export function useArticles () {
   const articlesTypeInfo = computed(() => ({
     globalFeed: true,
     myFeed: isAuthorized(user),
-    tag: tag.value,
-    author: username.value,
-    favorited: username.value,
+    tag: tag.value ?? '',
+    author: username.value ?? '',
+    favorited: username.value ?? '',
   }))
 
   async function fetchArticles () {
@@ -47,13 +47,13 @@ export function useArticles () {
     if (articlesType.value === 'my-feed') {
       responsePromise = getFeeds(page.value)
     }
-    if (articlesType.value === 'tag' && tag?.value !== undefined) {
+    if (articlesType.value === 'tag' && tag.value !== undefined) {
       responsePromise = getArticlesByTag(tag.value, page.value)
     }
-    if (articlesType.value === 'profile' && username?.value !== undefined) {
+    if (articlesType.value === 'profile' && username.value !== undefined) {
       responsePromise = getProfileArticles(username.value, page.value)
     }
-    if (articlesType.value === 'profile-favorites' && username?.value !== undefined) {
+    if (articlesType.value === 'profile-favorites' && username.value !== undefined) {
       responsePromise = getFavoritedArticles(username.value, page.value)
     }
     if (articlesType.value === 'global-feed') {

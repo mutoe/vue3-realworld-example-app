@@ -59,9 +59,9 @@ export default defineComponent({
     const navigationUseProps = computed(() => ({
       useGlobalFeed: props.useGlobalFeed && articlesTypeInfo.value.globalFeed,
       useMyFeed: props.useMyFeed && articlesTypeInfo.value.myFeed,
-      useTag: props.useTag ? articlesTypeInfo.value.tag ?? '' : '',
-      useAuthor: props.useAuthor ? articlesTypeInfo.value.author ?? '' : '',
-      useFavorited: props.useFavorited ? articlesTypeInfo.value.favorited ?? '' : '',
+      useTag: props.useTag ? articlesTypeInfo.value.tag : '',
+      useAuthor: props.useAuthor ? articlesTypeInfo.value.author : '',
+      useFavorited: props.useFavorited ? articlesTypeInfo.value.favorited : '',
     }))
 
     await fetchArticles()
