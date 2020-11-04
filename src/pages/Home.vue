@@ -17,7 +17,7 @@
               <ArticlesList
                 use-global-feed
                 use-my-feed
-                use-tag
+                use-tag-feed
               />
             </template>
             <template #fallback>

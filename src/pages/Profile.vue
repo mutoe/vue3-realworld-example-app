@@ -52,8 +52,8 @@
           <Suspense>
             <template #default>
               <ArticlesList
-                use-author
-                use-favorited
+                use-user-feed
+                use-user-favorited
               />
             </template>
             <template #fallback>

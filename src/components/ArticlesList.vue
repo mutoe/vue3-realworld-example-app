@@ -1,5 +1,5 @@
 <template>
-  <ArticlesListNavigation v-bind="navigationUseProps" />
+  <ArticlesListNavigation v-bind="$attrs" />
 
   <div
     v-if="articlesDownloading"
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 
 import ArticlesListNavigation from './ArticlesListNavigation.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
@@ -40,35 +40,17 @@ export default defineComponent({
     ArticlesListNavigation,
   },
 
-  props: {
-    useGlobalFeed: { type: Boolean, default: false },
-    useMyFeed: { type: Boolean, default: false },
-    useTag: { type: Boolean, default: false },
-    useAuthor: { type: Boolean, default: false },
-    useFavorited: { type: Boolean, default: false },
-  },
-
-  async setup (props) {
+  async setup () {
     const {
       fetchArticles, articlesDownloading,
       articlesCount, articles, updateArticle,
       page, changePage,
-      articlesTypeInfo,
     } = useArticles()
-
-    const navigationUseProps = computed(() => ({
-      useGlobalFeed: props.useGlobalFeed && articlesTypeInfo.value.globalFeed,
-      useMyFeed: props.useMyFeed && articlesTypeInfo.value.myFeed,
-      useTag: props.useTag ? articlesTypeInfo.value.tag : '',
-      useAuthor: props.useAuthor ? articlesTypeInfo.value.author : '',
-      useFavorited: props.useFavorited ? articlesTypeInfo.value.favorited : '',
-    }))
 
     await fetchArticles()
 
     return {
       articlesDownloading,
-      navigationUseProps,
       articles,
       articlesCount,
       page,

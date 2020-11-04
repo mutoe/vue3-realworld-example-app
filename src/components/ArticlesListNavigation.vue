@@ -3,14 +3,14 @@
     <ul class="nav nav-pills outline-active">
       <li
         v-for="link in links"
-        :key="link.type"
+        :key="link.name"
         class="nav-item"
       >
         <AppLink
           class="nav-link"
           active-class="active"
-          :name="link.name"
-          :params="link.params"
+          :name="link.routeName"
+          :params="link.routeParams"
         >
           <i
             v-if="link.icon"
@@ -23,16 +23,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs } from 'vue'
+import { computed, defineComponent } from 'vue'
 import type { RouteParams } from 'vue-router'
 import type { AppRouteNames } from '../router'
 
-type ArticleNavLinkType = 'globalFeed' | 'myFeed' | 'tag' | 'author' | 'favorited'
+import { useArticlesMeta, ArticlesType } from '../composable/useArticlesMeta'
 
-interface ArticleNavLink {
-  name: AppRouteNames
-  params?: Partial<RouteParams>
-  type: ArticleNavLinkType
+import store from '../store'
+
+interface ArticlesListNavLink {
+  name: ArticlesType
+  routeName: AppRouteNames
+  routeParams?: Partial<RouteParams>
   title: string
   icon?: string
 }
@@ -42,55 +44,57 @@ export default defineComponent({
   props: {
     useGlobalFeed: { type: Boolean, default: false },
     useMyFeed: { type: Boolean, default: false },
-    useTag: { type: String, default: '' },
-    useAuthor: { type: String, default: '' },
-    useFavorited: { type: String, default: '' },
+    useTagFeed: { type: Boolean, default: false },
+    useUserFeed: { type: Boolean, default: false },
+    useUserFavorited: { type: Boolean, default: false },
   },
   setup (props) {
-    const { useGlobalFeed, useMyFeed, useTag, useAuthor, useFavorited } = toRefs(props)
+    const { user, isAuthorized } = store.user
 
-    const allLinks = computed<ArticleNavLink[]>(() => [
+    const { tag, username } = useArticlesMeta()
+
+    const allLinks = computed<ArticlesListNavLink[]>(() => [
       {
-        type: 'globalFeed',
         name: 'global-feed',
+        routeName: 'global-feed',
         title: 'Global Feed',
       },
       {
-        type: 'myFeed',
         name: 'my-feed',
+        routeName: 'my-feed',
         title: 'Your Feed',
       },
       {
-        type: 'tag',
-        name: 'tag',
-        params: { tag: useTag.value },
-        title: useTag.value,
+        name: 'tag-feed',
+        routeName: 'tag',
+        routeParams: { tag: tag.value },
+        title: tag.value,
         icon: 'ion-pound',
       },
 
       {
-        type: 'author',
-        name: 'profile',
-        params: { username: useAuthor.value },
+        name: 'user-feed',
+        routeName: 'profile',
+        routeParams: { username: username.value },
         title: 'My articles',
       },
       {
-        type: 'favorited',
-        name: 'profile-favorites',
-        params: { username: useFavorited.value },
+        name: 'user-favorites-feed',
+        routeName: 'profile-favorites',
+        routeParams: { username: username.value },
         title: 'Favorited Articles',
       },
     ])
 
-    const show = computed<Record<ArticleNavLinkType, boolean>>(() => ({
-      globalFeed: useGlobalFeed.value,
-      myFeed: useMyFeed.value,
-      tag: useTag.value !== '',
-      author: useAuthor.value !== '',
-      favorited: useFavorited.value !== '',
+    const show = computed<Record<ArticlesType, boolean>>(() => ({
+      'global-feed': props.useGlobalFeed,
+      'my-feed': props.useMyFeed && isAuthorized(user),
+      'tag-feed': props.useTagFeed && tag.value !== '',
+      'user-feed': props.useUserFeed && username.value !== '',
+      'user-favorites-feed': props.useUserFavorited && username.value !== '',
     }))
 
-    const links = computed<ArticleNavLink[]>(() => allLinks.value.filter(link => show.value[link.type]))
+    const links = computed<ArticlesListNavLink[]>(() => allLinks.value.filter(link => show.value[link.name]))
 
     return {
       links,
