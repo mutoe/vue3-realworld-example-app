@@ -73,13 +73,11 @@ import { routerPush } from '../router'
 
 import { postRegister, PostRegisterForm, PostRegisterErrors } from '../services/auth/postRegister'
 
-import store from '../store'
+import { updateUser } from '../store/user'
 
 export default defineComponent({
   name: 'RegisterPage',
   setup () {
-    const { updateUser } = store.user
-
     const formRef = ref<HTMLFormElement | null>(null)
     const form = reactive<PostRegisterForm>({
       username: '',

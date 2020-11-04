@@ -1,30 +1,35 @@
-import { computed, ComputedRef, ref } from 'vue'
+import type { ComputedRef } from 'vue'
+import { createStore } from '@harlem/core'
 
 import { request } from '../services'
 import storage from '../utils/storage'
 
-export default function useUser () {
-  const user = ref<User | null>(storage.get<User>('user'))
-
-  const isAuthorized = (user: ComputedRef<User | null>): user is ComputedRef<User> => {
-    return user.value !== null
-  }
-
-  const updateUser = (userData: User | null): void => {
-    if (userData === null) {
-      storage.remove('user')
-      request.deleteAuthorizationHeader()
-      user.value = null
-    } else {
-      storage.set('user', userData)
-      request.setAuthorizationHeader(userData.token)
-      user.value = userData
-    }
-  }
-
-  return {
-    user: computed(() => user.value),
-    isAuthorized,
-    updateUser,
-  }
+interface State {
+  user: User | null
 }
+
+const STATE: State = {
+  user: storage.get<User>('user'),
+}
+
+const { getter, mutation } = createStore<State>('user', STATE)
+
+export const user = getter('user', state => state.user)
+
+export const isAuthorized = getter('isAuthorized', () => checkAuthorization(user))
+
+export const checkAuthorization = (user: ComputedRef<User | null>): user is ComputedRef<User> => {
+  return user.value !== null
+}
+
+export const updateUser = mutation<User | null>('updateUser', (state, userData) => {
+  if (!userData) {
+    storage.remove('user')
+    request.deleteAuthorizationHeader()
+    state.user = null
+  } else {
+    storage.set('user', userData)
+    request.setAuthorizationHeader(userData.token)
+    state.user = userData
+  }
+})

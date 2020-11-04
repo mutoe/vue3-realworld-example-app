@@ -23,7 +23,7 @@ import ArticleDetailComment from './ArticleDetailComment.vue'
 import { getCommentsByArticle } from '../services/comment/getComments'
 import { deleteComment } from '../services/comment/postComment'
 
-import store from '../store'
+import { user } from '../store/user'
 
 export default defineComponent({
   name: 'ArticleDetailComments',
@@ -35,7 +35,6 @@ export default defineComponent({
     const route = useRoute()
     const slug = route.params.slug as string
 
-    const { user } = store.user
     const username = computed(() => user.value?.username)
 
     const comments = ref<ArticleComment[]>([])

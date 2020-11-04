@@ -67,7 +67,7 @@ import { deleteArticle } from '../services/article/deleteArticle'
 import { useFavoriteArticle } from '../composable/useFavoriteArticle'
 import { useFollow } from '../composable/useFollowProfile'
 
-import store from '../store'
+import { user, checkAuthorization } from '../store/user'
 import { routerPush } from '../router'
 
 export default defineComponent({
@@ -79,10 +79,8 @@ export default defineComponent({
     update: (article: Article) => !!article.slug,
   },
   setup (props, { emit }) {
-    const { user, isAuthorized } = store.user
-
     const { article } = toRefs(props)
-    const displayEditButton = computed(() => isAuthorized(user) && user.value.username === article.value.author.username)
+    const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
     const displayFollowButton = computed(() => user.value?.username !== article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({

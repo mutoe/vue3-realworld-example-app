@@ -75,7 +75,7 @@ import ArticlesList from '../components/ArticlesList.vue'
 import { useProfile } from '../composable/useProfile'
 import { useFollow } from '../composable/useFollowProfile'
 
-import store from '../store'
+import { user, checkAuthorization } from '../store/user'
 
 export default defineComponent({
   name: 'ProfilePage',
@@ -86,8 +86,6 @@ export default defineComponent({
     const route = useRoute()
     const username = computed<string>(() => route.params.username as string)
 
-    const { user, isAuthorized } = store.user
-
     const { profile, updateProfile } = useProfile({ username })
 
     const { followProcessGoing, toggleFollow } = useFollow({
@@ -96,7 +94,7 @@ export default defineComponent({
       onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
     })
 
-    const showEdit = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
+    const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
     const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
     return {

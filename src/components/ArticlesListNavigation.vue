@@ -29,7 +29,7 @@ import type { AppRouteNames } from '../router'
 
 import { useArticlesMeta, ArticlesType } from '../composable/useArticlesMeta'
 
-import store from '../store'
+import { isAuthorized } from '../store/user'
 
 interface ArticlesListNavLink {
   name: ArticlesType
@@ -49,8 +49,6 @@ export default defineComponent({
     useUserFavorited: { type: Boolean, default: false },
   },
   setup (props) {
-    const { user, isAuthorized } = store.user
-
     const { tag, username } = useArticlesMeta()
 
     const allLinks = computed<ArticlesListNavLink[]>(() => [
@@ -88,7 +86,7 @@ export default defineComponent({
 
     const show = computed<Record<ArticlesType, boolean>>(() => ({
       'global-feed': props.useGlobalFeed,
-      'my-feed': props.useMyFeed && isAuthorized(user),
+      'my-feed': props.useMyFeed && isAuthorized.value,
       'tag-feed': props.useTagFeed && tag.value !== '',
       'user-feed': props.useUserFeed && username.value !== '',
       'user-favorites-feed': props.useUserFavorited && username.value !== '',
