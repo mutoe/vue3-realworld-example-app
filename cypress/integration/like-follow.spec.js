@@ -1,4 +1,4 @@
-describe('test for like-follow mode', () => {
+describe('test for like-follow', () => {
   beforeEach(() => {
     cy.server()
     cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
@@ -20,7 +20,7 @@ describe('test for like-follow mode', () => {
       .should('contain.text', ' Sign in ')
   })
 
-  it.only('no-login:follow author', () => {
+  it('no-login:follow author', () => {
     cy.get('.article-preview:first')
       .click()
 

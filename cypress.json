@@ -1,5 +1,7 @@
 {
-  "baseUrl": "http://localhost:3000",
+  "baseUrl": "https://mutoe.github.io/vue3-realworld-example-app",
   "experimentalNetworkStubbing": true,
   "chromeWebSecurity": false
+
+  
 }

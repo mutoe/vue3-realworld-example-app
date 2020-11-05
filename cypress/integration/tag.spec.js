@@ -1,4 +1,4 @@
-describe('test for tag mode', () => {
+describe('test for tag', () => {
   beforeEach(() => {
     cy.server()
     cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
