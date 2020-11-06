@@ -1,4 +1,4 @@
-describe('test for tag mode', () => {
+describe('test for tag', () => {
   beforeEach(() => {
     cy.server()
     cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
@@ -42,7 +42,7 @@ describe('test for tag mode', () => {
     })
   })
 
-  it.only('check articles tag including butt', () => {
+  it('check articles tag including butt', () => {
     // 点击最后一个tag
     cy.get('a.tag-pill.tag-default:last')
       .click()
@@ -51,12 +51,4 @@ describe('test for tag mode', () => {
     cy.get('.article-preview ul.tag-list')
       .should('have.length', 9)
   })
-
-  // it('',()=>{
-
-  // })
-
-  // it('',()=>{
-
-  // })
 })
