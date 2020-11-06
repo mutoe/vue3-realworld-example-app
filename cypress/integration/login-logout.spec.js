@@ -9,9 +9,20 @@ describe('test for login', () => {
     cy.visit('/')
   })
 
-  it('login in home page', () => {
+  it('login and logout in home page', () => {
+    // login
     cy.fixture('users.json').then(users => {
       cy.login(users.loginPass)
     })
+
+    // logout
+    cy.get('[href="#/settings"]')
+      .click()
+    cy.get('button.btn-outline-danger')
+      .contains('logout')
+      .click()
+    cy.get('ul.navbar-nav')
+      .should('contain', ' Sign in')
+      .should('contain', ' Sign up')
   })
 })
