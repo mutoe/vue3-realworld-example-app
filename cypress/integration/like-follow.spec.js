@@ -9,7 +9,7 @@ describe('test for like-follow', () => {
     cy.visit('/')
   })
 
-  it('no-login:like artiles', () => {
+  it('no-login:like articles', () => {
     cy.get('i.ion-heart:first')
       .click()
 
@@ -18,6 +18,19 @@ describe('test for like-follow', () => {
 
     cy.get('h1.text-xs-center')
       .should('contain.text', ' Sign in ')
+  })
+
+  it('login:like articles', () => {
+    // login
+    cy.fixture('users.json').then(users => {
+      cy.login(users.loginPass)
+    })
+
+    // like articles
+    cy.get('i.ion-heart:first')
+      .click()
+    cy.get('.article-meta:first button')
+      .should('have.class', 'btn-primary')
   })
 
   it('no-login:follow author', () => {
@@ -38,5 +51,24 @@ describe('test for like-follow', () => {
 
     cy.url()
       .should('contain', 'login')
+  })
+
+  it('login: follow author', () => {
+    // login
+    cy.fixture('users.json').then(users => {
+      cy.login(users.loginPass)
+    })
+
+    // click article
+    cy.get('a.preview-link:first span')
+      .contains('Read more...')
+      .click()
+      // follow author
+    cy.get('.article-meta button.btn-outline-secondary')
+      .should('contain', 'Follow')
+    cy.get('.article-meta button.btn-outline-secondary:first')
+      .click()
+    cy.get('.article-actions button.btn-outline-secondary:last')
+      .should('contain', 'Unfollow')
   })
 })
