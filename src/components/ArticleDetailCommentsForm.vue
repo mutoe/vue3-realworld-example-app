@@ -36,16 +36,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 
-import { useProfile } from '../../../composable/useProfile'
+import { useProfile } from '../composable/useProfile'
 
-import { postComment } from '../../../services/comment/postComment'
+import { postComment } from '../services/comment/postComment'
 
-import store from '../../../store'
+import * as userStore from '../store/user'
 
 export default defineComponent({
-  name: 'ArticleCommentsForm',
+  name: 'ArticleDetailCommentsForm',
   props: {
     articleSlug: { type: String, required: true },
   },
@@ -53,11 +53,12 @@ export default defineComponent({
     'add-comment': (comment: ArticleComment) => !!comment.id,
   },
   setup (props, { emit }) {
-    const { user, isAuthorized } = store.user
+    const { user, checkAuthorization } = userStore
 
     let profile
-    if (isAuthorized(user)) {
-      profile = useProfile(user.value.username).profile
+    if (checkAuthorization(user)) {
+      const username = computed(() => user.value.username)
+      profile = useProfile({ username }).profile
     }
 
     const comment = ref('')

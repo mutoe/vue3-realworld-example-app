@@ -66,13 +66,11 @@ import { routerPush } from '../router'
 
 import { postLogin, PostLoginForm, PostLoginErrors } from '../services/auth/postLogin'
 
-import store from '../store'
+import { updateUser } from '../store/user'
 
 export default defineComponent({
-  name: 'Login',
+  name: 'LoginPage',
   setup () {
-    const { updateUser } = store.user
-
     const formRef = ref<HTMLFormElement | null>(null)
     const form = reactive<PostLoginForm>({
       email: '',

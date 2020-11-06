@@ -1,0 +1,62 @@
+<template>
+  <ArticlesListNavigation v-bind="$attrs" />
+
+  <div
+    v-if="articlesDownloading"
+    class="article-preview"
+  >
+    Articles are downloading...
+  </div>
+  <template v-else>
+    <ArticlePreview
+      v-for="(article, index) in articles"
+      :key="article.slug"
+      :article="article"
+      @update="updateArticle(index, $event)"
+    />
+
+    <AppPagination
+      :count="articlesCount"
+      :page="page"
+      @page-change="changePage"
+    />
+  </template>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+import ArticlesListNavigation from './ArticlesListNavigation.vue'
+import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
+import AppPagination from './AppPagination.vue'
+
+import { useArticles } from '../composable/useArticles'
+
+export default defineComponent({
+  name: 'ArticlesList',
+  components: {
+    ArticlePreview: ArticlesListArticlePreview,
+    AppPagination,
+    ArticlesListNavigation,
+  },
+
+  async setup () {
+    const {
+      fetchArticles, articlesDownloading,
+      articlesCount, articles, updateArticle,
+      page, changePage,
+    } = useArticles()
+
+    await fetchArticles()
+
+    return {
+      articlesDownloading,
+      articles,
+      articlesCount,
+      page,
+      changePage,
+      updateArticle,
+    }
+  },
+})
+</script>

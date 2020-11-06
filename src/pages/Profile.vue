@@ -51,9 +51,9 @@
         <div class="col-xs-12 col-md-10 offset-md-1">
           <Suspense>
             <template #default>
-              <Articles
-                use-author
-                use-favorited
+              <ArticlesList
+                use-user-feed
+                use-user-favorited
               />
             </template>
             <template #fallback>
@@ -70,25 +70,23 @@
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
-import Articles from '../components/Articles/index.vue'
+import ArticlesList from '../components/ArticlesList.vue'
 
 import { useProfile } from '../composable/useProfile'
 import { useFollow } from '../composable/useFollowProfile'
 
-import store from '../store'
+import { user, checkAuthorization } from '../store/user'
 
 export default defineComponent({
-  name: 'Profile',
+  name: 'ProfilePage',
   components: {
-    Articles,
+    ArticlesList,
   },
   setup () {
     const route = useRoute()
     const username = computed<string>(() => route.params.username as string)
 
-    const { user, isAuthorized } = store.user
-
-    const { profile, updateProfile } = useProfile(username.value)
+    const { profile, updateProfile } = useProfile({ username })
 
     const { followProcessGoing, toggleFollow } = useFollow({
       following: computed<boolean>(() => profile.following),
@@ -96,7 +94,7 @@ export default defineComponent({
       onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
     })
 
-    const showEdit = computed<boolean>(() => isAuthorized(user) && user.value.username === username.value)
+    const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
     const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
     return {

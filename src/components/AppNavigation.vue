@@ -37,7 +37,7 @@ import type { RouteParams } from 'vue-router'
 
 import type { AppRouteNames } from '../router'
 
-import store from '../store'
+import { user } from '../store/user'
 
 interface NavLink {
   name: AppRouteNames
@@ -50,7 +50,6 @@ interface NavLink {
 export default defineComponent({
   name: 'AppNavigation',
   setup () {
-    const { user } = store.user
     const username = computed(() => user.value?.username)
     const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
 
@@ -96,7 +95,6 @@ export default defineComponent({
 
     return {
       navLinks,
-      store,
     }
   },
 })

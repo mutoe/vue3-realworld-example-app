@@ -3,7 +3,7 @@
     <div class="container">
       <h1>{{ article.title }}</h1>
 
-      <ArticleMeta
+      <ArticleDetailMeta
         :article="article"
         @update="updateArticle"
       />
@@ -32,7 +32,7 @@
     <hr>
 
     <div class="article-actions">
-      <ArticleMeta
+      <ArticleDetailMeta
         :article="article"
         @update="updateArticle"
       />
@@ -46,14 +46,14 @@ import md2html from 'marked'
 import { computed, defineComponent, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 
-import ArticleMeta from './Meta.vue'
+import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
-import { getArticle } from '../../services/article/getArticle'
+import { getArticle } from '../services/article/getArticle'
 
 export default defineComponent({
-  name: 'Article',
+  name: 'ArticleDetail',
   components: {
-    ArticleMeta,
+    ArticleDetailMeta,
   },
   async setup () {
     const route = useRoute()

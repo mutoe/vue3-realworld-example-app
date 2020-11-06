@@ -1,5 +1,4 @@
-import { ComputedRef, ref, watch } from 'vue'
-import type { AppRouteNames } from '../router'
+import { ref, watch } from 'vue'
 
 import createAsyncProcess from '../utils/create-async-process'
 
@@ -11,34 +10,32 @@ import {
   getArticlesByTag,
 } from '../services/article/getArticles'
 
-interface UseArticlesProps {
-  routeName: ComputedRef<AppRouteNames>
-  username?: ComputedRef<string | undefined>
-  tag?: ComputedRef<string | undefined>
-}
+import { useArticlesMeta } from './useArticlesMeta'
 
-export function useArticles ({ routeName, username, tag }: UseArticlesProps) {
+export function useArticles () {
+  const { articlesType, tag, username, metaChanged } = useArticlesMeta()
+
   const articles = ref<Article[]>([])
   const articlesCount = ref(0)
   const page = ref(1)
 
   async function fetchArticles () {
     articles.value = []
-    let responsePromise: null | Promise<any> = null
+    let responsePromise: null | Promise<ArticlesResponse> = null
 
-    if (routeName.value === 'my-feed') {
+    if (articlesType.value === 'my-feed') {
       responsePromise = getFeeds(page.value)
     }
-    if (routeName.value === 'tag' && tag?.value !== undefined) {
+    if (articlesType.value === 'tag-feed' && tag.value !== undefined) {
       responsePromise = getArticlesByTag(tag.value, page.value)
     }
-    if (routeName.value === 'profile' && username?.value !== undefined) {
+    if (articlesType.value === 'user-feed' && username.value !== undefined) {
       responsePromise = getProfileArticles(username.value, page.value)
     }
-    if (routeName.value === 'profile-favorites' && username?.value !== undefined) {
+    if (articlesType.value === 'user-favorites-feed' && username.value !== undefined) {
       responsePromise = getFavoritedArticles(username.value, page.value)
     }
-    if (routeName.value === 'global-feed') {
+    if (articlesType.value === 'global-feed') {
       responsePromise = getArticles(page.value)
     }
 
@@ -46,6 +43,8 @@ export function useArticles ({ routeName, username, tag }: UseArticlesProps) {
       const response = await responsePromise
       articles.value = response.articles
       articlesCount.value = response.articlesCount
+    } else {
+      throw new Error(`Articles type "${articlesType.value}" not supported`)
     }
   }
 
@@ -57,18 +56,18 @@ export function useArticles ({ routeName, username, tag }: UseArticlesProps) {
     articles.value[index] = article
   }
 
-  const { active, run } = createAsyncProcess(fetchArticles)
+  const { active: articlesDownloading, run: runWrappedFetchArticles } = createAsyncProcess(fetchArticles)
 
-  watch(routeName, () => {
+  watch(metaChanged, () => {
     if (page.value !== 1) changePage(1)
-    else run()
+    else runWrappedFetchArticles()
   })
 
-  watch(page, run)
+  watch(page, runWrappedFetchArticles)
 
   return {
-    fetchArticles: run,
-    articlesDownloading: active,
+    fetchArticles: runWrappedFetchArticles,
+    articlesDownloading,
     articles,
     articlesCount,
     page,

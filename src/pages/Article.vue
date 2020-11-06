@@ -2,7 +2,7 @@
   <div class="article-page">
     <Suspense>
       <template #default>
-        <Article />
+        <ArticleDetail />
       </template>
       <template #fallback>
         <div class="container page">
@@ -15,7 +15,7 @@
       <template #default>
         <div class="row">
           <div class="col-xs-12 col-md-8 offset-md-2">
-            <ArticleComments />
+            <ArticleDetailComments />
           </div>
         </div>
       </template>
@@ -31,14 +31,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import Article from '../components/Article/index.vue'
-import ArticleComments from '../components/Article/Comments/index.vue'
+import ArticleDetail from '../components/ArticleDetail.vue'
+import ArticleDetailComments from '../components/ArticleDetailComments.vue'
 
 export default defineComponent({
   name: 'ArticlePage',
   components: {
-    Article,
-    ArticleComments,
+    ArticleDetail,
+    ArticleDetailComments,
   },
 })
 </script>

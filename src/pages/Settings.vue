@@ -79,13 +79,11 @@ import { routerPush } from '../router'
 
 import { putProfile, PutProfileForm } from '../services/profile/putProfile'
 
-import store from '../store'
+import { user, checkAuthorization, updateUser } from '../store/user'
 
 export default defineComponent({
-  name: 'Settings',
+  name: 'SettingsPage',
   setup () {
-    const { user, isAuthorized, updateUser } = store.user
-
     const form = reactive<PutProfileForm>({})
 
     const onSubmit = async () => {
@@ -100,7 +98,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      if (!isAuthorized(user)) return await routerPush('login')
+      if (!checkAuthorization(user)) return await routerPush('login')
 
       form.image = user.value.image
       form.username = user.value.username

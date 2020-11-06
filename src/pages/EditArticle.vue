@@ -79,7 +79,7 @@ interface FormState {
 }
 
 export default defineComponent({
-  name: 'EditArticle',
+  name: 'EditArticlePage',
   setup () {
     const route = useRoute()
     const router = useRouter()

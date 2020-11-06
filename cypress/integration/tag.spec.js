@@ -42,7 +42,7 @@ describe('test for tag', () => {
     })
   })
 
-  it.only('check articles tag including butt', () => {
+  it('check articles tag including butt', () => {
     // 点击最后一个tag
     cy.get('a.tag-pill.tag-default:last')
       .click()
@@ -51,12 +51,4 @@ describe('test for tag', () => {
     cy.get('.article-preview ul.tag-list')
       .should('have.length', 9)
   })
-
-  // it('',()=>{
-
-  // })
-
-  // it('',()=>{
-
-  // })
 })

@@ -45,7 +45,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: 'ArticleComment',
+  name: 'ArticleDetailComment',
   props: {
     comment: { type: Object as PropType<ArticleComment>, required: true },
     username: { type: String as PropType<string | undefined>, default: undefined },
