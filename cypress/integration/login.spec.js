@@ -10,10 +10,6 @@ describe('test for login', () => {
   })
 
   it('login in home page', () => {
-    // const usrname = 'plumrx1'
-    // const email = 'plumrx1@qq.com'
-    // const password = '12345678'
-
     cy.fixture('users.json').then(users => {
       cy.login(users.loginPass)
     })

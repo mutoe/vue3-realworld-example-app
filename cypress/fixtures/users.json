@@ -8,5 +8,10 @@
         "username": "plumrx2",
         "email": "plumrx2@qq.com",
         "password": "12345678"
+    },
+    "registered":{
+        "username": "plumrx",
+        "email": "plumrx@qq.com",
+        "password": "12345678"
     }
 }

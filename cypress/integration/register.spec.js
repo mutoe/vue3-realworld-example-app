@@ -12,12 +12,10 @@ describe('test for register', () => {
 
   it('ligin in home page', () => {
     // click logup button in home page
-    const usrname = 'plumrx'
-    const email = 'plumrx@qq.com'
-    const password = '12345678'
-    cy.register(usrname, email, password)
-
-    cy.get('.navbar')
-      .should('contain', usrname)
+    cy.fixture('users.json').then(users => {
+      cy.register(users.registered)
+      cy.get('.navbar')
+        .should('contain', 'plumrx')
+    })
   })
 })

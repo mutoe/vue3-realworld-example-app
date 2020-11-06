@@ -44,18 +44,18 @@ Cypress.Commands.add('login', (user) => {
     .should('contain.text', user.username)
 })
 
-Cypress.Commands.add('register', (usrname, email, password) => {
+Cypress.Commands.add('register', (user) => {
   // click sign up button in home page
   cy.get('li.nav-item a.nav-link')
     .contains(' Sign up')
     .click()
     // []属性选择器
   cy.get('[placeholder="Your Name"]')
-    .type(usrname)
+    .type(user.username)
   cy.get('[placeholder="Email"]')
-    .type(email)
+    .type(user.email)
   cy.get('[placeholder="Password"]')
-    .type(password)
+    .type(user.password)
   cy.get('[type="submit"]')
     .click()
 })
