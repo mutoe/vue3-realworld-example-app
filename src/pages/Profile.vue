@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
             <div
-              v-if="!profile.username"
+              v-if="!profile"
               class="align-left"
             >
               Profile is downloading...
@@ -89,7 +89,7 @@ export default defineComponent({
     const { profile, updateProfile } = useProfile({ username })
 
     const { followProcessGoing, toggleFollow } = useFollow({
-      following: computed<boolean>(() => profile.following),
+      following: computed<boolean>(() => profile.value?.following ?? false),
       username,
       onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
     })
