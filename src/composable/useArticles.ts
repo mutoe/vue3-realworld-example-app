@@ -12,10 +12,8 @@ import {
 
 import { useArticlesMeta } from './useArticlesMeta'
 
-import { articlesType, tag, username, infoUpdated } from '../store/articlesMeta'
-
 export function useArticles () {
-  useArticlesMeta()
+  const { articlesType, tag, username, metaChanged } = useArticlesMeta()
 
   const articles = ref<Article[]>([])
   const articlesCount = ref(0)
@@ -60,7 +58,7 @@ export function useArticles () {
 
   const { active: articlesDownloading, run: runWrappedFetchArticles } = createAsyncProcess(fetchArticles)
 
-  watch(infoUpdated, () => {
+  watch(metaChanged, () => {
     if (page.value !== 1) changePage(1)
     else runWrappedFetchArticles()
   })

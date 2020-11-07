@@ -27,8 +27,9 @@ import { computed, defineComponent } from 'vue'
 import type { RouteParams } from 'vue-router'
 import type { AppRouteNames } from '../router'
 
+import { useArticlesMeta, ArticlesType } from '../composable/useArticlesMeta'
+
 import { isAuthorized } from '../store/user'
-import { tag, username, ArticlesType } from '../store/articlesMeta'
 
 interface ArticlesListNavLink {
   name: ArticlesType
@@ -48,6 +49,8 @@ export default defineComponent({
     useUserFavorited: { type: Boolean, default: false },
   },
   setup (props) {
+    const { tag, username } = useArticlesMeta()
+
     const allLinks = computed<ArticlesListNavLink[]>(() => [
       {
         name: 'global-feed',
