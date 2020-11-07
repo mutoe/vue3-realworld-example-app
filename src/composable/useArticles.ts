@@ -1,4 +1,6 @@
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import type { AppRouteNames } from '../router'
 
 import createAsyncProcess from '../utils/create-async-process'
 
@@ -10,10 +12,8 @@ import {
   getArticlesByTag,
 } from '../services/article/getArticles'
 
-import { useArticlesMeta } from './useArticlesMeta'
-
 export function useArticles () {
-  const { articlesType, tag, username, metaChanged } = useArticlesMeta()
+  const { articlesType, tag, username, metaChanged } = getArticlesMeta()
 
   const articles = ref<Article[]>([])
   const articlesCount = ref(0)
@@ -73,5 +73,65 @@ export function useArticles () {
     page,
     changePage,
     updateArticle,
+    tag,
+    username,
+  }
+}
+
+export type ArticlesType = 'global-feed' | 'my-feed' | 'tag-feed' | 'user-feed' | 'user-favorites-feed'
+export const articlesTypes: ArticlesType[] = ['global-feed', 'my-feed', 'tag-feed', 'user-feed', 'user-favorites-feed']
+export const isArticlesType = (type: any): type is ArticlesType => articlesTypes.includes(type)
+
+const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
+  'global-feed': 'global-feed',
+  'my-feed': 'my-feed',
+  tag: 'tag-feed',
+  profile: 'user-feed',
+  'profile-favorites': 'user-favorites-feed',
+})
+
+function getArticlesMeta () {
+  const route = useRoute()
+
+  const tag = ref('')
+  const username = ref('')
+  const articlesType = ref<ArticlesType>('global-feed')
+
+  watch(
+    () => route.name,
+    routeName => {
+      const possibleArticlesType = routeNameToArticlesType[routeName as AppRouteNames]
+      if (!isArticlesType(possibleArticlesType)) return
+
+      articlesType.value = possibleArticlesType
+    },
+    { immediate: true },
+  )
+
+  watch(
+    () => route.params.username,
+    usernameParam => {
+      if (usernameParam !== username.value) {
+        username.value = typeof usernameParam === 'string' ? usernameParam : ''
+      }
+    },
+    { immediate: true },
+  )
+
+  watch(
+    () => route.params.tag,
+    tagParam => {
+      if (tagParam !== tag.value) {
+        tag.value = typeof tagParam === 'string' ? tagParam : ''
+      }
+    },
+    { immediate: true },
+  )
+
+  return {
+    tag: computed(() => tag.value),
+    username: computed(() => username.value),
+    articlesType: computed(() => articlesType.value),
+    metaChanged: computed(() => `${articlesType.value}-${username.value}-${tag.value}`),
   }
 }
