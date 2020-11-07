@@ -6,3 +6,4 @@ dist
 *.iml
 cypress/videos
 coverage
+.vscode
