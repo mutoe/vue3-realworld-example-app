@@ -55,11 +55,11 @@ export default class FetchRequest {
   }
 
   private runFetch ({ method, url, data, options }: {
-      method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH',
-      url: string,
-      data?: Record<string, any>,
-      options: Partial<FetchRequestOptions>
-    }) {
+    method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH',
+    url: string,
+    data?: Record<string, any>,
+    options: Partial<FetchRequestOptions>
+  }) {
     const finalUrl = this.generateFinalUrl(url, options)
     const headers = this.generateFinalHeaders(options)
 
@@ -68,11 +68,11 @@ export default class FetchRequest {
     return fetch(finalUrl, fetchOptions)
   }
 
-  private runSafeFetch (method: 'GET' | 'DELETE', url:string, options: Partial<FetchRequestOptions>) {
+  private runSafeFetch (method: 'GET' | 'DELETE', url: string, options: Partial<FetchRequestOptions>) {
     return this.runFetch({ method, url, options })
   }
 
-  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url:string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions>) {
+  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
     return this.runFetch({ method, url, options, data })
   }
 
