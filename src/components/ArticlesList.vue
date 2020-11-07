@@ -1,5 +1,9 @@
 <template>
-  <ArticlesListNavigation v-bind="$attrs" />
+  <ArticlesListNavigation
+    v-bind="$attrs"
+    :tag="tag"
+    :username="username"
+  />
 
   <div
     v-if="articlesDownloading"
@@ -51,6 +55,7 @@ export default defineComponent({
       fetchArticles, articlesDownloading,
       articlesCount, articles, updateArticle,
       page, changePage,
+      tag, username,
     } = useArticles()
 
     await fetchArticles()
@@ -62,6 +67,8 @@ export default defineComponent({
       page,
       changePage,
       updateArticle,
+      tag,
+      username,
     }
   },
 })

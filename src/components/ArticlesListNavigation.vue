@@ -27,7 +27,7 @@ import { computed, defineComponent } from 'vue'
 import type { RouteParams } from 'vue-router'
 import type { AppRouteNames } from '../router'
 
-import { useArticlesMeta, ArticlesType } from '../composable/useArticlesMeta'
+import type { ArticlesType } from '../composable/useArticles'
 
 import { isAuthorized } from '../store/user'
 
@@ -47,10 +47,10 @@ export default defineComponent({
     useTagFeed: { type: Boolean, default: false },
     useUserFeed: { type: Boolean, default: false },
     useUserFavorited: { type: Boolean, default: false },
+    tag: { type: String, required: true },
+    username: { type: String, required: true },
   },
   setup (props) {
-    const { tag, username } = useArticlesMeta()
-
     const allLinks = computed<ArticlesListNavLink[]>(() => [
       {
         name: 'global-feed',
@@ -65,21 +65,21 @@ export default defineComponent({
       {
         name: 'tag-feed',
         routeName: 'tag',
-        routeParams: { tag: tag.value },
-        title: tag.value,
+        routeParams: { tag: props.tag },
+        title: props.tag,
         icon: 'ion-pound',
       },
 
       {
         name: 'user-feed',
         routeName: 'profile',
-        routeParams: { username: username.value },
+        routeParams: { username: props.username },
         title: 'My articles',
       },
       {
         name: 'user-favorites-feed',
         routeName: 'profile-favorites',
-        routeParams: { username: username.value },
+        routeParams: { username: props.username },
         title: 'Favorited Articles',
       },
     ])
@@ -87,9 +87,9 @@ export default defineComponent({
     const show = computed<Record<ArticlesType, boolean>>(() => ({
       'global-feed': props.useGlobalFeed,
       'my-feed': props.useMyFeed && isAuthorized.value,
-      'tag-feed': props.useTagFeed && tag.value !== '',
-      'user-feed': props.useUserFeed && username.value !== '',
-      'user-favorites-feed': props.useUserFavorited && username.value !== '',
+      'tag-feed': props.useTagFeed && props.tag !== '',
+      'user-feed': props.useUserFeed && props.username !== '',
+      'user-favorites-feed': props.useUserFavorited && props.username !== '',
     }))
 
     const links = computed<ArticlesListNavLink[]>(() => allLinks.value.filter(link => show.value[link.name]))
