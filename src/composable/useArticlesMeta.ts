@@ -1,10 +1,8 @@
-import { computed, ref, watch } from 'vue'
+import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import type { AppRouteNames } from '../router'
 
-export type ArticlesType = 'global-feed' | 'my-feed' | 'tag-feed' | 'user-feed' | 'user-favorites-feed'
-export const articlesTypes: ArticlesType[] = ['global-feed', 'my-feed', 'tag-feed', 'user-feed', 'user-favorites-feed']
-export const isArticlesType = (type: any): type is ArticlesType => articlesTypes.includes(type)
+import { updateArticlesMeta, ArticlesType, isArticlesType } from '../store/articlesMeta'
 
 const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
   'global-feed': 'global-feed',
@@ -17,17 +15,13 @@ const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
 export function useArticlesMeta () {
   const route = useRoute()
 
-  const tag = ref('')
-  const username = ref('')
-  const articlesType = ref<ArticlesType>('global-feed')
-
   watch(
     () => route.name,
     routeName => {
       const possibleArticlesType = routeNameToArticlesType[routeName as AppRouteNames]
       if (!isArticlesType(possibleArticlesType)) return
 
-      articlesType.value = possibleArticlesType
+      updateArticlesMeta('articlesType', possibleArticlesType)
     },
     { immediate: true },
   )
@@ -35,9 +29,8 @@ export function useArticlesMeta () {
   watch(
     () => route.params.username,
     usernameParam => {
-      if (usernameParam !== username.value) {
-        username.value = typeof usernameParam === 'string' ? usernameParam : ''
-      }
+      const value = typeof usernameParam === 'string' ? usernameParam : ''
+      updateArticlesMeta('username', value)
     },
     { immediate: true },
   )
@@ -45,17 +38,9 @@ export function useArticlesMeta () {
   watch(
     () => route.params.tag,
     tagParam => {
-      if (tagParam !== tag.value) {
-        tag.value = typeof tagParam === 'string' ? tagParam : ''
-      }
+      const value = typeof tagParam === 'string' ? tagParam : ''
+      updateArticlesMeta('tag', value)
     },
     { immediate: true },
   )
-
-  return {
-    tag: computed(() => tag.value),
-    username: computed(() => username.value),
-    articlesType: computed(() => articlesType.value),
-    metaChanged: computed(() => `${articlesType.value}-${username.value}-${tag.value}`),
-  }
 }
