@@ -32,7 +32,7 @@ yarn build
 - [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (Temporarily unavailable)
 - [x] E2E test ([Cypress](https://docs.cypress.io))
 - [ ] [SFC Script Setup](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md) (Unstable)
-- [x] Vetur Tools: [VTI](https://github.com/mutoe/vue3-realworld-example-app/pull/28) and [optionally VLS](https://github.com/mutoe/vue3-realworld-example-app/commit/8367f89a99c467d181d9c7f4144deb05cec55210#commitcomment-43957089)
+- [x] Vetur Tools: [VTI](https://github.com/mutoe/vue3-realworld-example-app/pull/28) and [optionally IDE hints](https://github.com/mutoe/vue3-realworld-example-app/commit/8367f89a99c467d181d9c7f4144deb05cec55210#commitcomment-43957089)
 
 # Contributors
 
