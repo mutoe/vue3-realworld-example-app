@@ -42,7 +42,7 @@ import { useProfile } from '../composable/useProfile'
 
 import { postComment } from '../services/comment/postComment'
 
-import * as userStore from '../store/user'
+import { user, checkAuthorization } from '../store/user'
 
 export default defineComponent({
   name: 'ArticleDetailCommentsForm',
@@ -53,13 +53,8 @@ export default defineComponent({
     'add-comment': (comment: ArticleComment) => !!comment.id,
   },
   setup (props, { emit }) {
-    const { user, checkAuthorization } = userStore
-
-    let profile
-    if (checkAuthorization(user)) {
-      const username = computed(() => user.value.username)
-      profile = useProfile({ username }).profile
-    }
+    const username = computed(() => checkAuthorization(user) ? user.value.username : '')
+    const { profile } = useProfile({ username })
 
     const comment = ref('')
 
