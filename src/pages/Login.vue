@@ -17,7 +17,7 @@
               v-for="(error, field) in errors"
               :key="field"
             >
-              {{ field }} {{ error[0] }}
+              {{ field }} {{ error ? error[0] : '' }}
             </li>
           </ul>
 
