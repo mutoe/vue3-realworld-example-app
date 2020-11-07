@@ -28,9 +28,9 @@ yarn build
 - [x] [ESLint](https://eslint.vuejs.org/)
 - [x] [Vue router](https://next.router.vuejs.org/)
 - [ ] [Vuex](https://vuex.vuejs.org/) (await Vuex v5, [#15](https://github.com/mutoe/vue3-realworld-example-app/issues/15))
-- [ ] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
+- [x] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
 - [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (Temporarily unavailable)
-- [ ] E2E test ([Cypress](https://docs.cypress.io))
+- [x] E2E test ([Cypress](https://docs.cypress.io))
 - [ ] [SFC Script Setup](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md) (Unstable)
 
 # Contributors
