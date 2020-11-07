@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "check-ts-errors": "yarn tsc && yarn vti diagnostics",
     "lint": "eslint \"{src,cypress/integration}/**/*.{js,ts,vue}\"",
     "test:unit": "jest --coverage",
     "test:e2e": "cypress run",
-    "test": "yarn tsc && yarn lint && yarn test:unit && yarn test:e2e"
+    "test": "yarn check-ts-errors && yarn lint && yarn test:unit && yarn test:e2e"
   },
   "dependencies": {
     "@harlem/core": "^1.0.16",
@@ -46,11 +47,13 @@
     "ts-jest": "^24.3.0",
     "typescript": "^3.9.7",
     "vite": "^1.0.0-rc.9",
+    "vti": "^0.0.14",
     "vue-jest": "^5.0.0-alpha.5"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn check-ts-errors"
     }
   },
   "lint-staged": {
