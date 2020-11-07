@@ -5,6 +5,6 @@ describe('# Article', () => {
   it('should display correctly', () => {
     const wrapper = mount(Article)
 
-    expect(wrapper.find('.article-page')).toHaveLength(1)
+    expect(wrapper.text()).toContain('Article is downloading')
   })
 })

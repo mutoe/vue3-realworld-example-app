@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint \"{src,cypress/integration}/**/*.{js,ts,vue}\"",
-    "test:unit": "jest",
+    "test:unit": "jest --coverage",
     "test:e2e": "cypress run",
     "test": "yarn tsc && yarn lint && yarn test:unit && yarn test:e2e"
   },
@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/vue": "^6.0.0",
     "@types/dompurify": "^2.0.4",
     "@types/jest": "^24.9.1",
     "@types/marked": "^1.1.0",
@@ -42,7 +44,7 @@
     "jsdom": "^16.4.0",
     "lint-staged": "^10.5.1",
     "ts-jest": "^24.3.0",
-    "typescript": "^4.0.5",
+    "typescript": "^3.9.7",
     "vite": "^1.0.0-rc.9",
     "vue-jest": "^5.0.0-alpha.5"
   },
@@ -84,11 +86,18 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {}
+    },
     "testEnvironment": "jsdom",
     "transform": {
       "^.+\\.vue$": "vue-jest",
       "^.+\\js$": "babel-jest"
     },
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{ts,vue}",
+      "!<rootDir>/src/config.ts"
+    ],
     "moduleFileExtensions": [
       "vue",
       "ts",
