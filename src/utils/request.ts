@@ -5,7 +5,7 @@ import { NetworkError } from '../types/error'
 import { Either, fail, success } from './either'
 import params2query from './params-to-query'
 
-interface FetchRequestOptions {
+export interface FetchRequestOptions {
   prefix: string;
   headers: Record<string, string>;
   params: Record<string, string | number | boolean>;
@@ -57,62 +57,63 @@ export default class FetchRequest {
   private runFetch ({ method, url, data, options }: {
     method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH',
     url: string,
-    data?: Record<string, any>,
-    options: Partial<FetchRequestOptions>
+    data?: unknown,
+    options?: Partial<FetchRequestOptions>
   }) {
     const finalUrl = this.generateFinalUrl(url, options)
     const headers = this.generateFinalHeaders(options)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fetchOptions: any = { method, headers }
     if (data) fetchOptions.body = JSON.stringify(data)
     return fetch(finalUrl, fetchOptions)
   }
 
-  private runSafeFetch (method: 'GET' | 'DELETE', url: string, options: Partial<FetchRequestOptions>) {
+  private runSafeFetch (method: 'GET' | 'DELETE', url: string, options?: Partial<FetchRequestOptions>) {
     return this.runFetch({ method, url, options })
   }
 
-  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}) {
+  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url: string, data?: unknown, options?: Partial<FetchRequestOptions>) {
     return this.runFetch({ method, url, options, data })
   }
 
-  get<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  get<T = unknown> (url: string, options?: Partial<FetchRequestOptions>): Promise<T> {
     return this.runSafeFetch('GET', url, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  checkableGet<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<Either<NetworkError, T>> {
+  checkableGet<T = unknown> (url: string, options?: Partial<FetchRequestOptions>): Promise<Either<NetworkError, T>> {
     return this.runSafeFetch('GET', url, options).then(r => this.handleResponse<T>(r))
   }
 
-  post<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  post<T = unknown> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<T> {
     return this.runUnsafeFetch('POST', url, data, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  checkablePost<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<Either<NetworkError, T>> {
+  checkablePost<T = unknown> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<Either<NetworkError, T>> {
     return this.runUnsafeFetch('POST', url, data, options).then(r => this.handleResponse<T>(r))
   }
 
-  delete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  delete<T = unknown> (url: string, options?: Partial<FetchRequestOptions>): Promise<T> {
     return this.runSafeFetch('DELETE', url, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  checkableDelete<T = any> (url: string, options: Partial<FetchRequestOptions> = {}): Promise<Either<NetworkError, T>> {
+  checkableDelete<T = unknown> (url: string, options?: Partial<FetchRequestOptions>): Promise<Either<NetworkError, T>> {
     return this.runSafeFetch('DELETE', url, options).then(r => this.handleResponse<T>(r))
   }
 
-  put<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  put<T = unknown> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<T> {
     return this.runUnsafeFetch('PUT', url, data, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  checkablePut<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<Either<NetworkError, T>> {
+  checkablePut<T> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<Either<NetworkError, T>> {
     return this.runUnsafeFetch('PUT', url, data, options).then(r => this.handleResponse<T>(r))
   }
 
-  patch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<T> {
+  patch<T = unknown> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<T> {
     return this.runUnsafeFetch('PATCH', url, data, options).then(r => this.handleCorrectResponse<T>(r))
   }
 
-  checkablePatch<T = any> (url: string, data: Record<string, any> = {}, options: Partial<FetchRequestOptions> = {}): Promise<Either<NetworkError, T>> {
+  checkablePatch<T> (url: string, data?: unknown, options?: Partial<FetchRequestOptions>): Promise<Either<NetworkError, T>> {
     return this.runUnsafeFetch('PATCH', url, data, options).then(r => this.handleResponse<T>(r))
   }
 

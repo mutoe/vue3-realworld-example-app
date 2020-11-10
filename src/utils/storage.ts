@@ -1,4 +1,4 @@
-function get<T = any> (key: string): T | null {
+function get<T> (key: string): T | null {
   try {
     const value = localStorage.getItem(key) || ''
     return JSON.parse(value)

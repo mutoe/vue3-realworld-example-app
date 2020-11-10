@@ -1,6 +1,6 @@
 import { request } from '../index'
 
-export async function deleteComment (slug: string, commentId: number): Promise<any> {
+export async function deleteComment (slug: string, commentId: number): Promise<Record<string, unknown>> {
   return request.delete(`/articles/${slug}/comments/${commentId}`)
 }
 

@@ -1,4 +1,4 @@
-import FetchRequest from 'src/utils/request'
+import FetchRequest, { FetchRequestOptions } from 'src/utils/request'
 import { Either, fail, isEither, success } from 'src/utils/either'
 
 import params2query from 'src/utils/params-to-query'
@@ -38,7 +38,7 @@ function isCheckable (method: CheckableMethod | Method): method is CheckableMeth
   return ['checkableGet', 'checkableDelete', 'checkablePost', 'checkablePut', 'checkablePatch'].includes(method)
 }
 
-async function triggerMethod<T = any> (request: FetchRequest, method: Method | CheckableMethod, options?: any): Promise<T | Either<NetworkError, T>> {
+async function triggerMethod<T = unknown> (request: FetchRequest, method: Method | CheckableMethod, options?: Partial<FetchRequestOptions>): Promise<T | Either<NetworkError, T>> {
   if (isCheckable(method)) {
     let response: Either<NetworkError, T>
     if (isCheckableSafe(method)) response = await request[method]<T>(PATH, options)
