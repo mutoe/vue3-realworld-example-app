@@ -7,12 +7,12 @@ interface PostArticleForm {
   tagList: string[];
 }
 
-export async function postArticle (form: PostArticleForm) {
+export async function postArticle (form: PostArticleForm): Promise<Article> {
   return request.post<ArticleResponse>('/articles', { article: form })
     .then(res => res.article)
 }
 
-export async function putArticle (slug: string, form: PostArticleForm) {
+export async function putArticle (slug: string, form: PostArticleForm): Promise<Article> {
   return request.put<ArticleResponse>(`/articles/${slug}`, { article: form })
     .then(res => res.article)
 }
