@@ -8,6 +8,6 @@ export interface PutProfileForm {
   password?: string;
 }
 
-export async function putProfile (form: PutProfileForm) {
+export async function putProfile (form: PutProfileForm): Promise<User> {
   return request.put<UserResponse>('/user', form).then(res => res.user)
 }

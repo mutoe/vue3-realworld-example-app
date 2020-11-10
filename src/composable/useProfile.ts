@@ -6,6 +6,7 @@ interface UseProfileProps {
   username: ComputedRef<string>
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useProfile ({ username }: UseProfileProps) {
   const profile = ref<Profile | null>(null)
 

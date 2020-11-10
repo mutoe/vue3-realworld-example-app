@@ -14,6 +14,7 @@ interface UseFollowProps {
   onUpdate: (profile: Profile) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
   async function toggleFollow () {
     let response: Either<AuthorizationError, Profile>

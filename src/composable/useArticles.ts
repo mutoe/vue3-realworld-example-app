@@ -12,6 +12,7 @@ import {
   getArticlesByTag,
 } from '../services/article/getArticles'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useArticles () {
   const { articlesType, tag, username, metaChanged } = getArticlesMeta()
 
@@ -80,6 +81,7 @@ export function useArticles () {
 
 export type ArticlesType = 'global-feed' | 'my-feed' | 'tag-feed' | 'user-feed' | 'user-favorites-feed'
 export const articlesTypes: ArticlesType[] = ['global-feed', 'my-feed', 'tag-feed', 'user-feed', 'user-favorites-feed']
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const isArticlesType = (type: any): type is ArticlesType => articlesTypes.includes(type)
 
 const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({

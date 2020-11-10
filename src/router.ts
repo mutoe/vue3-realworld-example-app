@@ -74,7 +74,7 @@ export const router = createRouter({
   ],
 })
 
-export function routerPush (name: AppRouteNames, params?: RouteParams) {
+export function routerPush (name: AppRouteNames, params?: RouteParams): ReturnType<typeof router.push> {
   if (params) return router.push({ name, params })
   else return router.push({ name })
 }

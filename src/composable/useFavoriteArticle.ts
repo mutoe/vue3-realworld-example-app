@@ -14,6 +14,7 @@ interface useFavoriteArticleProps {
   onUpdate: (newArticle: Article) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useFavoriteArticle = ({ isFavorited, articleSlug, onUpdate }: useFavoriteArticleProps) => {
   const favoriteArticle = async () => {
     let response: Either<AuthorizationError, Article>

@@ -1,9 +1,14 @@
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 
-export default function createAsyncProcess<T extends (...args: any[]) => any> (fn: T) {
-  const active = ref<boolean>(false)
+interface CreateAsyncProcessReturn<T extends (...args: any[]) => any> {
+  active: Ref<boolean>
+  run: (...args : Parameters<T>) => Promise<ReturnType<T>>
+}
 
-  async function run (...args : Parameters<T>): Promise<ReturnType<T>> {
+export default function createAsyncProcess<T extends (...args: any[]) => any> (fn: T): CreateAsyncProcessReturn<T> {
+  const active: CreateAsyncProcessReturn<T>['active'] = ref(false)
+
+  const run: CreateAsyncProcessReturn<T>['run'] = async (...args) => {
     active.value = true
     const result = await fn(...args)
     active.value = false
