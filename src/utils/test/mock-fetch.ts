@@ -6,7 +6,7 @@ interface FetchResponseFull {
   ok: boolean,
   status: number,
   statusText:string
-  json: (...args: any) => Promise<any>
+  json: () => Promise<unknown>
 }
 
 export default function mockFetch (data: FetchResponseBody | FetchResponseFull): void {
