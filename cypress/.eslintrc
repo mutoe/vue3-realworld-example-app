@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "env": {
+    "cypress/globals": true
+  },
+  "extends": [
+    "standard",
+    "plugin:cypress/recommended"
+  ],
+  "rules": {
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ]
+  }
+}

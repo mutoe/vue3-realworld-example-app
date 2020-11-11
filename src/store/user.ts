@@ -23,7 +23,7 @@ export const checkAuthorization = (user: ComputedRef<User | null>): user is Comp
 }
 
 export const updateUser = mutation<User | null>('updateUser', (state, userData) => {
-  if (!userData) {
+  if (userData === undefined || userData === null) {
     storage.remove('user')
     request.deleteAuthorizationHeader()
     state.user = null

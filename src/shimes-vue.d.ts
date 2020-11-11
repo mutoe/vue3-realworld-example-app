@@ -5,8 +5,8 @@ declare module '*.vue' {
   export default Component
 }
 
-  interface ImportMeta {
-    env: {
-      VITE_API_HOST: string
-    }
+interface ImportMeta {
+  env: {
+    VITE_API_HOST: string
   }
+}

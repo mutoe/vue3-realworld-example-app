@@ -6,39 +6,39 @@ import { Either, fail, success } from './either'
 import params2query from './params-to-query'
 
 export interface FetchRequestOptions {
-  prefix: string;
-  headers: Record<string, string>;
-  params: Record<string, string | number | boolean>;
+  prefix: string
+  headers: Record<string, string>
+  params: Record<string, string | number | boolean>
 }
 
 export default class FetchRequest {
-  private defaultOptions: FetchRequestOptions = {
+  private readonly defaultOptions: FetchRequestOptions = {
     prefix: '',
     headers: {},
     params: {},
   }
 
-  private options: FetchRequestOptions
+  private readonly options: FetchRequestOptions
 
   constructor (options: Partial<FetchRequestOptions> = {}) {
     this.options = merge(this.defaultOptions, options)
   }
 
-  private generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}) => {
+  private readonly generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}) => {
     const prefix = options.prefix ?? this.options.prefix
     const params = merge(this.options.params, options.params ?? {})
 
     let finalUrl = `${prefix}${url}`
-    if (Object.keys(params).length) finalUrl += `?${params2query(params)}`
+    if (Object.keys(params).length > 0) finalUrl += `?${params2query(params)}`
 
     return finalUrl
   }
 
-  private generateFinalHeaders = (options: Partial<FetchRequestOptions> = {}) => {
+  private readonly generateFinalHeaders = (options: Partial<FetchRequestOptions> = {}) => {
     return merge(this.options.headers, options.headers ?? {})
   }
 
-  private handleResponse = <T>(response: Response): Promise<Either<NetworkError, T>> => {
+  private readonly handleResponse = <T>(response: Response): Promise<Either<NetworkError, T>> => {
     if (response.ok) {
       return response.json().then(json => success(json as T))
     }
@@ -46,7 +46,7 @@ export default class FetchRequest {
     return Promise.resolve(fail(new NetworkError(response)))
   }
 
-  private handleCorrectResponse = <T>(response: Response): Promise<T> => {
+  private readonly handleCorrectResponse = <T>(response: Response): Promise<T> => {
     if (response.ok) {
       return response.json()
     }
@@ -55,9 +55,9 @@ export default class FetchRequest {
   }
 
   private runFetch ({ method, url, data, options }: {
-    method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH',
-    url: string,
-    data?: unknown,
+    method: 'GET' | 'DELETE' | 'POST' | 'PUT' | 'PATCH'
+    url: string
+    data?: unknown
     options?: Partial<FetchRequestOptions>
   }) {
     const finalUrl = this.generateFinalUrl(url, options)
@@ -65,7 +65,7 @@ export default class FetchRequest {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fetchOptions: any = { method, headers }
-    if (data) fetchOptions.body = JSON.stringify(data)
+    if (data !== undefined) fetchOptions.body = JSON.stringify(data)
     return fetch(finalUrl, fetchOptions)
   }
 
@@ -118,8 +118,7 @@ export default class FetchRequest {
   }
 
   public setAuthorizationHeader (token: string): void {
-    if (!this.options.headers) this.options.headers = {}
-    if (token) this.options.headers.Authorization = `Token ${token}`
+    if (token !== '') this.options.headers.Authorization = `Token ${token}`
   }
 
   public deleteAuthorizationHeader (): void {

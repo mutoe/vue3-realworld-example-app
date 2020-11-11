@@ -16,7 +16,7 @@ export function useProfile ({ username }: UseProfileProps) {
     updateProfile(profileData)
   }
 
-  async function updateProfile (profileData: Profile | null) {
+  function updateProfile (profileData: Profile | null) {
     profile.value = profileData
   }
 

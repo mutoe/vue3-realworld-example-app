@@ -52,7 +52,7 @@ async function triggerMethod<T = unknown> (request: FetchRequest, method: Method
   }
 }
 
-function forCorrectMethods (task: string, fn: (method: Method) => void): void {
+function forCorrectMethods (task: string, fn: (method: Method) => Promise<void>): void {
   wrapTests<Method>({
     task,
     fn,
@@ -61,7 +61,7 @@ function forCorrectMethods (task: string, fn: (method: Method) => void): void {
   })
 }
 
-function forCheckableMethods (task: string, fn: (method: CheckableMethod) => void): void {
+function forCheckableMethods (task: string, fn: (method: CheckableMethod) => Promise<void>): void {
   wrapTests<CheckableMethod>({
     task,
     fn,
@@ -70,7 +70,7 @@ function forCheckableMethods (task: string, fn: (method: CheckableMethod) => voi
   })
 }
 
-function forAllMethods (task: string, fn: (method: Method | CheckableMethod) => void): void {
+function forAllMethods (task: string, fn: (method: Method | CheckableMethod) => Promise<void>): void {
   forCheckableMethods(task, fn)
   forCorrectMethods(task, fn)
 }
@@ -78,7 +78,7 @@ function forAllMethods (task: string, fn: (method: Method | CheckableMethod) => 
 forAllMethods('# Should be implemented', async (method) => {
   const request = new FetchRequest()
 
-  triggerMethod(request, method)
+  await triggerMethod(request, method)
 
   expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining({
     method: method.replace('checkable', '').toUpperCase(),
@@ -89,7 +89,7 @@ describe('# Should implement prefix', () => {
   forAllMethods('should implement global prefix', async (method) => {
     const request = new FetchRequest({ prefix: PREFIX })
 
-    triggerMethod(request, method)
+    await triggerMethod(request, method)
 
     expect(global.fetch).toBeCalledWith(`${PREFIX}${PATH}`, expect.any(Object))
   })
@@ -97,7 +97,7 @@ describe('# Should implement prefix', () => {
   forAllMethods('should implement local prefix', async (method) => {
     const request = new FetchRequest()
 
-    triggerMethod(request, method, { prefix: SUB_PREFIX })
+    await triggerMethod(request, method, { prefix: SUB_PREFIX })
 
     expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
   })
@@ -105,7 +105,7 @@ describe('# Should implement prefix', () => {
   forAllMethods('should implement global + local prefix', async (method) => {
     const request = new FetchRequest({ prefix: PREFIX })
 
-    triggerMethod(request, method, { prefix: SUB_PREFIX })
+    await triggerMethod(request, method, { prefix: SUB_PREFIX })
 
     expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
   })
@@ -115,7 +115,7 @@ describe('# Should convert query object to query string in request url', () => {
   forAllMethods('should implement global query', async (method) => {
     const request = new FetchRequest({ params: PARAMS })
 
-    triggerMethod(request, method)
+    await triggerMethod(request, method)
 
     expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
   })
@@ -123,7 +123,7 @@ describe('# Should convert query object to query string in request url', () => {
   forAllMethods('should implement local query', async (method) => {
     const request = new FetchRequest()
 
-    triggerMethod(request, method, { params: PARAMS })
+    await triggerMethod(request, method, { params: PARAMS })
 
     expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
   })
@@ -134,7 +134,7 @@ describe('# Should convert query object to query string in request url', () => {
     const expectedOptions = { params: { q1: 'q11', q2: 'q2', q3: 'q3' } }
     const request = new FetchRequest(options)
 
-    triggerMethod(request, method, localOptions)
+    await triggerMethod(request, method, localOptions)
 
     expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(expectedOptions.params)}`, expect.any(Object))
   })
@@ -174,15 +174,15 @@ forCorrectMethods('# Should converted correct response body to json', async func
 
 forCheckableMethods('# Should converted checkable response to Either<NetworkError, DATA_TYPE>', async function (method) {
   const DATA = { foo: 'bar' }
-  type DATA_TYPE = {foo: 'bar'}
+  interface DATA_TYPE { foo: 'bar' }
   mockFetch({ type: 'body', ...DATA })
   const request = new FetchRequest()
 
   const result = await triggerMethod<DATA_TYPE>(request, method)
 
-  const resultIsEither = isEither<NetworkError, DATA_TYPE>(result)
-  const resultIsOk = isEither<NetworkError, DATA_TYPE>(result) && result.isOk()
-  const resultValue = isEither<NetworkError, DATA_TYPE>(result) && result.isOk() ? result.value : null
+  const resultIsEither = isEither<unknown, DATA_TYPE>(result)
+  const resultIsOk = isEither<unknown, DATA_TYPE>(result) && result.isOk()
+  const resultValue = isEither<unknown, DATA_TYPE>(result) && result.isOk() ? result.value : null
 
   expect(resultIsEither).toBe(true)
   expect(resultIsOk).toBe(true)
@@ -216,9 +216,9 @@ forCheckableMethods('# Should return Either<NetworkError, DATA_TYPE> if checkabl
   const request = new FetchRequest()
   const result = await triggerMethod(request, method)
 
-  const resultIsEither = isEither<NetworkError, void>(result)
-  const resultIsNotOk = isEither<NetworkError, void>(result) && result.isFail()
-  const resultValue = isEither<NetworkError, void>(result) && result.isFail() ? result.value : null
+  const resultIsEither = isEither<NetworkError, unknown>(result)
+  const resultIsNotOk = isEither<NetworkError, unknown>(result) && result.isFail()
+  const resultValue = isEither<NetworkError, unknown>(result) && result.isFail() ? result.value : null
 
   expect(resultIsEither).toBe(true)
   expect(resultIsNotOk).toBe(true)
@@ -233,7 +233,7 @@ describe('# Authorization header', function () {
     const request = new FetchRequest()
     request.setAuthorizationHeader(TOKEN)
 
-    triggerMethod(request, method)
+    await triggerMethod(request, method)
 
     expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
   })

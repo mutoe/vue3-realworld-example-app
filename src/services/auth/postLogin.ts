@@ -6,8 +6,8 @@ import { mapValidationResponse } from '../../utils/map-checkable-response'
 import { Either, fail, success } from '../../utils/either'
 
 export interface PostLoginForm {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export type PostLoginErrors = Partial<Record<keyof PostLoginForm, string[]>>

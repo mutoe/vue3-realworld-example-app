@@ -59,9 +59,9 @@ export function useArticles () {
 
   const { active: articlesDownloading, run: runWrappedFetchArticles } = createAsyncProcess(fetchArticles)
 
-  watch(metaChanged, () => {
+  watch(metaChanged, async () => {
     if (page.value !== 1) changePage(1)
-    else runWrappedFetchArticles()
+    else await runWrappedFetchArticles()
   })
 
   watch(page, runWrappedFetchArticles)

@@ -1,8 +1,8 @@
 interface WrapTestsProps <Item> {
   task: string
   list: Item[]
-  fn: (item: Item) => void,
-  only?: boolean,
+  fn: (item: Item) => void
+  only?: boolean
   testName?: (item: Item, index: number) => string
 }
 
@@ -11,7 +11,7 @@ function wrapTests<Item> ({ task, list, fn, testName, only = false }: WrapTestsP
 
   descFn(task, () => {
     list.forEach((item, index) => {
-      const name = testName ? testName(item, index) : ''
+      const name = testName !== undefined ? testName(item, index) : ''
       it(name, () => fn(item))
     })
   })
