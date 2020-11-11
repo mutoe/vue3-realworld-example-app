@@ -24,7 +24,7 @@ export default class FetchRequest {
     this.options = merge(this.defaultOptions, options)
   }
 
-  private readonly generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}) => {
+  private readonly generateFinalUrl = (url: string, options: Partial<FetchRequestOptions> = {}): string => {
     const prefix = options.prefix ?? this.options.prefix
     const params = merge(this.options.params, options.params ?? {})
 
@@ -34,7 +34,7 @@ export default class FetchRequest {
     return finalUrl
   }
 
-  private readonly generateFinalHeaders = (options: Partial<FetchRequestOptions> = {}) => {
+  private readonly generateFinalHeaders = (options: Partial<FetchRequestOptions> = {}): FetchRequestOptions['headers'] => {
     return merge(this.options.headers, options.headers ?? {})
   }
 
@@ -59,7 +59,7 @@ export default class FetchRequest {
     url: string
     data?: unknown
     options?: Partial<FetchRequestOptions>
-  }) {
+  }): Promise<Response> {
     const finalUrl = this.generateFinalUrl(url, options)
     const headers = this.generateFinalHeaders(options)
 
@@ -69,11 +69,20 @@ export default class FetchRequest {
     return fetch(finalUrl, fetchOptions)
   }
 
-  private runSafeFetch (method: 'GET' | 'DELETE', url: string, options?: Partial<FetchRequestOptions>) {
+  private runSafeFetch (
+    method: 'GET' | 'DELETE',
+    url: string,
+    options?: Partial<FetchRequestOptions>,
+  ): Promise<Response> {
     return this.runFetch({ method, url, options })
   }
 
-  private runUnsafeFetch (method: 'POST' | 'PUT' | 'PATCH', url: string, data?: unknown, options?: Partial<FetchRequestOptions>) {
+  private runUnsafeFetch (
+    method: 'POST' | 'PUT' | 'PATCH',
+    url: string,
+    data?: unknown,
+    options?: Partial<FetchRequestOptions>,
+  ): Promise<Response> {
     return this.runFetch({ method, url, options, data })
   }
 

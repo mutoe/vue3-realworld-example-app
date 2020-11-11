@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue'
+import { computed, ComputedRef, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import type { AppRouteNames } from '../router'
 
@@ -12,7 +12,7 @@ import {
   getArticlesByTag,
 } from '../services/article/getArticles'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useArticles () {
   const { articlesType, tag, username, metaChanged } = getArticlesMeta()
 
@@ -20,7 +20,7 @@ export function useArticles () {
   const articlesCount = ref(0)
   const page = ref(1)
 
-  async function fetchArticles () {
+  async function fetchArticles (): Promise<void> {
     articles.value = []
     let responsePromise: null | Promise<ArticlesResponse> = null
 
@@ -49,11 +49,11 @@ export function useArticles () {
     }
   }
 
-  const changePage = (value: number) => {
+  const changePage = (value: number): void => {
     page.value = value
   }
 
-  const updateArticle = (index: number, article: Article) => {
+  const updateArticle = (index: number, article: Article): void => {
     articles.value[index] = article
   }
 
@@ -92,7 +92,13 @@ const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
   'profile-favorites': 'user-favorites-feed',
 })
 
-function getArticlesMeta () {
+interface GetArticlesMetaReturn {
+  tag: ComputedRef<string>
+  username: ComputedRef<string>
+  articlesType: ComputedRef<ArticlesType>
+  metaChanged: ComputedRef<string>
+}
+function getArticlesMeta (): GetArticlesMetaReturn {
   const route = useRoute()
 
   const tag = ref('')
