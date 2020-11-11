@@ -2,7 +2,7 @@ import { ValidationError, AuthorizationError, NetworkError } from 'src/types/err
 import { Either, fail, isEither, success } from './either'
 import { mapAuthorizationResponse, mapValidationResponse } from './map-checkable-response'
 
-const createCheckableResponse = (response: Partial<Response>): Either<NetworkError, Partial<Response>> => response.ok
+const createCheckableResponse = (response: Partial<Response>): Either<NetworkError, Partial<Response>> => response.ok === true
   ? success(response)
   : fail(new NetworkError(response as Response))
 

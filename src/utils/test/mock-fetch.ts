@@ -3,9 +3,9 @@ interface FetchResponseBody {
 }
 interface FetchResponseFull {
   type: 'full'
-  ok: boolean,
-  status: number,
-  statusText:string
+  ok: boolean
+  status: number
+  statusText: string
   json: () => Promise<unknown>
 }
 

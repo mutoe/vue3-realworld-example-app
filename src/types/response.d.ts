@@ -1,28 +1,28 @@
 declare interface UserResponse {
-  user: User;
+  user: User
 }
 
 declare interface TagsResponse {
-  tags: string[];
+  tags: string[]
 }
 
 declare interface ProfileResponse {
-  profile: Profile;
+  profile: Profile
 }
 
 declare interface ArticleResponse {
-  article: Article;
+  article: Article
 }
 
 declare interface ArticlesResponse {
-  articles: Article[];
-  articlesCount: number;
+  articles: Article[]
+  articlesCount: number
 }
 
 declare interface CommentResponse {
-  comment: ArticleComment;
+  comment: ArticleComment
 }
 
 declare interface CommentsResponse {
-  comments: ArticleComment[];
+  comments: ArticleComment[]
 }

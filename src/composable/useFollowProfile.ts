@@ -19,7 +19,7 @@ export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
   async function toggleFollow () {
     let response: Either<AuthorizationError, Profile>
 
-    if (following.value === true) {
+    if (following.value) {
       response = await deleteFollowProfile(username.value)
     } else {
       response = await postFollowProfile(username.value)

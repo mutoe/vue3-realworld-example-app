@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "project": "./tsconfig.json",
+    "sourceType": "module",
+    "extraFileExtensions": [
+      ".vue",
+      ".d.ts"
+    ]
+  },
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "standard-with-typescript",
+    "plugin:vue/vue3-recommended"
+  ],
+  "rules": {
+    "no-undef": "off",
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/promise-function-async": "off"
+  }
+}
