@@ -9,7 +9,7 @@
     :key="comment.id"
     :comment="comment"
     :username="username"
-    @remove-comment="removeComment(comment.id)"
+    @remove-comment="() => removeComment(comment.id)"
   />
 </template>
 

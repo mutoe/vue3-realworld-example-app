@@ -12,7 +12,7 @@
     Articles are downloading...
   </div>
   <div
-    v-else-if="articles.length == 0"
+    v-else-if="articles.length === 0"
     class="article-preview"
   >
     No articles are here... yet.
@@ -22,7 +22,7 @@
       v-for="(article, index) in articles"
       :key="article.slug"
       :article="article"
-      @update="updateArticle(index, $event)"
+      @update="() => updateArticle(index, $event)"
     />
 
     <AppPagination
