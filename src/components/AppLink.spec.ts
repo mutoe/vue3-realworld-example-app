@@ -1,27 +1,28 @@
 import AppLink from './AppLink.vue'
-import { fireEvent, render, waitFor } from '@testing-library/vue'
-import { routerForTests } from '../utils/test/mock-router'
+import { router } from '../router'
+import { flushPromises, mount } from '@vue/test-utils'
 
 describe('# AppLink', function () {
   beforeEach(async () => {
-    await routerForTests.push({ name: 'home' })
+    await router.push('/')
   })
 
   it('should redirect to another page when click the link', async function () {
     // given
-    const { container, getByRole } = render(AppLink, {
-      global: { plugins: [routerForTests] },
-      props: { name: 'foo' },
-      slots: { default: 'Go to Foo' },
+    const wrapper = mount(AppLink, {
+      global: { plugins: [router] },
+      props: { name: 'tag', params: { tag: 'foo' } },
+      slots: { default: 'Go to Foo tag' },
     })
 
-    expect(container).toHaveTextContent('Go to Foo')
+    expect(wrapper.text()).toContain('Go to Foo tag')
 
     // when
-    const linkElement = getByRole('link', { name: 'foo' })
-    await fireEvent.click(linkElement)
+    const linkElement = wrapper.get('a[aria-label=tag]')
+    await linkElement.trigger('click')
+    await flushPromises()
 
     // then
-    await waitFor(() => expect(linkElement).toHaveClass('router-link-active'))
+    expect(linkElement.html()).toContain('router-link-active')
   })
 })
