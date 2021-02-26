@@ -4,7 +4,7 @@ import { router } from '../router'
 
 describe('# AppLink', () => {
   beforeEach(async () => {
-    await router.push({ name: 'global-feed' })
+    await router.push('/')
   })
 
   it('should redirect to another page when click the link', async () => {
@@ -15,7 +15,7 @@ describe('# AppLink', () => {
       slots: { default: 'Go to Foo tag' },
     })
 
-    expect(container).toHaveTextContent('Go to Foo')
+    expect(container).toHaveTextContent('Go to Foo tag')
 
     // when
     const linkElement = getByRole('link', { name: 'tag' })

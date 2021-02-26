@@ -1,9 +1,8 @@
 describe('View the homepage', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
-    cy.route2('GET', /articles/, { fixture: 'articles.json' }).as('getArticles')
-    cy.route2('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
+    cy.intercept('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
+    cy.intercept('GET', /articles/, { fixture: 'articles.json' }).as('getArticles')
+    cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
 
     cy.visit('/')
   })

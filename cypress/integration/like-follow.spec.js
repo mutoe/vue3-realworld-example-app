@@ -1,10 +1,9 @@
 describe('test for like-follow', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
-    cy.route2('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
-    cy.route2('GET', /articles\//, { fixture: 'article.json' }).as('getArticle')
-    cy.route2('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
+    cy.intercept('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
+    cy.intercept('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
+    cy.intercept('GET', /articles\//, { fixture: 'article.json' }).as('getArticle')
+    cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
 
     cy.visit('/')
   })
@@ -17,7 +16,7 @@ describe('test for like-follow', () => {
       .should('contain', 'login')
 
     cy.get('h1.text-xs-center')
-      .should('contain.text', ' Sign in ')
+      .should('contain.text', 'Sign in')
   })
 
   it('login:like articles', () => {

@@ -1,11 +1,10 @@
 describe('test for register', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route2('POST', /users/, { fixture: 'register.json' }).as('register')
-    cy.route2('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
-    cy.route2('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
-    cy.route2('GET', /articles\//, { fixture: 'article.json' }).as('getArticle')
-    cy.route2('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
+    cy.intercept('POST', /users/, { fixture: 'register.json' }).as('register')
+    cy.intercept('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
+    cy.intercept('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
+    cy.intercept('GET', /articles\//, { fixture: 'article.json' }).as('getArticle')
+    cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
 
     cy.visit('/')
   })

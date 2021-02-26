@@ -5,7 +5,7 @@ import { router } from '../router'
 
 describe('# AppFooter', () => {
   beforeEach(async () => {
-    await router.push({ name: 'global-feed' })
+    await router.push('/')
   })
 
   it('should render correctly', () => {
