@@ -12,27 +12,41 @@ We've gone to great lengths to adhere to the **Vue3** community styleguides & be
 
 For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
-# Getting started
-
-```shell script
-yarn install
-yarn dev
-yarn build
-```
-
 # What works?
 
 - [x] [Vite](https://github.com/vitejs/vite)
 - [x] [Composition API](https://composition-api.vuejs.org/)
+- [x] [Suspense](https://v3.vuejs.org/guide/component-dynamic-async.html#using-with-suspense) (Experimental)
 - [x] [TypeScript](https://www.typescriptlang.org/)
 - [x] [ESLint](https://eslint.vuejs.org/)
 - [x] [Vue router](https://next.router.vuejs.org/)
 - [x] [Harlem](https://github.com/andrewcourtice/harlem) ([await Vuex v5](https://github.com/mutoe/vue3-realworld-example-app/issues/15))
-- [x] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
-- [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (Temporarily unavailable)
+- [x] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next)) (master branch)
+- [x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro)) (in [testing-library branch](https://github.com/mutoe/vue3-realworld-example-app/tree/testing-library))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
 - [x] [SFC Script Setup](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md) (Experimental)
 - [x] Vetur Tools: [VTI](https://github.com/mutoe/vue3-realworld-example-app/pull/28) and [optionally IDE hints](https://github.com/mutoe/vue3-realworld-example-app/commit/8367f89a99c467d181d9c7f4144deb05cec55210#commitcomment-43957089)
+
+> \* "Experimental" means this feature may be changed.
+
+# Getting started
+
+```shell script
+yarn install
+
+# Development
+yarn dev
+
+# Build dist
+yarn build
+
+# Run unit tests
+yarn test:unit
+
+# Run E2E tests
+yarn cypress open # with GUI
+yarn test:e2e # headless
+```
 
 # Contributors
 

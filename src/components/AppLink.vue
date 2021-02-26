@@ -1,5 +1,9 @@
 <template>
-  <router-link :to="props" v-bind="attrs">
+  <router-link
+    :aria-label="props.name"
+    :to="props"
+    v-bind="attrs"
+  >
     <slot />
   </router-link>
 </template>
@@ -8,6 +12,7 @@
 import type { AppRouteNames } from '../router'
 import type { RouteParams } from 'vue-router'
 
+import { RouterLink } from 'vue-router'
 import { defineProps, useContext } from 'vue'
 
 const props = defineProps<{

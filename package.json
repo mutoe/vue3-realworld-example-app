@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.1",
     "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/vue": "^6.3.4",
+    "@testing-library/vue": "^6.4.0",
     "@types/dompurify": "^2.2.1",
     "@types/jest": "^26.0.20",
     "@types/marked": "^1.2.2",
