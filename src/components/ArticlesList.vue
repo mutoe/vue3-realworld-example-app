@@ -1,24 +1,14 @@
 <template>
-  <ArticlesListNavigation
-    v-bind="$attrs"
-    :tag="tag"
-    :username="username"
-  />
+  <ArticlesListNavigation v-bind="$attrs" :tag="tag" :username="username" />
 
-  <div
-    v-if="articlesDownloading"
-    class="article-preview"
-  >
+  <div v-if="articlesDownloading" class="article-preview">
     Articles are downloading...
   </div>
-  <div
-    v-else-if="articles.length === 0"
-    class="article-preview"
-  >
+  <div v-else-if="articles.length === 0" class="article-preview">
     No articles are here... yet.
   </div>
   <template v-else>
-    <ArticlePreview
+    <ArticlesListArticlePreview
       v-for="(article, index) in articles"
       :key="article.slug"
       :article="article"
@@ -33,43 +23,23 @@
   </template>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
+<script lang="ts" setup>
 import ArticlesListNavigation from './ArticlesListNavigation.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import AppPagination from './AppPagination.vue'
-
 import { useArticles } from '../composable/useArticles'
 
-export default defineComponent({
-  name: 'ArticlesList',
-  components: {
-    ArticlePreview: ArticlesListArticlePreview,
-    AppPagination,
-    ArticlesListNavigation,
-  },
+const {
+  fetchArticles,
+  articlesDownloading,
+  articlesCount,
+  articles,
+  updateArticle,
+  page,
+  changePage,
+  tag,
+  username,
+} = useArticles()
 
-  async setup () {
-    const {
-      fetchArticles, articlesDownloading,
-      articlesCount, articles, updateArticle,
-      page, changePage,
-      tag, username,
-    } = useArticles()
-
-    await fetchArticles()
-
-    return {
-      articlesDownloading,
-      articles,
-      articlesCount,
-      page,
-      changePage,
-      updateArticle,
-      tag,
-      username,
-    }
-  },
-})
+await fetchArticles()
 </script>

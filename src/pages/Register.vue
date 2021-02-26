@@ -3,28 +3,18 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">
-            Sign up
-          </h1>
+          <h1 class="text-xs-center">Sign up</h1>
           <p class="text-xs-center">
-            <AppLink name="login">
-              Have an account?
-            </AppLink>
+            <AppLink name="login"> Have an account? </AppLink>
           </p>
 
           <ul class="error-messages">
-            <li
-              v-for="(error, field) in errors"
-              :key="field"
-            >
-              {{ field }} {{ error ? error[0] : '' }}
+            <li v-for="(error, field) in errors" :key="field">
+              {{ field }} {{ error ? error[0] : "" }}
             </li>
           </ul>
 
-          <form
-            ref="formRef"
-            @submit.prevent="register"
-          >
+          <form ref="formRef" @submit.prevent="register">
             <fieldset class="form-group">
               <input
                 v-model="form.username"
@@ -32,7 +22,7 @@
                 type="text"
                 required
                 placeholder="Your Name"
-              >
+              />
             </fieldset>
             <fieldset class="form-group">
               <input
@@ -41,7 +31,7 @@
                 type="email"
                 required
                 placeholder="Email"
-              >
+              />
             </fieldset>
             <fieldset class="form-group">
               <input
@@ -51,7 +41,7 @@
                 :minLength="8"
                 required
                 placeholder="Password"
-              >
+              />
             </fieldset>
             <button
               type="submit"
@@ -67,44 +57,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+<script lang="ts" setup>
+import type { PostRegisterForm, PostRegisterErrors } from '../services/auth/postRegister'
+
+import { reactive, ref } from 'vue'
 import { routerPush } from '../router'
-
-import { postRegister, PostRegisterForm, PostRegisterErrors } from '../services/auth/postRegister'
-
+import { postRegister } from '../services/auth/postRegister'
 import { updateUser } from '../store/user'
 
-export default defineComponent({
-  name: 'RegisterPage',
-  setup () {
-    const formRef = ref<HTMLFormElement | null>(null)
-    const form = reactive<PostRegisterForm>({
-      username: '',
-      email: '',
-      password: '',
-    })
-
-    const errors = ref<PostRegisterErrors>({})
-
-    const register = async () => {
-      if (!formRef.value?.checkValidity()) return
-
-      const result = await postRegister(form)
-      if (result.isOk()) {
-        updateUser(result.value)
-        await routerPush('global-feed')
-      } else {
-        errors.value = await result.value.getErrors()
-      }
-    }
-
-    return {
-      formRef,
-      form,
-      register,
-      errors,
-    }
-  },
+const formRef = ref<HTMLFormElement | null>(null)
+const form = reactive<PostRegisterForm>({
+  username: '',
+  email: '',
+  password: '',
 })
+
+const errors = ref<PostRegisterErrors>({})
+
+const register = async () => {
+  if (!formRef.value?.checkValidity()) return
+
+  const result = await postRegister(form)
+  if (result.isOk()) {
+    updateUser(result.value)
+    await routerPush('global-feed')
+  } else {
+    errors.value = await result.value.getErrors()
+  }
+}
 </script>

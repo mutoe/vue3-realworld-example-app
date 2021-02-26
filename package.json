@@ -1,6 +1,6 @@
 {
   "name": "vue3-realworld-example-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -15,8 +15,8 @@
     "@harlem/core": "^1.1.0",
     "deepmerge": "^4.2.2",
     "dompurify": "^2.2.6",
-    "marked": "^2.0.0",
-    "vue": "^3.0.2",
+    "marked": "^1.2.9",
+    "vue": "^3.0.6",
     "vue-router": "^4.0.4"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "@testing-library/vue": "^6.3.4",
     "@types/dompurify": "^2.2.1",
     "@types/jest": "^26.0.20",
+    "@types/marked": "^1.2.2",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "@vitejs/plugin-vue": "^1.1.4",
@@ -39,14 +40,13 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.6.0",
     "husky": "^5.1.1",
     "jest": "^26.6.3",
     "jsdom": "^16.4.0",
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.1",
-    "typescript": "^4.1.5",
+    "typescript": "~4.1.5",
     "vite": "^2.0.2",
     "vti": "^0.0.24",
     "vue-jest": "^5.0.0-alpha.8"

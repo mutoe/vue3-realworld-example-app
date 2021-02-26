@@ -13,8 +13,8 @@
   />
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
@@ -25,38 +25,22 @@ import { deleteComment } from '../services/comment/postComment'
 
 import { user } from '../store/user'
 
-export default defineComponent({
-  name: 'ArticleDetailComments',
-  components: {
-    ArticleDetailCommentsForm,
-    ArticleDetailComment,
-  },
-  async setup () {
-    const route = useRoute()
-    const slug = route.params.slug as string
+const route = useRoute()
+const slug = route.params.slug as string
 
-    const username = computed(() => user.value?.username)
+const username = computed(() => user.value?.username)
 
-    const comments = ref<ArticleComment[]>([])
+const comments = ref<ArticleComment[]>([])
 
-    const addComment = async (comment: ArticleComment) => {
-      comments.value.unshift(comment)
-    }
+const addComment = async (comment: ArticleComment) => {
+  comments.value.unshift(comment)
+}
 
-    const removeComment = async (commentId: number) => {
-      await deleteComment(slug, commentId)
-      comments.value = comments.value.filter(c => c.id !== commentId)
-    }
+const removeComment = async (commentId: number) => {
+  await deleteComment(slug, commentId)
+  comments.value = comments.value.filter(c => c.id !== commentId)
+}
 
-    comments.value = await getCommentsByArticle(slug)
+comments.value = await getCommentsByArticle(slug)
 
-    return {
-      comments,
-      slug,
-      username,
-      addComment,
-      removeComment,
-    }
-  },
-})
 </script>

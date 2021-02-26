@@ -3,9 +3,7 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">
-            Your Settings
-          </h1>
+          <h1 class="text-xs-center">Your Settings</h1>
 
           <form @submit.prevent="onSubmit">
             <fieldset>
@@ -15,7 +13,7 @@
                   type="text"
                   class="form-control"
                   placeholder="URL of profile picture"
-                >
+                />
               </fieldset>
               <fieldset class="form-group">
                 <input
@@ -23,7 +21,7 @@
                   type="text"
                   class="form-control form-control-lg"
                   placeholder="Your name"
-                >
+                />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
@@ -39,7 +37,7 @@
                   type="email"
                   class="form-control form-control-lg"
                   placeholder="Email"
-                >
+                />
               </fieldset>
               <fieldset class="form-group">
                 <input
@@ -47,7 +45,7 @@
                   type="password"
                   class="form-control form-control-lg"
                   placeholder="New Password"
-                >
+                />
               </fieldset>
               <button
                 class="btn btn-lg btn-primary pull-xs-right"
@@ -59,12 +57,9 @@
             </fieldset>
           </form>
 
-          <hr>
+          <hr />
 
-          <button
-            class="btn btn-outline-danger"
-            @click="onLogout"
-          >
+          <button class="btn btn-outline-danger" @click="onLogout">
             Or click here to logout.
           </button>
         </div>
@@ -73,54 +68,42 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, onMounted, reactive } from 'vue'
+<script lang="ts" setup>
+import type { PutProfileForm } from '../services/profile/putProfile'
+
+import { computed, onMounted, reactive } from 'vue'
 import { routerPush } from '../router'
-
-import { putProfile, PutProfileForm } from '../services/profile/putProfile'
-
+import { putProfile } from '../services/profile/putProfile'
 import { user, checkAuthorization, updateUser } from '../store/user'
 
-export default defineComponent({
-  name: 'SettingsPage',
-  setup () {
-    const form = reactive<PutProfileForm>({})
+const form = reactive<PutProfileForm>({})
 
-    const onSubmit = async () => {
-      const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
-      const userData = await putProfile(filteredForm)
-      updateUser(userData)
-      await routerPush('profile', { username: userData.username })
-    }
+const onSubmit = async () => {
+  const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
+  const userData = await putProfile(filteredForm)
+  updateUser(userData)
+  await routerPush('profile', { username: userData.username })
+}
 
-    const onLogout = async () => {
-      updateUser(null)
-      await routerPush('global-feed')
-    }
+const onLogout = async () => {
+  updateUser(null)
+  await routerPush('global-feed')
+}
 
-    onMounted(async () => {
-      if (!checkAuthorization(user)) return await routerPush('login')
+onMounted(async () => {
+  if (!checkAuthorization(user)) return await routerPush('login')
 
-      form.image = user.value.image
-      form.username = user.value.username
-      form.bio = user.value.bio
-      form.email = user.value.email
-    })
-
-    const isButtonDisabled = computed(() => (
-      form.image === user.value?.image &&
-      form.username === user.value?.username &&
-      form.bio === user.value?.bio &&
-      form.email === user.value?.email &&
-      !form.password
-    ))
-
-    return {
-      form,
-      onSubmit,
-      isButtonDisabled,
-      onLogout,
-    }
-  },
+  form.image = user.value.image
+  form.username = user.value.username
+  form.bio = user.value.bio
+  form.email = user.value.email
 })
+
+const isButtonDisabled = computed(() => (
+  form.image === user.value?.image &&
+  form.username === user.value?.username &&
+  form.bio === user.value?.bio &&
+  form.email === user.value?.email &&
+  !form.password
+))
 </script>

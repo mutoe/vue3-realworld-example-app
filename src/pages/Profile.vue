@@ -38,7 +38,8 @@
                 @click="toggleFollow"
               >
                 <i class="ion-plus-round space" />
-                {{ profile.following ? "Unfollow" : "Follow" }} {{ profile.username }}
+                {{ profile.following ? "Unfollow" : "Follow" }}
+                {{ profile.username }}
               </button>
             </template>
           </div>
@@ -66,47 +67,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-
 import ArticlesList from '../components/ArticlesList.vue'
-
 import { useProfile } from '../composable/useProfile'
 import { useFollow } from '../composable/useFollowProfile'
-
 import { user, checkAuthorization } from '../store/user'
 
-export default defineComponent({
-  name: 'ProfilePage',
-  components: {
-    ArticlesList,
-  },
-  setup () {
-    const route = useRoute()
-    const username = computed<string>(() => route.params.username as string)
+const route = useRoute()
+const username = computed<string>(() => route.params.username as string)
 
-    const { profile, updateProfile } = useProfile({ username })
+const { profile, updateProfile } = useProfile({ username })
 
-    const { followProcessGoing, toggleFollow } = useFollow({
-      following: computed<boolean>(() => profile.value?.following ?? false),
-      username,
-      onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
-    })
-
-    const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
-    const showFollow = computed<boolean>(() => user.value?.username !== username.value)
-
-    return {
-      profile,
-      showEdit,
-      showFollow,
-      followProcessGoing,
-      toggleFollow,
-    }
-  },
+const { followProcessGoing, toggleFollow } = useFollow({
+  following: computed<boolean>(() => profile.value?.following ?? false),
+  username,
+  onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
 
+const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
+const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 </script>
 
 <style scoped>
@@ -114,6 +95,6 @@ export default defineComponent({
   margin-right: 4px;
 }
 .align-left {
-  text-align: left
+  text-align: left;
 }
 </style>

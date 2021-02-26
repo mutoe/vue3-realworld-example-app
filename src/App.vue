@@ -4,16 +4,7 @@
   <AppFooter />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import AppFooter from './components/AppFooter.vue'
 import AppNavigation from './components/AppNavigation.vue'
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    AppNavigation,
-    AppFooter,
-  },
-})
 </script>

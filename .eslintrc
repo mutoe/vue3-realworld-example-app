@@ -5,24 +5,20 @@
     "parser": "@typescript-eslint/parser",
     "project": "./tsconfig.json",
     "sourceType": "module",
-    "extraFileExtensions": [
-      ".vue",
-      ".d.ts"
-    ]
+    "extraFileExtensions": [".vue", ".d.ts"]
   },
   "extends": [
     "standard",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "standard-with-typescript",
-    "plugin:vue/vue3-recommended"
+    "plugin:vue/vue3-recommended",
+    "standard-with-typescript"
   ],
   "rules": {
     "no-undef": "off",
-    "comma-dangle": [
-      "warn",
-      "always-multiline"
-    ],
-    "@typescript-eslint/promise-function-async": "off"
+    "no-unused-vars": "off",
+    "comma-dangle": ["warn", "always-multiline"],
+    "@typescript-eslint/promise-function-async": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }

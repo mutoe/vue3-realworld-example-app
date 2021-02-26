@@ -22,81 +22,74 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script lang="ts" setup>
 import type { RouteParams } from 'vue-router'
 import type { AppRouteNames } from '../router'
-
 import type { ArticlesType } from '../composable/useArticles'
 
+import { computed, defineProps } from 'vue'
 import { isAuthorized } from '../store/user'
 
 interface ArticlesListNavLink {
-  name: ArticlesType
-  routeName: AppRouteNames
-  routeParams?: Partial<RouteParams>
-  title: string
-  icon?: string
+  name: ArticlesType;
+  routeName: AppRouteNames;
+  routeParams?: Partial<RouteParams>;
+  title: string;
+  icon?: string;
 }
 
-export default defineComponent({
-  name: 'ArticlesListNavigation',
-  props: {
-    useGlobalFeed: { type: Boolean, default: false },
-    useMyFeed: { type: Boolean, default: false },
-    useTagFeed: { type: Boolean, default: false },
-    useUserFeed: { type: Boolean, default: false },
-    useUserFavorited: { type: Boolean, default: false },
-    tag: { type: String, required: true },
-    username: { type: String, required: true },
+const props = defineProps<{
+  tag: string;
+  username: string;
+  useGlobalFeed?: boolean;
+  useMyFeed?: boolean;
+  useTagFeed?: boolean;
+  useUserFeed?: boolean;
+  useUserFavorited?: boolean;
+}>()
+
+const allLinks = computed<ArticlesListNavLink[]>(() => [
+  {
+    name: 'global-feed',
+    routeName: 'global-feed',
+    title: 'Global Feed',
   },
-  setup (props) {
-    const allLinks = computed<ArticlesListNavLink[]>(() => [
-      {
-        name: 'global-feed',
-        routeName: 'global-feed',
-        title: 'Global Feed',
-      },
-      {
-        name: 'my-feed',
-        routeName: 'my-feed',
-        title: 'Your Feed',
-      },
-      {
-        name: 'tag-feed',
-        routeName: 'tag',
-        routeParams: { tag: props.tag },
-        title: props.tag,
-        icon: 'ion-pound',
-      },
-
-      {
-        name: 'user-feed',
-        routeName: 'profile',
-        routeParams: { username: props.username },
-        title: 'My articles',
-      },
-      {
-        name: 'user-favorites-feed',
-        routeName: 'profile-favorites',
-        routeParams: { username: props.username },
-        title: 'Favorited Articles',
-      },
-    ])
-
-    const show = computed<Record<ArticlesType, boolean>>(() => ({
-      'global-feed': props.useGlobalFeed,
-      'my-feed': props.useMyFeed && isAuthorized.value,
-      'tag-feed': props.useTagFeed && props.tag !== '',
-      'user-feed': props.useUserFeed && props.username !== '',
-      'user-favorites-feed': props.useUserFavorited && props.username !== '',
-    }))
-
-    const links = computed<ArticlesListNavLink[]>(() => allLinks.value.filter(link => show.value[link.name]))
-
-    return {
-      links,
-    }
+  {
+    name: 'my-feed',
+    routeName: 'my-feed',
+    title: 'Your Feed',
   },
-})
+  {
+    name: 'tag-feed',
+    routeName: 'tag',
+    routeParams: { tag: props.tag },
+    title: props.tag,
+    icon: 'ion-pound',
+  },
+
+  {
+    name: 'user-feed',
+    routeName: 'profile',
+    routeParams: { username: props.username },
+    title: 'My articles',
+  },
+  {
+    name: 'user-favorites-feed',
+    routeName: 'profile-favorites',
+    routeParams: { username: props.username },
+    title: 'Favorited Articles',
+  },
+])
+
+const show = computed<Record<ArticlesType, boolean>>(() => ({
+  'global-feed': props.useGlobalFeed ?? false,
+  'my-feed': (props.useMyFeed && isAuthorized.value) ?? false,
+  'tag-feed': (props.useTagFeed && props.tag !== '') ?? false,
+  'user-feed': (props.useUserFeed && props.username !== '') ?? false,
+  'user-favorites-feed': (props.useUserFavorited && props.username !== '') ?? false,
+}))
+
+const links = computed<ArticlesListNavLink[]>(() =>
+  allLinks.value.filter((link) => show.value[link.name]),
+)
 </script>

@@ -35,8 +35,8 @@
   </form>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+<script lang="ts" setup>
+import { ref, computed, defineProps, defineEmit } from 'vue'
 
 import { useProfile } from '../composable/useProfile'
 
@@ -44,31 +44,21 @@ import { postComment } from '../services/comment/postComment'
 
 import { user, checkAuthorization } from '../store/user'
 
-export default defineComponent({
-  name: 'ArticleDetailCommentsForm',
-  props: {
-    articleSlug: { type: String, required: true },
-  },
-  emits: {
-    'add-comment': (comment: ArticleComment) => !!comment.id,
-  },
-  setup (props, { emit }) {
-    const username = computed(() => checkAuthorization(user) ? user.value.username : '')
-    const { profile } = useProfile({ username })
+const props = defineProps<{
+  articleSlug: string
+}>()
 
-    const comment = ref('')
+const emit = defineEmit<(e: 'add-comment', comment: ArticleComment) => void>()
 
-    const submitComment = async () => {
-      const newComment = await postComment(props.articleSlug, comment.value)
-      emit('add-comment', newComment)
-      comment.value = ''
-    }
+const username = computed(() => checkAuthorization(user) ? user.value.username : '')
+const { profile } = useProfile({ username })
 
-    return {
-      profile,
-      comment,
-      submitComment,
-    }
-  },
-})
+const comment = ref('')
+
+const submitComment = async () => {
+  const newComment = await postComment(props.articleSlug, comment.value)
+  emit('add-comment', newComment)
+  comment.value = ''
+}
+
 </script>
