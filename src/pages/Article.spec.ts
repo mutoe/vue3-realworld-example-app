@@ -1,10 +1,17 @@
-import { mount } from '@vue/test-utils'
+import { render } from '@testing-library/vue'
+import { router } from 'src/router'
 import Article from './Article.vue'
 
 describe('# Article', () => {
-  it('should display correctly', () => {
-    const wrapper = mount(Article)
+  beforeEach(async () => {
+    await router.push('/')
+  })
 
-    expect(wrapper.text()).toContain('Article is downloading')
+  it('should render correctly', () => {
+    const { container } = render(Article, {
+      global: { plugins: [router] },
+    })
+
+    expect(container.textContent).toContain('Article is downloading')
   })
 })

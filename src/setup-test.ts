@@ -9,6 +9,9 @@ jest.mock('src/config', () => ({
   },
 }))
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+global.fetch = jest.fn().mockImplementation(() => new Promise(() => {}))
+
 afterEach(() => {
   jest.clearAllMocks()
 })
