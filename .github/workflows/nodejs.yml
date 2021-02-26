@@ -27,18 +27,25 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: install dependencies
+
+      - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-      - name: lint
-        run: yarn tsc && yarn lint
+      - name: Lint
+        run: |
+          yarn tsc
+          yarn lint
+          yarn lint:vti
 
-      - name: build
+      - name: Unit test
+        run: yarn test:unit
+
+      - name: Build
         run: |
           yarn build --base=/vue3-realworld-example-app/
           echo > dist/.nojekyll
 
-      - name: deploy
+      - name: Deploy
         uses: s0/git-publish-subdir-action@master
         env:
           REPO: self
