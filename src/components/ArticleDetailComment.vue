@@ -41,17 +41,24 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed, defineEmit, defineProps } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
 
-const props = defineProps<{
-  comment: ArticleComment
-  username?: string
-}>()
-
-const emit = defineEmit<(e: 'remove-comment') => boolean>()
-
-const showRemove = computed(() => (
-  props.username !== undefined && props.username === props.comment.author.username
-))
+export default defineComponent({
+  name: 'ArticleDetailComment',
+  props: {
+    comment: { type: Object as PropType<ArticleComment>, required: true },
+    username: { type: String as PropType<string | undefined>, default: undefined },
+  },
+  emits: {
+    'remove-comment': () => true,
+  },
+  setup (props) {
+    return {
+      showRemove: computed(() => (
+        props.username !== undefined && props.username === props.comment.author.username
+      )),
+    }
+  },
+})
 </script>

@@ -3,26 +3,24 @@
     <div class="article-meta">
       <AppLink
         name="profile"
-        :params="{ username: article.author.username }"
+        :params="{username: article.author.username}"
       >
         <img :src="article.author.image">
       </AppLink>
       <div class="info">
         <AppLink
           name="profile"
-          :params="{ username: article.author.username }"
+          :params="{username: article.author.username}"
           class="author"
         >
           {{ article.author.username }}
         </AppLink>
-        <span class="date">{{
-          new Date(article.createdAt).toDateString()
-        }}</span>
+        <span class="date">{{ new Date(article.createdAt).toDateString() }}</span>
       </div>
 
       <button
         class="btn btn-sm pull-xs-right"
-        :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+        :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
         @click="favoriteArticle"
       >
@@ -32,7 +30,7 @@
 
     <AppLink
       name="article"
-      :params="{ slug: article.slug }"
+      :params="{slug: article.slug}"
       class="preview-link"
     >
       <h1>{{ article.title }}</h1>
@@ -51,19 +49,29 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { computed, defineEmit, defineProps } from 'vue'
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
 import { useFavoriteArticle } from '../composable/useFavoriteArticle'
 
-const props = defineProps<{
-  article: Article;
-}>()
+export default defineComponent({
+  name: 'ArticlesListArticlePreview',
+  props: {
+    article: { type: Object as PropType<Article>, required: true },
+  },
+  emits: {
+    update: (article: Article) => !!article.slug,
+  },
+  setup (props, { emit }) {
+    const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
+      isFavorited: computed(() => props.article.favorited),
+      articleSlug: computed(() => props.article.slug),
+      onUpdate: (newArticle: Article): void => emit('update', newArticle),
+    })
 
-const emit = defineEmit<(e: 'update', article: Article) => void>()
-
-const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
-  isFavorited: computed(() => props.article.favorited),
-  articleSlug: computed(() => props.article.slug),
-  onUpdate: (newArticle: Article): void => emit('update', newArticle),
+    return {
+      favoriteProcessGoing,
+      favoriteArticle,
+    }
+  },
 })
 </script>

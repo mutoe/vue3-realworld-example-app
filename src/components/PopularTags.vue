@@ -6,7 +6,7 @@
       v-for="tag in tags"
       :key="tag"
       name="tag"
-      :params="{ tag }"
+      :params="{tag}"
       class="tag-pill tag-default"
     >
       {{ tag }}
@@ -14,10 +14,20 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { useTags } from '../composable/useTags'
 
-const { tags, fetchTags } = useTags()
+export default defineComponent({
+  name: 'PopularTags',
+  async setup () {
+    const { tags, fetchTags } = useTags()
 
-await fetchTags()
+    await fetchTags()
+
+    return {
+      tags,
+    }
+  },
+})
 </script>

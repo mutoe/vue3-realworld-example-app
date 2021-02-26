@@ -1,24 +1,29 @@
 <template>
   <router-link
-    :aria-label="props.name"
-    :to="props"
+    :to="to"
     v-bind="attrs"
   >
     <slot />
   </router-link>
 </template>
 
-<script lang="ts" setup>
-import type { AppRouteNames } from '../router'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import type { RouteParams } from 'vue-router'
+import type { AppRouteNames } from '../router'
 
-import { RouterLink } from 'vue-router'
-import { defineProps, useContext } from 'vue'
+export default defineComponent({
+  name: 'AppLink',
+  props: {
+    name: { type: String as PropType<AppRouteNames>, required: true },
+    params: { type: Object as PropType<RouteParams>, default: () => ({}) },
+  },
+  setup (props, { attrs }) {
+    return {
+      to: props,
+      attrs,
+    }
+  },
+})
 
-const props = defineProps<{
-  name: AppRouteNames
-  params?: RouteParams
-}>()
-
-const { attrs } = useContext()
 </script>
