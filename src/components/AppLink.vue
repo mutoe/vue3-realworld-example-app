@@ -9,11 +9,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { AppRouteNames } from '../router'
-import type { RouteParams } from 'vue-router'
-
-import { RouterLink } from 'vue-router'
+import type { AppRouteNames } from 'src/router'
 import { defineProps, useContext } from 'vue'
+import type { RouteParams } from 'vue-router'
 
 const props = defineProps<{
   name: AppRouteNames

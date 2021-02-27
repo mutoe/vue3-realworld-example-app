@@ -44,6 +44,6 @@
 </template>
 
 <script lang="ts" setup>
-import ArticlesList from '../components/ArticlesList.vue'
-import PopularTags from '../components/PopularTags.vue'
+import ArticlesList from 'src/components/ArticlesList.vue'
+import PopularTags from 'src/components/PopularTags.vue'
 </script>

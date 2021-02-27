@@ -1,10 +1,20 @@
 <template>
-  <ArticlesListNavigation v-bind="$attrs" :tag="tag" :username="username" />
+  <ArticlesListNavigation
+    v-bind="$attrs"
+    :tag="tag"
+    :username="username"
+  />
 
-  <div v-if="articlesDownloading" class="article-preview">
+  <div
+    v-if="articlesDownloading"
+    class="article-preview"
+  >
     Articles are downloading...
   </div>
-  <div v-else-if="articles.length === 0" class="article-preview">
+  <div
+    v-else-if="articles.length === 0"
+    class="article-preview"
+  >
     No articles are here... yet.
   </div>
   <template v-else>
@@ -12,7 +22,7 @@
       v-for="(article, index) in articles"
       :key="article.slug"
       :article="article"
-      @update="() => updateArticle(index, $event)"
+      @update="newArticle => updateArticle(index, newArticle)"
     />
 
     <AppPagination
@@ -24,10 +34,10 @@
 </template>
 
 <script lang="ts" setup>
-import ArticlesListNavigation from './ArticlesListNavigation.vue'
-import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
+import { useArticles } from 'src/composable/useArticles'
 import AppPagination from './AppPagination.vue'
-import { useArticles } from '../composable/useArticles'
+import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
+import ArticlesListNavigation from './ArticlesListNavigation.vue'
 
 const {
   fetchArticles,

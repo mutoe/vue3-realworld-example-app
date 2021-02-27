@@ -1,12 +1,9 @@
+import { routerPush } from 'src/router'
+import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/followProfile'
+import type { AuthorizationError } from 'src/types/error'
+import createAsyncProcess from 'src/utils/create-async-process'
+import type { Either } from 'src/utils/either'
 import type { ComputedRef } from 'vue'
-import { routerPush } from '../router'
-
-import type { AuthorizationError } from '../types/error'
-
-import type { Either } from '../utils/either'
-import createAsyncProcess from '../utils/create-async-process'
-
-import { postFollowProfile, deleteFollowProfile } from '../services/profile/followProfile'
 
 interface UseFollowProps {
   username: ComputedRef<string>

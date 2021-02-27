@@ -6,6 +6,7 @@
       :class="['page-item', { active: isActive(pageNumber) }]"
     >
       <a
+        :aria-label="`Go to page ${pageNumber}`"
         class="page-link"
         @click="onPageChange(pageNumber)"
       >{{ pageNumber }}</a>
@@ -14,13 +15,14 @@
 </template>
 
 <script lang="ts" setup>
+import { limit } from 'src/services'
 import { computed, defineEmit, defineProps, toRefs } from 'vue'
-import { limit } from '../services'
 
 const props = defineProps<{
   page: number
   count: number
 }>()
+
 const emit = defineEmit<(e: 'page-change', index: number) => void>()
 
 const { count, page } = toRefs(props)

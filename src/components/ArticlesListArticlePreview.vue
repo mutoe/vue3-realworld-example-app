@@ -3,28 +3,27 @@
     <div class="article-meta">
       <AppLink
         name="profile"
-        :params="{ username: article.author.username }"
+        :params="{username: article.author.username}"
       >
         <img :src="article.author.image">
       </AppLink>
       <div class="info">
         <AppLink
           name="profile"
-          :params="{ username: article.author.username }"
+          :params="{username: article.author.username}"
           class="author"
         >
           {{ article.author.username }}
         </AppLink>
-        <span class="date">{{
-          new Date(article.createdAt).toDateString()
-        }}</span>
+        <span class="date">{{ new Date(article.createdAt).toDateString() }}</span>
       </div>
 
       <button
+        :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm pull-xs-right"
-        :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+        :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
-        @click="favoriteArticle"
+        @click="() =>favoriteArticle()"
       >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
@@ -32,7 +31,7 @@
 
     <AppLink
       name="article"
-      :params="{ slug: article.slug }"
+      :params="{slug: article.slug}"
       class="preview-link"
     >
       <h1>{{ article.title }}</h1>
@@ -52,8 +51,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { computed, defineEmit, defineProps } from 'vue'
-import { useFavoriteArticle } from '../composable/useFavoriteArticle'
 
 const props = defineProps<{
   article: Article;

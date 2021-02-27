@@ -6,7 +6,7 @@
       v-for="tag in tags"
       :key="tag"
       name="tag"
-      :params="{ tag }"
+      :params="{tag}"
       class="tag-pill tag-default"
     >
       {{ tag }}
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useTags } from '../composable/useTags'
+import { useTags } from 'src/composable/useTags'
 
 const { tags, fetchTags } = useTags()
 

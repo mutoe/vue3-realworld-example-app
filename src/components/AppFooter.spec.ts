@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
+import registerGlobalComponents from 'src/plugins/global-components'
+import { router } from 'src/router'
 import AppFooter from './AppFooter.vue'
-import registerGlobalComponents from '../plugins/global-components'
-import { router } from '../router'
 
 describe('# AppFooter', () => {
   beforeEach(async () => {

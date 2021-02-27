@@ -1,17 +1,29 @@
 <template>
   <nav class="navbar navbar-light">
     <div class="container">
-      <AppLink class="navbar-brand" name="global-feed"> conduit </AppLink>
+      <AppLink
+        class="navbar-brand"
+        name="global-feed"
+      >
+        conduit
+      </AppLink>
 
       <ul class="nav navbar-nav pull-xs-right">
-        <li v-for="link in navLinks" :key="link.name" class="nav-item">
+        <li
+          v-for="link in navLinks"
+          :key="link.name"
+          class="nav-item"
+        >
           <AppLink
             class="nav-link"
             active-class="active"
             :name="link.name"
             :params="link.params"
           >
-            <i v-if="link.icon" :class="link.icon" /> {{ link.title }}
+            <i
+              v-if="link.icon"
+              :class="link.icon"
+            /> {{ link.title }}
           </AppLink>
         </li>
       </ul>
@@ -20,11 +32,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { AppRouteNames } from 'src/router'
+import { user } from 'src/store/user'
+import { computed, defineComponent } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../router'
-
-import { computed } from 'vue'
-import { user } from '../store/user'
 
 interface NavLink {
   name: AppRouteNames

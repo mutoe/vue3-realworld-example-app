@@ -12,10 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Use Node.js 12.x
+      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
 
       - name: Get yarn cache
         id: yarn-cache
@@ -31,11 +32,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-      - name: Lint
-        run: |
-          yarn tsc
-          yarn lint
-          yarn lint:vti
+      - name: TypeScript check
+        run: yarn tsc
+
+      - name: Eslint check
+        run: yarn lint:script
+
+      - name: Vetur check
+        run: yarn lint:vti
 
       - name: Unit test
         run: yarn test:unit

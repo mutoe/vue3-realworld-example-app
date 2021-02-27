@@ -1,9 +1,7 @@
+import type { AuthorizationError } from 'src/types/error'
+import { Either, fail, success } from 'src/utils/either'
+import { mapAuthorizationResponse } from 'src/utils/map-checkable-response'
 import { request } from '../index'
-
-import type { AuthorizationError } from '../../types/error'
-
-import { Either, fail, success } from '../../utils/either'
-import { mapAuthorizationResponse } from '../../utils/map-checkable-response'
 
 export async function postFavoriteArticle (slug: string): Promise<Either<AuthorizationError, Article>> {
   const result1 = await request.checkablePost<ArticleResponse>(`/articles/${slug}/favorite`)

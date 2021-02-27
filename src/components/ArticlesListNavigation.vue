@@ -23,20 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../router'
-import type { ArticlesType } from '../composable/useArticles'
-
+import type { ArticlesType } from 'src/composable/useArticles'
+import type { AppRouteNames } from 'src/router'
+import { isAuthorized } from 'src/store/user'
 import { computed, defineProps } from 'vue'
-import { isAuthorized } from '../store/user'
-
-interface ArticlesListNavLink {
-  name: ArticlesType;
-  routeName: AppRouteNames;
-  routeParams?: Partial<RouteParams>;
-  title: string;
-  icon?: string;
-}
+import type { RouteParams } from 'vue-router'
 
 const props = defineProps<{
   tag: string;
@@ -47,6 +38,14 @@ const props = defineProps<{
   useUserFeed?: boolean;
   useUserFavorited?: boolean;
 }>()
+
+interface ArticlesListNavLink {
+  name: ArticlesType
+  routeName: AppRouteNames
+  routeParams?: Partial<RouteParams>
+  title: string
+  icon?: string
+}
 
 const allLinks = computed<ArticlesListNavLink[]>(() => [
   {
@@ -66,7 +65,6 @@ const allLinks = computed<ArticlesListNavLink[]>(() => [
     title: props.tag,
     icon: 'ion-pound',
   },
-
   {
     name: 'user-feed',
     routeName: 'profile',
@@ -89,7 +87,5 @@ const show = computed<Record<ArticlesType, boolean>>(() => ({
   'user-favorites-feed': (props.useUserFavorited && props.username !== '') ?? false,
 }))
 
-const links = computed<ArticlesListNavLink[]>(() =>
-  allLinks.value.filter((link) => show.value[link.name]),
-)
+const links = computed<ArticlesListNavLink[]>(() => allLinks.value.filter(link => show.value[link.name]))
 </script>

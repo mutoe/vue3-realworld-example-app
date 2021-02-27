@@ -33,6 +33,8 @@
       <span class="mod-options">
         <i
           v-if="showRemove"
+          role="button"
+          aria-label="Delete comment"
           class="ion-trash-a"
           @click="$emit('remove-comment')"
         />

@@ -1,9 +1,7 @@
+import type { ValidationError } from 'src/types/error'
+import { Either, fail, success } from 'src/utils/either'
+import { mapValidationResponse } from 'src/utils/map-checkable-response'
 import { request } from '../index'
-
-import type { ValidationError } from '../../types/error'
-
-import { mapValidationResponse } from '../../utils/map-checkable-response'
-import { Either, fail, success } from '../../utils/either'
 
 export interface PostRegisterForm {
   email: string

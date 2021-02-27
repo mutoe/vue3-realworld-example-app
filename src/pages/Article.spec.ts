@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
+import { router } from 'src/router'
 import Article from './Article.vue'
-import { router } from '../router'
 
 describe('# Article', () => {
   beforeEach(async () => {

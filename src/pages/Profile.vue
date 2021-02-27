@@ -38,8 +38,7 @@
                 @click="toggleFollow"
               >
                 <i class="ion-plus-round space" />
-                {{ profile.following ? "Unfollow" : "Follow" }}
-                {{ profile.username }}
+                {{ profile.following ? "Unfollow" : "Follow" }} {{ profile.username }}
               </button>
             </template>
           </div>
@@ -68,12 +67,12 @@
 </template>
 
 <script lang="ts" setup>
+import ArticlesList from 'src/components/ArticlesList.vue'
+import { useFollow } from 'src/composable/useFollowProfile'
+import { useProfile } from 'src/composable/useProfile'
+import { checkAuthorization, user } from 'src/store/user'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import ArticlesList from '../components/ArticlesList.vue'
-import { useProfile } from '../composable/useProfile'
-import { useFollow } from '../composable/useFollowProfile'
-import { user, checkAuthorization } from '../store/user'
 
 const route = useRoute()
 const username = computed<string>(() => route.params.username as string)
@@ -95,6 +94,6 @@ const showFollow = computed<boolean>(() => user.value?.username !== username.val
   margin-right: 4px;
 }
 .align-left {
-  text-align: left;
+  text-align: left
 }
 </style>

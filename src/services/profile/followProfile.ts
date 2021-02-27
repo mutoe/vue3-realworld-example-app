@@ -1,9 +1,7 @@
-import type { AuthorizationError } from '../../types/error'
-
+import type { AuthorizationError } from 'src/types/error'
+import { Either, fail, success } from 'src/utils/either'
+import { mapAuthorizationResponse } from 'src/utils/map-checkable-response'
 import { request } from '../index'
-
-import { mapAuthorizationResponse } from '../../utils/map-checkable-response'
-import { Either, fail, success } from '../../utils/either'
 
 export async function postFollowProfile (username: string): Promise<Either<AuthorizationError, Profile>> {
   const result1 = await request.checkablePost<ProfileResponse>(`/profiles/${username}/follow`)

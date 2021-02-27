@@ -1,6 +1,6 @@
-import AppLink from './AppLink.vue'
-import { router } from '../router'
 import { flushPromises, mount } from '@vue/test-utils'
+import { router } from 'src/router'
+import AppLink from './AppLink.vue'
 
 describe('# AppLink', function () {
   beforeEach(async () => {
