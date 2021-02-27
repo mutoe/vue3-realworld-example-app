@@ -18,11 +18,11 @@
     No articles are here... yet.
   </div>
   <template v-else>
-    <ArticlePreview
+    <ArticlesListArticlePreview
       v-for="(article, index) in articles"
       :key="article.slug"
       :article="article"
-      @update="() => updateArticle(index, $event)"
+      @update="newArticle => updateArticle(index, newArticle)"
     />
 
     <AppPagination
@@ -43,7 +43,7 @@ import ArticlesListNavigation from './ArticlesListNavigation.vue'
 export default defineComponent({
   name: 'ArticlesList',
   components: {
-    ArticlePreview: ArticlesListArticlePreview,
+    ArticlesListArticlePreview,
     AppPagination,
     ArticlesListNavigation,
   },
