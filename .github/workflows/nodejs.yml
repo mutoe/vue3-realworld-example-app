@@ -32,11 +32,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-      - name: Lint
-        run: |
-          yarn tsc
-          yarn lint
-          yarn lint:vti
+      - name: TypeScript check
+        run: yarn tsc
+
+      - name: Eslint check
+        run: yarn lint:script
+
+      - name: Vetur check
+        run: yarn lint:vti
 
       - name: Unit test
         run: yarn test:unit

@@ -7,7 +7,7 @@
     "build": "vite build",
     "lint:script": "eslint \"{src,cypress}/**/*.{js,ts,vue}\"",
     "lint:vti": "vti diagnostics",
-    "lint": "yarn tsc && yarn lint:script && yarn lint:vti",
+    "lint": "concurrently 'yarn tsc' 'yarn lint:script' 'yarn lint:vti'",
     "test:unit": "jest --coverage",
     "test:e2e": "yarn build && concurrently -k \"serve dist\" \"cypress run -c baseUrl=http://localhost:5000\"",
     "test:e2e:ci": "cypress run -C cypress.prod.json",
