@@ -1,16 +1,14 @@
-import { computed, ComputedRef, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import type { AppRouteNames } from '../router'
-
-import createAsyncProcess from '../utils/create-async-process'
-
+import type { AppRouteNames } from 'src/router'
 import {
   getArticles,
-  getFavoritedArticles,
-  getProfileArticles,
-  getFeeds,
   getArticlesByTag,
-} from '../services/article/getArticles'
+  getFavoritedArticles,
+  getFeeds,
+  getProfileArticles,
+} from 'src/services/article/getArticles'
+import createAsyncProcess from 'src/utils/create-async-process'
+import { computed, ComputedRef, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useArticles () {

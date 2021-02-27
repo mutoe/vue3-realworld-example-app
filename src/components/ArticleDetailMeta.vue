@@ -60,15 +60,12 @@
 </template>
 
 <script lang="ts">
+import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
+import { useFollow } from 'src/composable/useFollowProfile'
+import { routerPush } from 'src/router'
+import { deleteArticle } from 'src/services/article/deleteArticle'
+import { checkAuthorization, user } from 'src/store/user'
 import { computed, defineComponent, PropType, toRefs } from 'vue'
-
-import { deleteArticle } from '../services/article/deleteArticle'
-
-import { useFavoriteArticle } from '../composable/useFavoriteArticle'
-import { useFollow } from '../composable/useFollowProfile'
-
-import { user, checkAuthorization } from '../store/user'
-import { routerPush } from '../router'
 
 export default defineComponent({
   name: 'ArticleDetailMeta',

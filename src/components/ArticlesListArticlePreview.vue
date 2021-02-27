@@ -50,8 +50,8 @@
 </template>
 
 <script lang="ts">
+import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { computed, defineComponent, PropType } from 'vue'
-import { useFavoriteArticle } from '../composable/useFavoriteArticle'
 
 export default defineComponent({
   name: 'ArticlesListArticlePreview',

@@ -61,12 +61,10 @@
 </template>
 
 <script lang="ts">
+import { routerPush } from 'src/router'
+import { postLogin, PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
+import { updateUser } from 'src/store/user'
 import { defineComponent, reactive, ref } from 'vue'
-import { routerPush } from '../router'
-
-import { postLogin, PostLoginForm, PostLoginErrors } from '../services/auth/postLogin'
-
-import { updateUser } from '../store/user'
 
 export default defineComponent({
   name: 'LoginPage',

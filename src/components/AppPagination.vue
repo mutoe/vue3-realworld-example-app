@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs } from 'vue'
-import { limit } from '../services'
+import { limit } from 'src/services'
+import { computed, defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
   name: 'AppPagination',

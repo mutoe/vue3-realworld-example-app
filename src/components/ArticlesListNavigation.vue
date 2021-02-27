@@ -23,13 +23,11 @@
 </template>
 
 <script lang="ts">
+import type { ArticlesType } from 'src/composable/useArticles'
+import type { AppRouteNames } from 'src/router'
+import { isAuthorized } from 'src/store/user'
 import { computed, defineComponent } from 'vue'
 import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../router'
-
-import type { ArticlesType } from '../composable/useArticles'
-
-import { isAuthorized } from '../store/user'
 
 interface ArticlesListNavLink {
   name: ArticlesType

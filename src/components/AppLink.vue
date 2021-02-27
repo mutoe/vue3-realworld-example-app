@@ -9,10 +9,9 @@
 </template>
 
 <script lang="ts">
-import type { RouteParams } from 'vue-router'
-import type { AppRouteNames } from '../router'
-
+import type { AppRouteNames } from 'src/router'
 import { defineComponent, PropType } from 'vue'
+import type { RouteParams } from 'vue-router'
 import { RouterLink } from 'vue-router'
 
 export default defineComponent({

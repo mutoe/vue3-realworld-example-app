@@ -43,12 +43,10 @@
 <script lang="ts">
 import DOMPurify from 'dompurify'
 import md2html from 'marked'
+import { getArticle } from 'src/services/article/getArticle'
 import { computed, defineComponent, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
-
-import { getArticle } from '../services/article/getArticle'
 
 export default defineComponent({
   name: 'ArticleDetail',

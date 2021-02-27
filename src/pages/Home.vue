@@ -44,10 +44,9 @@
 </template>
 
 <script lang="ts">
+import ArticlesList from 'src/components/ArticlesList.vue'
+import PopularTags from 'src/components/PopularTags.vue'
 import { defineComponent } from 'vue'
-
-import ArticlesList from '../components/ArticlesList.vue'
-import PopularTags from '../components/PopularTags.vue'
 
 export default defineComponent({
   name: 'HomePage',

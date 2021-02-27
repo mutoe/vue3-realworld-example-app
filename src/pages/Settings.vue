@@ -74,12 +74,10 @@
 </template>
 
 <script lang="ts">
+import { routerPush } from 'src/router'
+import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
+import { checkAuthorization, updateUser, user } from 'src/store/user'
 import { computed, defineComponent, onMounted, reactive } from 'vue'
-import { routerPush } from '../router'
-
-import { putProfile, PutProfileForm } from '../services/profile/putProfile'
-
-import { user, checkAuthorization, updateUser } from '../store/user'
 
 export default defineComponent({
   name: 'SettingsPage',

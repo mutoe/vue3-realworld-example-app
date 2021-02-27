@@ -1,6 +1,5 @@
+import { getProfile } from 'src/services/profile/getProfile'
 import { ComputedRef, ref, watch } from 'vue'
-
-import { getProfile } from '../services/profile/getProfile'
 
 interface UseProfileProps {
   username: ComputedRef<string>

@@ -1,5 +1,5 @@
-import { request } from '../services'
-import storage from '../utils/storage'
+import { request } from 'src/services'
+import storage from 'src/utils/storage'
 
 export default function (): void {
   const token = storage.get<User>('user')?.token

@@ -68,12 +68,10 @@
 </template>
 
 <script lang="ts">
+import { routerPush } from 'src/router'
+import { postRegister, PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
+import { updateUser } from 'src/store/user'
 import { defineComponent, reactive, ref } from 'vue'
-import { routerPush } from '../router'
-
-import { postRegister, PostRegisterForm, PostRegisterErrors } from '../services/auth/postRegister'
-
-import { updateUser } from '../store/user'
 
 export default defineComponent({
   name: 'RegisterPage',

@@ -34,13 +34,11 @@
 </template>
 
 <script lang="ts">
+import { useArticles } from 'src/composable/useArticles'
 import { defineComponent } from 'vue'
-
-import ArticlesListNavigation from './ArticlesListNavigation.vue'
-import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import AppPagination from './AppPagination.vue'
-
-import { useArticles } from '../composable/useArticles'
+import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
+import ArticlesListNavigation from './ArticlesListNavigation.vue'
 
 export default defineComponent({
   name: 'ArticlesList',

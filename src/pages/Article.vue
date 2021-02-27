@@ -29,10 +29,9 @@
 </template>
 
 <script lang="ts">
+import ArticleDetail from 'src/components/ArticleDetail.vue'
+import ArticleDetailComments from 'src/components/ArticleDetailComments.vue'
 import { defineComponent } from 'vue'
-
-import ArticleDetail from '../components/ArticleDetail.vue'
-import ArticleDetailComments from '../components/ArticleDetailComments.vue'
 
 export default defineComponent({
   name: 'ArticlePage',

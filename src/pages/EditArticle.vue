@@ -66,10 +66,10 @@
 </template>
 
 <script lang="ts">
+import { getArticle } from 'src/services/article/getArticle'
+import { postArticle, putArticle } from 'src/services/article/postArticle'
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getArticle } from '../services/article/getArticle'
-import { postArticle, putArticle } from '../services/article/postArticle'
 
 interface FormState {
   title: string;

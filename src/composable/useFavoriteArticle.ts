@@ -1,12 +1,9 @@
+import { routerPush } from 'src/router'
+import { deleteFavoriteArticle, postFavoriteArticle } from 'src/services/article/favoriteArticle'
+import type { AuthorizationError } from 'src/types/error'
+import createAsyncProcess from 'src/utils/create-async-process'
+import type { Either } from 'src/utils/either'
 import { ComputedRef } from 'vue'
-import { routerPush } from '../router'
-
-import type { AuthorizationError } from '../types/error'
-
-import { deleteFavoriteArticle, postFavoriteArticle } from '../services/article/favoriteArticle'
-
-import type { Either } from '../utils/either'
-import createAsyncProcess from '../utils/create-async-process'
 
 interface useFavoriteArticleProps {
   isFavorited: ComputedRef<boolean>

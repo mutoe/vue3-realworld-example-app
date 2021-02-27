@@ -67,15 +67,12 @@
 </template>
 
 <script lang="ts">
+import ArticlesList from 'src/components/ArticlesList.vue'
+import { useFollow } from 'src/composable/useFollowProfile'
+import { useProfile } from 'src/composable/useProfile'
+import { checkAuthorization, user } from 'src/store/user'
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-
-import ArticlesList from '../components/ArticlesList.vue'
-
-import { useProfile } from '../composable/useProfile'
-import { useFollow } from '../composable/useFollowProfile'
-
-import { user, checkAuthorization } from '../store/user'
 
 export default defineComponent({
   name: 'ProfilePage',

@@ -14,16 +14,13 @@
 </template>
 
 <script lang="ts">
+import { getCommentsByArticle } from 'src/services/comment/getComments'
+import { deleteComment } from 'src/services/comment/postComment'
+import { user } from 'src/store/user'
 import { computed, defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
-import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 import ArticleDetailComment from './ArticleDetailComment.vue'
-
-import { getCommentsByArticle } from '../services/comment/getComments'
-import { deleteComment } from '../services/comment/postComment'
-
-import { user } from '../store/user'
+import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 
 export default defineComponent({
   name: 'ArticleDetailComments',
