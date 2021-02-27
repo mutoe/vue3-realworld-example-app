@@ -21,6 +21,7 @@
 
     <button
       v-if="displayFollowButton"
+      :aria-label="article.author.following ? 'Unfollow' : 'Follow'"
       class="btn btn-sm btn-outline-secondary space"
       :disabled="followProcessGoing"
       @click="toggleFollow"
@@ -30,6 +31,7 @@
     </button>
 
     <button
+      :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
       class="btn btn-sm space"
       :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
       :disabled="favoriteProcessGoing"
@@ -42,6 +44,7 @@
 
     <AppLink
       v-if="displayEditButton"
+      aria-label="Edit article"
       class="btn btn-outline-secondary btn-sm space"
       name="edit-article"
       :params="{slug: article.slug}"
@@ -51,6 +54,7 @@
 
     <button
       v-if="displayEditButton"
+      aria-label="Delete article"
       class="btn btn-outline-danger btn-sm"
       @click="onDelete"
     >
@@ -78,7 +82,7 @@ export default defineComponent({
   setup (props, { emit }) {
     const { article } = toRefs(props)
     const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
-    const displayFollowButton = computed(() => user.value?.username !== article.value.author.username)
+    const displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
 
     const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
       isFavorited: computed(() => article.value.favorited),

@@ -67,7 +67,6 @@ export default defineComponent({
         title: props.tag,
         icon: 'ion-pound',
       },
-
       {
         name: 'user-feed',
         routeName: 'profile',

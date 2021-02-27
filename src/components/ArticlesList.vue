@@ -50,10 +50,15 @@ export default defineComponent({
 
   async setup () {
     const {
-      fetchArticles, articlesDownloading,
-      articlesCount, articles, updateArticle,
-      page, changePage,
-      tag, username,
+      fetchArticles,
+      articlesDownloading,
+      articlesCount,
+      articles,
+      updateArticle,
+      page,
+      changePage,
+      tag,
+      username,
     } = useArticles()
 
     await fetchArticles()

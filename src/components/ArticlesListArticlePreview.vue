@@ -19,10 +19,11 @@
       </div>
 
       <button
+        :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm pull-xs-right"
         :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
-        @click="favoriteArticle"
+        @click="() =>favoriteArticle()"
       >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
@@ -56,13 +57,19 @@ import { computed, defineComponent, PropType } from 'vue'
 export default defineComponent({
   name: 'ArticlesListArticlePreview',
   props: {
-    article: { type: Object as PropType<Article>, required: true },
+    article: {
+      type: Object as PropType<Article>,
+      required: true,
+    },
   },
   emits: {
     update: (article: Article) => !!article.slug,
   },
   setup (props, { emit }) {
-    const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
+    const {
+      favoriteProcessGoing,
+      favoriteArticle,
+    } = useFavoriteArticle({
       isFavorited: computed(() => props.article.favorited),
       articleSlug: computed(() => props.article.slug),
       onUpdate: (newArticle: Article): void => emit('update', newArticle),

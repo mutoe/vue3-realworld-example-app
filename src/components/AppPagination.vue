@@ -6,6 +6,7 @@
       :class="['page-item', { active: isActive(pageNumber) }]"
     >
       <a
+        :aria-label="`Go to page ${pageNumber}`"
         class="page-link"
         @click="onPageChange(pageNumber)"
       >{{ pageNumber }}</a>

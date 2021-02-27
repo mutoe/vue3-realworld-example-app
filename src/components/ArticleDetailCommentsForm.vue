@@ -14,6 +14,7 @@
     <div class="card-block">
       <textarea
         v-model="comment"
+        aria-label="Write comment"
         class="form-control"
         placeholder="Write a comment..."
         rows="3"
@@ -25,8 +26,9 @@
         class="comment-author-img"
       >
       <button
+        aria-label="Submit"
         type="submit"
-        :disabled="comment===''"
+        :disabled="comment === ''"
         class="btn btn-sm btn-primary"
       >
         Post Comment
@@ -36,13 +38,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
-
-import { useProfile } from '../composable/useProfile'
-
-import { postComment } from '../services/comment/postComment'
-
-import { user, checkAuthorization } from '../store/user'
+import { useProfile } from 'src/composable/useProfile'
+import { postComment } from 'src/services/comment/postComment'
+import { checkAuthorization, user } from 'src/store/user'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'ArticleDetailCommentsForm',

@@ -18,6 +18,8 @@
         v-html="articleHandledBody"
       />
       <!-- eslint-enable vue/no-v-html  -->
+
+      <!-- TODO: abstract tag list component-->
       <ul class="tag-list">
         <li
           v-for="tag in article.tagList"
