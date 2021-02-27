@@ -1,5 +1,8 @@
 # ![RealWorld Example App](logo.png)
 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Node%20CI/master?label=master%20branch&logo=github&style=for-the-badge)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Node%20CI/script-setup?label=script%20setup%20branch&logo=github&style=for-the-badge)
+
 > ### [Vue3](https://v3.vuejs.org/) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
 
@@ -57,7 +60,7 @@ yarn test:e2e # headless
 Made with [contributors-img](https://contributors-img.web.app).
 
 ## Vue related implementations of the Realworld app
-[gothinkster/vue-realworld-example-app](https://github.com/gothinkster/vue-realworld-example-app) - vue2, js  
-[AlexBrohshtut/vue-ts-realworld-app](https://github.com/AlexBrohshtut/vue-ts-realworld-app) - vue2, ts, class-component  
-[devJang/nuxt-realworld](https://github.com/devJang/nuxt-realworld) - nuxt, ts, composition api  
-[levchak0910/vue3-ssr-realworld-example-app](https://github.com/levchak0910/vue3-ssr-realworld-example-app) - vue3, ssr  
+[gothinkster/vue-realworld-example-app](https://github.com/gothinkster/vue-realworld-example-app) - vue2, js
+[AlexBrohshtut/vue-ts-realworld-app](https://github.com/AlexBrohshtut/vue-ts-realworld-app) - vue2, ts, class-component
+[devJang/nuxt-realworld](https://github.com/devJang/nuxt-realworld) - nuxt, ts, composition api
+[levchak0910/vue3-ssr-realworld-example-app](https://github.com/levchak0910/vue3-ssr-realworld-example-app) - vue3, ssr
