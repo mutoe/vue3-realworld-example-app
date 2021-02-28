@@ -4,6 +4,7 @@ describe.only('Follow', () => {
   beforeEach(() => {
     cy.intercept('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
     cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
+    cy.intercept('GET', /profiles\/\S+/, { fixture: 'profile.json' }).as('getProfile')
     cy.fixture('article.json').then(article => {
       article.article.author.username = 'foo'
       cy.intercept('GET', /articles\/\S+/, { statusCode: 200, body: article }).as('getArticle')
