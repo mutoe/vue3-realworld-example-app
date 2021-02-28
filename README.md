@@ -36,6 +36,7 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [Script setup sugar](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md)
 - [ ] [Script ref sugar](https://github.com/vuejs/rfcs/blob/ref-sugar/active-rfcs/0000-ref-sugar.md)
 - [x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
+- [ ] Vetur Tools [![Vetur#2296](https://img.shields.io/github/issues/detail/state/vuejs/vetur/2296?label=vetur%232296&logo=github&style=flat-square)](https://github.com/vuejs/vetur/issues/2296)
 
 > _[Why we have the second branch?](https://github.com/mutoe/vue3-realworld-example-app/commit/c0c983dba08cb31fc96bbc3eb7f15faf469d0624#commitcomment-47600736)_
 
