@@ -7,7 +7,10 @@ on:
     types: [completed]
 
 jobs:
-  build:
+  deploy:
+    # https://github.community/t/workflow-run-success-type-reference/133194
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     env:
       CI: true
 
