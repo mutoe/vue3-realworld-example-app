@@ -1,9 +1,16 @@
-name: Node CI
+name: Deploy
 
-on: [push]
+on:
+  workflow_run:
+    workflows: ["Test"]
+    branches: [master]
+    types: [completed]
 
 jobs:
-  build:
+  deploy:
+    # https://github.community/t/workflow-run-success-type-reference/133194
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     env:
       CI: true
 
@@ -31,18 +38,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
-
-      - name: TypeScript check
-        run: yarn tsc
-
-      - name: Eslint check
-        run: yarn lint:script
-
-      - name: Vetur check
-        run: yarn lint:vti
-
-      - name: Unit test
-        run: yarn test:unit
 
       - name: Build
         run: |
