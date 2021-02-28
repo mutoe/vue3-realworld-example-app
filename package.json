@@ -48,7 +48,7 @@
     "lint-staged": "^10.5.4",
     "serve": "^11.3.2",
     "ts-jest": "^26.5.1",
-    "typescript": "~4.1.5",
+    "typescript": "~4.2.2",
     "vite": "^2.0.2",
     "vti": "^0.0.24",
     "vue-jest": "^5.0.0-alpha.8"
