@@ -85,5 +85,5 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           config: baseUrl=http://localhost:5000
-          start: serve dist
+          start: yarn serve dist
           wait-on: http://localhost:5000
