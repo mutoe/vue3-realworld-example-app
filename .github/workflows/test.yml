@@ -45,6 +45,13 @@ jobs:
       - name: Unit test
         run: yarn test:unit
 
+      - name: Update coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ${{ github.ref }}
+
+
   e2e_tests:
     name: E2E test
     env:
