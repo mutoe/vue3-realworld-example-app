@@ -1,10 +1,10 @@
 # ![RealWorld Example App](logo.png)
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/master?label=master&logo=github&style=for-the-badge)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/script-setup?label=script-setup&logo=github&style=for-the-badge)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/master?label=master&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Amaster)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/script-setup?label=script-setup&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Ascript-setup)
 
-![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/master?label=master&logo=codecov&style=flat-square)
-![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/script-setup?label=script-setup&logo=codecov&style=flat-square)
+[![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/master?label=master&logo=codecov&style=flat-square)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/master)
+[![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/script-setup?label=script-setup&logo=codecov&style=flat-square)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/script-setup)
 
 > ### [Vue3](https://v3.vuejs.org/) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
