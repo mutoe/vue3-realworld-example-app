@@ -65,7 +65,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { getArticle } from 'src/services/article/getArticle'
 import { postArticle, putArticle } from 'src/services/article/postArticle'
 import { computed, onMounted, reactive, ref } from 'vue'
