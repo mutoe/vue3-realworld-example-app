@@ -1,13 +1,14 @@
-describe('test for tag', () => {
-  beforeEach(() => {
-    cy.intercept('GET', /articles\?tag=butt/, { fixture: 'article_of_tag' }).as('article_of_tag')
-    cy.intercept('GET', /articles/, { fixture: 'articles.json' }).as('getArticles')
-    cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
+import { ROUTES } from '../constants'
 
-    cy.visit('/')
+describe('Tag', () => {
+  beforeEach(() => {
+    cy.intercept('GET', /articles\?tag=butt/, { fixture: 'articles_of_tag.json' }).as('getArticlesOfTag')
+    cy.intercept('GET', /articles\?limit/, { fixture: 'articles.json' }).as('getArticles')
+    cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
   })
 
-  it('it should display correct tags when page loaded', () => {
+  it('should display correct tags when page loaded', () => {
+    cy.visit(ROUTES.HOME)
     cy.wait('@getTags')
 
     cy.get('div.tag-list')
@@ -20,9 +21,8 @@ describe('test for tag', () => {
   })
 
   it('should show right articles of tag', () => {
-    // 点击最后一个tag
-    cy.get('a.tag-pill.tag-default:last')
-      .click()
+    cy.get('a.tag-pill.tag-default:last').click()
+    cy.wait('@getArticlesOfTag')
 
     cy.get('a.tag-pill.tag-default:last')
       .should('have.class', 'router-link-active')
@@ -31,7 +31,6 @@ describe('test for tag', () => {
     cy.get('a.tag-pill.tag-default:last').invoke('text').then(tag => {
       const path = `#/tag/${tag}`
 
-      // check URL
       cy.url()
         .should('include', path)
 
@@ -39,15 +38,5 @@ describe('test for tag', () => {
       cy.get('a.active.router-link-exact-active.nav-link')
         .should('contain', tag)
     })
-  })
-
-  it('check articles tag including butt', () => {
-    // 点击最后一个tag
-    cy.get('a.tag-pill.tag-default:last')
-      .click()
-
-    // 文章标签元素
-    cy.get('.article-preview ul.tag-list')
-      .should('have.length', 9)
   })
 })
