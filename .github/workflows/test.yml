@@ -1,6 +1,12 @@
 name: Test
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 jobs:
   lint:
@@ -115,10 +121,11 @@ jobs:
 
       - name: E2E test
         uses: cypress-io/github-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
+          record: true
           config: baseUrl=http://localhost:5000
           start: yarn serve dist
           wait-on: http://localhost:5000
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
