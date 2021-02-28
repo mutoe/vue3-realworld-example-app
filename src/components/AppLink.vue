@@ -11,6 +11,7 @@
 <script lang="ts" setup>
 import type { AppRouteNames } from 'src/router'
 import { defineProps, useContext } from 'vue'
+import { RouterLink } from 'vue-router'
 import type { RouteParams } from 'vue-router'
 
 const props = defineProps<{

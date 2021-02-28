@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { fireEvent, render } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
@@ -19,12 +19,12 @@ const globalMountOptions: GlobalMountOptions = {
 }
 
 describe('# ArticleDetailMeta', () => {
-  const editButton = '[aria-label="Edit article"]'
-  const deleteButton = '[aria-label="Delete article"]'
-  const followButton = '[aria-label="Follow"]'
-  const unfollowButton = '[aria-label="Unfollow"]'
-  const favoriteButton = '[aria-label="Favorite article"]'
-  const unfavoriteButton = '[aria-label="Unfavorite article"]'
+  const editButton = 'Edit article'
+  const deleteButton = 'Delete article'
+  const followButton = 'Follow'
+  const unfollowButton = 'Unfollow'
+  const favoriteButton = 'Favorite article'
+  const unfavoriteButton = 'Unfavorite article'
 
   const mockDeleteArticle = deleteArticle as jest.MockedFunction<typeof deleteArticle>
   const mockFollowUser = postFollowProfile as jest.MockedFunction<typeof postFollowProfile>
@@ -42,92 +42,92 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should display edit button when user is author', () => {
-    const wrapper = mount(ArticleDetailMeta, {
+    const { queryByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
     })
 
-    expect(wrapper.find(editButton).exists()).toBe(true)
-    expect(wrapper.find(followButton).exists()).toBe(false)
+    expect(queryByRole('link', { name: editButton })).toBeInTheDocument()
+    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
   })
 
   it('should display follow button when user not author', () => {
     updateUser({ ...fixtures.user, username: 'user2' })
-    const wrapper = mount(ArticleDetailMeta, {
+    const { queryByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
     })
 
-    expect(wrapper.find(editButton).exists()).toBe(false)
-    expect(wrapper.find(followButton).exists()).toBe(true)
+    expect(queryByRole('link', { name: editButton })).not.toBeInTheDocument()
+    expect(queryByRole('button', { name: followButton })).toBeInTheDocument()
   })
 
   it('should not display follow button and edit button when user not logged', () => {
     updateUser(null)
-    const wrapper = mount(ArticleDetailMeta, {
+    const { queryByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
     })
 
-    expect(wrapper.find(editButton).exists()).toBe(false)
-    expect(wrapper.find(followButton).exists()).toBe(false)
+    expect(queryByRole('button', { name: editButton })).not.toBeInTheDocument()
+    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
   })
 
   it('should call delete article service when click delete button', async () => {
-    const wrapper = mount(ArticleDetailMeta, {
+    const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
     })
 
-    await wrapper.find(deleteButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: deleteButton }))
 
     expect(mockDeleteArticle).toBeCalledWith('article-foo')
   })
 
   it('should call follow service when click follow button', async () => {
     updateUser({ ...fixtures.user, username: 'user2' })
-    const wrapper = mount(ArticleDetailMeta, {
+    const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
     })
 
-    await wrapper.find(followButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: followButton }))
 
     expect(mockFollowUser).toBeCalledWith('Author name')
   })
 
   it('should call unfollow service when click follow button and not followed author', async () => {
     updateUser({ ...fixtures.user, username: 'user2' })
-    const wrapper = mount(ArticleDetailMeta, {
+    const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } } },
     })
 
-    await wrapper.find(unfollowButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: unfollowButton }))
 
     expect(mockUnfollowUser).toBeCalledWith('Author name')
   })
 
   it('should call favorite article service when click favorite button', async () => {
     updateUser({ ...fixtures.user, username: 'user2' })
-    const wrapper = mount(ArticleDetailMeta, {
+    const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, favorited: false } },
     })
 
-    await wrapper.find(favoriteButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: favoriteButton }))
 
     expect(mockFavoriteArticle).toBeCalledWith('article-foo')
   })
 
   it('should call favorite article service when click unfavorite button', async () => {
     updateUser({ ...fixtures.user, username: 'user2' })
-    const wrapper = mount(ArticleDetailMeta, {
+    const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, favorited: true } },
     })
 
-    await wrapper.find(unfavoriteButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: unfavoriteButton }))
 
     expect(mockUnfavoriteArticle).toBeCalledWith('article-foo')
   })
