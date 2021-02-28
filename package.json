@@ -17,7 +17,7 @@
     "@harlem/core": "^1.1.0",
     "deepmerge": "^4.2.2",
     "dompurify": "^2.2.6",
-    "marked": "^1.2.9",
+    "marked": "^2.0.1",
     "vue": "^3.0.6",
     "vue-router": "^4.0.4"
   },
@@ -35,7 +35,7 @@
     "babel-jest": "^26.6.3",
     "concurrently": "^6.0.0",
     "cypress": "^6.5.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-with-typescript": "^20.0.0",
     "eslint-plugin-cypress": "^2.11.2",
@@ -49,7 +49,7 @@
     "lint-staged": "^10.5.4",
     "serve": "^11.3.2",
     "ts-jest": "^26.5.1",
-    "typescript": "~4.1.5",
+    "typescript": "~4.2.2",
     "vite": "^2.0.2",
     "vti": "^0.0.24",
     "vue-jest": "^5.0.0-alpha.8"

@@ -1,0 +1,2251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`# ArticleDetail should render markdown (zh-CN) body correctly 1`] = `
+DOMWrapper {
+  "element": <div
+    class="row article-content"
+  >
+    <!-- eslint-disable vue/no-v-html  -->
+    <div
+      class="col-md-12"
+    >
+      <h1
+        id="markdown-示例"
+      >
+        Markdown 示例
+      </h1>
+      
+
+      <p>
+        标签： Markdown
+      </p>
+      
+
+      <hr />
+      
+
+      <h3
+        id="1-斜体和粗体"
+      >
+        1. 斜体和粗体
+      </h3>
+      
+
+      <p>
+        使用 * 和 ** 表示斜体和粗体。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <p>
+        这是 
+        <em>
+          斜体
+        </em>
+        ，这是 
+        <strong>
+          粗体
+        </strong>
+        。
+      </p>
+      
+
+      <h3
+        id="2-分级标题"
+      >
+        2. 分级标题
+      </h3>
+      
+
+      <p>
+        使用 === 表示一级标题，使用 --- 表示二级标题。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <pre>
+        <code>
+          这是一个一级标题
+============================
+
+这是一个二级标题
+--------------------------------------------------
+
+### 这是一个三级标题
+
+        </code>
+      </pre>
+      
+
+      <p>
+        你也可以选择在行首加井号表示不同级别的标题 (H1-H6)，例如：# H1, ## H2, ### H3，#### H4。
+      </p>
+      
+
+      <h3
+        id="3-外链接"
+      >
+        3. 外链接
+      </h3>
+      
+
+      <p>
+        使用 [描述](链接地址) 为文字增加外链接。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <p>
+        这是去往 
+        <a
+          href="http://ghosertblog.github.com"
+        >
+          本人博客
+        </a>
+         的链接。
+      </p>
+      
+
+      <h3
+        id="4-无序列表"
+      >
+        4. 无序列表
+      </h3>
+      
+
+      <p>
+        使用 *，+，- 表示无序列表。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <ul>
+        
+
+        <li>
+          无序列表项 一
+        </li>
+        
+
+        <li>
+          无序列表项 二
+        </li>
+        
+
+        <li>
+          无序列表项 三
+        </li>
+        
+
+      </ul>
+      
+
+      <h3
+        id="5-有序列表"
+      >
+        5. 有序列表
+      </h3>
+      
+
+      <p>
+        使用数字和点表示有序列表。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <ol>
+        
+
+        <li>
+          有序列表项 一
+        </li>
+        
+
+        <li>
+          有序列表项 二
+        </li>
+        
+
+        <li>
+          有序列表项 三
+        </li>
+        
+
+      </ol>
+      
+
+      <h3
+        id="6-文字引用"
+      >
+        6. 文字引用
+      </h3>
+      
+
+      <p>
+        使用 &gt; 表示文字引用。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <blockquote>
+        
+
+        <p>
+          野火烧不尽，春风吹又生。
+        </p>
+        
+
+      </blockquote>
+      
+
+      <h3
+        id="7-行内代码块"
+      >
+        7. 行内代码块
+      </h3>
+      
+
+      <p>
+        使用 
+        <code>
+           代码
+        </code>
+         表示行内代码块。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <p>
+        让我们聊聊 
+        <code>
+          html
+        </code>
+        。
+      </p>
+      
+
+      <h3
+        id="8--代码块"
+      >
+        8.  代码块
+      </h3>
+      
+
+      <p>
+        使用 四个缩进空格 表示代码块。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <pre>
+        <code>
+          这是一个代码块，此行左侧有四个不可见的空格。
+
+        </code>
+      </pre>
+      
+
+      <h3
+        id="9--插入图像"
+      >
+        9.  插入图像
+      </h3>
+      
+
+      <p>
+        使用 ![描述](图片链接地址) 插入图像。
+      </p>
+      
+
+      <p>
+        示例：
+      </p>
+      
+
+      <p>
+        <img
+          alt="我的头像"
+          src="https://www.zybuluo.com/static/img/my_head.jpg"
+        />
+      </p>
+      
+
+      <h1
+        id="cmd-markdown-高阶语法手册"
+      >
+        Cmd Markdown 高阶语法手册
+      </h1>
+      
+
+      <h3
+        id="1-内容目录"
+      >
+        1. 内容目录
+      </h3>
+      
+
+      <p>
+        在段落中填写 
+        <code>
+          [TOC]
+        </code>
+         以显示全文内容的目录结构。
+      </p>
+      
+
+      <p>
+        [TOC]
+      </p>
+      
+
+      <h3
+        id="2-标签分类"
+      >
+        2. 标签分类
+      </h3>
+      
+
+      <p>
+        在编辑区任意行的列首位置输入以下代码给文稿标签：
+      </p>
+      
+
+      <p>
+        标签： 数学 英语 Markdown
+      </p>
+      
+
+      <p>
+        或者
+      </p>
+      
+
+      <p>
+        Tags： 数学 英语 Markdown
+      </p>
+      
+
+      <h3
+        id="3-删除线"
+      >
+        3. 删除线
+      </h3>
+      
+
+      <p>
+        使用 ~~ 表示删除线。
+      </p>
+      
+
+      <p>
+        <del>
+          这是一段错误的文本。
+        </del>
+      </p>
+      
+
+      <h3
+        id="4-注脚"
+      >
+        4. 注脚
+      </h3>
+      
+
+      <p>
+        使用 [^keyword] 表示注脚。
+      </p>
+      
+
+      <p>
+        这是一个注脚[^footnote]的样例。
+      </p>
+      
+
+      <p>
+        这是第二个注脚[^footnote2]的样例。
+      </p>
+      
+
+      <h3
+        id="5-latex-公式"
+      >
+        5. LaTeX 公式
+      </h3>
+      
+
+      <p>
+        $ 表示行内公式：
+      </p>
+      
+
+      <p>
+        质能守恒方程可以用一个很简洁的方程式 $E=mc^2$ 来表达。
+      </p>
+      
+
+      <p>
+        $$ 表示整行公式：
+      </p>
+      
+
+      <p>
+        $$\\sum_{i=1}^n a_i=0$$
+      </p>
+      
+
+      <p>
+        $$f(x_1,x_x,\\ldots,x_n) = x_1^2 + x_2^2 + \\cdots + x_n^2 $$
+      </p>
+      
+
+      <p>
+        $$\\sum^{j-1}
+        <em>
+          {k=0}{\\widehat{\\gamma}
+        </em>
+        {kj} z_k}$$
+      </p>
+      
+
+      <p>
+        访问 
+        <a
+          href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference"
+        >
+          MathJax
+        </a>
+         参考更多使用方法。
+      </p>
+      
+
+      <h3
+        id="6-加强的代码块"
+      >
+        6. 加强的代码块
+      </h3>
+      
+
+      <p>
+        支持四十一种编程语言的语法高亮的显示，行号显示。
+      </p>
+      
+
+      <p>
+        非代码示例：
+      </p>
+      
+
+      <pre>
+        <code>
+          $ sudo apt-get install vim-gnome
+
+        </code>
+      </pre>
+      
+
+      <p>
+        Python 示例：
+      </p>
+      
+
+      <pre>
+        <code
+          class="language-python"
+        >
+          @requires_authorization
+def somefunc(param1='', param2=0):
+    '''A docstring'''
+    if param1 &gt; param2: # interesting
+        print 'Greater'
+    return (param2 - param1 + 1) or None
+
+class SomeClass:
+    pass
+
+&gt;&gt;&gt; message = '''interpreter
+... prompt'''
+
+        </code>
+      </pre>
+      
+
+      <p>
+        JavaScript 示例：
+      </p>
+      
+
+      <pre>
+        <code
+          class="language-javascript"
+        >
+          /**
+* nth element in the fibonacci series.
+* @param n &gt;= 0
+* @return the nth element, &gt;= 0.
+*/
+function fib(n) {
+  var a = 1, b = 1;
+  var tmp;
+  while (--n &gt;= 0) {
+    tmp = a;
+    a += b;
+    b = tmp;
+  }
+  return a;
+}
+
+document.write(fib(10));
+
+        </code>
+      </pre>
+      
+
+      <h3
+        id="7-流程图"
+      >
+        7. 流程图
+      </h3>
+      
+
+      <h4
+        id="示例"
+      >
+        示例
+      </h4>
+      
+
+      <pre>
+        <code
+          class="language-flow"
+        >
+          st=&gt;start: Start:&gt;https://www.zybuluo.com
+io=&gt;inputoutput: verification
+op=&gt;operation: Your Operation
+cond=&gt;condition: Yes or No?
+sub=&gt;subroutine: Your Subroutine
+e=&gt;end
+
+st-&gt;io-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;sub-&gt;io
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="更多语法参考：流程图语法参考"
+      >
+        更多语法参考：
+        <a
+          href="http://adrai.github.io/flowchart.js/"
+        >
+          流程图语法参考
+        </a>
+      </h4>
+      
+
+      <h3
+        id="8-序列图"
+      >
+        8. 序列图
+      </h3>
+      
+
+      <h4
+        id="示例-1"
+      >
+        示例 1
+      </h4>
+      
+
+      <pre>
+        <code
+          class="language-seq"
+        >
+          Alice-&gt;Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob--&gt;Alice: I am good thanks!
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="示例-2"
+      >
+        示例 2
+      </h4>
+      
+
+      <pre>
+        <code
+          class="language-seq"
+        >
+          Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="更多语法参考：序列图语法参考"
+      >
+        更多语法参考：
+        <a
+          href="http://bramp.github.io/js-sequence-diagrams/"
+        >
+          序列图语法参考
+        </a>
+      </h4>
+      
+
+      <h3
+        id="9-甘特图"
+      >
+        9. 甘特图
+      </h3>
+      
+
+      <p>
+        甘特图内在思想简单。基本是一条线条图，横轴表示时间，纵轴表示活动（项目），线条表示在整个期间上计划和实际的活动完成情况。它直观地表明任务计划在什么时候进行，及实际进展与计划要求的对比。
+      </p>
+      
+
+      <pre>
+        <code
+          class="language-gantt"
+        >
+              title 项目开发流程
+    section 项目确定
+        需求分析       :a1, 2016-06-22, 3d
+        可行性报告     :after a1, 5d
+        概念验证       : 5d
+    section 项目实施
+        概要设计      :2016-07-05  , 5d
+        详细设计      :2016-07-08, 10d
+        编码          :2016-07-15, 10d
+        测试          :2016-07-22, 5d
+    section 发布验收
+        发布: 2d
+        验收: 3d
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="更多语法参考：甘特图语法参考"
+      >
+        更多语法参考：
+        <a
+          href="https://knsv.github.io/mermaid/#gant-diagrams"
+        >
+          甘特图语法参考
+        </a>
+      </h4>
+      
+
+      <h3
+        id="10-mermaid-流程图"
+      >
+        10. Mermaid 流程图
+      </h3>
+      
+
+      <pre>
+        <code
+          class="language-graphLR"
+        >
+              A[Hard edge] --&gt;|Link text| B(Round edge)
+    B --&gt; C{Decision}
+    C --&gt;|One| D[Result one]
+    C --&gt;|Two| E[Result two]
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="更多语法参考：mermaid-流程图语法参考"
+      >
+        更多语法参考：
+        <a
+          href="https://knsv.github.io/mermaid/#flowcharts-basic-syntax"
+        >
+          Mermaid 流程图语法参考
+        </a>
+      </h4>
+      
+
+      <h3
+        id="11-mermaid-序列图"
+      >
+        11. Mermaid 序列图
+      </h3>
+      
+
+      <pre>
+        <code
+          class="language-sequence"
+        >
+              Alice-&gt;John: Hello John, how are you?
+    loop every minute
+        John--&gt;Alice: Great!
+    end
+
+        </code>
+      </pre>
+      
+
+      <h4
+        id="更多语法参考：mermaid-序列图语法参考"
+      >
+        更多语法参考：
+        <a
+          href="https://knsv.github.io/mermaid/#sequence-diagrams"
+        >
+          Mermaid 序列图语法参考
+        </a>
+      </h4>
+      
+
+      <h3
+        id="12-表格支持"
+      >
+        12. 表格支持
+      </h3>
+      
+
+      <table>
+        
+
+        <thead>
+          
+
+          <tr>
+            
+
+            <th>
+              项目
+            </th>
+            
+
+            <th
+              align="right"
+            >
+              价格
+            </th>
+            
+
+            <th
+              align="center"
+            >
+              数量
+            </th>
+            
+
+          </tr>
+          
+
+        </thead>
+        
+
+        <tbody>
+          <tr>
+            
+
+            <td>
+              计算机
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              $1600
+            </td>
+            
+
+            <td
+              align="center"
+            >
+              5
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td>
+              手机
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              $12
+            </td>
+            
+
+            <td
+              align="center"
+            >
+              12
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td>
+              管线
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              $1
+            </td>
+            
+
+            <td
+              align="center"
+            >
+              234
+            </td>
+            
+
+          </tr>
+          
+
+        </tbody>
+      </table>
+      
+
+      <h3
+        id="13-定义型列表"
+      >
+        13. 定义型列表
+      </h3>
+      
+
+      <p>
+        名词 1
+:   定义 1（左侧有一个可见的冒号和四个不可见的空格）
+      </p>
+      
+
+      <p>
+        代码块 2
+:   这是代码块的定义（左侧有一个可见的冒号和四个不可见的空格）
+      </p>
+      
+
+      <pre>
+        <code>
+              代码块（左侧有八个不可见的空格）
+
+        </code>
+      </pre>
+      
+
+      <h3
+        id="14-html-标签"
+      >
+        14. Html 标签
+      </h3>
+      
+
+      <p>
+        本站支持在 Markdown 语法中嵌套 Html 标签，譬如，你可以用 Html 写一个纵跨两行的表格：
+      </p>
+      
+
+      <pre>
+        <code>
+          &lt;table&gt;
+    &lt;tr&gt;
+        &lt;th rowspan="2"&gt;值班人员&lt;/th&gt;
+        &lt;th&gt;星期一&lt;/th&gt;
+        &lt;th&gt;星期二&lt;/th&gt;
+        &lt;th&gt;星期三&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;李强&lt;/td&gt;
+        &lt;td&gt;张明&lt;/td&gt;
+        &lt;td&gt;王平&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+        </code>
+      </pre>
+      
+
+      <table>
+        
+    
+        <tbody>
+          <tr>
+            
+        
+            <th
+              rowspan="2"
+            >
+              值班人员
+            </th>
+            
+        
+            <th>
+              星期一
+            </th>
+            
+        
+            <th>
+              星期二
+            </th>
+            
+        
+            <th>
+              星期三
+            </th>
+            
+    
+          </tr>
+          
+    
+          <tr>
+            
+        
+            <td>
+              李强
+            </td>
+            
+        
+            <td>
+              张明
+            </td>
+            
+        
+            <td>
+              王平
+            </td>
+            
+    
+          </tr>
+          
+
+        </tbody>
+      </table>
+      
+
+
+      <h3
+        id="15-内嵌图标"
+      >
+        15. 内嵌图标
+      </h3>
+      
+
+      <p>
+        本站的图标系统对外开放，在文档中输入
+      </p>
+      
+
+      <pre>
+        <code>
+          &lt;i class="icon-weibo"&gt;&lt;/i&gt;
+
+        </code>
+      </pre>
+      
+
+      <p>
+        即显示微博的图标： 
+        <i
+          class="icon-weibo icon-2x"
+        />
+      </p>
+      
+
+      <p>
+        替换 上述 
+        <code>
+          i 标签
+        </code>
+         内的 
+        <code>
+          icon-weibo
+        </code>
+         以显示不同的图标，例如：
+      </p>
+      
+
+      <pre>
+        <code>
+          &lt;i class="icon-renren"&gt;&lt;/i&gt;
+
+        </code>
+      </pre>
+      
+
+      <p>
+        即显示人人的图标： 
+        <i
+          class="icon-renren icon-2x"
+        />
+      </p>
+      
+
+      <p>
+        更多的图标和玩法可以参看 
+        <a
+          href="http://fortawesome.github.io/Font-Awesome/3.2.1/icons/"
+        >
+          font-awesome
+        </a>
+         官方网站。
+      </p>
+      
+
+      <h3
+        id="16-待办事宜-todo-列表"
+      >
+        16. 待办事宜 Todo 列表
+      </h3>
+      
+
+      <p>
+        使用带有 [ ] 或 [x] （未完成或已完成）项的列表语法撰写一个待办事宜列表，并且支持子列表嵌套以及混用Markdown语法，例如：
+      </p>
+      
+
+      <pre>
+        <code>
+          - [ ] **Cmd Markdown 开发**
+    - [ ] 改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率
+    - [ ] 支持以 PDF 格式导出文稿
+    - [x] 新增Todo列表功能 [语法参考](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
+    - [x] 改进 LaTex 功能
+        - [x] 修复 LaTex 公式渲染问题
+        - [x] 新增 LaTex 公式编号功能 [语法参考](http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers)
+- [ ] **七月旅行准备**
+    - [ ] 准备邮轮上需要携带的物品
+    - [ ] 浏览日本免税店的物品
+    - [x] 购买蓝宝石公主号七月一日的船票
+
+        </code>
+      </pre>
+      
+
+      <p>
+        对应显示如下待办事宜 Todo 列表：
+      </p>
+      
+
+      <ul>
+        
+
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           
+          <strong>
+            Cmd Markdown 开发
+          </strong>
+          <ul>
+            
+
+            <li>
+              <input
+                disabled=""
+                type="checkbox"
+              />
+               改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率
+            </li>
+            
+
+            <li>
+              <input
+                disabled=""
+                type="checkbox"
+              />
+               支持以 PDF 格式导出文稿
+            </li>
+            
+
+            <li>
+              <input
+                checked=""
+                disabled=""
+                type="checkbox"
+              />
+               新增Todo列表功能 
+              <a
+                href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments"
+              >
+                语法参考
+              </a>
+            </li>
+            
+
+            <li>
+              <input
+                checked=""
+                disabled=""
+                type="checkbox"
+              />
+               改进 LaTex 功能
+              <ul>
+                
+
+                <li>
+                  <input
+                    checked=""
+                    disabled=""
+                    type="checkbox"
+                  />
+                   修复 LaTex 公式渲染问题
+                </li>
+                
+
+                <li>
+                  <input
+                    checked=""
+                    disabled=""
+                    type="checkbox"
+                  />
+                   新增 LaTex 公式编号功能 
+                  <a
+                    href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers"
+                  >
+                    语法参考
+                  </a>
+                </li>
+                
+
+              </ul>
+              
+
+            </li>
+            
+
+          </ul>
+          
+
+        </li>
+        
+
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           
+          <strong>
+            七月旅行准备
+          </strong>
+          <ul>
+            
+
+            <li>
+              <input
+                disabled=""
+                type="checkbox"
+              />
+               准备邮轮上需要携带的物品
+            </li>
+            
+
+            <li>
+              <input
+                disabled=""
+                type="checkbox"
+              />
+               浏览日本免税店的物品
+            </li>
+            
+
+            <li>
+              <input
+                checked=""
+                disabled=""
+                type="checkbox"
+              />
+               购买蓝宝石公主号七月一日的船票
+            </li>
+            
+
+          </ul>
+          
+
+        </li>
+        
+
+      </ul>
+      
+
+      <p>
+        [^footnote]: 这是一个 
+        <em>
+          注脚
+        </em>
+         的 
+        <strong>
+          文本
+        </strong>
+        。
+      </p>
+      
+
+      <p>
+        [^footnote2]: 这是另一个 
+        <em>
+          注脚
+        </em>
+         的 
+        <strong>
+          文本
+        </strong>
+        。
+      </p>
+      
+
+    </div>
+    <!-- eslint-enable vue/no-v-html  -->
+    <!-- TODO: abstract tag list component-->
+    <ul
+      class="tag-list"
+    >
+      
+      <li
+        class="tag-default tag-pill tag-outline"
+      >
+        foo
+      </li>
+      
+    </ul>
+  </div>,
+}
+`;
+
+exports[`# ArticleDetail should render markdown body correctly 1`] = `
+DOMWrapper {
+  "element": <div
+    class="row article-content"
+  >
+    <!-- eslint-disable vue/no-v-html  -->
+    <div
+      class="col-md-12"
+    >
+      <h1
+        id="h1-heading-8-"
+      >
+        h1 Heading 8-)
+      </h1>
+      
+
+      <h2
+        id="h2-heading"
+      >
+        h2 Heading
+      </h2>
+      
+
+      <h3
+        id="h3-heading"
+      >
+        h3 Heading
+      </h3>
+      
+
+      <h4
+        id="h4-heading"
+      >
+        h4 Heading
+      </h4>
+      
+
+      <h5
+        id="h5-heading"
+      >
+        h5 Heading
+      </h5>
+      
+
+      <h6
+        id="h6-heading"
+      >
+        h6 Heading
+      </h6>
+      
+
+      <h2
+        id="horizontal-rules"
+      >
+        Horizontal Rules
+      </h2>
+      
+
+      <hr />
+      
+
+      <hr />
+      
+
+      <hr />
+      
+
+      <h2
+        id="typographic-replacements"
+      >
+        Typographic replacements
+      </h2>
+      
+
+      <p>
+        Enable typographer option to see result.
+      </p>
+      
+
+      <p>
+        (c) (C) (r) (R) (tm) (TM) (p) (P) +-
+      </p>
+      
+
+      <p>
+        test.. test... test..... test?..... test!....
+      </p>
+      
+
+      <p>
+        !!!!!! ???? ,,  -- ---
+      </p>
+      
+
+      <p>
+        "Smartypants, double quotes" and 'single quotes'
+      </p>
+      
+
+      <h2
+        id="emphasis"
+      >
+        Emphasis
+      </h2>
+      
+
+      <p>
+        <strong>
+          This is bold text
+        </strong>
+      </p>
+      
+
+      <p>
+        <strong>
+          This is bold text
+        </strong>
+      </p>
+      
+
+      <p>
+        <em>
+          This is italic text
+        </em>
+      </p>
+      
+
+      <p>
+        <em>
+          This is italic text
+        </em>
+      </p>
+      
+
+      <p>
+        <del>
+          Strikethrough
+        </del>
+      </p>
+      
+
+      <h2
+        id="blockquotes"
+      >
+        Blockquotes
+      </h2>
+      
+
+      <blockquote>
+        
+
+        <p>
+          Blockquotes can also be nested...
+        </p>
+        
+
+        <blockquote>
+          
+
+          <p>
+            ...by using additional greater-than signs right next to each other...
+          </p>
+          
+
+          <blockquote>
+            
+
+            <p>
+              ...or with spaces between arrows.
+            </p>
+            
+
+          </blockquote>
+          
+
+        </blockquote>
+        
+
+      </blockquote>
+      
+
+      <h2
+        id="lists"
+      >
+        Lists
+      </h2>
+      
+
+      <p>
+        Unordered
+      </p>
+      
+
+      <ul>
+        
+
+        <li>
+          Create a list by starting a line with 
+          <code>
+            +
+          </code>
+          , 
+          <code>
+            -
+          </code>
+          , or 
+          <code>
+            *
+          </code>
+        </li>
+        
+
+        <li>
+          Sub-lists are made by indenting 2 spaces:
+          <ul>
+            
+
+            <li>
+              Marker character change forces new list start:
+              <ul>
+                
+
+                <li>
+                  Ac tristique libero volutpat at
+                </li>
+                
+
+              </ul>
+              
+
+              <ul>
+                
+
+                <li>
+                  Facilisis in pretium nisl aliquet
+                </li>
+                
+
+              </ul>
+              
+
+              <ul>
+                
+
+                <li>
+                  Nulla volutpat aliquam velit
+                </li>
+                
+
+              </ul>
+              
+
+            </li>
+            
+
+          </ul>
+          
+
+        </li>
+        
+
+        <li>
+          Very easy!
+        </li>
+        
+
+      </ul>
+      
+
+      <p>
+        Ordered
+      </p>
+      
+
+      <ol>
+        
+
+        <li>
+          Lorem ipsum dolor sit amet
+        </li>
+        
+
+        <li>
+          Consectetur adipiscing elit
+        </li>
+        
+
+        <li>
+          Integer molestie lorem at massa
+        </li>
+        
+
+      </ol>
+      
+
+      <ol>
+        
+
+        <li>
+          You can use sequential numbers...
+        </li>
+        
+
+        <li>
+          ...or keep all the numbers as 
+          <code>
+            1.
+          </code>
+        </li>
+        
+
+      </ol>
+      
+
+      <p>
+        Start numbering with offset:
+      </p>
+      
+
+      <ol
+        start="57"
+      >
+        
+
+        <li>
+          foo
+        </li>
+        
+
+        <li>
+          bar
+        </li>
+        
+
+      </ol>
+      
+
+      <h2
+        id="code"
+      >
+        Code
+      </h2>
+      
+
+      <p>
+        Inline 
+        <code>
+          code
+        </code>
+      </p>
+      
+
+      <p>
+        Indented code
+      </p>
+      
+
+      <pre>
+        <code>
+          // Some comments
+line 1 of code
+line 2 of code
+line 3 of code
+
+        </code>
+      </pre>
+      
+
+      <p>
+        Block code "fences"
+      </p>
+      
+
+      <pre>
+        <code>
+          Sample text here...
+
+        </code>
+      </pre>
+      
+
+      <p>
+        Syntax highlighting
+      </p>
+      
+
+      <pre>
+        <code
+          class="language-js"
+        >
+          var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+
+        </code>
+      </pre>
+      
+
+      <h2
+        id="tables"
+      >
+        Tables
+      </h2>
+      
+
+      <table>
+        
+
+        <thead>
+          
+
+          <tr>
+            
+
+            <th>
+              Option
+            </th>
+            
+
+            <th>
+              Description
+            </th>
+            
+
+          </tr>
+          
+
+        </thead>
+        
+
+        <tbody>
+          <tr>
+            
+
+            <td>
+              data
+            </td>
+            
+
+            <td>
+              path to data files to supply the data that will be passed into templates.
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td>
+              engine
+            </td>
+            
+
+            <td>
+              engine to be used for processing templates. Handlebars is the default.
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td>
+              ext
+            </td>
+            
+
+            <td>
+              extension to be used for dest files.
+            </td>
+            
+
+          </tr>
+          
+
+        </tbody>
+      </table>
+      
+
+      <p>
+        Right aligned columns
+      </p>
+      
+
+      <table>
+        
+
+        <thead>
+          
+
+          <tr>
+            
+
+            <th
+              align="right"
+            >
+              Option
+            </th>
+            
+
+            <th
+              align="right"
+            >
+              Description
+            </th>
+            
+
+          </tr>
+          
+
+        </thead>
+        
+
+        <tbody>
+          <tr>
+            
+
+            <td
+              align="right"
+            >
+              data
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              path to data files to supply the data that will be passed into templates.
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td
+              align="right"
+            >
+              engine
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              engine to be used for processing templates. Handlebars is the default.
+            </td>
+            
+
+          </tr>
+          
+
+          <tr>
+            
+
+            <td
+              align="right"
+            >
+              ext
+            </td>
+            
+
+            <td
+              align="right"
+            >
+              extension to be used for dest files.
+            </td>
+            
+
+          </tr>
+          
+
+        </tbody>
+      </table>
+      
+
+      <h2
+        id="links"
+      >
+        Links
+      </h2>
+      
+
+      <p>
+        <a
+          href="http://dev.nodeca.com"
+        >
+          link text
+        </a>
+      </p>
+      
+
+      <p>
+        <a
+          href="http://nodeca.github.io/pica/demo/"
+          title="title text!"
+        >
+          link with title
+        </a>
+      </p>
+      
+
+      <p>
+        Autoconverted link 
+        <a
+          href="https://github.com/nodeca/pica"
+        >
+          https://github.com/nodeca/pica
+        </a>
+         (enable linkify to see)
+      </p>
+      
+
+      <h2
+        id="images"
+      >
+        Images
+      </h2>
+      
+
+      <p>
+        <img
+          alt="Minion"
+          src="https://octodex.github.com/images/minion.png"
+        />
+        
+
+        <img
+          alt="Stormtroopocat"
+          src="https://octodex.github.com/images/stormtroopocat.jpg"
+          title="The Stormtroopocat"
+        />
+      </p>
+      
+
+      <p>
+        Like links, Images also have a footnote style syntax
+      </p>
+      
+
+      <p>
+        <img
+          alt="Alt text"
+          src="https://octodex.github.com/images/dojocat.jpg"
+          title="The Dojocat"
+        />
+      </p>
+      
+
+      <p>
+        With a reference later in the document defining the URL location:
+      </p>
+      
+
+      <h2
+        id="plugins"
+      >
+        Plugins
+      </h2>
+      
+
+      <p>
+        The killer feature of 
+        <code>
+          markdown-it
+        </code>
+         is very effective support of
+
+        <a
+          href="https://www.npmjs.org/browse/keyword/markdown-it-plugin"
+        >
+          syntax plugins
+        </a>
+        .
+      </p>
+      
+
+      <h3
+        id="emojies"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-emoji"
+        >
+          Emojies
+        </a>
+      </h3>
+      
+
+      <blockquote>
+        
+
+        <p>
+          Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
+        </p>
+        
+
+        <p>
+          Shortcuts (emoticons): :-) :-( 8-) ;)
+        </p>
+        
+
+      </blockquote>
+      
+
+      <p>
+        see 
+        <a
+          href="https://github.com/markdown-it/markdown-it-emoji#change-output"
+        >
+          how to change output
+        </a>
+         with twemoji.
+      </p>
+      
+
+      <h3
+        id="subscript--superscript"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-sub"
+        >
+          Subscript
+        </a>
+         / 
+        <a
+          href="https://github.com/markdown-it/markdown-it-sup"
+        >
+          Superscript
+        </a>
+      </h3>
+      
+
+      <ul>
+        
+
+        <li>
+          19^th^
+        </li>
+        
+
+        <li>
+          H
+          <del>
+            2
+          </del>
+          O
+        </li>
+        
+
+      </ul>
+      
+
+      <h3
+        id="ins"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-ins"
+        >
+          &lt;ins&gt;
+        </a>
+      </h3>
+      
+
+      <p>
+        ++Inserted text++
+      </p>
+      
+
+      <h3
+        id="mark"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-mark"
+        >
+          &lt;mark&gt;
+        </a>
+      </h3>
+      
+
+      <p>
+        ==Marked text==
+      </p>
+      
+
+      <h3
+        id="footnotes"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-footnote"
+        >
+          Footnotes
+        </a>
+      </h3>
+      
+
+      <p>
+        Footnote 1 link[^first].
+      </p>
+      
+
+      <p>
+        Footnote 2 link[^second].
+      </p>
+      
+
+      <p>
+        Inline footnote^[Text of inline footnote] definition.
+      </p>
+      
+
+      <p>
+        Duplicated footnote reference[^second].
+      </p>
+      
+
+      <p>
+        [^first]: Footnote 
+        <strong>
+          can have markup
+        </strong>
+      </p>
+      
+
+      <pre>
+        <code>
+          and multiple paragraphs.
+
+        </code>
+      </pre>
+      
+
+      <p>
+        [^second]: Footnote text.
+      </p>
+      
+
+      <h3
+        id="definition-lists"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-deflist"
+        >
+          Definition lists
+        </a>
+      </h3>
+      
+
+      <p>
+        Term 1
+      </p>
+      
+
+      <p>
+        :   Definition 1
+with lazy continuation.
+      </p>
+      
+
+      <p>
+        Term 2 with 
+        <em>
+          inline markup
+        </em>
+      </p>
+      
+
+      <p>
+        :   Definition 2
+      </p>
+      
+
+      <pre>
+        <code>
+              { some code, part of Definition 2 }
+
+Third paragraph of definition 2.
+
+        </code>
+      </pre>
+      
+
+      <p>
+        <em>
+          Compact style:
+        </em>
+      </p>
+      
+
+      <p>
+        Term 1
+  ~ Definition 1
+      </p>
+      
+
+      <p>
+        Term 2
+  ~ Definition 2a
+  ~ Definition 2b
+      </p>
+      
+
+      <h3
+        id="abbreviations"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-abbr"
+        >
+          Abbreviations
+        </a>
+      </h3>
+      
+
+      <p>
+        This is HTML abbreviation example.
+      </p>
+      
+
+      <p>
+        It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+      </p>
+      
+
+      <p>
+        *[HTML]: Hyper Text Markup Language
+      </p>
+      
+
+      <h3
+        id="custom-containers"
+      >
+        <a
+          href="https://github.com/markdown-it/markdown-it-container"
+        >
+          Custom containers
+        </a>
+      </h3>
+      
+
+      <p>
+        ::: warning
+
+        <em>
+          here be dragons
+        </em>
+        
+:::
+      </p>
+      
+
+    </div>
+    <!-- eslint-enable vue/no-v-html  -->
+    <!-- TODO: abstract tag list component-->
+    <ul
+      class="tag-list"
+    >
+      
+      <li
+        class="tag-default tag-pill tag-outline"
+      >
+        foo
+      </li>
+      
+    </ul>
+  </div>,
+}
+`;

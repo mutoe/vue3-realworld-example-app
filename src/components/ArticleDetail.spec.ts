@@ -12,7 +12,6 @@ describe('# ArticleDetail', () => {
   const mockGetArticle = getArticle as jest.MockedFunction<typeof getArticle>
 
   beforeEach(async () => {
-    mockGetArticle.mockResolvedValue(fixtures.article)
     await router.push({
       name: 'article',
       params: { slug: fixtures.article.slug },
@@ -20,11 +19,20 @@ describe('# ArticleDetail', () => {
   })
 
   it.skip('should render markdown body correctly', async () => {
+    mockGetArticle.mockResolvedValue(fixtures.article)
     const { container } = render(asyncComponentWrapper(ArticleDetail), {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(container.querySelector('h1')).toHaveTextContent('Article body')
-    expect(container.querySelector('strong')).toHaveTextContent('Strong')
+    expect(container.querySelector('.article-content')).toMatchSnapshot()
+  })
+
+  it.skip('should render markdown (zh-CN) body correctly', async () => {
+    mockGetArticle.mockResolvedValue(fixtures.article)
+    const { container } = render(asyncComponentWrapper(ArticleDetail), {
+      global: { plugins: [registerGlobalComponents, router] },
+    })
+
+    expect(container.querySelector('.article-content')).toMatchSnapshot()
   })
 })

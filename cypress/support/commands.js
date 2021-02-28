@@ -23,6 +23,5 @@ Cypress.Commands.add('login', (username = 'plumrx') => {
   cy.get('[type="password"]').type('12345678')
   cy.get('[type="submit"]').contains('Sign in').click()
 
-  cy.get('li.nav-item:last')
-    .should('contain.text', username)
+  cy.url().should('match', /#\/$/)
 })
