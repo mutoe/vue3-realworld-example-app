@@ -26,7 +26,7 @@ describe('# ArticleDetail', () => {
     await flushPromises()
 
     const articleBody = wrapper.find('.article-content')
-    expect(articleBody).toMatchSnapshot()
+    expect(articleBody.html()).toMatchSnapshot()
   })
 
   it('should render markdown (zh-CN) body correctly', async () => {
@@ -37,6 +37,6 @@ describe('# ArticleDetail', () => {
     await flushPromises()
 
     const articleBody = wrapper.find('.article-content')
-    expect(articleBody).toMatchSnapshot()
+    expect(articleBody.html()).toMatchSnapshot()
   })
 })
