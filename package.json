@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "serve": "vite preview",
     "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.js}\"",
     "lint:vti": "vti diagnostics",
     "lint": "concurrently 'yarn tsc' 'yarn lint:script' 'yarn lint:vti'",
     "test:unit": "jest --coverage",
-    "test:e2e": "yarn build && concurrently -k \"serve dist\" \"cypress run -c baseUrl=http://localhost:5000\"",
+    "test:e2e": "yarn build && concurrently -k \"yarn serve\" \"cypress run -c baseUrl=http://localhost:5000\"",
     "test:e2e:ci": "cypress run -C cypress.prod.json",
     "test": "yarn test:unit && yarn test:e2e"
   },
@@ -44,7 +45,6 @@
     "jsdom": "^16.4.0",
     "lint-staged": "^10.5.4",
     "rollup-plugin-analyzer": "^4.0.0",
-    "serve": "^11.3.2",
     "ts-jest": "^26.5.1",
     "typescript": "~4.2.2",
     "vite": "^2.0.2",
