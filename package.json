@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@harlem/core": "^1.1.0",
-    "deepmerge": "^4.2.2",
     "insane": "^2.6.2",
     "marked": "^2.0.1",
     "vue": "^3.0.6",
