@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import analyzer from 'rollup-plugin-analyzer'
 
 export default defineConfig({
   resolve: {
@@ -8,5 +9,8 @@ export default defineConfig({
       'src': resolve(__dirname, 'src'),
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    analyzer({ summaryOnly: true }),
+  ],
 })
