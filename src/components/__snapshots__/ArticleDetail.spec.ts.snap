@@ -418,17 +418,17 @@ console.log(foo(5));
 <td align=\\"right\\">extension to be used for dest files.</td>
 </tr>
 </tbody></table>
-<h2 id=\\"links\\">Links</h2>
+<h2>Links</h2>
 <p><a href=\\"http://dev.nodeca.com\\">link text</a></p>
-<p><a href=\\"http://nodeca.github.io/pica/demo/\\" title=\\"title text!\\">link with title</a></p>
+<p><a title=\\"title text!\\" href=\\"http://nodeca.github.io/pica/demo/\\">link with title</a></p>
 <p>Autoconverted link <a href=\\"https://github.com/nodeca/pica\\">https://github.com/nodeca/pica</a> (enable linkify to see)</p>
-<h2 id=\\"images\\">Images</h2>
-<p><img src=\\"https://octodex.github.com/images/minion.png\\" alt=\\"Minion\\">
-<img src=\\"https://octodex.github.com/images/stormtroopocat.jpg\\" alt=\\"Stormtroopocat\\" title=\\"The Stormtroopocat\\"></p>
+<h2>Images</h2>
+<p><img alt=\\"Minion\\" src=\\"https://octodex.github.com/images/minion.png\\">
+<img title=\\"The Stormtroopocat\\" alt=\\"Stormtroopocat\\" src=\\"https://octodex.github.com/images/stormtroopocat.jpg\\"></p>
 <p>Like links, Images also have a footnote style syntax</p>
-<p><img src=\\"https://octodex.github.com/images/dojocat.jpg\\" alt=\\"Alt text\\" title=\\"The Dojocat\\"></p>
+<p><img title=\\"The Dojocat\\" alt=\\"Alt text\\" src=\\"https://octodex.github.com/images/dojocat.jpg\\"></p>
 <p>With a reference later in the document defining the URL location:</p>
-<h2 id=\\"plugins\\">Plugins</h2>
+<h2>Plugins</h2>
 <p>The killer feature of <code>markdown-it</code> is very effective support of
 <a href=\\"https://www.npmjs.org/browse/keyword/markdown-it-plugin\\">syntax plugins</a>.</p>
 <h3 id=\\"emojies\\"><a href=\\"https://github.com/markdown-it/markdown-it-emoji\\">Emojies</a></h3>

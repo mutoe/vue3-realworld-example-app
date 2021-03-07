@@ -39,4 +39,15 @@ describe('# ArticleDetail', () => {
     const articleBody = wrapper.find('.article-content')
     expect(articleBody.html()).toMatchSnapshot()
   })
+
+  it('should filter the xss content in Markdown body', async () => {
+    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownXss })
+    const wrapper = mount(asyncComponentWrapper(ArticleDetail), {
+      global: { plugins: [registerGlobalComponents, router] },
+    })
+    await flushPromises()
+
+    const articleBody = wrapper.find('.article-content')
+    expect(articleBody.html()).not.toContain('alert')
+  })
 })
