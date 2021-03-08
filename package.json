@@ -47,7 +47,7 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "ts-jest": "^26.5.1",
     "typescript": "~4.2.2",
-    "vite": "^2.0.2",
+    "vite": "^2.0.5",
     "vti": "^0.1.1",
     "vue-jest": "^5.0.0-alpha.8"
   },
