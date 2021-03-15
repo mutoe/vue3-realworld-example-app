@@ -11,6 +11,7 @@ export function useProfile ({ username }: UseProfileProps) {
 
   async function fetchProfile (): Promise<void> {
     updateProfile(null)
+    if (!username.value) return
     const profileData = await getProfile(username.value)
     updateProfile(profileData)
   }
