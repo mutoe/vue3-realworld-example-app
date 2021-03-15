@@ -5,12 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: monthly
+    allow:
+      - dependency-type: production
 
-  - package-ecosystem: "github-actions"
+  - package-ecosystem: github-actions
     directory: ".github/workflows"
     schedule:
-      interval: "weekly"
+      interval: monthly
