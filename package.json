@@ -22,7 +22,7 @@
     "vue-router": "^4.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.1",
+    "@babel/core": "^7.13.10",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.16.1",
