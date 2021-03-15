@@ -2,20 +2,18 @@ import { ROUTES } from '../constants'
 
 describe('Article', () => {
   beforeEach(() => {
-    cy.intercept('GET', /articles\/\S+$/, { fixture: 'article.json' })
-    cy.intercept('GET', /articles\?/, { fixture: 'articles.json' })
-    cy.intercept('GET', /tags$/, { fixture: 'articles_of_tag.json' })
-    cy.intercept('GET', /profiles\/\S+/, { fixture: 'profile.json' })
-    cy.intercept('DELETE', /articles\/\S+$/, { statusCode: 200, body: {} }).as('deleteArticle')
+    cy.intercept('GET', /articles\?limit/, { fixture: 'articles.json' })
+    cy.intercept('GET', /articles\/.+/, { fixture: 'article.json' })
+    cy.intercept('GET', /tags/, { fixture: 'articles_of_tag.json' })
+    cy.intercept('GET', /profiles\/.+/, { fixture: 'profile.json' })
+    cy.intercept('DELETE', /articles\/.+/, { statusCode: 200, body: {} }).as('deleteArticle')
   })
 
   describe('post article', () => {
-    before(() => {
+    it('jump to post detail page when submit create article form', () => {
       cy.login()
       cy.visit('/')
-    })
 
-    it('jump to post detail page when submit create article form', () => {
       cy.intercept('POST', /articles$/, { fixture: 'article.json' })
 
       cy.get('[href="#/article/create"]').click()
@@ -45,12 +43,10 @@ describe('Article', () => {
   })
 
   describe('delete article', () => {
-    before(() => {
+    it('delete article', () => {
       cy.login()
       cy.visit(ROUTES.ARTICLE)
-    })
 
-    it('delete article', () => {
       cy.get('.article-actions button.btn-outline-danger')
         .contains('Delete Article')
         .click()
