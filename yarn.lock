@@ -402,10 +402,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@harlem/core@^1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@harlem/core/-/core-1.1.1.tgz#245a08cb2f68c6aa4e6d70bebe118b0545cf7798"
-  integrity sha512-v/a4BOXEf+Iw//6pVfY9nXELIKsaevzXKMfw3wj5KP6wQfNlkWjKarMIKrh4wtJchf7OEf50jfZX74SoERTMRg==
+"@harlem/core@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@harlem/core/-/core-1.2.3.tgz#5eb8941827b9f69ccdc2594de9e505c2f16bd901"
+  integrity sha512-D2jYl6fqT/EOKKQ0EslLb4VGMOO+1FSynVj2c/J6eiqdp+3QmbsC7nYkm8Bba26R33lcBNHzF8bpUmryknhvtQ==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
