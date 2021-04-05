@@ -8,7 +8,7 @@ import ArticleDetail from './ArticleDetail.vue'
 
 jest.mock('src/services/article/getArticle')
 
-describe('# ArticleDetail', () => {
+describe.skip('# ArticleDetail', () => {
   const mockGetArticle = getArticle as jest.MockedFunction<typeof getArticle>
 
   beforeEach(async () => {
