@@ -8,8 +8,9 @@
 
 > ### [Vue3](https://v3.vuejs.org/) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
-
-### [Demo](https://mutoe.github.io/vue3-realworld-example-app) [RealWorld](https://github.com/gothinkster/realworld)
+- [Demo (master branch)](https://vue3-realworld-example-app-mutoe.vercel.app)
+- [Demo (script-setup branch)](https://vue3-realworld-example-app-setup.vercel.app)
+- [RealWorld](https://github.com/gothinkster/realworld)
 
 
 This codebase was created to demonstrate a fully fledged fullstack application built with **Vue3** including CRUD operations, authentication, routing, pagination, and more.
