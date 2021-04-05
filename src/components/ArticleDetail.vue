@@ -43,8 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import DOMPurify from 'dompurify'
-import md2html from 'marked'
+import marked from 'src/plugins/marked'
 import { getArticle } from 'src/services/article/getArticle'
 import { computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
@@ -53,7 +52,7 @@ import ArticleDetailMeta from './ArticleDetailMeta.vue'
 const route = useRoute()
 const slug = route.params.slug as string
 const article = reactive<Article>(await getArticle(slug))
-const articleHandledBody = computed(() => md2html(article.body, { sanitizer: DOMPurify.sanitize }))
+const articleHandledBody = computed(() => marked(article.body))
 const updateArticle = (newArticle: Article) => {
   Object.assign(article, newArticle)
 }

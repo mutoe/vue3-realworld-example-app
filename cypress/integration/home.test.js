@@ -4,12 +4,12 @@ describe('Homepage', () => {
   beforeEach(() => {
     cy.intercept('GET', /articles\?tag=butt/, { fixture: 'articles_of_tag.json' }).as('getArticlesOfTag')
     cy.intercept('GET', /articles\?limit/, { fixture: 'articles.json' }).as('getArticles')
+    cy.intercept('GET', /articles\/.+/, { fixture: 'article.json' }).as('getArticle')
     cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
   })
 
   it('should can access home page', () => {
     cy.visit(ROUTES.HOME)
-    cy.wait('@getArticles')
 
     cy.get('h1.logo-font')
       .should('contain.text', 'conduit')
@@ -38,7 +38,6 @@ describe('Homepage', () => {
 
   it('should highlight Home nav-item top menu bar when page load', () => {
     cy.visit(ROUTES.HOME)
-    cy.wait('@getArticles')
 
     cy.get('ul.nav.navbar-nav.pull-xs-right a.nav-link')
       .contains('Home')

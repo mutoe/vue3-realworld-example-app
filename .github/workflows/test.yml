@@ -125,7 +125,7 @@ jobs:
         with:
           record: true
           config: baseUrl=http://localhost:5000
-          start: yarn serve dist
+          start: yarn serve
           wait-on: http://localhost:5000
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

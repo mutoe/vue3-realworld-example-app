@@ -18,8 +18,8 @@ describe('# ArticleDetail', () => {
     })
   })
 
-  it.skip('should render markdown body correctly', async () => {
-    mockGetArticle.mockResolvedValue(fixtures.article)
+  it('should render markdown body correctly', async () => {
+    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdown })
     const { container } = render(asyncComponentWrapper(ArticleDetail), {
       global: { plugins: [registerGlobalComponents, router] },
     })
@@ -27,12 +27,21 @@ describe('# ArticleDetail', () => {
     expect(container.querySelector('.article-content')).toMatchSnapshot()
   })
 
-  it.skip('should render markdown (zh-CN) body correctly', async () => {
-    mockGetArticle.mockResolvedValue(fixtures.article)
+  it('should render markdown (zh-CN) body correctly', async () => {
+    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownCN })
     const { container } = render(asyncComponentWrapper(ArticleDetail), {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
     expect(container.querySelector('.article-content')).toMatchSnapshot()
+  })
+
+  it('should filter the xss content in Markdown body', async () => {
+    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownXss })
+    const { container } = render(asyncComponentWrapper(ArticleDetail), {
+      global: { plugins: [registerGlobalComponents, router] },
+    })
+
+    expect(container.querySelector('.article-content')?.textContent).not.toContain('alert')
   })
 })
