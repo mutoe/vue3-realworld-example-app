@@ -1,16 +1,18 @@
 import mockLocalStorage from './test/mock-local-storage'
 
-import storage from './storage'
+import Storage from './storage'
 
 describe('# storage', function () {
   const DATA = { foo: 'bar' }
   const KEY = 'key'
 
+  const storage = new Storage<typeof DATA>(KEY)
+
   describe('# GET', function () {
     it('should be called with correct key', function () {
       const fn = mockLocalStorage('getItem')
 
-      storage.get(KEY)
+      storage.get()
 
       expect(fn).toBeCalledWith(KEY)
     })
@@ -18,7 +20,7 @@ describe('# storage', function () {
     it('should get an object given valid local storage item', function () {
       mockLocalStorage('getItem', DATA)
 
-      const result = storage.get(KEY)
+      const result = storage.get()
 
       expect(result).toMatchObject(DATA)
     })
@@ -27,7 +29,7 @@ describe('# storage', function () {
       mockLocalStorage('getItem', '{invalid value}', false)
 
       expect(() => {
-        const result = storage.get(KEY)
+        const result = storage.get()
         expect(result).toBeNull()
       }).not.toThrow()
     })
@@ -37,7 +39,7 @@ describe('# storage', function () {
     it('should be called with correct key and value', function () {
       const fn = mockLocalStorage('setItem')
 
-      storage.set(KEY, DATA)
+      storage.set(DATA)
 
       expect(fn).toBeCalledWith(KEY, JSON.stringify(DATA))
     })
@@ -47,7 +49,7 @@ describe('# storage', function () {
     it('should be called with correct key', function () {
       const fn = mockLocalStorage('removeItem')
 
-      storage.remove(KEY)
+      storage.remove()
 
       expect(fn).toBeCalledWith(KEY)
     })
