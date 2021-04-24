@@ -36,7 +36,7 @@
           role="button"
           aria-label="Delete comment"
           class="ion-trash-a"
-          @click="$emit('remove-comment')"
+          @click="emit('remove-comment')"
         />
       </span>
     </div>
@@ -51,7 +51,10 @@ const props = defineProps<{
   username?: string
 }>()
 
-const emit = defineEmit<(e: 'remove-comment') => boolean>()
+interface Emit {
+  (e: 'remove-comment'): boolean
+}
+const emit = defineEmit<Emit>()
 
 const showRemove = computed(() => (
   props.username !== undefined && props.username === props.comment.author.username

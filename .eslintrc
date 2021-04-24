@@ -16,6 +16,7 @@
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",
+    "no-labels": "off",
     "comma-dangle": ["warn", "always-multiline"],
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",

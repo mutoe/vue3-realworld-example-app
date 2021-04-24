@@ -75,7 +75,8 @@
 
 <script lang="ts" setup>
 import { routerPush } from 'src/router'
-import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
+import { putProfile } from 'src/services/profile/putProfile'
+import type { PutProfileForm } from 'src/services/profile/putProfile'
 import { checkAuthorization, updateUser, user } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 
@@ -104,9 +105,9 @@ onMounted(async () => {
 
 const isButtonDisabled = computed(() => (
   form.image === user.value?.image &&
-      form.username === user.value?.username &&
-      form.bio === user.value?.bio &&
-      form.email === user.value?.email &&
-      !form.password
+  form.username === user.value?.username &&
+  form.bio === user.value?.bio &&
+  form.email === user.value?.email &&
+  !form.password
 ))
 </script>

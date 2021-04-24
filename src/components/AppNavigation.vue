@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import type { AppRouteNames } from 'src/router'
 import { user } from 'src/store/user'
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
 
 interface NavLink {

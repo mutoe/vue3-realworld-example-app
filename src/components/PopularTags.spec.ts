@@ -3,7 +3,6 @@ import PopularTags from 'src/components/PopularTags.vue'
 import { useTags } from 'src/composable/useTags'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import { ref } from 'vue'
 
 jest.mock('src/composable/useTags')

@@ -1,13 +1,10 @@
 import { render, waitFor } from '@testing-library/vue'
-import ArticleDetailComment from 'src/components/ArticleDetailComment.vue'
-import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
 import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import fixtures from 'src/utils/test/fixtures'
-import { nextTick } from 'vue'
 import ArticleDetailComments from './ArticleDetailComments.vue'
 
 jest.mock('src/services/comment/getComments')
