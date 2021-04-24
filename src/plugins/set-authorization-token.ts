@@ -1,7 +1,7 @@
 import { request } from 'src/services'
-import storage from 'src/utils/storage'
+import { userStorage } from 'src/store/user'
 
 export default function (): void {
-  const token = storage.get<User>('user')?.token
+  const token = userStorage.get()?.token
   if (token !== undefined) request.setAuthorizationHeader(token)
 }

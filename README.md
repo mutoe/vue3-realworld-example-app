@@ -35,7 +35,7 @@ For more information on how to this works with other frontends/backends, head ov
 #### What works in [script-setup branch](https://github.com/mutoe/vue3-realworld-example-app/tree/script-setup) (based on the master branch)
 
 - [x] [Script setup sugar](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md)
-- [ ] [Script ref sugar](https://github.com/vuejs/rfcs/blob/ref-sugar/active-rfcs/0000-ref-sugar.md)
+- [x] [Script ref sugar](https://github.com/vuejs/rfcs/blob/ref-sugar/active-rfcs/0000-ref-sugar.md)
 - [x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
 
 > _[Why we have the second branch?](https://github.com/mutoe/vue3-realworld-example-app/commit/c0c983dba08cb31fc96bbc3eb7f15faf469d0624#commitcomment-47600736)_
