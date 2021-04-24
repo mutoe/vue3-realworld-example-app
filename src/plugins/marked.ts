@@ -29,10 +29,7 @@ export default (markdown: string): string => {
       td: ['align'],
       input: ['disabled', 'type', 'checked'],
     },
-    filter: ({
-      tag,
-      attrs,
-    }: any) => {
+    filter: ({ tag, attrs }: {tag: string, attrs: Record<string, string>}) => {
       // Display checklist
       if (tag === 'input') {
         return attrs.type === 'checkbox' && attrs.disabled === ''

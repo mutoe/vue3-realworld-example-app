@@ -8,11 +8,10 @@
     "extraFileExtensions": [".vue", ".d.ts"]
   },
   "extends": [
-    "standard",
+    "standard-with-typescript",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:vue/vue3-recommended",
-    "standard-with-typescript"
+    "plugin:vue/vue3-recommended"
   ],
   "rules": {
     "no-undef": "off",

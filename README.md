@@ -30,14 +30,13 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [Harlem](https://github.com/andrewcourtice/harlem) ([await Vuex v5](https://github.com/mutoe/vue3-realworld-example-app/issues/15))
 - [x] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
-- [x] Vetur Tools: [VTI](https://github.com/mutoe/vue3-realworld-example-app/pull/28) and [optionally IDE hints](https://github.com/mutoe/vue3-realworld-example-app/commit/8367f89a99c467d181d9c7f4144deb05cec55210#commitcomment-43957089)
+- [x] [Vue tsc](https://github.com/johnsoncodehk/vue-tsc)
 
 #### What works in [script-setup branch](https://github.com/mutoe/vue3-realworld-example-app/tree/script-setup) (based on the master branch)
 
 - [x] [Script setup sugar](https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md)
 - [ ] [Script ref sugar](https://github.com/vuejs/rfcs/blob/ref-sugar/active-rfcs/0000-ref-sugar.md)
 - [x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
-- [ ] Vetur Tools [![Vetur#2296](https://img.shields.io/github/issues/detail/state/vuejs/vetur/2296?label=vetur%232296&logo=github&style=flat-square)](https://github.com/vuejs/vetur/issues/2296)
 
 > _[Why we have the second branch?](https://github.com/mutoe/vue3-realworld-example-app/commit/c0c983dba08cb31fc96bbc3eb7f15faf469d0624#commitcomment-47600736)_
 
@@ -74,3 +73,7 @@ Made with [contributors-img](https://contributors-img.web.app).
 - [AlexBrohshtut/vue-ts-realworld-app](https://github.com/AlexBrohshtut/vue-ts-realworld-app) - vue2, ts, class-component
 - [devJang/nuxt-realworld](https://github.com/devJang/nuxt-realworld) - nuxt, ts, composition api
 - [levchak0910/vue3-ssr-realworld-example-app](https://github.com/levchak0910/vue3-ssr-realworld-example-app) - vue3, ssr
+
+## Sponsor
+
+Thanks **JetBrains** for providing IDE support!

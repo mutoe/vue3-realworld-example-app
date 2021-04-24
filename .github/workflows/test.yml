@@ -40,14 +40,10 @@ jobs:
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
       - name: TypeScript check
-        run: yarn tsc
+        run: yarn lint:tsc
 
       - name: Eslint check
         run: yarn lint:script
-
-      # https://github.com/vuejs/vetur/issues/2296
-      # - name: Vetur check
-      #   run: yarn lint:vti
 
   unit_test:
     name: Unit test
