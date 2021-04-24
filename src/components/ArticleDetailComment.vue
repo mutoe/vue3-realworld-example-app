@@ -51,12 +51,11 @@ const props = defineProps<{
   username?: string
 }>()
 
-interface Emit {
+const emit = defineEmit<{
   (e: 'remove-comment'): boolean
-}
-const emit = defineEmit<Emit>()
+}>()
 
-const showRemove = computed(() => (
+ref: showRemove = computed(() => (
   props.username !== undefined && props.username === props.comment.author.username
 ))
 </script>

@@ -75,11 +75,13 @@ const props = defineProps<{
   article: Article
 }>()
 
-const emit = defineEmit<(e: 'update', article: Article) => void>()
+const emit = defineEmit<{
+  (e: 'update', article: Article): void
+}>()
 
 const { article } = toRefs(props)
-const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
-const displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
+ref: displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
+ref: displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
 
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited: computed(() => article.value.favorited),

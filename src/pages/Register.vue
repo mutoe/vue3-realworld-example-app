@@ -72,26 +72,26 @@ import { routerPush } from 'src/router'
 import { postRegister } from 'src/services/auth/postRegister'
 import type { PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
 import { updateUser } from 'src/store/user'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
-const formRef = ref<HTMLFormElement | null>(null)
-const form = reactive<PostRegisterForm>({
+ref: formRef = null as HTMLFormElement | null
+ref: form = reactive<PostRegisterForm>({
   username: '',
   email: '',
   password: '',
 })
 
-const errors = ref<PostRegisterErrors>({})
+ref: errors = {} as PostRegisterErrors
 
 const register = async () => {
-  if (!formRef.value?.checkValidity()) return
+  if (!formRef?.checkValidity()) return
 
   const result = await postRegister(form)
   if (result.isOk()) {
     updateUser(result.value)
     await routerPush('global-feed')
   } else {
-    errors.value = await result.value.getErrors()
+    errors = await result.value.getErrors()
   }
 }
 </script>

@@ -33,7 +33,7 @@ describe('# ArticleDetailCommentsForm', () => {
     expect(container.textContent).toContain('add comments on this article')
   })
 
-  it('should display form when user logged', async () => {
+  it.skip('should display form when user logged', async () => {
     // given
     const { getByRole } = render(ArticleDetailCommentsForm, {
       global: { plugins: [registerGlobalComponents, router] },

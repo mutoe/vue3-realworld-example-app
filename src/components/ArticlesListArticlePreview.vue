@@ -58,7 +58,9 @@ const props = defineProps<{
   article: Article;
 }>()
 
-const emit = defineEmit<(e: 'update', article: Article) => void>()
+const emit = defineEmit<{
+  (e: 'update', article: Article): void
+}>()
 
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited: computed(() => props.article.favorited),

@@ -41,22 +41,24 @@
 import { useProfile } from 'src/composable/useProfile'
 import { postComment } from 'src/services/comment/postComment'
 import { checkAuthorization, user } from 'src/store/user'
-import { computed, defineEmit, defineProps, ref } from 'vue'
+import { computed, defineEmit, defineProps } from 'vue'
 
 const props = defineProps<{
   articleSlug: string
 }>()
 
-const emit = defineEmit<(e: 'add-comment', comment: ArticleComment) => void>()
+const emit = defineEmit<{
+  (e: 'add-comment', comment: ArticleComment): void
+}>()
 
-const username = computed(() => checkAuthorization(user) ? user.value.username : '')
-const { profile } = useProfile({ username })
+ref: username = computed(() => checkAuthorization(user) ? user.value.username : '')
+const { profile } = useProfile({ username: $username })
 
-const comment = ref('')
+ref: comment = ''
 
 const submitComment = async () => {
-  const newComment = await postComment(props.articleSlug, comment.value)
+  const newComment = await postComment(props.articleSlug, comment)
   emit('add-comment', newComment)
-  comment.value = ''
+  comment = ''
 }
 </script>

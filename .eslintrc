@@ -18,6 +18,7 @@
     "no-unused-vars": "off",
     "no-labels": "off",
     "comma-dangle": ["warn", "always-multiline"],
+    "func-call-spacing": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-unused-vars": "off"

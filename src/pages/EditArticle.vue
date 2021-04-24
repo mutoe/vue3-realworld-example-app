@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { getArticle } from 'src/services/article/getArticle'
 import { postArticle, putArticle } from 'src/services/article/postArticle'
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface FormState {
@@ -80,7 +80,7 @@ interface FormState {
 
 const route = useRoute()
 const router = useRouter()
-const slug = computed<string>(() => route.params.slug as string)
+ref: slug = computed<string>(() => route.params.slug as string)
 
 const form = reactive<FormState>({
   title: '',
@@ -89,10 +89,10 @@ const form = reactive<FormState>({
   tagList: [],
 })
 
-const newTag = ref<string>('')
+ref: newTag = '' as string
 const addTag = () => {
-  form.tagList.push(newTag.value.trim())
-  newTag.value = ''
+  form.tagList.push(newTag.trim())
+  newTag = ''
 }
 const removeTag = (tag: string) => {
   form.tagList = form.tagList.filter(t => t !== tag)
@@ -109,13 +109,13 @@ async function fetchArticle (slug: string) {
 }
 
 onMounted(() => {
-  if (slug.value) fetchArticle(slug.value)
+  if (slug) fetchArticle(slug)
 })
 
 const onSubmit = async () => {
   let article: Article
-  if (slug.value) {
-    article = await putArticle(slug.value, form)
+  if (slug) {
+    article = await putArticle(slug, form)
   } else {
     article = await postArticle(form)
   }

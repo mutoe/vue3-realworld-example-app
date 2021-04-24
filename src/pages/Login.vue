@@ -65,25 +65,25 @@ import { routerPush } from 'src/router'
 import { postLogin } from 'src/services/auth/postLogin'
 import type { PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
 import { updateUser } from 'src/store/user'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
-const formRef = ref<HTMLFormElement | null>(null)
-const form = reactive<PostLoginForm>({
+ref: formRef = null as HTMLFormElement | null
+ref: form = reactive<PostLoginForm>({
   email: '',
   password: '',
 })
 
-const errors = ref<PostLoginErrors>({})
+ref: errors = {} as PostLoginErrors
 
 const login = async () => {
-  if (!formRef.value?.checkValidity()) return
+  if (!formRef?.checkValidity()) return
 
   const result = await postLogin(form)
   if (result.isOk()) {
     updateUser(result.value)
     await routerPush('global-feed')
   } else {
-    errors.value = await result.value.getErrors()
+    errors = await result.value.getErrors()
   }
 }
 </script>

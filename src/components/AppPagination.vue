@@ -17,17 +17,19 @@
 
 <script lang="ts" setup>
 import { limit } from 'src/services'
-import { computed, defineEmit, defineProps, toRefs } from 'vue'
+import { computed, defineEmit, defineProps } from 'vue'
 
 const props = defineProps<{
   page: number
   count: number
 }>()
 
-const emit = defineEmit<(e: 'page-change', index: number) => void>()
+const emit = defineEmit<{
+  (e: 'page-change', index: number): void
+}>()
 
-const { count, page } = toRefs(props)
-const pagesCount = computed(() => Math.ceil(count.value / limit))
-const isActive = (index: number) => page.value === index
+ref: pagesCount = computed(() => Math.ceil(props.count / limit))
+
+const isActive = (index: number) => props.page === index
 const onPageChange = (index: number) => emit('page-change', index)
 </script>
