@@ -6,7 +6,7 @@ import analyzer from 'rollup-plugin-analyzer'
 export default defineConfig({
   resolve: {
     alias: {
-      'src': resolve(__dirname, 'src'),
+      src: resolve(__dirname, 'src'),
     },
   },
   plugins: [

@@ -1,4 +1,3 @@
-import { request } from '../services'
 import params2query from './params-to-query'
 
 describe('# params2query', () => {

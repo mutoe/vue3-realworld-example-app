@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { fireEvent, render } from '@testing-library/vue'
 import ArticlesListArticlePreview from 'src/components/ArticlesListArticlePreview.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
@@ -13,19 +13,19 @@ jest.mock('src/composable/useFavoriteArticle', () => ({
 }))
 
 describe('# ArticlesListArticlePreview', () => {
-  const favoriteButton = '[aria-label="Favorite article"]'
+  const favoriteButton = 'Favorite article'
 
   beforeEach(async () => {
     await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
   })
 
   it('should call favorite method when click favorite button', async () => {
-    const wrapper = mount(ArticlesListArticlePreview, {
+    const { getByRole } = render(ArticlesListArticlePreview, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { article: fixtures.article },
     })
 
-    await wrapper.find(favoriteButton).trigger('click')
+    await fireEvent.click(getByRole('button', { name: favoriteButton }))
 
     expect(mockFavoriteArticle).toBeCalledTimes(1)
   })

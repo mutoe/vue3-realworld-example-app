@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { render } from '@testing-library/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import AppFooter from './AppFooter.vue'
@@ -9,10 +9,10 @@ describe('# AppFooter', () => {
   })
 
   it('should render correctly', () => {
-    const wrapper = mount(AppFooter, {
+    const { container } = render(AppFooter, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(wrapper.text()).toContain('a')
+    expect(container).toBeInTheDocument()
   })
 })

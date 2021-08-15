@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { render } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
@@ -18,26 +18,26 @@ describe('# ArticlesListNavigation', () => {
   })
 
   it('should render global feed item when passed global feed prop', () => {
-    const wrapper = mount(ArticlesListNavigation, {
+    const { container } = render(ArticlesListNavigation, {
       global: globalMountOptions,
       props: { tag: '', username: '', useGlobalFeed: true },
     })
 
-    const items = wrapper.findAll('.nav-item')
+    const items = container.querySelectorAll('.nav-item')
     expect(items).toHaveLength(1)
-    expect(items[0].text()).toContain('Global Feed')
+    expect(items[0].textContent).toContain('Global Feed')
   })
 
   it('should render full item', () => {
-    const wrapper = mount(ArticlesListNavigation, {
+    const { container } = render(ArticlesListNavigation, {
       global: globalMountOptions,
       props: { tag: 'foo', username: '', useGlobalFeed: true, useMyFeed: true, useTagFeed: true },
     })
 
-    const items = wrapper.findAll('.nav-item')
+    const items = container.querySelectorAll('.nav-item')
     expect(items).toHaveLength(3)
-    expect(items[0].text()).toContain('Global Feed')
-    expect(items[1].text()).toContain('Your Feed')
-    expect(items[2].text()).toContain('foo')
+    expect(items[0].textContent).toContain('Global Feed')
+    expect(items[1].textContent).toContain('Your Feed')
+    expect(items[2].textContent).toContain('foo')
   })
 })

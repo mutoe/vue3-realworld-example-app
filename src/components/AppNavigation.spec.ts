@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { render } from '@testing-library/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { updateUser, user } from 'src/store/user'
@@ -11,29 +11,29 @@ describe('# AppNavigation', () => {
   })
 
   it('should render Sign in and Sign up when user not logged', () => {
-    const wrapper = mount(AppNavigation, {
+    const { container } = render(AppNavigation, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(wrapper.findAll('.nav-item')).toHaveLength(3)
-    expect(wrapper.text()).toContain('Home')
-    expect(wrapper.text()).toContain('Sign in')
-    expect(wrapper.text()).toContain('Sign up')
+    expect(container.querySelectorAll('.nav-item')).toHaveLength(3)
+    expect(container.textContent).toContain('Home')
+    expect(container.textContent).toContain('Sign in')
+    expect(container.textContent).toContain('Sign up')
   })
 
   it('should render xxx when user logged', () => {
     updateUser({ id: 1, username: 'foo', email: '', token: '', bio: undefined, image: undefined })
-    const wrapper = mount(AppNavigation, {
+    const { container } = render(AppNavigation, {
       global: {
         plugins: [registerGlobalComponents, router],
         mocks: { $store: user },
       },
     })
 
-    expect(wrapper.findAll('.nav-item')).toHaveLength(4)
-    expect(wrapper.text()).toContain('Home')
-    expect(wrapper.text()).toContain('New Post')
-    expect(wrapper.text()).toContain('Settings')
-    expect(wrapper.text()).toContain('foo')
+    expect(container.querySelectorAll('.nav-item')).toHaveLength(4)
+    expect(container.textContent).toContain('Home')
+    expect(container.textContent).toContain('New Post')
+    expect(container.textContent).toContain('Settings')
+    expect(container.textContent).toContain('foo')
   })
 })
