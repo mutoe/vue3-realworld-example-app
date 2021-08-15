@@ -8,6 +8,7 @@
       <a
         :aria-label="`Go to page ${pageNumber}`"
         class="page-link"
+        href="javascript:"
         @click="onPageChange(pageNumber)"
       >{{ pageNumber }}</a>
     </li>

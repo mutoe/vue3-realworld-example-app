@@ -22,7 +22,7 @@ describe('# ArticleDetailComments', () => {
     })
   })
 
-  it.skip('should render correctly', async () => {
+  it('should render correctly', async () => {
     const { container } = render(asyncComponentWrapper(ArticleDetailComments), {
       global: { plugins: [registerGlobalComponents, router] },
     })
