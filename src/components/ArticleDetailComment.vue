@@ -44,18 +44,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineEmit, defineProps } from 'vue'
 
 const props = defineProps<{
   comment: ArticleComment
   username?: string
 }>()
 
-const emit = defineEmit<{
+const emit = defineEmits<{
   (e: 'remove-comment'): boolean
 }>()
 
-ref: showRemove = computed(() => (
+const showRemove = $computed(() => (
   props.username !== undefined && props.username === props.comment.author.username
 ))
 </script>

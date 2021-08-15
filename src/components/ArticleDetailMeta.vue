@@ -69,36 +69,39 @@ import { useFollow } from 'src/composable/useFollowProfile'
 import { routerPush } from 'src/router'
 import { deleteArticle } from 'src/services/article/deleteArticle'
 import { checkAuthorization, user } from 'src/store/user'
-import { computed, defineEmit, defineProps, toRefs } from 'vue'
 
 const props = defineProps<{
   article: Article
 }>()
 
-const emit = defineEmit<{
+const emit = defineEmits<{
   (e: 'update', article: Article): void
 }>()
 
-const { article } = toRefs(props)
-ref: displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
-ref: displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
+const { article } = $fromRefs(props)
+const displayEditButton = $computed(() => checkAuthorization(user) && user.value.username === article.author.username)
+const displayFollowButton = $computed(() => checkAuthorization(user) && user.value.username !== article.author.username)
 
+const isFavorited = $computed(() => article.favorited)
+const articleSlug = $computed(() => article.slug)
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
-  isFavorited: computed(() => article.value.favorited),
-  articleSlug: computed(() => article.value.slug),
+  isFavorited,
+  articleSlug,
   onUpdate: newArticle => emit('update', newArticle),
 })
 
 const onDelete = async () => {
-  await deleteArticle(article.value.slug)
+  await deleteArticle(article.slug)
   await routerPush('global-feed')
 }
 
-const { followProcessGoing, toggleFollow } = useFollow({
-  following: computed(() => article.value.author.following),
-  username: computed(() => article.value.author.username),
+const following = $computed(() => article.author.following)
+const username = $computed(() => article.author.username)
+const { toggleFollow, followProcessGoing } = useFollow({
+  following,
+  username,
   onUpdate: (author: Profile) => {
-    const newArticle = { ...article.value, author }
+    const newArticle = { ...article, author }
     emit('update', newArticle)
   },
 })

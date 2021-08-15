@@ -52,19 +52,21 @@
 
 <script lang="ts" setup>
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
-import { computed, defineEmit, defineProps } from 'vue'
 
 const props = defineProps<{
   article: Article;
 }>()
 
-const emit = defineEmit<{
+const emit = defineEmits<{
   (e: 'update', article: Article): void
 }>()
 
+const isFavorited = $computed(() => props.article.favorited)
+const articleSlug = $computed(() => props.article.slug)
+
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
-  isFavorited: computed(() => props.article.favorited),
-  articleSlug: computed(() => props.article.slug),
+  isFavorited,
+  articleSlug,
   onUpdate: (newArticle: Article): void => emit('update', newArticle),
 })
 </script>

@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { getArticle } from 'src/services/article/getArticle'
 import { postArticle, putArticle } from 'src/services/article/postArticle'
-import { computed, onMounted, reactive } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface FormState {
@@ -80,16 +80,16 @@ interface FormState {
 
 const route = useRoute()
 const router = useRouter()
-ref: slug = computed<string>(() => route.params.slug as string)
+const slug = $computed<string>(() => route.params.slug as string)
 
-const form = reactive<FormState>({
+let form = $ref<FormState>({
   title: '',
   description: '',
   body: '',
   tagList: [],
 })
 
-ref: newTag = '' as string
+let newTag = $ref('')
 const addTag = () => {
   form.tagList.push(newTag.trim())
   newTag = ''

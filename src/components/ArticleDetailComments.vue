@@ -17,7 +17,6 @@
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
 import { user } from 'src/store/user'
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
@@ -25,9 +24,9 @@ import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 const route = useRoute()
 const slug = route.params.slug as string
 
-ref: username = computed(() => user.value?.username)
+const username = $computed(() => user.value?.username)
 
-ref: comments = [] as ArticleComment[]
+let comments = $ref<ArticleComment[]>([])
 
 const addComment = async (comment: ArticleComment) => {
   comments.unshift(comment)

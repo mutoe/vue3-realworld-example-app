@@ -75,18 +75,19 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-ref: username = computed<string>(() => route.params.username as string)
+const username = $computed<string>(() => route.params.username as string)
 
-const { profile, updateProfile } = useProfile({ username: $username })
+const { profile, updateProfile } = useProfile({ username })
 
+const following = $computed<boolean>(() => profile?.following ?? false)
 const { followProcessGoing, toggleFollow } = useFollow({
-  following: computed<boolean>(() => profile.value?.following ?? false),
-  username: $username,
+  following,
+  username,
   onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
 
-ref: showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username)
-ref: showFollow = computed<boolean>(() => user.value?.username !== username)
+const showEdit = $computed<boolean>(() => checkAuthorization(user) && user.value.username === username)
+const showFollow = $computed<boolean>(() => user.value?.username !== username)
 </script>
 
 <style scoped>

@@ -3,11 +3,10 @@ import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/fol
 import type { AuthorizationError } from 'src/types/error'
 import createAsyncProcess from 'src/utils/create-async-process'
 import type { Either } from 'src/utils/either'
-import type { ComputedRef } from 'vue'
 
 interface UseFollowProps {
-  username: ComputedRef<string>
-  following: ComputedRef<boolean>
+  username: string
+  following: boolean
   onUpdate: (profile: Profile) => void
 }
 
@@ -16,10 +15,10 @@ export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
   async function toggleFollow (): Promise<void> {
     let response: Either<AuthorizationError, Profile>
 
-    if (following.value) {
-      response = await deleteFollowProfile(username.value)
+    if (following) {
+      response = await deleteFollowProfile(username)
     } else {
-      response = await postFollowProfile(username.value)
+      response = await postFollowProfile(username)
     }
 
     if (response.isOk()) onUpdate(response.value)

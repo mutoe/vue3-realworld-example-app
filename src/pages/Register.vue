@@ -72,16 +72,15 @@ import { routerPush } from 'src/router'
 import { postRegister } from 'src/services/auth/postRegister'
 import type { PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
 import { updateUser } from 'src/store/user'
-import { reactive } from 'vue'
 
-ref: formRef = null as HTMLFormElement | null
-ref: form = reactive<PostRegisterForm>({
+let formRef = $ref<HTMLFormElement | null>(null)
+let form = $ref<PostRegisterForm>({
   username: '',
   email: '',
   password: '',
 })
 
-ref: errors = {} as PostRegisterErrors
+let errors = $ref<PostRegisterErrors>({})
 
 const register = async () => {
   if (!formRef?.checkValidity()) return

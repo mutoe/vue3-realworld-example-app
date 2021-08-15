@@ -3,11 +3,10 @@ import { deleteFavoriteArticle, postFavoriteArticle } from 'src/services/article
 import type { AuthorizationError } from 'src/types/error'
 import createAsyncProcess from 'src/utils/create-async-process'
 import type { Either } from 'src/utils/either'
-import { ComputedRef } from 'vue'
 
 interface useFavoriteArticleProps {
-  isFavorited: ComputedRef<boolean>
-  articleSlug: ComputedRef<string>
+  isFavorited: boolean
+  articleSlug: string
   onUpdate: (newArticle: Article) => void
 }
 
@@ -15,10 +14,10 @@ interface useFavoriteArticleProps {
 export const useFavoriteArticle = ({ isFavorited, articleSlug, onUpdate }: useFavoriteArticleProps) => {
   const favoriteArticle = async (): Promise<void> => {
     let response: Either<AuthorizationError, Article>
-    if (isFavorited.value) {
-      response = await deleteFavoriteArticle(articleSlug.value)
+    if (isFavorited) {
+      response = await deleteFavoriteArticle(articleSlug)
     } else {
-      response = await postFavoriteArticle(articleSlug.value)
+      response = await postFavoriteArticle(articleSlug)
     }
 
     if (response.isOk()) onUpdate(response.value)

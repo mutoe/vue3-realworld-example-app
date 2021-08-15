@@ -45,14 +45,13 @@
 <script lang="ts" setup>
 import marked from 'src/plugins/marked'
 import { getArticle } from 'src/services/article/getArticle'
-import { computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
 const route = useRoute()
 const slug = route.params.slug as string
-const article = reactive<Article>(await getArticle(slug))
-ref: articleHandledBody = computed(() => marked(article.body))
+let article = $ref<Article>(await getArticle(slug))
+const articleHandledBody = $computed(() => marked(article.body))
 const updateArticle = (newArticle: Article) => {
   Object.assign(article, newArticle)
 }

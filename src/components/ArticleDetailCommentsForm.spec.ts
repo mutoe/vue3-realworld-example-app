@@ -5,7 +5,6 @@ import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { postComment } from 'src/services/comment/postComment'
 import fixtures from 'src/utils/test/fixtures'
-import { ref } from 'vue'
 
 jest.mock('src/composable/useProfile')
 jest.mock('src/services/comment/postComment')
@@ -18,13 +17,13 @@ describe('# ArticleDetailCommentsForm', () => {
     await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
     mockPostComment.mockResolvedValue(fixtures.comment2)
     mockUseProfile.mockReturnValue({
-      profile: ref(fixtures.author),
+      profile: fixtures.author,
       updateProfile: jest.fn(),
     })
   })
 
   it('should display sign in button when user not logged', () => {
-    mockUseProfile.mockReturnValue({ profile: ref(null), updateProfile: jest.fn() })
+    mockUseProfile.mockReturnValue({ profile: null, updateProfile: jest.fn() })
     const { container } = render(ArticleDetailCommentsForm, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { articleSlug: fixtures.article.slug },

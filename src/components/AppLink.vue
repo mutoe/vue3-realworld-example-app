@@ -10,14 +10,14 @@
 
 <script lang="ts" setup>
 import type { AppRouteNames } from 'src/router'
-import { defineProps, useContext } from 'vue'
 import { RouterLink } from 'vue-router'
 import type { RouteParams } from 'vue-router'
+import { useAttrs } from 'vue'
 
 const props = defineProps<{
   name: AppRouteNames
   params?: RouteParams
 }>()
 
-const { attrs } = useContext()
+const attrs = useAttrs()
 </script>

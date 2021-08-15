@@ -26,7 +26,6 @@
 import type { ArticlesType } from 'src/composable/useArticles'
 import type { AppRouteNames } from 'src/router'
 import { isAuthorized } from 'src/store/user'
-import { computed, defineProps } from 'vue'
 import type { RouteParams } from 'vue-router'
 
 const props = defineProps<{
@@ -47,7 +46,7 @@ interface ArticlesListNavLink {
   icon?: string
 }
 
-ref: allLinks = computed<ArticlesListNavLink[]>(() => [
+const allLinks = $computed<ArticlesListNavLink[]>(() => [
   {
     name: 'global-feed',
     routeName: 'global-feed',
@@ -79,7 +78,7 @@ ref: allLinks = computed<ArticlesListNavLink[]>(() => [
   },
 ])
 
-ref: show = computed<Record<ArticlesType, boolean>>(() => ({
+const show = $computed<Record<ArticlesType, boolean>>(() => ({
   'global-feed': props.useGlobalFeed ?? false,
   'my-feed': (props.useMyFeed && isAuthorized.value) ?? false,
   'tag-feed': (props.useTagFeed && props.tag !== '') ?? false,
@@ -87,5 +86,5 @@ ref: show = computed<Record<ArticlesType, boolean>>(() => ({
   'user-favorites-feed': (props.useUserFavorited && props.username !== '') ?? false,
 }))
 
-ref: links = computed<ArticlesListNavLink[]>(() => allLinks.filter(link => show[link.name]))
+const links = $computed<ArticlesListNavLink[]>(() => allLinks.filter(link => show[link.name]))
 </script>

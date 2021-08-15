@@ -34,7 +34,6 @@
 <script lang="ts" setup>
 import type { AppRouteNames } from 'src/router'
 import { user } from 'src/store/user'
-import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
 
 interface NavLink {
@@ -45,10 +44,10 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
-ref: username = computed(() => user.value?.username)
-ref: displayStatus = computed(() => username ? 'authorized' : 'anonym')
+const username = $computed(() => user.value?.username)
+const displayStatus = $computed(() => username ? 'authorized' : 'anonym')
 
-ref: allNavLinks = computed<NavLink[]>(() => [
+const allNavLinks = $computed<NavLink[]>(() => [
   {
     name: 'global-feed',
     title: 'Home',
@@ -84,7 +83,7 @@ ref: allNavLinks = computed<NavLink[]>(() => [
   },
 ])
 
-ref: navLinks = computed(() => allNavLinks.filter(
+const navLinks = $computed(() => allNavLinks.filter(
   l => l.display === displayStatus || l.display === 'all',
 ))
 </script>
