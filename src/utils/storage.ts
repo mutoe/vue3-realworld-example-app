@@ -1,8 +1,8 @@
 type StorageType = 'localStorage' | 'sessionStorage'
 
 export default class Storage<T = unknown> {
-  key: string
-  storageType: StorageType
+  private readonly key: string
+  private readonly storageType: StorageType
 
   constructor (key: string, storageType: StorageType = 'localStorage') {
     this.key = key
