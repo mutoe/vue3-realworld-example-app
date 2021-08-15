@@ -32,9 +32,9 @@ describe('# ArticleDetailCommentsForm', () => {
     expect(container.textContent).toContain('add comments on this article')
   })
 
-  it.skip('should display form when user logged', async () => {
+  it('should display form when user logged', async () => {
     // given
-    const { getByRole } = render(ArticleDetailCommentsForm, {
+    const { getByRole, emitted } = render(ArticleDetailCommentsForm, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { articleSlug: fixtures.article.slug },
     })
@@ -47,9 +47,7 @@ describe('# ArticleDetailCommentsForm', () => {
     // then
     expect(mockPostComment).toBeCalledWith('article-foo', 'some texts...')
 
-    // TODO: test emit event
-    // const events = emitted()
-    // expect(events).toHaveLength(1)
-    // expect(events![0]).toEqual([fixtures.comment2])
+    const { submit } = emitted()
+    expect(submit).toHaveLength(1)
   })
 })

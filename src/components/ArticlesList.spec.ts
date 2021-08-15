@@ -5,6 +5,7 @@ import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { getArticles } from 'src/services/article/getArticles'
 import fixtures from 'src/utils/test/fixtures'
+import asyncComponentWrapper from '../utils/test/async-component-wrapper'
 
 jest.mock('src/services/article/getArticles')
 
@@ -20,8 +21,8 @@ describe('# ArticlesList', () => {
     await router.push('/')
   })
 
-  it.skip('should render correctly', async () => {
-    const wrapper = render(ArticlesList, {
+  it('should render correctly', async () => {
+    const wrapper = render(asyncComponentWrapper(ArticlesList), {
       global: globalMountOptions,
     })
 

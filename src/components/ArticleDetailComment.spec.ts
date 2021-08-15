@@ -32,7 +32,7 @@ describe('# ArticleDetailComment', () => {
     expect(getByRole('button', { name: 'Delete comment' })).toBeInTheDocument()
   })
 
-  it.skip('should emit remove comment when click remove comment button', async () => {
+  it('should emit remove comment when click remove comment button', async () => {
     const { getByRole, emitted } = render(ArticleDetailComment, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { comment: fixtures.comment, username: fixtures.author.username },
@@ -41,8 +41,6 @@ describe('# ArticleDetailComment', () => {
     await fireEvent.click(getByRole('button', { name: 'Delete comment' }))
 
     const events = emitted()
-
-    expect(events).toHaveLength(1)
-    // expect(events![0]).toEqual([])
+    expect(events['remove-comment']).toHaveLength(1)
   })
 })
