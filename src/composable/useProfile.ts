@@ -1,26 +1,27 @@
 import { getProfile } from 'src/services/profile/getProfile'
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
+import type { Ref } from 'vue'
 
 interface UseProfileProps {
-  username: string
+  username: Ref<string>
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useProfile ({ username }: UseProfileProps) {
-  let profile = $ref<Profile | null>(null)
+  const profile = ref<Profile | null>(null)
 
   async function fetchProfile (): Promise<void> {
     updateProfile(null)
     if (!username) return
-    const profileData = await getProfile(username)
+    const profileData = await getProfile(username.value)
     updateProfile(profileData)
   }
 
   function updateProfile (profileData: Profile | null): void {
-    profile = profileData
+    profile.value = profileData
   }
 
-  watch($raw(username), fetchProfile, { immediate: true })
+  watch(username, fetchProfile, { immediate: true })
 
   return {
     profile,

@@ -71,15 +71,14 @@ import ArticlesList from 'src/components/ArticlesList.vue'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { useProfile } from 'src/composable/useProfile'
 import { checkAuthorization, user } from 'src/store/user'
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const username = $computed<string>(() => route.params.username as string)
 
-const { profile, updateProfile } = useProfile({ username })
+const { profile, updateProfile } = useProfile({ username: $raw(username) })
 
-const following = $computed<boolean>(() => profile?.following ?? false)
+const following = $computed<boolean>(() => profile.value?.following ?? false)
 const { followProcessGoing, toggleFollow } = useFollow({
   following,
   username,

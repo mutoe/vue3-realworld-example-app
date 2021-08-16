@@ -17,6 +17,7 @@
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
 import { user } from 'src/store/user'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
@@ -37,5 +38,7 @@ const removeComment = async (commentId: number) => {
   comments = comments.filter(c => c.id !== commentId)
 }
 
-comments = await getCommentsByArticle(slug)
+onMounted(async () => {
+  comments = await getCommentsByArticle(slug)
+})
 </script>

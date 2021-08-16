@@ -27,6 +27,12 @@ This is **Strong** content.`,
   updatedAt: '2020-01-01T00:00:00Z',
 }
 
+const articleAfterFavorite: Article = {
+  ...article,
+  favorited: true,
+  favoritesCount: 1,
+}
+
 const comment: ArticleComment = {
   id: 1,
   author,
@@ -51,6 +57,7 @@ export default {
   author,
   user,
   article,
+  articleAfterFavorite,
   comment,
   comment2,
   markdown,

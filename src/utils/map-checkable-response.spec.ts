@@ -13,9 +13,9 @@ describe('# mapAuthorizationResponse', function () {
 
     const result = mapAuthorizationResponse<Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isOk()).toBe(true)
-    expect(result.value).toEqual(RESPONSE)
+    cy.wrap(isEither(result)).should('be.true')
+    cy.wrap(result.isOk()).should('be.true')
+    cy.wrap(result.value).should('equal', RESPONSE)
   })
 
   it('should return Either with AuthorizationError and failed Response', function () {
@@ -24,9 +24,9 @@ describe('# mapAuthorizationResponse', function () {
 
     const result = mapAuthorizationResponse<Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isFail()).toBe(true)
-    expect(result.value).toBeInstanceOf(AuthorizationError)
+    cy.wrap(isEither(result)).should('be.true')
+    cy.wrap(result.isFail()).should('be.true')
+    cy.wrap(result.value).should('be.instanceOf', AuthorizationError)
   })
 
   it('should throw NetworkError when Response is failed with status != 401', function () {
@@ -35,7 +35,7 @@ describe('# mapAuthorizationResponse', function () {
 
     expect(() => {
       mapAuthorizationResponse<Partial<Response>>(response)
-    }).toThrowError(NetworkError)
+    }).to.throw()
   })
 })
 
@@ -48,9 +48,9 @@ describe('# mapValidationResponse', function () {
 
     const result = mapValidationResponse<ValidationErrors, Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isOk()).toBe(true)
-    expect(result.value).toEqual(RESPONSE)
+    cy.wrap(isEither(result)).should('be.true')
+    cy.wrap(result.isOk()).should('be.true')
+    cy.wrap(result.value).should('equal', RESPONSE)
   })
 
   it('should return Either with ValidationError and failed Response', async function () {
@@ -59,10 +59,12 @@ describe('# mapValidationResponse', function () {
 
     const result = mapValidationResponse<ValidationErrors, Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isFail()).toBe(true)
-    expect(result.value).toBeInstanceOf(ValidationError)
-    expect(result.isFail() && await result.value.getErrors()).toEqual((await RESPONSE.json()).errors)
+    cy.wrap(isEither(result)).should('be.true')
+    cy.wrap(result.isFail()).should('be.true')
+    cy.wrap(result.value).should('be.instanceOf', ValidationError)
+    const errors = result.isFail() && result.value.getErrors()
+    const expectErrors = (await RESPONSE.json()).errors
+    cy.wrap(errors).should('equal', expectErrors)
   })
 
   it('should throw NetworkError when Response is failed with status != 422', function () {
@@ -71,6 +73,6 @@ describe('# mapValidationResponse', function () {
 
     expect(() => {
       mapValidationResponse<ValidationErrors, Partial<Response>>(response)
-    }).toThrowError(NetworkError)
+    }).to.throw()
   })
 })

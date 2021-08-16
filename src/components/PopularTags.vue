@@ -16,8 +16,11 @@
 
 <script lang="ts" setup>
 import { useTags } from 'src/composable/useTags'
+import { onMounted } from 'vue'
 
 const { tags, fetchTags } = useTags()
 
-await fetchTags()
+onMounted(async () => {
+  await fetchTags()
+})
 </script>

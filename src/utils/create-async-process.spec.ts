@@ -7,36 +7,34 @@ describe('# Create async process', function () {
   it('should expect active as Vue Ref type', function () {
     const { active } = createAsyncProcess(someProcess)
 
-    expect(isRef(active)).toBe(true)
+    cy.wrap(isRef(active)).should('be.true')
   })
 
   it('should correctly test active functionality', async function () {
     const { active, run } = createAsyncProcess(someProcess)
 
-    expect(active.value).toBe(false)
+    cy.wrap(active.value).should('be.false')
 
-    const promise = run()
+    void run()
 
-    expect(active.value).toBe(true)
+    cy.wrap(active.value).should('be.true')
 
-    await promise
-
-    expect(active.value).toBe(false)
+    cy.wrap(active.value).should('be.false')
   })
 
   it('should expect run as a function', function () {
     const { run } = createAsyncProcess(someProcess)
 
-    expect(run).toBeInstanceOf(Function)
+    cy.wrap(run).should('be.instanceOf', Function)
   })
 
   it('should expect original function called with correct params and return correct data', async function () {
-    const someProcess = jest.fn().mockImplementation(a => Promise.resolve({ a, b: null }))
+    const someProcess = cy.stub().callsFake(a => Promise.resolve({ a, b: null }))
     const { run } = createAsyncProcess(someProcess)
 
     const result = await run(null)
 
-    expect(someProcess).toBeCalledWith(null)
-    expect(result).toEqual({ a: null, b: null })
+    cy.wrap(someProcess).should('be.calledWith', null)
+    cy.wrap(result).should('eq', { a: null, b: null })
   })
 })

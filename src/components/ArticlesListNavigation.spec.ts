@@ -1,4 +1,4 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@cypress/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
@@ -18,26 +18,26 @@ describe('# ArticlesListNavigation', () => {
   })
 
   it('should render global feed item when passed global feed prop', () => {
-    const { container } = render(ArticlesListNavigation, {
+    mount(ArticlesListNavigation, {
       global: globalMountOptions,
       props: { tag: '', username: '', useGlobalFeed: true },
     })
 
-    const items = container.querySelectorAll('.nav-item')
-    expect(items).toHaveLength(1)
-    expect(items[0].textContent).toContain('Global Feed')
+    cy.get('.nav-item')
+      .should('have.length', 1)
+      .should('contain.text', 'Global Feed')
   })
 
   it('should render full item', () => {
-    const { container } = render(ArticlesListNavigation, {
+    mount(ArticlesListNavigation, {
       global: globalMountOptions,
       props: { tag: 'foo', username: '', useGlobalFeed: true, useMyFeed: true, useTagFeed: true },
     })
 
-    const items = container.querySelectorAll('.nav-item')
-    expect(items).toHaveLength(3)
-    expect(items[0].textContent).toContain('Global Feed')
-    expect(items[1].textContent).toContain('Your Feed')
-    expect(items[2].textContent).toContain('foo')
+    cy.get('.nav-item')
+      .should('have.length', 3)
+      .should('contain.text', 'Global Feed')
+      .should('contain.text', 'Your Feed')
+      .should('contain.text', 'foo')
   })
 })

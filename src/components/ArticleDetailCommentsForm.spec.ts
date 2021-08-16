@@ -1,53 +1,43 @@
-import { fireEvent, render } from '@testing-library/vue'
+import { mount } from '@cypress/vue'
 import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
-import { useProfile } from 'src/composable/useProfile'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { postComment } from 'src/services/comment/postComment'
 import fixtures from 'src/utils/test/fixtures'
 
-jest.mock('src/composable/useProfile')
-jest.mock('src/services/comment/postComment')
-
 describe('# ArticleDetailCommentsForm', () => {
-  const mockUseProfile = useProfile as jest.MockedFunction<typeof useProfile>
-  const mockPostComment = postComment as jest.MockedFunction<typeof postComment>
-
   beforeEach(async () => {
     await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
-    mockPostComment.mockResolvedValue(fixtures.comment2)
-    mockUseProfile.mockReturnValue({
-      profile: fixtures.author,
-      updateProfile: jest.fn(),
-    })
   })
 
   it('should display sign in button when user not logged', () => {
-    mockUseProfile.mockReturnValue({ profile: null, updateProfile: jest.fn() })
-    const { container } = render(ArticleDetailCommentsForm, {
+    cy.intercept('POST', '/api/articles/*/comments', fixtures.comment2).as('createComment')
+
+    mount(ArticleDetailCommentsForm, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { articleSlug: fixtures.article.slug },
     })
 
-    expect(container.textContent).toContain('add comments on this article')
+    cy.contains('add comments on this article')
   })
 
   it('should display form when user logged', async () => {
+    cy.intercept('POST', '/api/articles/*/comments', { statusCode: 200 }).as('createComment')
+
     // given
-    const { getByRole, emitted } = render(ArticleDetailCommentsForm, {
+    mount(ArticleDetailCommentsForm, {
       global: { plugins: [registerGlobalComponents, router] },
       props: { articleSlug: fixtures.article.slug },
     })
 
     // when
-    const inputElement = getByRole('textbox', { name: 'Write comment' })
-    await fireEvent.update(inputElement, 'some texts...')
-    await fireEvent.click(getByRole('button', { name: 'Submit' }))
+    cy.findByRole('textbox', { name: 'Write comment' })
+      .type('some texts...')
+    cy.findByRole('button', { name: 'Submit' })
 
     // then
-    expect(mockPostComment).toBeCalledWith('article-foo', 'some texts...')
+    cy.get('@createComment').should('be.calledWith', 'article-foo', 'some texts...')
 
-    const { submit } = emitted()
-    expect(submit).toHaveLength(1)
+    const events = Cypress.vueWrapper.emitted()
+    cy.wrap(events).should('have.property', 'submit')
   })
 })

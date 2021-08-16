@@ -13,6 +13,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "src",

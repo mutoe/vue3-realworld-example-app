@@ -1,4 +1,4 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@cypress/vue'
 import { router } from 'src/router'
 import Article from './Article.vue'
 
@@ -8,10 +8,10 @@ describe('# Article', () => {
   })
 
   it('should render correctly', () => {
-    const { container } = render(Article, {
+    mount(Article, {
       global: { plugins: [router] },
     })
 
-    expect(container.textContent).toContain('Article is downloading')
+    cy.contains('Article is downloading')
   })
 })

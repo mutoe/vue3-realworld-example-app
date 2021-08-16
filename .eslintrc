@@ -16,6 +16,7 @@
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",
+    "no-void": "off",
     "comma-dangle": ["warn", "always-multiline"],
     "func-call-spacing": "off",
     "prefer-const": "off",

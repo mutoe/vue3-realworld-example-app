@@ -1,21 +1,11 @@
-import { render, waitFor } from '@testing-library/vue'
+import { mount } from '@cypress/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { getCommentsByArticle } from 'src/services/comment/getComments'
-import { deleteComment } from 'src/services/comment/postComment'
-import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetailComments from './ArticleDetailComments.vue'
 
-jest.mock('src/services/comment/getComments')
-jest.mock('src/services/comment/postComment')
-
 describe('# ArticleDetailComments', () => {
-  const mockGetCommentsByArticle = getCommentsByArticle as jest.MockedFunction<typeof getCommentsByArticle>
-  const mockDeleteComment = deleteComment as jest.MockedFunction<typeof deleteComment>
-
   beforeEach(async () => {
-    mockGetCommentsByArticle.mockResolvedValue([fixtures.comment])
     await router.push({
       name: 'article',
       params: { slug: fixtures.article.slug },
@@ -23,42 +13,48 @@ describe('# ArticleDetailComments', () => {
   })
 
   it('should render correctly', async () => {
-    const { container } = render(asyncComponentWrapper(ArticleDetailComments), {
-      global: { plugins: [registerGlobalComponents, router] },
+    cy.intercept('GET', '/api/articles/*/comments', { body: { comments: [fixtures.comment] } }).as('retrieveComments')
+
+    mount(ArticleDetailComments, {
+      global: {
+        plugins: [registerGlobalComponents, router],
+      },
     })
 
-    expect(mockGetCommentsByArticle).toBeCalledWith('article-foo')
-    expect(container).toBeInTheDocument()
+    cy.wait('@retrieveComments').its('request.url').should('contain', 'article-foo')
   })
 
+  // TODO: resolve the Cypress.vue is undefined
   it.skip('should display new comment when post new comment', async () => {
+    cy.intercept('GET', '/api/articles/*/comments', { body: { comments: [fixtures.comment] } }).as('retrieveComments')
+
     // given
-    const { container } = render(asyncComponentWrapper(ArticleDetailComments), {
+    mount(ArticleDetailComments, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    await waitFor(() => expect(mockGetCommentsByArticle).toBeCalled())
-    expect(container.querySelectorAll('.card')).toHaveLength(1)
+    cy.wait('@retrieveComments')
+    cy.get('.card').should('have.length', 1)
 
     // when
-    // wrapper.findComponent(ArticleDetailCommentsForm).vm.$emit('add-comment', fixtures.comment2)
-    // await nextTick()
+    Cypress.vue.$emit('add-comment', fixtures.comment2)
 
     // then
-    expect(container.querySelectorAll('.card')).toHaveLength(2)
+    cy.get('.card').should('have.length', 2)
   })
 
   it.skip('should call remove comment service when click delete button', async () => {
+    cy.intercept('DELETE', '/api/articles/*/comments', { statusCode: 200 }).as('deleteComment')
+
     // given
-    render(asyncComponentWrapper(ArticleDetailComments), {
+    mount(ArticleDetailComments, {
       global: { plugins: [registerGlobalComponents, router] },
     })
-    await waitFor(() => expect(mockGetCommentsByArticle).toBeCalled())
 
     // when
-    // wrapper.findComponent(ArticleDetailComment).vm.$emit('remove-comment')
+    Cypress.vue.$emit('remove-comment')
 
     // then
-    expect(mockDeleteComment).toBeCalledWith('article-foo', 1)
+    cy.wait('@deleteComment')
   })
 })

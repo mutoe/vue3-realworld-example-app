@@ -1,16 +1,10 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@cypress/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { getArticle } from 'src/services/article/getArticle'
-import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetail from './ArticleDetail.vue'
 
-jest.mock('src/services/article/getArticle')
-
 describe.skip('# ArticleDetail', () => {
-  const mockGetArticle = getArticle as jest.MockedFunction<typeof getArticle>
-
   beforeEach(async () => {
     await router.push({
       name: 'article',
@@ -19,29 +13,27 @@ describe.skip('# ArticleDetail', () => {
   })
 
   it('should render markdown body correctly', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdown })
-    const { container } = render(asyncComponentWrapper(ArticleDetail), {
+    cy.intercept('/articles/:slug', { ...fixtures.article, body: fixtures.markdown })
+    mount(ArticleDetail, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(container.querySelector('.article-content')).toMatchSnapshot()
+    cy.get('.article-content').should('have.html', '')
   })
 
   it('should render markdown (zh-CN) body correctly', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownCN })
-    const { container } = render(asyncComponentWrapper(ArticleDetail), {
+    mount(ArticleDetail, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(container.querySelector('.article-content')).toMatchSnapshot()
+    cy.get('.article-content').should('have.html', '')
   })
 
   it('should filter the xss content in Markdown body', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownXss })
-    const { container } = render(asyncComponentWrapper(ArticleDetail), {
+    mount(ArticleDetail, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
-    expect(container.querySelector('.article-content')?.textContent).not.toContain('alert')
+    cy.get('.article-content').should('have.html', '')
   })
 })

@@ -51,7 +51,7 @@ const emit = defineEmits<{
 }>()
 
 const username = $computed(() => checkAuthorization(user) ? user.value.username : '')
-const { profile } = useProfile({ username })
+const { profile } = useProfile({ username: $raw(username) })
 
 let comment = $ref('')
 

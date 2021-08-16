@@ -35,6 +35,7 @@
 
 <script lang="ts" setup>
 import { useArticles } from 'src/composable/useArticles'
+import { onMounted } from 'vue'
 import AppPagination from './AppPagination.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import ArticlesListNavigation from './ArticlesListNavigation.vue'
@@ -51,5 +52,7 @@ const {
   username,
 } = useArticles()
 
-await fetchArticles()
+onMounted(async () => {
+  await fetchArticles()
+})
 </script>
