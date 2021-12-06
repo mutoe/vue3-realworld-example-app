@@ -587,10 +587,17 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@harlem/core@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@harlem/core/-/core-1.3.2.tgz#6738b38d6acbbe9928d917066df45e6180ba52f6"
-  integrity sha512-aHYAv8j5NrPbmZpmItgY/B8HsnaUrsYPMg6t8Z69yp0PAZ9UlQEqar22TaXuVEZehGF6mtKvPRU/EqPP/dmRNw==
+"@harlem/core@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@harlem/core/-/core-2.2.0.tgz#4b4cb2d88d7dbf191a1780ae0a312f844669a60b"
+  integrity sha512-4Gob8u7OU0bpwVNMHl4lhyo9L4ytAHVtCNUIuWiDRdVHZ9ZeTa6D13Vlhf0zzIg7u+4/uBds8AiZlrwgaXwr/w==
+  dependencies:
+    "@harlem/utilities" "^2.2.0"
+
+"@harlem/utilities@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@harlem/utilities/-/utilities-2.2.0.tgz#b609ee79cf9f17cbf2f4479eb9af5f150917d95c"
+  integrity sha512-ViNaRdmXOjKn/ikxZFWW4Id4IbAkaZYiaIJ8DFNHau4w3VdSuaBHtmc8AHaN3JEF3qmQ1mHCdrAon08fMtEz9Q==
 
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"
@@ -985,6 +992,11 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/marked@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-4.0.1.tgz#d588a7bbc4d6551c5e75249bc106ffda96ae33c5"
+  integrity sha512-ZigEmCWdNUU7IjZEuQ/iaimYdDHWHfTe3kg8ORfKjyGYd9RWumPoOJRQXB0bO+XLkNwzCthW3wUIQtANaEZ1ag==
 
 "@types/node@*":
   version "16.6.1"
@@ -4563,10 +4575,10 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-marked@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-2.1.3.tgz#bd017cef6431724fd4b27e0657f5ceb14bff3753"
-  integrity sha512-/Q+7MGzaETqifOMWYEA7HVMaZb4XbcRfaOzcSsHZEith83KGlvaSG33u0SKu89Mj5h+T8V2hM+8O45Qc5XTgwA==
+marked@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.6.tgz#cd199503102b6807354f00574348d41ad4fd25d2"
+  integrity sha512-+H0bTf8DM8zLuFBUm/2VklxaCrwlBFgoJzHJcMZCnZ9cPgsllHwKpL6TPLdDeA38yPluMuVKOL1hO5w6HmG5Mg==
 
 merge-stream@^2.0.0:
   version "2.0.0"

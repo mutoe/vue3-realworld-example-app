@@ -1,4 +1,4 @@
-import marked from 'marked'
+import { marked } from 'marked'
 import insane from 'insane'
 
 export default (markdown: string): string => {

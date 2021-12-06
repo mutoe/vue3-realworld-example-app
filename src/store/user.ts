@@ -14,7 +14,7 @@ const STATE: State = {
   user: userStorage.get(),
 }
 
-const { getter, mutation } = createStore<State>('user', STATE)
+const { getter, mutation } = createStore('user', STATE)
 
 export const user = getter('user', state => state.user)
 
