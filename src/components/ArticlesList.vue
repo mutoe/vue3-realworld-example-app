@@ -43,8 +43,8 @@ import ArticlesListNavigation from './ArticlesListNavigation.vue'
 export default defineComponent({
   name: 'ArticlesList',
   components: {
-    ArticlesListArticlePreview,
     AppPagination,
+    ArticlesListArticlePreview,
     ArticlesListNavigation,
   },
 

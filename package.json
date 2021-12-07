@@ -9,7 +9,7 @@
     "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.js}\"",
     "lint:tsc": "vue-tsc --noEmit",
     "lint": "concurrently 'yarn build' 'yarn lint:tsc' 'yarn lint:script'",
-    "test:unit": "jest",
+    "test:unit": "vite-jest",
     "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run -c baseUrl=http://localhost:5000\"",
     "test:e2e:ci": "cypress run -C cypress.prod.json",
     "test": "yarn test:unit && yarn test:e2e"
@@ -31,7 +31,6 @@
     "@typescript-eslint/parser": "^5.5.0",
     "@vitejs/plugin-vue": "^1.10.1",
     "@vue/compiler-sfc": "^3.2.24",
-    "babel-jest": "^27.4.2",
     "concurrently": "^6.4.0",
     "cypress": "^9.1.1",
     "eslint": "^8.4.0",
@@ -43,14 +42,14 @@
     "eslint-plugin-vue": "^8.2.0",
     "husky": "^4.3.8",
     "jest": "^27.4.3",
+    "jest-environment-jsdom": "^27.4.3",
     "jsdom": "^19.0.0",
     "lint-staged": "^12.1.2",
     "rollup-plugin-analyzer": "^4.0.0",
-    "ts-jest": "^27.1.0",
     "typescript": "^4.5.2",
     "vite": "^2.6.14",
-    "vue-tsc": "^0.29.8",
-    "vue3-jest": "^27.0.0-alpha.2"
+    "vite-jest": "^0.1.3",
+    "vue-tsc": "^0.29.8"
   },
   "husky": {
     "hooks": {
@@ -63,26 +62,8 @@
     "cypress/**/*.js": "eslint --fix"
   },
   "jest": {
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {}
-    },
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.vue$": "vue3-jest",
-      "^.+\\js$": "babel-jest"
-    },
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{ts,vue}",
-      "!<rootDir>/src/config.ts"
-    ],
-    "moduleFileExtensions": [
-      "vue",
-      "ts",
-      "js",
-      "json",
-      "node"
-    ],
+    "preset": "vite-jest",
+    "testEnvironment": "jest-environment-jsdom",
     "testMatch": [
       "<rootDir>/src/**/*.spec.ts"
     ],
@@ -91,6 +72,10 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/src/setup-test.ts"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{ts,vue}",
+      "!<rootDir>/src/config.ts"
     ]
   }
 }

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import FetchRequest, { FetchRequestOptions } from 'src/utils/request'
 import { Either, fail, isEither, success } from 'src/utils/either'
 

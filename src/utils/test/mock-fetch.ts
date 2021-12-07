@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 interface FetchResponseBody {
   type: 'body'
 }
@@ -23,5 +24,6 @@ export default function mockFetch (data: FetchResponseBody | FetchResponseFull):
     response = body
   }
 
+  // @ts-expect-error let's fix this later
   global.fetch = jest.fn().mockResolvedValue(response)
 }

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 
 type LocalStorageKey = 'getItem' | 'setItem' | 'removeItem'
 
@@ -6,5 +7,6 @@ export default function mockLocalStorage<T> (key: LocalStorageKey, data?: T, str
   // use __proto__ because jsdom bug: https://github.com/facebook/jest/issues/6798#issuecomment-412871616
   // eslint-disable-next-line no-proto
   global.localStorage.__proto__[key] = fn
+  // @ts-expect-error let's fix this later
   return fn
 }

@@ -1,14 +1,22 @@
+import { jest } from '@jest/globals'
 import { render, waitFor } from '@testing-library/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { getCommentsByArticle } from 'src/services/comment/getComments'
-import { deleteComment } from 'src/services/comment/postComment'
 import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import fixtures from 'src/utils/test/fixtures'
-import ArticleDetailComments from './ArticleDetailComments.vue'
 
-jest.mock('src/services/comment/getComments')
-jest.mock('src/services/comment/postComment')
+jest.unstable_mockModule('src/services/comment/getComments', () => ({
+  getCommentsByArticle: jest.fn(),
+}))
+jest.unstable_mockModule('src/services/comment/postComment', () => ({
+  deleteComment: jest.fn(),
+  postComment: jest.fn(),
+}))
+
+const { getCommentsByArticle } = await import('src/services/comment/getComments')
+const { deleteComment } = await import('src/services/comment/postComment')
+
+const ArticleDetailComments = (await import('./ArticleDetailComments.vue')).default
 
 describe('# ArticleDetailComments', () => {
   const mockGetCommentsByArticle = getCommentsByArticle as jest.MockedFunction<typeof getCommentsByArticle>

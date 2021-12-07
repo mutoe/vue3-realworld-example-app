@@ -1,17 +1,27 @@
+import { jest } from '@jest/globals'
 import { fireEvent, render } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { deleteArticle } from 'src/services/article/deleteArticle'
-import { deleteFavoriteArticle, postFavoriteArticle } from 'src/services/article/favoriteArticle'
-import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/followProfile'
 import { updateUser, user } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
-import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
-jest.mock('src/services/article/deleteArticle')
-jest.mock('src/services/profile/followProfile')
-jest.mock('src/services/article/favoriteArticle')
+jest.unstable_mockModule('src/services/article/deleteArticle', () => ({
+  deleteArticle: jest.fn(),
+}))
+jest.unstable_mockModule('src/services/article/favoriteArticle', () => ({
+  deleteFavoriteArticle: jest.fn(),
+  postFavoriteArticle: jest.fn(),
+}))
+jest.unstable_mockModule('src/services/profile/followProfile', () => ({
+  deleteFollowProfile: jest.fn(),
+  postFollowProfile: jest.fn(),
+}))
+
+const { deleteArticle } = await import ('src/services/article/deleteArticle')
+const { deleteFavoriteArticle, postFavoriteArticle } = await import ('src/services/article/favoriteArticle')
+const { deleteFollowProfile, postFollowProfile } = await import ('src/services/profile/followProfile')
+const { default: ArticleDetailMeta } = await import ('./ArticleDetailMeta.vue')
+const { router } = await import('src/router')
 
 const globalMountOptions: GlobalMountOptions = {
   plugins: [registerGlobalComponents, router],

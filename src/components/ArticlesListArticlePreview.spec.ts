@@ -1,16 +1,18 @@
+import { jest } from '@jest/globals'
 import { fireEvent, render } from '@testing-library/vue'
-import ArticlesListArticlePreview from 'src/components/ArticlesListArticlePreview.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
 import fixtures from 'src/utils/test/fixtures'
 
 const mockFavoriteArticle = jest.fn()
-jest.mock('src/composable/useFavoriteArticle', () => ({
+jest.unstable_mockModule('src/composable/useFavoriteArticle', () => ({
   useFavoriteArticle: () => ({
     favoriteProcessGoing: false,
     favoriteArticle: mockFavoriteArticle,
   }),
 }))
+
+const { default: ArticlesListArticlePreview } = await import('src/components/ArticlesListArticlePreview.vue')
+const { router } = await import('src/router')
 
 describe('# ArticlesListArticlePreview', () => {
   const favoriteButton = 'Favorite article'

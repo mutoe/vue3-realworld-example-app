@@ -1,14 +1,21 @@
+import { jest } from '@jest/globals'
 import { fireEvent, render } from '@testing-library/vue'
-import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
-import { useProfile } from 'src/composable/useProfile'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { postComment } from 'src/services/comment/postComment'
 import fixtures from 'src/utils/test/fixtures'
 import { ref } from 'vue'
 
-jest.mock('src/composable/useProfile')
-jest.mock('src/services/comment/postComment')
+jest.unstable_mockModule('src/composable/useProfile', () => ({
+  useProfile: jest.fn(),
+}))
+jest.unstable_mockModule('src/services/comment/postComment', () => ({
+  deleteComment: jest.fn(),
+  postComment: jest.fn(),
+}))
+
+const { useProfile } = await import('src/composable/useProfile')
+const { postComment } = await import('src/services/comment/postComment')
+const { default: ArticleDetailCommentsForm } = await import('src/components/ArticleDetailCommentsForm.vue')
 
 describe('# ArticleDetailCommentsForm', () => {
   const mockUseProfile = useProfile as jest.MockedFunction<typeof useProfile>

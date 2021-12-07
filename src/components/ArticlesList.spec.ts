@@ -1,13 +1,22 @@
+import { jest } from '@jest/globals'
 import { render } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
-import ArticlesList from 'src/components/ArticlesList.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { getArticles } from 'src/services/article/getArticles'
 import fixtures from 'src/utils/test/fixtures'
 import asyncComponentWrapper from '../utils/test/async-component-wrapper'
 
-jest.mock('src/services/article/getArticles')
+jest.unstable_mockModule('src/services/article/getArticles', () => ({
+  getArticles: jest.fn(),
+  getFavoritedArticles: jest.fn(),
+  getProfileArticles: jest.fn(),
+  getFeeds: jest.fn(),
+  getArticlesByTag: jest.fn(),
+
+}))
+
+const { getArticles } = await import('src/services/article/getArticles')
+const { router } = await import('src/router')
+const { default: ArticlesList } = await import('src/components/ArticlesList.vue')
 
 describe('# ArticlesList', () => {
   const globalMountOptions: GlobalMountOptions = {

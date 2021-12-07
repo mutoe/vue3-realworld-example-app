@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import { render } from '@testing-library/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import { isRef } from 'vue'
 import createAsyncProcess from './create-async-process'
 
