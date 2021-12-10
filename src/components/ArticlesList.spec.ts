@@ -1,11 +1,11 @@
-import { render } from '@testing-library/vue'
+import { waitFor } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesList from 'src/components/ArticlesList.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { getArticles } from 'src/services/article/getArticles'
 import fixtures from 'src/utils/test/fixtures'
-import asyncComponentWrapper from '../utils/test/async-component-wrapper'
+import { renderAsync } from '../utils/test/render-async'
 
 jest.mock('src/services/article/getArticles')
 
@@ -22,11 +22,11 @@ describe('# ArticlesList', () => {
   })
 
   it('should render correctly', async () => {
-    const wrapper = render(asyncComponentWrapper(ArticlesList), {
+    const wrapper = renderAsync(ArticlesList, {
       global: globalMountOptions,
     })
 
     expect(wrapper).toBeTruthy()
-    expect(mockFetchArticles).toBeCalledTimes(1)
+    await waitFor(() => expect(mockFetchArticles).toBeCalledTimes(1))
   })
 })
