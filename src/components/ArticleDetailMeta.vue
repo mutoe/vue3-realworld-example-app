@@ -79,11 +79,11 @@ const emit = defineEmits<{
 }>()
 
 const { article } = $fromRefs(props)
-const displayEditButton = $computed(() => checkAuthorization(user) && user.value.username === article.author.username)
-const displayFollowButton = $computed(() => checkAuthorization(user) && user.value.username !== article.author.username)
+let displayEditButton = $computed(() => checkAuthorization(user) && user.value.username === article.author.username)
+let displayFollowButton = $computed(() => checkAuthorization(user) && user.value.username !== article.author.username)
 
-const isFavorited = $computed(() => article.favorited)
-const articleSlug = $computed(() => article.slug)
+let isFavorited = $computed(() => article.favorited)
+let articleSlug = $computed(() => article.slug)
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited,
   articleSlug,
@@ -95,8 +95,8 @@ const onDelete = async () => {
   await routerPush('global-feed')
 }
 
-const following = $computed(() => article.author.following)
-const username = $computed(() => article.author.username)
+let following = $computed(() => article.author.following)
+let username = $computed(() => article.author.username)
 const { toggleFollow, followProcessGoing } = useFollow({
   following,
   username,

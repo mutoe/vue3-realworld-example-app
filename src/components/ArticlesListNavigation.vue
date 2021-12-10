@@ -46,7 +46,7 @@ interface ArticlesListNavLink {
   icon?: string
 }
 
-const allLinks = $computed<ArticlesListNavLink[]>(() => [
+let allLinks = $computed<ArticlesListNavLink[]>(() => [
   {
     name: 'global-feed',
     routeName: 'global-feed',
@@ -78,7 +78,7 @@ const allLinks = $computed<ArticlesListNavLink[]>(() => [
   },
 ])
 
-const show = $computed<Record<ArticlesType, boolean>>(() => ({
+let show = $computed<Record<ArticlesType, boolean>>(() => ({
   'global-feed': props.useGlobalFeed ?? false,
   'my-feed': (props.useMyFeed && isAuthorized.value) ?? false,
   'tag-feed': (props.useTagFeed && props.tag !== '') ?? false,
@@ -86,5 +86,5 @@ const show = $computed<Record<ArticlesType, boolean>>(() => ({
   'user-favorites-feed': (props.useUserFavorited && props.username !== '') ?? false,
 }))
 
-const links = $computed<ArticlesListNavLink[]>(() => allLinks.filter(link => show[link.name]))
+let links = $computed<ArticlesListNavLink[]>(() => allLinks.filter(link => show[link.name]))
 </script>

@@ -80,7 +80,7 @@ interface FormState {
 
 const route = useRoute()
 const router = useRouter()
-const slug = $computed<string>(() => route.params.slug as string)
+let slug = $computed<string>(() => route.params.slug as string)
 
 let form = $ref<FormState>({
   title: '',

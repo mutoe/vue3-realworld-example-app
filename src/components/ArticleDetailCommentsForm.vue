@@ -50,8 +50,8 @@ const emit = defineEmits<{
   (e: 'add-comment', comment: ArticleComment): void
 }>()
 
-const username = $computed(() => checkAuthorization(user) ? user.value.username : '')
-const { profile } = useProfile({ username: $raw(username) })
+let username = $computed(() => checkAuthorization(user) ? user.value.username : '')
+const { profile } = useProfile({ username: $$(username) })
 
 let comment = $ref('')
 

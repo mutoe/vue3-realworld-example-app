@@ -54,5 +54,5 @@ const emit = defineEmits<{
   (e: 'remove-comment'): boolean
 }>()
 
-const showRemove = $computed(() => (props.username !== undefined && props.username === props.comment.author.username))
+let showRemove = $computed(() => (props.username !== undefined && props.username === props.comment.author.username))
 </script>

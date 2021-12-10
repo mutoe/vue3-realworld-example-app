@@ -74,19 +74,19 @@ import { checkAuthorization, user } from 'src/store/user'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const username = $computed<string>(() => route.params.username as string)
+let username = $computed<string>(() => route.params.username as string)
 
-const { profile, updateProfile } = useProfile({ username: $raw(username) })
+const { profile, updateProfile } = useProfile({ username: $$(username) })
 
-const following = $computed<boolean>(() => profile.value?.following ?? false)
+let following = $computed<boolean>(() => profile.value?.following ?? false)
 const { followProcessGoing, toggleFollow } = useFollow({
   following,
   username,
   onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
 
-const showEdit = $computed<boolean>(() => checkAuthorization(user) && user.value.username === username)
-const showFollow = $computed<boolean>(() => user.value?.username !== username)
+let showEdit = $computed<boolean>(() => checkAuthorization(user) && user.value.username === username)
+let showFollow = $computed<boolean>(() => user.value?.username !== username)
 </script>
 
 <style scoped>

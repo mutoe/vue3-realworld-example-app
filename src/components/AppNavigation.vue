@@ -44,10 +44,10 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
-const username = $computed(() => user.value?.username)
-const displayStatus = $computed(() => username ? 'authorized' : 'anonym')
+let username = $computed(() => user.value?.username)
+let displayStatus = $computed(() => (username ? 'authorized' : 'anonym'))
 
-const allNavLinks = $computed<NavLink[]>(() => [
+let allNavLinks = $computed<NavLink[]>(() => [
   {
     name: 'global-feed',
     title: 'Home',
@@ -83,7 +83,7 @@ const allNavLinks = $computed<NavLink[]>(() => [
   },
 ])
 
-const navLinks = $computed(() => allNavLinks.filter(
-  l => l.display === displayStatus || l.display === 'all',
-))
+let navLinks = $computed(() =>
+  allNavLinks.filter((l) => l.display === displayStatus || l.display === 'all'),
+)
 </script>

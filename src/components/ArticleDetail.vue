@@ -51,7 +51,7 @@ import ArticleDetailMeta from './ArticleDetailMeta.vue'
 const route = useRoute()
 const slug = route.params.slug as string
 let article = $ref<Article>(await getArticle(slug))
-const articleHandledBody = $computed(() => marked(article.body))
+let articleHandledBody = $computed(() => marked(article.body))
 const updateArticle = (newArticle: Article) => {
   Object.assign(article, newArticle)
 }

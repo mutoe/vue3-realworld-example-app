@@ -61,8 +61,8 @@ const emit = defineEmits<{
   (e: 'update', article: Article): void
 }>()
 
-const isFavorited = $computed(() => props.article.favorited)
-const articleSlug = $computed(() => props.article.slug)
+let isFavorited = $computed(() => props.article.favorited)
+let articleSlug = $computed(() => props.article.slug)
 
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited,

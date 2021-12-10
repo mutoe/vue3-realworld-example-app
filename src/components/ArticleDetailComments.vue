@@ -25,7 +25,7 @@ import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 const route = useRoute()
 const slug = route.params.slug as string
 
-const username = $computed(() => user.value?.username)
+let username = $computed(() => user.value?.username)
 
 let comments = $ref<ArticleComment[]>([])
 
