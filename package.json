@@ -10,9 +10,9 @@
     "lint:tsc": "vue-tsc --noEmit",
     "lint": "concurrently 'yarn build' 'yarn lint:tsc' 'yarn lint:script'",
     "test:unit": "cypress run-ct",
-    "test:e2e": "yarn build && concurrently -k \"yarn serve\" \"cypress run -c baseUrl=http://localhost:5000\"",
+    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run -c baseUrl=http://localhost:5000\"",
     "test:e2e:ci": "cypress run -C cypress.prod.json",
-    "test": "test:unit && yarn test:e2e"
+    "test": "yarn test:unit && yarn test:e2e"
   },
   "dependencies": {
     "@harlem/core": "^2.2.0",
@@ -26,6 +26,7 @@
     "@cypress/vite-dev-server": "^2.2.1",
     "@cypress/vue": "^3.0.5",
     "@testing-library/cypress": "^8.0.2",
+    "@types/marked": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "@vitejs/plugin-vue": "^1.10.2",
