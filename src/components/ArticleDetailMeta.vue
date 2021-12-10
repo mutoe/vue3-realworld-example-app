@@ -63,56 +63,45 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { routerPush } from 'src/router'
 import { deleteArticle } from 'src/services/article/deleteArticle'
 import { checkAuthorization, user } from 'src/store/user'
-import { computed, defineComponent, PropType, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 
-export default defineComponent({
-  name: 'ArticleDetailMeta',
-  props: {
-    article: { type: Object as PropType<Article>, required: true },
-  },
-  emits: {
-    update: (article: Article) => !!article.slug,
-  },
-  setup (props, { emit }) {
-    const { article } = toRefs(props)
-    const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
-    const displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
+interface Props {
+  article: Article,
+}
+interface Emits {
+  (e: 'update', article: Article): void
+}
 
-    const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
-      isFavorited: computed(() => article.value.favorited),
-      articleSlug: computed(() => article.value.slug),
-      onUpdate: newArticle => emit('update', newArticle),
-    })
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
-    const onDelete = async () => {
-      await deleteArticle(article.value.slug)
-      await routerPush('global-feed')
-    }
+const { article } = toRefs(props)
+const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
+const displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
 
-    const { followProcessGoing, toggleFollow } = useFollow({
-      following: computed(() => article.value.author.following),
-      username: computed(() => article.value.author.username),
-      onUpdate: (author: Profile) => {
-        const newArticle = { ...article.value, author }
-        emit('update', newArticle)
-      },
-    })
+const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
+  isFavorited: computed(() => article.value.favorited),
+  articleSlug: computed(() => article.value.slug),
+  onUpdate: newArticle => emit('update', newArticle),
+})
 
-    return {
-      displayEditButton,
-      displayFollowButton,
-      onDelete,
-      favoriteProcessGoing,
-      favoriteArticle,
-      followProcessGoing,
-      toggleFollow,
-    }
+const onDelete = async () => {
+  await deleteArticle(article.value.slug)
+  await routerPush('global-feed')
+}
+
+const { followProcessGoing, toggleFollow } = useFollow({
+  following: computed(() => article.value.author.following),
+  username: computed(() => article.value.author.username),
+  onUpdate: (author: Profile) => {
+    const newArticle = { ...article.value, author }
+    emit('update', newArticle)
   },
 })
 </script>

@@ -33,46 +33,24 @@
   </template>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useArticles } from 'src/composable/useArticles'
-import { defineComponent } from 'vue'
 import AppPagination from './AppPagination.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import ArticlesListNavigation from './ArticlesListNavigation.vue'
 
-export default defineComponent({
-  name: 'ArticlesList',
-  components: {
-    ArticlesListArticlePreview,
-    AppPagination,
-    ArticlesListNavigation,
-  },
+const {
+  fetchArticles,
+  articlesDownloading,
+  articlesCount,
+  articles,
+  updateArticle,
+  page,
+  changePage,
+  tag,
+  username,
+} = useArticles()
 
-  async setup () {
-    const {
-      fetchArticles,
-      articlesDownloading,
-      articlesCount,
-      articles,
-      updateArticle,
-      page,
-      changePage,
-      tag,
-      username,
-    } = useArticles()
+await fetchArticles()
 
-    await fetchArticles()
-
-    return {
-      articlesDownloading,
-      articles,
-      articlesCount,
-      page,
-      changePage,
-      updateArticle,
-      tag,
-      username,
-    }
-  },
-})
 </script>
