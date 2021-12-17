@@ -2,7 +2,7 @@
 
 ### Using the hosted API
 
-Simply point your [API requests](https://github.com/gothinkster/realworld/tree/master/api) to `https://conduit.productionready.io/api` and you're good to go!
+Simply point your [API requests](https://github.com/gothinkster/realworld/tree/master/api) to `https://api.realworld.io/api` and you're good to go!
 
 ### Routing Guidelines
 
@@ -29,7 +29,7 @@ Simply point your [API requests](https://github.com/gothinkster/realworld/tree/m
 Instead of having the Bootstrap theme included locally, we recommend loading the precompiled theme from our CDN (our [header template](#header) does this by default):
 
 ```html
-<link rel="stylesheet" href="//demo.productionready.io/main.css">
+<link rel="stylesheet" href="//demo.realworld.io/main.css">
 ```
 
 Alternatively, if you want to make modifications to the theme, check out the [theme's repo](https://github.com/gothinkster/conduit-bootstrap-template).
@@ -47,7 +47,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
   - [Settings](#settings)
   - [Create/Edit Article](#createedit-article)
   - [Article](#article)
-  
+
 
 ## Layout
 
@@ -64,7 +64,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
     <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
     <!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
-    <link rel="stylesheet" href="//demo.productionready.io/main.css">
+    <link rel="stylesheet" href="//demo.realworld.io/main.css">
   </head>
   <body>
 
@@ -256,7 +256,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
           <button class="btn btn-sm btn-outline-secondary action-btn">
             <i class="ion-plus-round"></i>
             &nbsp;
-            Follow Eric Simons 
+            Follow Eric Simons
           </button>
         </div>
 
@@ -486,7 +486,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
             </button>
           </div>
         </form>
-        
+
         <div class="card">
           <div class="card-block">
             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -518,7 +518,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
             </span>
           </div>
         </div>
-        
+
       </div>
 
     </div>
