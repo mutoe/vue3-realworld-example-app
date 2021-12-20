@@ -66,43 +66,27 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import ArticlesList from 'src/components/ArticlesList.vue'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { useProfile } from 'src/composable/useProfile'
 import { checkAuthorization, user } from 'src/store/user'
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-export default defineComponent({
-  name: 'ProfilePage',
-  components: {
-    ArticlesList,
-  },
-  setup () {
-    const route = useRoute()
-    const username = computed<string>(() => route.params.username as string)
+const route = useRoute()
+const username = computed<string>(() => route.params.username as string)
 
-    const { profile, updateProfile } = useProfile({ username })
+const { profile, updateProfile } = useProfile({ username })
 
-    const { followProcessGoing, toggleFollow } = useFollow({
-      following: computed<boolean>(() => profile.value?.following ?? false),
-      username,
-      onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
-    })
-
-    const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
-    const showFollow = computed<boolean>(() => user.value?.username !== username.value)
-
-    return {
-      profile,
-      showEdit,
-      showFollow,
-      followProcessGoing,
-      toggleFollow,
-    }
-  },
+const { followProcessGoing, toggleFollow } = useFollow({
+  following: computed<boolean>(() => profile.value?.following ?? false),
+  username,
+  onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
+
+const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
+const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
 </script>
 

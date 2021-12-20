@@ -1,15 +1,12 @@
 # ![RealWorld Example App](logo.png)
 
+[![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/master?logo=codecov&style=for-the-badge)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/master)
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/master?label=master&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Amaster)
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/script-setup?label=script-setup&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Ascript-setup)
-
-[![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/master?label=master&logo=codecov&style=flat-square)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/master)
-[![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/script-setup?label=script-setup&logo=codecov&style=flat-square)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/script-setup)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mutoe/vue3-realworld-example-app/Test/script-setup?label=ref-sugar&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Aref-sugar)
 
 > ### [Vue3](https://v3.vuejs.org/) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
-- [Demo (master branch)](https://vue3-realworld-example-app-mutoe.vercel.app)
-- [Demo (script-setup branch)](https://vue3-realworld-example-app-setup.vercel.app)
+- [Demo](https://vue3-realworld-example-app-mutoe.vercel.app)
 - [RealWorld](https://github.com/gothinkster/realworld)
 
 
@@ -23,22 +20,19 @@ For more information on how to this works with other frontends/backends, head ov
 
 - [x] [Vite](https://github.com/vitejs/vite)
 - [x] [Composition API](https://composition-api.vuejs.org/)
+- [x] [SFC \<script setup> sugar](https://v3.vuejs.org/api/sfc-script-setup.html)
 - [x] [Suspense](https://v3.vuejs.org/guide/component-dynamic-async.html#using-with-suspense) (Experimental)
-- [x] [TypeScript](https://www.typescriptlang.org/)
-- [x] [ESLint](https://eslint.vuejs.org/)
 - [x] [Vue router](https://next.router.vuejs.org/)
-- [x] [Harlem](https://github.com/andrewcourtice/harlem) ([await Vuex v5](https://github.com/mutoe/vue3-realworld-example-app/issues/15))
-- [x] Unit test ([Vue Test Utils](https://github.com/vuejs/vue-test-utils-next))
-- [ ] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
+- [x] State management ([Harlem](https://github.com/andrewcourtice/harlem) ([await Vuex v5](https://github.com/mutoe/vue3-realworld-example-app/issues/15)))
+- [x] Type system [TypeScript](https://www.typescriptlang.org/) [Vue tsc](https://github.com/johnsoncodehk/vue-tsc)
+- [x] Linter [ESLint](https://eslint.vuejs.org/)
+- [x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
-- [x] [Vue tsc](https://github.com/johnsoncodehk/vue-tsc)
 
-#### What works in [script-setup branch](https://github.com/mutoe/vue3-realworld-example-app/tree/script-setup) (based on the master branch)
+#### What works in [ref-sugar branch](https://github.com/mutoe/vue3-realworld-example-app/tree/ref-sugar) (based on the master branch)
 
-- [x] [SFC script setup](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup)
 - [x] [Script ref sugar (take 2)](https://github.com/vuejs/rfcs/discussions/369)
-- ~~[x] Unit test ([Vue Testing Library](https://testing-library.com/docs/vue-testing-library/intro))~~
-- [ ] [Cypress component test](https://docs.cypress.io/guides/component-testing/introduction#What-is-Component-Testing)
+- [ ] Unit test [Cypress component test](https://docs.cypress.io/guides/component-testing/introduction#What-is-Component-Testing)
 
 > _[Why we have the second branch?](https://github.com/mutoe/vue3-realworld-example-app/commit/c0c983dba08cb31fc96bbc3eb7f15faf469d0624#commitcomment-47600736)_
 

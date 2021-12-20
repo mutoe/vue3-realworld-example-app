@@ -1,9 +1,9 @@
 import { jest } from '@jest/globals'
-import { render } from '@testing-library/vue'
+import { waitFor } from '@testing-library/vue'
 import { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import registerGlobalComponents from 'src/plugins/global-components'
 import fixtures from 'src/utils/test/fixtures'
-import asyncComponentWrapper from '../utils/test/async-component-wrapper'
+import { renderAsync } from '../utils/test/render-async'
 
 jest.unstable_mockModule('src/services/article/getArticles', () => ({
   getArticles: jest.fn(),
@@ -31,11 +31,11 @@ describe('# ArticlesList', () => {
   })
 
   it('should render correctly', async () => {
-    const wrapper = render(asyncComponentWrapper(ArticlesList), {
+    const wrapper = renderAsync(ArticlesList, {
       global: globalMountOptions,
     })
 
     expect(wrapper).toBeTruthy()
-    expect(mockFetchArticles).toBeCalledTimes(1)
+    await waitFor(() => expect(mockFetchArticles).toBeCalledTimes(1))
   })
 })

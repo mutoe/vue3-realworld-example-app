@@ -60,41 +60,30 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { routerPush } from 'src/router'
 import { postLogin, PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
 import { updateUser } from 'src/store/user'
-import { defineComponent, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-export default defineComponent({
-  name: 'LoginPage',
-  setup () {
-    const formRef = ref<HTMLFormElement | null>(null)
-    const form = reactive<PostLoginForm>({
-      email: '',
-      password: '',
-    })
-
-    const errors = ref<PostLoginErrors>({})
-
-    const login = async () => {
-      if (!formRef.value?.checkValidity()) return
-
-      const result = await postLogin(form)
-      if (result.isOk()) {
-        updateUser(result.value)
-        await routerPush('global-feed')
-      } else {
-        errors.value = await result.value.getErrors()
-      }
-    }
-
-    return {
-      formRef,
-      form,
-      login,
-      errors,
-    }
-  },
+const formRef = ref<HTMLFormElement | null>(null)
+const form = reactive<PostLoginForm>({
+  email: '',
+  password: '',
 })
+
+const errors = ref<PostLoginErrors>({})
+
+const login = async () => {
+  if (!formRef.value?.checkValidity()) return
+
+  const result = await postLogin(form)
+  if (result.isOk()) {
+    updateUser(result.value)
+    await routerPush('global-feed')
+  } else {
+    errors.value = await result.value.getErrors()
+  }
+}
+
 </script>

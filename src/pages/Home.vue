@@ -43,16 +43,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import ArticlesList from 'src/components/ArticlesList.vue'
 import PopularTags from 'src/components/PopularTags.vue'
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'HomePage',
-  components: {
-    ArticlesList,
-    PopularTags,
-  },
-})
 </script>
