@@ -67,42 +67,30 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { routerPush } from 'src/router'
 import { postRegister, PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
 import { updateUser } from 'src/store/user'
-import { defineComponent, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-export default defineComponent({
-  name: 'RegisterPage',
-  setup () {
-    const formRef = ref<HTMLFormElement | null>(null)
-    const form = reactive<PostRegisterForm>({
-      username: '',
-      email: '',
-      password: '',
-    })
-
-    const errors = ref<PostRegisterErrors>({})
-
-    const register = async () => {
-      if (!formRef.value?.checkValidity()) return
-
-      const result = await postRegister(form)
-      if (result.isOk()) {
-        updateUser(result.value)
-        await routerPush('global-feed')
-      } else {
-        errors.value = await result.value.getErrors()
-      }
-    }
-
-    return {
-      formRef,
-      form,
-      register,
-      errors,
-    }
-  },
+const formRef = ref<HTMLFormElement | null>(null)
+const form = reactive<PostRegisterForm>({
+  username: '',
+  email: '',
+  password: '',
 })
+
+const errors = ref<PostRegisterErrors>({})
+
+const register = async () => {
+  if (!formRef.value?.checkValidity()) return
+
+  const result = await postRegister(form)
+  if (result.isOk()) {
+    updateUser(result.value)
+    await routerPush('global-feed')
+  } else {
+    errors.value = await result.value.getErrors()
+  }
+}
 </script>

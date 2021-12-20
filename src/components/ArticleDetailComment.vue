@@ -36,31 +36,29 @@
           role="button"
           aria-label="Delete comment"
           class="ion-trash-a"
-          @click="$emit('remove-comment')"
+          @click="emit('remove-comment')"
         />
       </span>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 
-export default defineComponent({
-  name: 'ArticleDetailComment',
-  props: {
-    comment: { type: Object as PropType<ArticleComment>, required: true },
-    username: { type: String as PropType<string | undefined>, default: undefined },
-  },
-  emits: {
-    'remove-comment': () => true,
-  },
-  setup (props) {
-    return {
-      showRemove: computed(() => (
-        props.username !== undefined && props.username === props.comment.author.username
-      )),
-    }
-  },
-})
+interface Props {
+  comment: ArticleComment
+  username?: string
+}
+
+interface Emits {
+  (e: 'remove-comment'): boolean
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+const showRemove = computed(() => (
+  props.username !== undefined && props.username === props.comment.author.username
+))
 </script>

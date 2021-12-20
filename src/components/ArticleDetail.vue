@@ -42,35 +42,20 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import marked from 'src/plugins/marked'
 import { getArticle } from 'src/services/article/getArticle'
-import { computed, defineComponent, reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
-export default defineComponent({
-  name: 'ArticleDetail',
-  components: {
-    ArticleDetailMeta,
-  },
-  async setup () {
-    const route = useRoute()
-    const slug = route.params.slug as string
-    const article = reactive<Article>(await getArticle(slug))
+const route = useRoute()
+const slug = route.params.slug as string
+const article = reactive<Article>(await getArticle(slug))
 
-    const articleHandledBody = computed(() => marked(article.body))
+const articleHandledBody = computed(() => marked(article.body))
 
-    const updateArticle = (newArticle: Article) => {
-      Object.assign(article, newArticle)
-    }
-
-    return {
-      article,
-      articleHandledBody,
-      slug,
-      updateArticle,
-    }
-  },
-})
+const updateArticle = (newArticle: Article) => {
+  Object.assign(article, newArticle)
+}
 </script>

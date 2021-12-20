@@ -73,52 +73,41 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { routerPush } from 'src/router'
 import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
 import { checkAuthorization, updateUser, user } from 'src/store/user'
-import { computed, defineComponent, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 
-export default defineComponent({
-  name: 'SettingsPage',
-  setup () {
-    const form = reactive<PutProfileForm>({})
+const form = reactive<PutProfileForm>({})
 
-    const onSubmit = async () => {
-      const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
-      const userData = await putProfile(filteredForm)
-      updateUser(userData)
-      await routerPush('profile', { username: userData.username })
-    }
+const onSubmit = async () => {
+  const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
+  const userData = await putProfile(filteredForm)
+  updateUser(userData)
+  await routerPush('profile', { username: userData.username })
+}
 
-    const onLogout = async () => {
-      updateUser(null)
-      await routerPush('global-feed')
-    }
+const onLogout = async () => {
+  updateUser(null)
+  await routerPush('global-feed')
+}
 
-    onMounted(async () => {
-      if (!checkAuthorization(user)) return await routerPush('login')
+onMounted(async () => {
+  if (!checkAuthorization(user)) return await routerPush('login')
 
-      form.image = user.value.image
-      form.username = user.value.username
-      form.bio = user.value.bio
-      form.email = user.value.email
-    })
+  form.image = user.value.image
+  form.username = user.value.username
+  form.bio = user.value.bio
+  form.email = user.value.email
+})
 
-    const isButtonDisabled = computed(() => (
-      form.image === user.value?.image &&
+const isButtonDisabled = computed(() => (
+  form.image === user.value?.image &&
       form.username === user.value?.username &&
       form.bio === user.value?.bio &&
       form.email === user.value?.email &&
       !form.password
-    ))
+))
 
-    return {
-      form,
-      onSubmit,
-      isButtonDisabled,
-      onLogout,
-    }
-  },
-})
 </script>

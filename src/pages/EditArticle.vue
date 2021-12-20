@@ -65,10 +65,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { getArticle } from 'src/services/article/getArticle'
 import { postArticle, putArticle } from 'src/services/article/postArticle'
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface FormState {
@@ -78,60 +78,48 @@ interface FormState {
   tagList: string[];
 }
 
-export default defineComponent({
-  name: 'EditArticlePage',
-  setup () {
-    const route = useRoute()
-    const router = useRouter()
-    const slug = computed<string>(() => route.params.slug as string)
+const route = useRoute()
+const router = useRouter()
+const slug = computed<string>(() => route.params.slug as string)
 
-    const form = reactive<FormState>({
-      title: '',
-      description: '',
-      body: '',
-      tagList: [],
-    })
-
-    const newTag = ref<string>('')
-    const addTag = () => {
-      form.tagList.push(newTag.value.trim())
-      newTag.value = ''
-    }
-    const removeTag = (tag: string) => {
-      form.tagList = form.tagList.filter(t => t !== tag)
-    }
-
-    async function fetchArticle (slug: string) {
-      const article = await getArticle(slug)
-
-      // FIXME: I always feel a little wordy here
-      form.title = article.title
-      form.description = article.description
-      form.body = article.body
-      form.tagList = article.tagList
-    }
-
-    onMounted(() => {
-      if (slug.value) fetchArticle(slug.value)
-    })
-
-    const onSubmit = async () => {
-      let article: Article
-      if (slug.value) {
-        article = await putArticle(slug.value, form)
-      } else {
-        article = await postArticle(form)
-      }
-      return router.push({ name: 'article', params: { slug: article.slug } })
-    }
-
-    return {
-      form,
-      onSubmit,
-      newTag,
-      addTag,
-      removeTag,
-    }
-  },
+const form = reactive<FormState>({
+  title: '',
+  description: '',
+  body: '',
+  tagList: [],
 })
+
+const newTag = ref<string>('')
+const addTag = () => {
+  form.tagList.push(newTag.value.trim())
+  newTag.value = ''
+}
+const removeTag = (tag: string) => {
+  form.tagList = form.tagList.filter(t => t !== tag)
+}
+
+async function fetchArticle (slug: string) {
+  const article = await getArticle(slug)
+
+  // FIXME: I always feel a little wordy here
+  form.title = article.title
+  form.description = article.description
+  form.body = article.body
+  form.tagList = article.tagList
+}
+
+onMounted(() => {
+  if (slug.value) fetchArticle(slug.value)
+})
+
+const onSubmit = async () => {
+  let article: Article
+  if (slug.value) {
+    article = await putArticle(slug.value, form)
+  } else {
+    article = await postArticle(form)
+  }
+  return router.push({ name: 'article', params: { slug: article.slug } })
+}
+
 </script>

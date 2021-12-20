@@ -1,10 +1,10 @@
-import { render, waitFor } from '@testing-library/vue'
+import { waitFor } from '@testing-library/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
-import asyncComponentWrapper from 'src/utils/test/async-component-wrapper'
 import fixtures from 'src/utils/test/fixtures'
+import { renderAsync } from '../utils/test/render-async'
 import ArticleDetailComments from './ArticleDetailComments.vue'
 
 jest.mock('src/services/comment/getComments')
@@ -23,7 +23,7 @@ describe('# ArticleDetailComments', () => {
   })
 
   it('should render correctly', async () => {
-    const { container } = render(asyncComponentWrapper(ArticleDetailComments), {
+    const { container } = await renderAsync(ArticleDetailComments, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
@@ -33,7 +33,7 @@ describe('# ArticleDetailComments', () => {
 
   it.skip('should display new comment when post new comment', async () => {
     // given
-    const { container } = render(asyncComponentWrapper(ArticleDetailComments), {
+    const { container } = await renderAsync(ArticleDetailComments, {
       global: { plugins: [registerGlobalComponents, router] },
     })
 
@@ -50,7 +50,7 @@ describe('# ArticleDetailComments', () => {
 
   it.skip('should call remove comment service when click delete button', async () => {
     // given
-    render(asyncComponentWrapper(ArticleDetailComments), {
+    await renderAsync(ArticleDetailComments, {
       global: { plugins: [registerGlobalComponents, router] },
     })
     await waitFor(() => expect(mockGetCommentsByArticle).toBeCalled())

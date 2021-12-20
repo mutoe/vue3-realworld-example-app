@@ -28,16 +28,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import ArticleDetail from 'src/components/ArticleDetail.vue'
 import ArticleDetailComments from 'src/components/ArticleDetailComments.vue'
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'ArticlePage',
-  components: {
-    ArticleDetail,
-    ArticleDetailComments,
-  },
-})
 </script>
