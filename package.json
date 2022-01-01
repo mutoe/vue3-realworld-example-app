@@ -17,7 +17,7 @@
   "dependencies": {
     "@harlem/core": "^2.2.0",
     "insane": "^2.6.2",
-    "marked": "^4.0.6",
+    "marked": "^4.0.8",
     "vue": "^3.2.24",
     "vue-router": "^4.0.12"
   },
