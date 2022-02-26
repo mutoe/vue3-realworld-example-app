@@ -8,7 +8,7 @@
     "serve": "vite preview",
     "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.js}\"",
     "lint:tsc": "vue-tsc --noEmit",
-    "lint": "concurrently 'yarn build' 'yarn lint:tsc' 'yarn lint:script'",
+    "lint": "concurrently \"yarn build\" \"yarn lint:tsc\" \"yarn lint:script\"",
     "test:unit": "jest",
     "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run -c baseUrl=http://localhost:5000\"",
     "test:e2e:ci": "cypress run -C cypress.prod.json",
