@@ -9,5 +9,5 @@ export interface PutProfileForm {
 }
 
 export function putProfile (form: PutProfileForm): Promise<User> {
-  return request.put<UserResponse>('/user', form).then(res => res.user)
+  return request.put<UserResponse>('/user', { user: form }).then(res => res.user)
 }
