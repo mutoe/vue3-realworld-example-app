@@ -82,7 +82,7 @@ const route = useRoute()
 const router = useRouter()
 const slug = computed<string>(() => route.params.slug as string)
 
-const form = reactive<FormState>({
+const form: FormState = reactive({
   title: '',
   description: '',
   body: '',

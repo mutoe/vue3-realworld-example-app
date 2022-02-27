@@ -74,7 +74,7 @@ import { updateUser } from 'src/store/user'
 import { reactive, ref } from 'vue'
 
 const formRef = ref<HTMLFormElement | null>(null)
-const form = reactive<PostRegisterForm>({
+const form: PostRegisterForm = reactive({
   username: '',
   email: '',
   password: '',
