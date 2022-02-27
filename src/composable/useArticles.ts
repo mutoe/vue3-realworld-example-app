@@ -24,17 +24,13 @@ export function useArticles () {
 
     if (articlesType.value === 'my-feed') {
       responsePromise = getFeeds(page.value)
-    }
-    if (articlesType.value === 'tag-feed' && tag.value !== undefined) {
+    } else if (articlesType.value === 'tag-feed' && tag.value) {
       responsePromise = getArticlesByTag(tag.value, page.value)
-    }
-    if (articlesType.value === 'user-feed' && username.value !== undefined) {
+    } else if (articlesType.value === 'user-feed' && username.value) {
       responsePromise = getProfileArticles(username.value, page.value)
-    }
-    if (articlesType.value === 'user-favorites-feed' && username.value !== undefined) {
+    } else if (articlesType.value === 'user-favorites-feed' && username.value) {
       responsePromise = getFavoritedArticles(username.value, page.value)
-    }
-    if (articlesType.value === 'global-feed') {
+    } else if (articlesType.value === 'global-feed') {
       responsePromise = getArticles(page.value)
     }
 
