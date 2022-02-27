@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useArticles () {
-  const { articlesType, tag, username, metaChanged } = getArticlesMeta()
+  const { articlesType, tag, username, metaChanged } = useArticlesMeta()
 
   const articles = ref<Article[]>([])
   const articlesCount = ref(0)
@@ -87,13 +87,13 @@ const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
   'profile-favorites': 'user-favorites-feed',
 })
 
-interface GetArticlesMetaReturn {
+interface UseArticlesMetaReturn {
   tag: ComputedRef<string>
   username: ComputedRef<string>
   articlesType: ComputedRef<ArticlesType>
   metaChanged: ComputedRef<string>
 }
-function getArticlesMeta (): GetArticlesMetaReturn {
+function useArticlesMeta (): UseArticlesMetaReturn {
   const route = useRoute()
 
   const tag = ref('')
