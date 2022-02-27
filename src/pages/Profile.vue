@@ -50,12 +50,10 @@
       <div class="row">
         <div class="col-xs-12 col-md-10 offset-md-1">
           <Suspense>
-            <template #default>
-              <ArticlesList
-                use-user-feed
-                use-user-favorited
-              />
-            </template>
+            <ArticlesList
+              use-user-feed
+              use-user-favorited
+            />
             <template #fallback>
               Articles are downloading...
             </template>
