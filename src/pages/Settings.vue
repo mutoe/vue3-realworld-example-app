@@ -79,7 +79,7 @@ import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
 import { checkAuthorization, updateUser, user } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 
-const form = reactive<PutProfileForm>({})
+const form: PutProfileForm = reactive({})
 
 const onSubmit = async () => {
   const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
