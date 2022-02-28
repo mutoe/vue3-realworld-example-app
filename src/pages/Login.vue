@@ -75,6 +75,8 @@ const form = reactive<PostLoginForm>({
 const errors = ref<PostLoginErrors>({})
 
 const login = async () => {
+  errors.value = {}
+
   if (!formRef.value?.checkValidity()) return
 
   const result = await postLogin(form)
