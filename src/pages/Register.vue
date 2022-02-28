@@ -83,6 +83,8 @@ const form = reactive<PostRegisterForm>({
 const errors = ref<PostRegisterErrors>({})
 
 const register = async () => {
+  errors.value = {}
+
   if (!formRef.value?.checkValidity()) return
 
   const result = await postRegister(form)
