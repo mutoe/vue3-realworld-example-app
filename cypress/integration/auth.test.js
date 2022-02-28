@@ -46,6 +46,14 @@ describe('Auth', () => {
         cy.wrap($el.checkValidity()).should('to.be', false)
       })
     })
+
+    it('should not allow visiting login page when the user is logged in', () => {
+      cy.login()
+
+      cy.visit('/#/login')
+
+      cy.url().should('match', /\/#\/$/)
+    })
   })
 
   describe('Register', () => {
@@ -80,6 +88,14 @@ describe('Auth', () => {
       cy.wait('@registerRequest')
       cy.contains('email has already been taken')
       cy.contains('username has already been taken')
+    })
+
+    it('should not allow visiting register page when the user is logged in', () => {
+      cy.login()
+
+      cy.visit('/#/register')
+
+      cy.url().should('match', /\/#\/$/)
     })
   })
 })

@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteParams } from 'vue-router'
 import Home from './pages/Home.vue'
+import { isAuthorized } from './store/user'
 
 export type AppRouteNames = 'global-feed'
 | 'my-feed'
@@ -50,11 +51,13 @@ export const router = createRouter({
       name: 'login',
       path: '/login',
       component: () => import('./pages/Login.vue'),
+      beforeEnter: () => !isAuthorized.value,
     },
     {
       name: 'register',
       path: '/register',
       component: () => import('./pages/Register.vue'),
+      beforeEnter: () => !isAuthorized.value,
     },
     {
       name: 'profile',
