@@ -15,7 +15,7 @@
     "test": "yarn test:unit && yarn test:e2e"
   },
   "dependencies": {
-    "@harlem/core": "^2.2.3",
+    "@harlem/core": "^2.3.0",
     "insane": "^2.6.2",
     "marked": "^4.0.12",
     "vue": "^3.2.30",
