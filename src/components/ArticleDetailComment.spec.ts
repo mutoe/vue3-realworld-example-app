@@ -16,7 +16,7 @@ describe('# ArticleDetailComment', () => {
     })
 
     expect(container.querySelector('.card-text')).toHaveTextContent('Comment body')
-    expect(container.querySelector('.date-posted')).toHaveTextContent('1/1/2020')
+    expect(container.querySelector('.date-posted')).toHaveTextContent('01/01/2020')
     expect(queryByRole('button', { name: 'Delete comment' })).toBeNull()
   })
 

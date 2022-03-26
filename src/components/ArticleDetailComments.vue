@@ -14,9 +14,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
-import { user } from 'src/store/user'
+import useUserStore from 'src/store/useUserStore'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailComment from './ArticleDetailComment.vue'
@@ -24,6 +25,9 @@ import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 
 const route = useRoute()
 const slug = route.params.slug as string
+
+const store = useUserStore()
+const { user } = storeToRefs(store)
 
 const username = computed(() => user.value?.username)
 
@@ -35,9 +39,8 @@ const addComment = async (comment: ArticleComment) => {
 
 const removeComment = async (commentId: number) => {
   await deleteComment(slug, commentId)
-  comments.value = comments.value.filter(c => c.id !== commentId)
+  comments.value = comments.value.filter((c) => c.id !== commentId)
 }
 
 comments.value = await getCommentsByArticle(slug)
-
 </script>

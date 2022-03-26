@@ -63,8 +63,10 @@
 <script setup lang="ts">
 import { routerPush } from 'src/router'
 import { postLogin, PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
-import { updateUser } from 'src/store/user'
+import useUserStore from 'src/store/useUserStore'
 import { reactive, ref } from 'vue'
+
+const { updateUser } = useUserStore()
 
 const formRef = ref<HTMLFormElement | null>(null)
 const form = reactive<PostLoginForm>({

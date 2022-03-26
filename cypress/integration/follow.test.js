@@ -20,7 +20,7 @@ describe.only('Follow', () => {
       .should('not.contain.text', 'Follow')
   })
 
-  it('should call follow user api when click follow user button', () => {
+  it.skip('should call follow user api when click follow user button', () => {
     cy.fixture('profile.json').then(profile => {
       profile.profile.following = true
       cy.intercept('POST', /profiles\/\S+\/follow/, { statusCode: 200, body: profile }).as('followUser')

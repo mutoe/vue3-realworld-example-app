@@ -33,8 +33,9 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import type { AppRouteNames } from 'src/router'
-import { user } from 'src/store/user'
+import useUserStore from 'src/store/useUserStore'
 import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
 
@@ -46,8 +47,15 @@ interface NavLink {
   display: 'all' | 'anonym' | 'authorized'
 }
 
+const store = useUserStore()
+const { user, isAuthorized } = storeToRefs(store)
+
 const username = computed(() => user.value?.username)
-const displayStatus = computed(() => username.value ? 'authorized' : 'anonym')
+
+console.log('username', username.value, 'isauth', isAuthorized.value)
+const displayStatus = computed(() =>
+  username.value ? 'authorized' : 'anonym',
+)
 
 const allNavLinks = computed<NavLink[]>(() => [
   {
@@ -85,8 +93,9 @@ const allNavLinks = computed<NavLink[]>(() => [
   },
 ])
 
-const navLinks = computed(() => allNavLinks.value.filter(
-  l => l.display === displayStatus.value || l.display === 'all',
-))
-
+const navLinks = computed(() =>
+  allNavLinks.value.filter(
+    (l) => l.display === displayStatus.value || l.display === 'all',
+  ),
+)
 </script>

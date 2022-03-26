@@ -38,9 +38,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useProfile } from 'src/composable/useProfile'
 import { postComment } from 'src/services/comment/postComment'
-import { checkAuthorization, user } from 'src/store/user'
+import useUserStore, { checkAuthorization } from 'src/store/useUserStore'
 import { computed, ref } from 'vue'
 
 interface Props {
@@ -50,10 +51,13 @@ interface Emits {
   (e: 'add-comment', comment: ArticleComment): void
 }
 
+const store = useUserStore()
+const { user } = storeToRefs(store)
+
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const username = computed(() => checkAuthorization(user) ? user.value.username : '')
+const username = computed(() => checkAuthorization(user.value) ? user.value?.username : '')
 const { profile } = useProfile({ username })
 
 const comment = ref('')

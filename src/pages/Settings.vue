@@ -74,10 +74,15 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { routerPush } from 'src/router'
 import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
-import { checkAuthorization, updateUser, user } from 'src/store/user'
+import useUserStore, { checkAuthorization } from 'src/store/useUserStore'
+
 import { computed, onMounted, reactive } from 'vue'
+
+const { updateUser, ...store } = useUserStore()
+const { user } = storeToRefs(store)
 
 const form = reactive<PutProfileForm>({})
 

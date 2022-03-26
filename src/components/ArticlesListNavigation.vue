@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import type { ArticlesType } from 'src/composable/useArticles'
 import type { AppRouteNames } from 'src/router'
-import { isAuthorized } from 'src/store/user'
+import useUserStore from 'src/store/useUserStore'
 import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
 
@@ -54,6 +54,8 @@ const props = withDefaults(defineProps<Props>(), {
   useUserFavorited: false,
   useUserFeed: false,
 })
+
+const store = useUserStore()
 
 const allLinks = computed<ArticlesListNavLink[]>(() => [
   {
@@ -89,7 +91,7 @@ const allLinks = computed<ArticlesListNavLink[]>(() => [
 
 const show = computed<Record<ArticlesType, boolean>>(() => ({
   'global-feed': props.useGlobalFeed,
-  'my-feed': props.useMyFeed && isAuthorized.value,
+  'my-feed': props.useMyFeed && store.isAuthorized,
   'tag-feed': props.useTagFeed && props.tag !== '',
   'user-feed': props.useUserFeed && props.username !== '',
   'user-favorites-feed': props.useUserFavorited && props.username !== '',
