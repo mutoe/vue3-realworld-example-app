@@ -19,7 +19,7 @@
     "insane": "^2.6.2",
     "marked": "^4.0.12",
     "vue": "^3.2.30",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
