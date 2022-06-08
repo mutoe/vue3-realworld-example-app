@@ -1,9 +1,9 @@
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { getArticle } from 'src/services/article/getArticle'
+import fixtures from 'src/utils/test/fixtures'
 import { renderAsync } from '../utils/test/render-async'
 import ArticleDetail from './ArticleDetail.vue'
-import fixtures from 'src/utils/test/fixtures'
 
 jest.mock('src/services/article/getArticle')
 

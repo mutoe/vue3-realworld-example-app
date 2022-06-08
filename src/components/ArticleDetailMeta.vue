@@ -4,7 +4,7 @@
       name="profile"
       :params="{username: article.author.username}"
     >
-      <img :src="article.author.image">
+      <img :src="article.author.image" :alt="article.author.username">
     </AppLink>
 
     <div class="info">
@@ -72,7 +72,7 @@ import { checkAuthorization, user } from 'src/store/user'
 import { computed, toRefs } from 'vue'
 
 interface Props {
-  article: Article,
+  article: Article
 }
 interface Emits {
   (e: 'update', article: Article): void

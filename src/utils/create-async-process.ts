@@ -1,5 +1,5 @@
-import type { Ref  } from 'vue'
-import {  ref } from 'vue'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface CreateAsyncProcessReturn<T extends (...args: any[]) => any> {

@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory  } from 'vue-router'
-import type {RouteParams} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import type { RouteParams } from 'vue-router'
 import Home from './pages/Home.vue'
 import { isAuthorized } from './store/user'
 

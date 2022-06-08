@@ -15,6 +15,7 @@
         <img
           :src="comment.author.image"
           class="comment-author-img"
+          :alt="comment.author.username"
         >
       </AppLink>
 
@@ -58,7 +59,5 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const showRemove = computed(() => (
-  props.username !== undefined && props.username === props.comment.author.username
-))
+const showRemove = computed(() => props.username !== undefined && props.username === props.comment.author.username)
 </script>

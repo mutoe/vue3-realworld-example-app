@@ -1,7 +1,7 @@
-import type {FetchRequestOptions} from 'src/utils/request'
+import type { FetchRequestOptions } from 'src/utils/request'
 import FetchRequest from 'src/utils/request'
-import {  fail, isEither, success } from 'src/utils/either'
-import type {Either} from 'src/utils/either'
+import { fail, isEither, success } from 'src/utils/either'
+import type { Either } from 'src/utils/either'
 
 import params2query from 'src/utils/params-to-query'
 import mockFetch from 'src/utils/test/mock-fetch'
@@ -142,8 +142,8 @@ describe('# Should convert query object to query string in request url', () => {
   })
 })
 
-describe('# Should work with headers', function () {
-  forAllMethods('should add headers', async function (method) {
+describe('# Should work with headers', () => {
+  forAllMethods('should add headers', async (method) => {
     const options = { headers: { h1: 'h1', h2: 'h2' } }
     const request = new FetchRequest(options)
 
@@ -152,7 +152,7 @@ describe('# Should work with headers', function () {
     expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(options))
   })
 
-  forAllMethods('should merge headers', async function (method) {
+  forAllMethods('should merge headers', async (method) => {
     const options = { headers: { h1: 'h1', h2: 'h2' } }
     const localOptions = { headers: { h1: 'h11', h3: 'h3' } }
     const expectedOptions = { headers: { h1: 'h11', h2: 'h2', h3: 'h3' } }
@@ -164,7 +164,7 @@ describe('# Should work with headers', function () {
   })
 })
 
-forCorrectMethods('# Should converted correct response body to json', async function (method) {
+forCorrectMethods('# Should converted correct response body to json', async (method) => {
   const DATA = { foo: 'bar' }
   mockFetch({ type: 'body', ...DATA })
   const request = new FetchRequest()
@@ -174,7 +174,7 @@ forCorrectMethods('# Should converted correct response body to json', async func
   expect(body).toMatchObject(DATA)
 })
 
-forCheckableMethods('# Should converted checkable response to Either<NetworkError, DATA_TYPE>', async function (method) {
+forCheckableMethods('# Should converted checkable response to Either<NetworkError, DATA_TYPE>', async (method) => {
   const DATA = { foo: 'bar' }
   interface DATA_TYPE { foo: 'bar' }
   mockFetch({ type: 'body', ...DATA })
@@ -191,7 +191,7 @@ forCheckableMethods('# Should converted checkable response to Either<NetworkErro
   expect(resultValue).toMatchObject(DATA)
 })
 
-forCorrectMethods('# Should throw NetworkError if correct request is not OK', async function (method) {
+forCorrectMethods('# Should throw NetworkError if correct request is not OK', async (method) => {
   mockFetch({
     type: 'full',
     ok: false,
@@ -206,7 +206,7 @@ forCorrectMethods('# Should throw NetworkError if correct request is not OK', as
   await expect(result).rejects.toBeInstanceOf(NetworkError)
 })
 
-forCheckableMethods('# Should return Either<NetworkError, DATA_TYPE> if checkable request is not OK', async function (method) {
+forCheckableMethods('# Should return Either<NetworkError, DATA_TYPE> if checkable request is not OK', async (method) => {
   mockFetch({
     type: 'full',
     ok: false,
@@ -227,11 +227,11 @@ forCheckableMethods('# Should return Either<NetworkError, DATA_TYPE> if checkabl
   expect(resultValue).toBeInstanceOf(NetworkError)
 })
 
-describe('# Authorization header', function () {
+describe('# Authorization header', () => {
   const TOKEN = 'token'
   const OPTIONS = { headers: { Authorization: `Token ${TOKEN}` } }
 
-  forAllMethods('should add authorization header', async function (method) {
+  forAllMethods('should add authorization header', async (method) => {
     const request = new FetchRequest()
     request.setAuthorizationHeader(TOKEN)
 
@@ -240,7 +240,7 @@ describe('# Authorization header', function () {
     expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
   })
 
-  forAllMethods('should remove authorization header', async function (method) {
+  forAllMethods('should remove authorization header', async (method) => {
     const request = new FetchRequest(OPTIONS)
 
     await triggerMethod(request, method)

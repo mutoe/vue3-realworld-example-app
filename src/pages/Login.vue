@@ -62,8 +62,8 @@
 
 <script setup lang="ts">
 import { routerPush } from 'src/router'
-import type { PostLoginErrors, PostLoginForm} from 'src/services/auth/postLogin'
-import {postLogin } from 'src/services/auth/postLogin'
+import type { PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
+import { postLogin } from 'src/services/auth/postLogin'
 import { updateUser } from 'src/store/user'
 import { reactive, ref } from 'vue'
 

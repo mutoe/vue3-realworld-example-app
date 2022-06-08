@@ -1,6 +1,6 @@
 import wrapTests from 'src/utils/test/wrap-tests'
 import { ValidationError, AuthorizationError, NetworkError } from 'src/types/error'
-import type { Either  } from './either'
+import type { Either } from './either'
 import { fail, isEither, success } from './either'
 import { mapAuthorizationResponse, mapValidationResponse } from './map-checkable-response'
 
@@ -8,8 +8,8 @@ const createCheckableResponse = (response: Partial<Response>): Either<NetworkErr
   ? success(response)
   : fail(new NetworkError(response as Response))
 
-describe('# mapAuthorizationResponse', function () {
-  it('should return Either with AuthorizationError and correct Response', function () {
+describe('# mapAuthorizationResponse', () => {
+  it('should return Either with AuthorizationError and correct Response', () => {
     const RESPONSE = { ok: true }
     const response = createCheckableResponse(RESPONSE)
 
@@ -20,7 +20,7 @@ describe('# mapAuthorizationResponse', function () {
     expect(result.value).toEqual(RESPONSE)
   })
 
-  it('should return Either with AuthorizationError and failed Response', function () {
+  it('should return Either with AuthorizationError and failed Response', () => {
     const RESPONSE = { ok: false, status: 401 }
     const response = createCheckableResponse(RESPONSE)
 
@@ -31,7 +31,7 @@ describe('# mapAuthorizationResponse', function () {
     expect(result.value).toBeInstanceOf(AuthorizationError)
   })
 
-  it('should throw NetworkError when Response is failed with status != 401', function () {
+  it('should throw NetworkError when Response is failed with status != 401', () => {
     const RESPONSE = { ok: false, status: 400 }
     const response = createCheckableResponse(RESPONSE)
 
@@ -41,10 +41,10 @@ describe('# mapAuthorizationResponse', function () {
   })
 })
 
-describe('# mapValidationResponse', function () {
+describe('# mapValidationResponse', () => {
   interface ValidationErrors {[field: string]: string}
 
-  it('should return Either with ValidationError and correct Response', function () {
+  it('should return Either with ValidationError and correct Response', () => {
     const RESPONSE = { ok: true }
     const response = createCheckableResponse(RESPONSE)
 
@@ -72,7 +72,7 @@ describe('# mapValidationResponse', function () {
     },
   })
 
-  it('should throw NetworkError when Response is failed with status other than 422 and 403', function () {
+  it('should throw NetworkError when Response is failed with status other than 422 and 403', () => {
     const RESPONSE = { ok: false, status: 400 }
     const response = createCheckableResponse(RESPONSE)
 

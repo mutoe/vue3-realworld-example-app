@@ -72,10 +72,10 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface FormState {
-  title: string;
-  description: string;
-  body: string;
-  tagList: string[];
+  title: string
+  description: string
+  body: string
+  tagList: string[]
 }
 
 const route = useRoute()

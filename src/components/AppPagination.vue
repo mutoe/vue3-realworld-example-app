@@ -25,7 +25,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'page-change', index: number):void
+  (e: 'page-change', index: number): void
 }
 
 const props = defineProps<Props>()

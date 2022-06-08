@@ -8,11 +8,11 @@
  * https://github.com/testing-library/vue-testing-library/blob/main/src/render.js
  */
 
-import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { h, defineComponent, Suspense } from 'vue'
-
-import type {  RenderOptions, RenderResult } from '@testing-library/vue'
-import { getQueriesForElement, prettyDOM  } from '@testing-library/vue'
+import type { RenderOptions, RenderResult } from '@testing-library/vue'
+import { getQueriesForElement, prettyDOM } from '@testing-library/vue'
 
 const mountedWrappers = new Set<VueWrapper<any>>()
 

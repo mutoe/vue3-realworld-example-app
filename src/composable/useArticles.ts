@@ -7,8 +7,8 @@ import {
   getProfileArticles,
 } from 'src/services/article/getArticles'
 import createAsyncProcess from 'src/utils/create-async-process'
-import type {  ComputedRef   } from 'vue'
-import { computed,  ref, watch } from 'vue'
+import type { ComputedRef } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
@@ -80,13 +80,13 @@ export const articlesTypes: ArticlesType[] = ['global-feed', 'my-feed', 'tag-fee
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export const isArticlesType = (type: any): type is ArticlesType => articlesTypes.includes(type)
 
-const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = ({
+const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = {
   'global-feed': 'global-feed',
   'my-feed': 'my-feed',
-  tag: 'tag-feed',
-  profile: 'user-feed',
+  'tag': 'tag-feed',
+  'profile': 'user-feed',
   'profile-favorites': 'user-favorites-feed',
-})
+}
 
 interface UseArticlesMetaReturn {
   tag: ComputedRef<string>

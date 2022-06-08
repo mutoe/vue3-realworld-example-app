@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import { routerPush } from 'src/router'
-import type {  PutProfileForm } from 'src/services/profile/putProfile'
+import type { PutProfileForm } from 'src/services/profile/putProfile'
 import { putProfile } from 'src/services/profile/putProfile'
 import { checkAuthorization, updateUser, user } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
@@ -83,7 +83,7 @@ import { computed, onMounted, reactive } from 'vue'
 const form: PutProfileForm = reactive({})
 
 const onSubmit = async () => {
-  const filteredForm = Object.entries(form).reduce((a, [k, v]) => (v === null ? a : { ...a, [k]: v }), {})
+  const filteredForm = Object.entries(form).reduce((a, [k, v]) => v === null ? a : { ...a, [k]: v }, {})
   const userData = await putProfile(filteredForm)
   updateUser(userData)
   await routerPush('profile', { username: userData.username })
@@ -103,12 +103,12 @@ onMounted(async () => {
   form.email = user.value.email
 })
 
-const isButtonDisabled = computed(() => (
+const isButtonDisabled = computed(() =>
   form.image === user.value?.image &&
       form.username === user.value?.username &&
       form.bio === user.value?.bio &&
       form.email === user.value?.email &&
-      !form.password
-))
+      !form.password,
+)
 
 </script>

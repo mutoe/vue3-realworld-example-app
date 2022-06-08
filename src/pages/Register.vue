@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import { routerPush } from 'src/router'
 import type { PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
-import { postRegister  } from 'src/services/auth/postRegister'
+import { postRegister } from 'src/services/auth/postRegister'
 import { updateUser } from 'src/store/user'
 import { reactive, ref } from 'vue'
 
