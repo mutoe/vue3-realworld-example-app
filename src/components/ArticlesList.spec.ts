@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/vue'
-import { GlobalMountOptions } from '@vue/test-utils/dist/types'
+import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesList from 'src/components/ArticlesList.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'

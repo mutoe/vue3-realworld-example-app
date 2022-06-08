@@ -1,6 +1,7 @@
 import wrapTests from 'src/utils/test/wrap-tests'
 import { ValidationError, AuthorizationError, NetworkError } from 'src/types/error'
-import { Either, fail, isEither, success } from './either'
+import type { Either  } from './either'
+import { fail, isEither, success } from './either'
 import { mapAuthorizationResponse, mapValidationResponse } from './map-checkable-response'
 
 const createCheckableResponse = (response: Partial<Response>): Either<NetworkError, Partial<Response>> => response.ok === true

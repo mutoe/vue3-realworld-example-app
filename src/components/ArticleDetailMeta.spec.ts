@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/vue'
-import { GlobalMountOptions } from '@vue/test-utils/dist/types'
+import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
 import { deleteArticle } from 'src/services/article/deleteArticle'

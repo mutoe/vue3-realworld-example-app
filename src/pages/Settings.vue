@@ -75,7 +75,8 @@
 
 <script setup lang="ts">
 import { routerPush } from 'src/router'
-import { putProfile, PutProfileForm } from 'src/services/profile/putProfile'
+import type {  PutProfileForm } from 'src/services/profile/putProfile'
+import { putProfile } from 'src/services/profile/putProfile'
 import { checkAuthorization, updateUser, user } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 

@@ -7,7 +7,8 @@ import {
   getProfileArticles,
 } from 'src/services/article/getArticles'
 import createAsyncProcess from 'src/utils/create-async-process'
-import { computed, ComputedRef, ref, watch } from 'vue'
+import type {  ComputedRef   } from 'vue'
+import { computed,  ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type

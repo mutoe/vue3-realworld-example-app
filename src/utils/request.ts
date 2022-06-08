@@ -1,5 +1,6 @@
 import { NetworkError } from 'src/types/error'
-import { Either, fail, success } from './either'
+import type { Either  } from './either'
+import {  fail, success } from './either'
 import params2query from './params-to-query'
 
 export interface FetchRequestOptions {

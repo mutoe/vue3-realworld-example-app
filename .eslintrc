@@ -8,11 +8,13 @@
     "extraFileExtensions": [".vue", ".d.ts"]
   },
   "extends": [
-    "standard-with-typescript",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:vue/vue3-recommended"
   ],
+  "env": {
+    "vue/setup-compiler-macros": true
+  },
   "rules": {
     "no-undef": "off",
     "no-unused-vars": "off",

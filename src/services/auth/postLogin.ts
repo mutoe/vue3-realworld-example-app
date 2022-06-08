@@ -1,5 +1,6 @@
 import type { ValidationError } from 'src/types/error'
-import { Either, fail, success } from 'src/utils/either'
+import type { Either  } from 'src/utils/either'
+import { fail, success } from 'src/utils/either'
 import { mapValidationResponse } from 'src/utils/map-checkable-response'
 import { request } from '../index'
 

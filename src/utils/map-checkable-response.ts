@@ -1,6 +1,7 @@
 import { AuthorizationError, NetworkError, ValidationError } from '../types/error'
 
-import { Either, fail, success } from './either'
+import {  fail, success } from './either'
+import type {Either} from './either'
 
 export const mapAuthorizationResponse = <T>(result: Either<NetworkError, T>): Either<AuthorizationError, T> => {
   if (result.isOk()) {

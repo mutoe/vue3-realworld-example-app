@@ -1,5 +1,5 @@
 import { render } from '@testing-library/vue'
-import { GlobalMountOptions } from '@vue/test-utils/dist/types'
+import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
