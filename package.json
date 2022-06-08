@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
@@ -41,7 +42,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^8.2.0",
-    "husky": "^4.3.8",
+    "husky": "^8.0.0",
     "jest": "^28.1.1",
     "jsdom": "^19.0.0",
     "lint-staged": "^13.0.0",
@@ -51,12 +52,6 @@
     "vite": "^2.9.10",
     "vue-tsc": "^0.37.3",
     "vue3-jest": "^27.0.0-alpha.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn lint"
-    }
   },
   "lint-staged": {
     "src/**/*.{ts,vue}": "eslint --fix",
