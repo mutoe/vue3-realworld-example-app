@@ -1,4 +1,6 @@
-import AppLink from 'src/components/AppLink.vue'
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+
+import type AppLink from 'src/components/AppLink.vue'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {

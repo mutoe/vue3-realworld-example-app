@@ -758,10 +758,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mutoe/eslint-config-preset-basic@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-basic/-/eslint-config-preset-basic-1.2.1.tgz#3ccc7c840f6c6545b0dbb9c5c7f7ddd8044445e9"
-  integrity sha512-kPPGYdEtf+ZSKjQQOEhRtMUv4UuYOk84hCM2Nbn6n1S2PKVP2zVfj2vKMAjIJFEMZe7xCsa6aUpb6Y6n+T/E0A==
+"@mutoe/eslint-config-preset-basic@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-basic/-/eslint-config-preset-basic-1.3.2.tgz#70d3d9c25235c63554e62dc97ce4c428749b305e"
+  integrity sha512-R/EyWJlpL05hFqAuCQg0c+yJb4FFDuO/fktGhNyN2iiLbfNmZCZHLrR8kuEWCbxDn0eNtCcBR07/wUjOrmTj3w==
   dependencies:
     "@mutoe/eslint-config-preset-standard" "^1.2.1"
     eslint-plugin-eslint-comments "^3.2.0"
@@ -780,22 +780,23 @@
     eslint-plugin-n "^15.2.1"
     eslint-plugin-promise "^6.0.0"
 
-"@mutoe/eslint-config-preset-ts@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-ts/-/eslint-config-preset-ts-1.2.1.tgz#e3de967012ebeea8b789a12b40c5708dbc4baa62"
-  integrity sha512-lhFdKnPnbLCIr0J15BVHY8g3j0G5kAJ7QM5pvRZz41+UzYkXUgosnJK9Bp8Sfwm+eZwLkrEMEu0nRMhvnrFMvg==
+"@mutoe/eslint-config-preset-ts@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-ts/-/eslint-config-preset-ts-1.3.2.tgz#cedab2ea7d516f9d01f89682d5b655dd72bb06b6"
+  integrity sha512-zISqct9CeSguxchFue4nprXZZNJgrPSuBSariRZNT+um6++X+BZdZBrT11VbWlOG5/MMpq+zKBx3sxOyjzXZZg==
   dependencies:
-    "@mutoe/eslint-config-preset-basic" "^1.2.1"
+    "@mutoe/eslint-config-preset-basic" "^1.3.2"
     "@typescript-eslint/eslint-plugin" "^5.27.1"
     "@typescript-eslint/parser" "^5.27.1"
 
-"@mutoe/eslint-config-preset-vue@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-vue/-/eslint-config-preset-vue-1.2.1.tgz#115f258c132fca718b0779c473b68610b6da6845"
-  integrity sha512-N9AZ7x+My4sbHJOY4H1ZHtxiifYSHRhBR2cl5wxM7lW1f32ZapA6nm/4dYDsTSMvYAOt19FBS7uxGE/c7DTCsg==
+"@mutoe/eslint-config-preset-vue@~1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@mutoe/eslint-config-preset-vue/-/eslint-config-preset-vue-1.3.2.tgz#31403ab703ae606f6e336877ee87420afb3a9e26"
+  integrity sha512-s1pPZRLf1zxnTkGrB6VaY5N1gTAguwq/vDvttPys1gL0ZjdfzmGcCKr4dMNXv7WNL5YcsmNMOzjDTcg7das4uA==
   dependencies:
-    "@mutoe/eslint-config-preset-ts" "^1.2.1"
+    "@mutoe/eslint-config-preset-ts" "^1.3.2"
     eslint-plugin-vue "^9.1.0"
+    vue-eslint-parser "^9.0.2"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -5432,7 +5433,7 @@ vue-demi@*:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.1.tgz#7604904c88be338418a10abbc94d5b8caa14cb8c"
   integrity sha512-xmkJ56koG3ptpLnpgmIzk9/4nFf4CqduSJbUM0OdPoU87NwRuZ6x49OLhjSa/fC15fV+5CbEnrxU4oyE022svg==
 
-vue-eslint-parser@^9.0.1:
+vue-eslint-parser@^9.0.1, vue-eslint-parser@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.0.2.tgz#d2535516f3f55adb387939427fe741065eb7948a"
   integrity sha512-uCPQwTGjOtAYrwnU+76pYxalhjsh7iFBsHwBqDHiOPTxtICDaraO4Szw54WFTNZTAEsgHHzqFOu1mmnBOBRzDA==
