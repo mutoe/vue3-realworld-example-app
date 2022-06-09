@@ -1,6 +1,0 @@
-{
-  "baseUrl": "https://mutoe.github.io/vue3-realworld-example-app",
-  "chromeWebSecurity": false,
-  "defaultCommandTimeout": 8000,
-  "requestTimeout": 8000
-}
