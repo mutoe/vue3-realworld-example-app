@@ -23,11 +23,12 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import type { ArticlesType } from 'src/composable/useArticles'
 import type { AppRouteNames } from 'src/router'
-import { isAuthorized } from 'src/store/user'
 import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
+import { useUserStore } from '../store/user'
 
 interface ArticlesListNavLink {
   name: ArticlesType
@@ -86,6 +87,8 @@ const allLinks = computed<ArticlesListNavLink[]>(() => [
     title: 'Favorited Articles',
   },
 ])
+
+const { isAuthorized } = storeToRefs(useUserStore())
 
 const show = computed<Record<ArticlesType, boolean>>(() => ({
   'global-feed': props.useGlobalFeed,

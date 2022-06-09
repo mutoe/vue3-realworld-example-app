@@ -3,17 +3,18 @@ import type { RouteParams } from 'vue-router'
 import Home from './pages/Home.vue'
 import { isAuthorized } from './store/user'
 
-export type AppRouteNames = 'global-feed'
-| 'my-feed'
-| 'tag'
-| 'article'
-| 'create-article'
-| 'edit-article'
-| 'login'
-| 'register'
-| 'profile'
-| 'profile-favorites'
-| 'settings'
+export type AppRouteNames =
+  | 'global-feed'
+  | 'my-feed'
+  | 'tag'
+  | 'article'
+  | 'create-article'
+  | 'edit-article'
+  | 'login'
+  | 'register'
+  | 'profile'
+  | 'profile-favorites'
+  | 'settings'
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -52,13 +53,13 @@ export const router = createRouter({
       name: 'login',
       path: '/login',
       component: () => import('./pages/Login.vue'),
-      beforeEnter: () => !isAuthorized.value,
+      beforeEnter: () => !isAuthorized(),
     },
     {
       name: 'register',
       path: '/register',
       component: () => import('./pages/Register.vue'),
-      beforeEnter: () => !isAuthorized.value,
+      beforeEnter: () => !isAuthorized(),
     },
     {
       name: 'profile',

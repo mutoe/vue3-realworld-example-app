@@ -1,37 +1,32 @@
-import type { ComputedRef } from 'vue'
-import { createStore } from '@harlem/core'
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 
 import { request } from '../services'
 import Storage from '../utils/storage'
 
 export const userStorage = new Storage<User>('user')
 
-interface State {
-  user: User | null
-}
+export const isAuthorized = (): boolean => !!userStorage.get()
 
-const STATE: State = {
-  user: userStorage.get(),
-}
+export const useUserStore = defineStore('user', () => {
+  const user = ref(userStorage.get())
+  const isAuthorized = computed(() => user.value !== null)
 
-const { getter, mutation } = createStore('user', STATE)
+  function updateUser (userData?: User | null) {
+    if (userData === undefined || userData === null) {
+      userStorage.remove()
+      request.deleteAuthorizationHeader()
+      user.value = null
+    } else {
+      userStorage.set(userData)
+      request.setAuthorizationHeader(userData.token)
+      user.value = userData
+    }
+  }
 
-export const user = getter('user', state => state.user)
-
-export const isAuthorized = getter('isAuthorized', () => checkAuthorization(user))
-
-export const checkAuthorization = (user: ComputedRef<User | null>): user is ComputedRef<User> => {
-  return user.value !== null
-}
-
-export const updateUser = mutation<User | null>('updateUser', (state, userData) => {
-  if (userData === undefined || userData === null) {
-    userStorage.remove()
-    request.deleteAuthorizationHeader()
-    state.user = null
-  } else {
-    userStorage.set(userData)
-    request.setAuthorizationHeader(userData.token)
-    state.user = userData
+  return {
+    user,
+    isAuthorized,
+    updateUser,
   }
 })

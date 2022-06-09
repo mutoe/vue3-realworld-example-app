@@ -1,18 +1,21 @@
 import { render } from '@testing-library/vue'
+import { createPinia, setActivePinia } from 'pinia'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { updateUser, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import AppNavigation from './AppNavigation.vue'
 
 describe('# AppNavigation', () => {
   beforeEach(async () => {
-    updateUser(null)
+    setActivePinia(createPinia())
     await router.push('/')
   })
 
   it('should render Sign in and Sign up when user not logged', () => {
+    const userStore = useUserStore()
+    userStore.updateUser(null)
     const { container } = render(AppNavigation, {
-      global: { plugins: [registerGlobalComponents, router] },
+      global: { plugins: [registerGlobalComponents, router], components: {} },
     })
 
     expect(container.querySelectorAll('.nav-item')).toHaveLength(3)
@@ -22,11 +25,11 @@ describe('# AppNavigation', () => {
   })
 
   it('should render xxx when user logged', () => {
-    updateUser({ id: 1, username: 'foo', email: '', token: '', bio: undefined, image: undefined })
+    const userStore = useUserStore()
+    userStore.updateUser({ id: 1, username: 'foo', email: '', token: '', bio: undefined, image: undefined })
     const { container } = render(AppNavigation, {
       global: {
         plugins: [registerGlobalComponents, router],
-        mocks: { $store: user },
       },
     })
 

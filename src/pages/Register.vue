@@ -71,7 +71,7 @@
 import { routerPush } from 'src/router'
 import type { PostRegisterErrors, PostRegisterForm } from 'src/services/auth/postRegister'
 import { postRegister } from 'src/services/auth/postRegister'
-import { updateUser } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { reactive, ref } from 'vue'
 
 const formRef = ref<HTMLFormElement | null>(null)
@@ -80,6 +80,8 @@ const form: PostRegisterForm = reactive({
   email: '',
   password: '',
 })
+
+const { updateUser } = useUserStore()
 
 const errors = ref<PostRegisterErrors>({})
 

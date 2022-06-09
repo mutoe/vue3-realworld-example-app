@@ -64,7 +64,7 @@
 import { routerPush } from 'src/router'
 import type { PostLoginErrors, PostLoginForm } from 'src/services/auth/postLogin'
 import { postLogin } from 'src/services/auth/postLogin'
-import { updateUser } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { reactive, ref } from 'vue'
 
 const formRef = ref<HTMLFormElement | null>(null)
@@ -72,6 +72,8 @@ const form: PostLoginForm = reactive({
   email: '',
   password: '',
 })
+
+const { updateUser } = useUserStore()
 
 const errors = ref<PostLoginErrors>({})
 

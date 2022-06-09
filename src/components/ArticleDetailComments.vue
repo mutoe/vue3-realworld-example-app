@@ -14,9 +14,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { getCommentsByArticle } from 'src/services/comment/getComments'
 import { deleteComment } from 'src/services/comment/postComment'
-import { user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleDetailComment from './ArticleDetailComment.vue'
@@ -24,6 +25,8 @@ import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 
 const route = useRoute()
 const slug = route.params.slug as string
+
+const { user } = storeToRefs(useUserStore())
 
 const username = computed(() => user.value?.username)
 

@@ -14,6 +14,7 @@
               <img
                 :src="profile.image"
                 class="user-img"
+                :alt="profile.username"
               >
 
               <h4>{{ profile.username }}</h4>
@@ -65,10 +66,11 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import ArticlesList from 'src/components/ArticlesList.vue'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { useProfile } from 'src/composable/useProfile'
-import { checkAuthorization, user } from 'src/store/user'
+import { isAuthorized, useUserStore } from 'src/store/user'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -83,7 +85,9 @@ const { followProcessGoing, toggleFollow } = useFollow({
   onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
 
-const showEdit = computed<boolean>(() => checkAuthorization(user) && user.value.username === username.value)
+const { user } = storeToRefs(useUserStore())
+
+const showEdit = computed<boolean>(() => isAuthorized() && user.value?.username === username.value)
 const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
 </script>

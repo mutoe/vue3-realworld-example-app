@@ -64,11 +64,12 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { routerPush } from 'src/router'
 import { deleteArticle } from 'src/services/article/deleteArticle'
-import { checkAuthorization, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { computed, toRefs } from 'vue'
 
 interface Props {
@@ -82,8 +83,9 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const { article } = toRefs(props)
-const displayEditButton = computed(() => checkAuthorization(user) && user.value.username === article.value.author.username)
-const displayFollowButton = computed(() => checkAuthorization(user) && user.value.username !== article.value.author.username)
+const { user, isAuthorized } = storeToRefs(useUserStore())
+const displayEditButton = computed(() => isAuthorized.value && user.value?.username === article.value.author.username)
+const displayFollowButton = computed(() => isAuthorized.value && user.value?.username !== article.value.author.username)
 
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited: computed(() => article.value.favorited),

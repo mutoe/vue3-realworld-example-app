@@ -3,17 +3,17 @@ import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import registerGlobalComponents from 'src/plugins/global-components'
 import { router } from 'src/router'
-import { updateUser, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
 
 describe('# ArticlesListNavigation', () => {
   const globalMountOptions: GlobalMountOptions = {
     plugins: [registerGlobalComponents, router],
-    mocks: { $store: user },
   }
+  const userStore = useUserStore()
 
   beforeEach(async () => {
-    updateUser(fixtures.user)
+    userStore.updateUser(fixtures.user)
     await router.push('/')
   })
 

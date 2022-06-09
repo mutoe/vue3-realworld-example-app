@@ -5,7 +5,7 @@ import { router } from 'src/router'
 import { deleteArticle } from 'src/services/article/deleteArticle'
 import { deleteFavoriteArticle, postFavoriteArticle } from 'src/services/article/favoriteArticle'
 import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/followProfile'
-import { updateUser, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
@@ -15,7 +15,6 @@ jest.mock('src/services/article/favoriteArticle')
 
 const globalMountOptions: GlobalMountOptions = {
   plugins: [registerGlobalComponents, router],
-  mocks: { $store: user },
 }
 
 describe('# ArticleDetailMeta', () => {
@@ -31,13 +30,14 @@ describe('# ArticleDetailMeta', () => {
   const mockUnfollowUser = deleteFollowProfile as jest.MockedFunction<typeof deleteFollowProfile>
   const mockFavoriteArticle = postFavoriteArticle as jest.MockedFunction<typeof postFavoriteArticle>
   const mockUnfavoriteArticle = deleteFavoriteArticle as jest.MockedFunction<typeof deleteFavoriteArticle>
+  const userStore = useUserStore()
 
   beforeEach(async () => {
     mockFollowUser.mockResolvedValue({ isOk: () => true } as any)
     mockUnfollowUser.mockResolvedValue({ isOk: () => true } as any)
     mockFavoriteArticle.mockResolvedValue({ isOk: () => true, value: fixtures.article } as any)
     mockUnfavoriteArticle.mockResolvedValue({ isOk: () => true, value: fixtures.article } as any)
-    updateUser(fixtures.user)
+    userStore.updateUser(fixtures.user)
     await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
   })
 
@@ -52,7 +52,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should display follow button when user not author', () => {
-    updateUser({ ...fixtures.user, username: 'user2' })
+    userStore.updateUser({ ...fixtures.user, username: 'user2' })
     const { queryByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
@@ -63,7 +63,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should not display follow button and edit button when user not logged', () => {
-    updateUser(null)
+    userStore.updateUser(null)
     const { queryByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
@@ -85,7 +85,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should call follow service when click follow button', async () => {
-    updateUser({ ...fixtures.user, username: 'user2' })
+    userStore.updateUser({ ...fixtures.user, username: 'user2' })
     const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: fixtures.article },
@@ -97,7 +97,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should call unfollow service when click follow button and not followed author', async () => {
-    updateUser({ ...fixtures.user, username: 'user2' })
+    userStore.updateUser({ ...fixtures.user, username: 'user2' })
     const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } } },
@@ -109,7 +109,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should call favorite article service when click favorite button', async () => {
-    updateUser({ ...fixtures.user, username: 'user2' })
+    userStore.updateUser({ ...fixtures.user, username: 'user2' })
     const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, favorited: false } },
@@ -121,7 +121,7 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should call favorite article service when click unfavorite button', async () => {
-    updateUser({ ...fixtures.user, username: 'user2' })
+    userStore.updateUser({ ...fixtures.user, username: 'user2' })
     const { getByRole } = render(ArticleDetailMeta, {
       global: globalMountOptions,
       props: { article: { ...fixtures.article, favorited: true } },

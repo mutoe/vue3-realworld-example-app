@@ -77,37 +77,39 @@
 import { routerPush } from 'src/router'
 import type { PutProfileForm } from 'src/services/profile/putProfile'
 import { putProfile } from 'src/services/profile/putProfile'
-import { checkAuthorization, updateUser, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 
 const form: PutProfileForm = reactive({})
 
+const userStore = useUserStore()
+
 const onSubmit = async () => {
   const filteredForm = Object.entries(form).reduce((a, [k, v]) => v === null ? a : { ...a, [k]: v }, {})
   const userData = await putProfile(filteredForm)
-  updateUser(userData)
+  userStore.updateUser(userData)
   await routerPush('profile', { username: userData.username })
 }
 
 const onLogout = async () => {
-  updateUser(null)
+  userStore.updateUser(null)
   await routerPush('global-feed')
 }
 
 onMounted(async () => {
-  if (!checkAuthorization(user)) return await routerPush('login')
+  if (!userStore.isAuthorized) return await routerPush('login')
 
-  form.image = user.value.image
-  form.username = user.value.username
-  form.bio = user.value.bio
-  form.email = user.value.email
+  form.image = userStore.user?.image
+  form.username = userStore.user?.username
+  form.bio = userStore.user?.bio
+  form.email = userStore.user?.email
 })
 
 const isButtonDisabled = computed(() =>
-  form.image === user.value?.image &&
-      form.username === user.value?.username &&
-      form.bio === user.value?.bio &&
-      form.email === user.value?.email &&
+  form.image === userStore.user?.image &&
+      form.username === userStore.user?.username &&
+      form.bio === userStore.user?.bio &&
+      form.email === userStore.user?.email &&
       !form.password,
 )
 

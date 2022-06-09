@@ -24,6 +24,7 @@
       <img
         :src="profile.image"
         class="comment-author-img"
+        :alt="profile.username"
       >
       <button
         aria-label="Submit"
@@ -38,9 +39,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useProfile } from 'src/composable/useProfile'
 import { postComment } from 'src/services/comment/postComment'
-import { checkAuthorization, user } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { computed, ref } from 'vue'
 
 interface Props {
@@ -53,7 +55,9 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const username = computed(() => checkAuthorization(user) ? user.value.username : '')
+const { user } = storeToRefs(useUserStore())
+
+const username = computed(() => user.value?.username ?? '')
 const { profile } = useProfile({ username })
 
 const comment = ref('')
