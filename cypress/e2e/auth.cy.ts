@@ -1,4 +1,4 @@
-import { ROUTES } from '../constants'
+import { ROUTES } from './constant'
 
 describe('Auth', () => {
   describe('Login and logout', () => {
@@ -42,8 +42,8 @@ describe('Auth', () => {
       cy.get('[type="password"]').type('123456')
       cy.get('[type="submit"]').click()
 
-      cy.get('form').then(([$el]) => {
-        cy.wrap($el.checkValidity()).should('to.be', false)
+      cy.get('form').then(($el) => {
+        cy.wrap($el[0].checkValidity()).should('to.be', false)
       })
     })
 

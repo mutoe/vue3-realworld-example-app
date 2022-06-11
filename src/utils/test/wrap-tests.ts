@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 interface WrapTestsProps <Item> {
   task: string
   list: Item[]
@@ -7,11 +9,13 @@ interface WrapTestsProps <Item> {
 }
 
 function wrapTests<Item> ({ task, list, fn, testName, only = false }: WrapTestsProps<Item>): void {
-  const descFn = only ? describe.only : describe
+  // @ts-ignore
+  const descFn = only ? context.only : context
 
   descFn(task, () => {
     list.forEach((item, index) => {
       const name = testName !== undefined ? testName(item, index) : ''
+      // @ts-ignore
       it(name, () => fn(item))
     })
   })

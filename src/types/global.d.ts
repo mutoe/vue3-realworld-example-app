@@ -1,7 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference types="vite/client" />
-// noinspection JSFileReferences
-
 declare module 'insane';
 
 interface ImportMeta {

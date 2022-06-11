@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "id": 5,
+      "createdAt": "2021-11-24T12:11:08.480Z",
+      "updatedAt": "2021-11-24T12:11:08.480Z",
+      "body": "If someone else has started working on an implementation, consider jumping in and helping them! by contacting the author.",
+      "author": {
+        "username": "Gerome",
+        "bio": null,
+        "image": "https://api.realworld.io/images/demo-avatar.png",
+        "following": false
+      }
+    },
+    {
+      "id": 4,
+      "createdAt": "2021-11-24T12:11:08.340Z",
+      "updatedAt": "2021-11-24T12:11:08.340Z",
+      "body": "Before starting a new implementation, please check if there is any work in progress for the stack you want to work on.",
+      "author": {
+        "username": "Gerome",
+        "bio": null,
+        "image": "https://api.realworld.io/images/demo-avatar.png",
+        "following": false
+      }
+    }
+  ]
+}

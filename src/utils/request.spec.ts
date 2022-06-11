@@ -1,21 +1,10 @@
+import { NetworkError } from 'src/types/error'
+import type { Either } from 'src/utils/either'
+import { fail, isEither, success } from 'src/utils/either'
+import params2query from 'src/utils/params-to-query'
 import type { FetchRequestOptions } from 'src/utils/request'
 import FetchRequest from 'src/utils/request'
-import { fail, isEither, success } from 'src/utils/either'
-import type { Either } from 'src/utils/either'
-
-import params2query from 'src/utils/params-to-query'
-import mockFetch from 'src/utils/test/mock-fetch'
 import wrapTests from 'src/utils/test/wrap-tests'
-
-import { NetworkError } from 'src/types/error'
-
-beforeEach(() => {
-  mockFetch({ type: 'body' })
-})
-
-afterEach(() => {
-  jest.clearAllMocks()
-})
 
 const PREFIX = '/prefix'
 const SUB_PREFIX = '/sub-prefix'
@@ -54,7 +43,7 @@ async function triggerMethod<T = unknown> (request: FetchRequest, method: Method
   }
 }
 
-function forCorrectMethods (task: string, fn: (method: Method) => Promise<void>): void {
+function forCorrectMethods (task: string, fn: (method: Method) => void): void {
   wrapTests<Method>({
     task,
     fn,
@@ -63,7 +52,7 @@ function forCorrectMethods (task: string, fn: (method: Method) => Promise<void>)
   })
 }
 
-function forCheckableMethods (task: string, fn: (method: CheckableMethod) => Promise<void>): void {
+function forCheckableMethods (task: string, fn: (method: CheckableMethod) => void): void {
   wrapTests<CheckableMethod>({
     task,
     fn,
@@ -72,188 +61,223 @@ function forCheckableMethods (task: string, fn: (method: CheckableMethod) => Pro
   })
 }
 
-function forAllMethods (task: string, fn: (method: Method | CheckableMethod) => Promise<void>): void {
-  forCheckableMethods(task, fn)
-  forCorrectMethods(task, fn)
+function forAllMethods (task: string, fn: (method: Method | CheckableMethod) => void): void {
+  forCheckableMethods(`[Checkable Methods] ${task}`, fn)
+  forCorrectMethods(`[Correct Methods] ${task}`, fn)
 }
 
-forAllMethods('# Should be implemented', async (method) => {
-  const request = new FetchRequest()
-
-  await triggerMethod(request, method)
-
-  expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining({
-    method: method.replace('checkable', '').toUpperCase(),
-  }))
+beforeEach(() => {
+  cy.intercept('*', { foo: 'bar' }).as('request')
 })
 
-describe('# Should implement prefix', () => {
-  forAllMethods('should implement global prefix', async (method) => {
-    const request = new FetchRequest({ prefix: PREFIX })
-
-    await triggerMethod(request, method)
-
-    expect(global.fetch).toBeCalledWith(`${PREFIX}${PATH}`, expect.any(Object))
-  })
-
-  forAllMethods('should implement local prefix', async (method) => {
+describe('# Request', () => {
+  forAllMethods('should be implemented', (method) => {
     const request = new FetchRequest()
 
-    await triggerMethod(request, method, { prefix: SUB_PREFIX })
+    cy.wrap(triggerMethod(request, method))
 
-    expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
-  })
-
-  forAllMethods('should implement global + local prefix', async (method) => {
-    const request = new FetchRequest({ prefix: PREFIX })
-
-    await triggerMethod(request, method, { prefix: SUB_PREFIX })
-
-    expect(global.fetch).toBeCalledWith(`${SUB_PREFIX}${PATH}`, expect.any(Object))
+    cy.wait('@request').then(({ request }) => {
+      expect(request.url).to.equal(window.location.origin + PATH)
+      expect(request.method).to.equal(method.replace('checkable', '').toUpperCase())
+    })
   })
 })
 
-describe('# Should convert query object to query string in request url', () => {
-  forAllMethods('should implement global query', async (method) => {
+describe('# Prefix', () => {
+  forAllMethods('should implement global prefix', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
+    const request = new FetchRequest({ prefix: PREFIX })
+
+    cy.wrap(triggerMethod(request, method))
+
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${PREFIX}${PATH}`)
+  })
+
+  forAllMethods('should implement local prefix', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
+    const request = new FetchRequest()
+
+    cy.wrap(triggerMethod(request, method, { prefix: SUB_PREFIX }))
+
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${SUB_PREFIX}${PATH}`)
+  })
+
+  forAllMethods('should implement global + local prefix', (method) => {
+    const request = new FetchRequest({ prefix: PREFIX })
+
+    cy.wrap(triggerMethod(request, method, { prefix: SUB_PREFIX }))
+
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${SUB_PREFIX}${PATH}`)
+  })
+})
+
+describe('# Query string', () => {
+  forAllMethods('should implement global query', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
     const request = new FetchRequest({ params: PARAMS })
 
-    await triggerMethod(request, method)
+    cy.wrap(triggerMethod(request, method))
 
-    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${PATH}?${params2query(PARAMS)}`)
   })
 
-  forAllMethods('should implement local query', async (method) => {
+  forAllMethods('should implement local query', (method) => {
     const request = new FetchRequest()
 
-    await triggerMethod(request, method, { params: PARAMS })
+    cy.wrap(triggerMethod(request, method, { params: PARAMS }))
 
-    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(PARAMS)}`, expect.any(Object))
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${PATH}?${params2query(PARAMS)}`)
   })
 
-  forAllMethods('should implement global + local query', async (method) => {
+  forAllMethods('should implement global + local query', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
     const options = { params: { q1: 'q1', q2: 'q2' } }
     const localOptions = { params: { q1: 'q11', q3: 'q3' } }
     const expectedOptions = { params: { q1: 'q11', q2: 'q2', q3: 'q3' } }
     const request = new FetchRequest(options)
 
-    await triggerMethod(request, method, localOptions)
+    cy.wrap(triggerMethod(request, method, localOptions))
 
-    expect(global.fetch).toBeCalledWith(`${PATH}?${params2query(expectedOptions.params)}`, expect.any(Object))
+    cy.wait('@request')
+      .its('request.url')
+      .should('eq', `${window.location.origin}${PATH}?${params2query(expectedOptions.params)}`)
   })
 })
 
-describe('# Should work with headers', () => {
-  forAllMethods('should add headers', async (method) => {
+describe('# Headers', () => {
+  forAllMethods('should add global headers', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
     const options = { headers: { h1: 'h1', h2: 'h2' } }
     const request = new FetchRequest(options)
 
-    await triggerMethod(request, method)
+    cy.wrap(triggerMethod(request, method))
 
-    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(options))
+    cy.wait('@request')
+      .its('request.headers')
+      .should('contain', options.headers)
   })
 
-  forAllMethods('should merge headers', async (method) => {
+  forAllMethods('should merge global and local headers', (method) => {
+    cy.intercept('*', { foo: 'bar' }).as('request')
     const options = { headers: { h1: 'h1', h2: 'h2' } }
     const localOptions = { headers: { h1: 'h11', h3: 'h3' } }
     const expectedOptions = { headers: { h1: 'h11', h2: 'h2', h3: 'h3' } }
     const request = new FetchRequest(options)
 
-    await triggerMethod(request, method, localOptions)
+    cy.wrap(triggerMethod(request, method, localOptions))
 
-    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(expectedOptions))
+    cy.wait('@request')
+      .its('request.headers')
+      .should('contain', expectedOptions.headers)
   })
 })
 
-forCorrectMethods('# Should converted correct response body to json', async (method) => {
-  const DATA = { foo: 'bar' }
-  mockFetch({ type: 'body', ...DATA })
-  const request = new FetchRequest()
-
-  const body = await triggerMethod(request, method)
-
-  expect(body).toMatchObject(DATA)
-})
-
-forCheckableMethods('# Should converted checkable response to Either<NetworkError, DATA_TYPE>', async (method) => {
+describe('# Response', () => {
   const DATA = { foo: 'bar' }
   interface DATA_TYPE { foo: 'bar' }
-  mockFetch({ type: 'body', ...DATA })
-  const request = new FetchRequest()
 
-  const result = await triggerMethod<DATA_TYPE>(request, method)
+  context('response body', () => {
+    forCorrectMethods('should converted correct response body to json', (method) => {
+      cy.intercept('*', DATA).as('request')
+      const request = new FetchRequest()
 
-  const resultIsEither = isEither<unknown, DATA_TYPE>(result)
-  const resultIsOk = isEither<unknown, DATA_TYPE>(result) && result.isOk()
-  const resultValue = isEither<unknown, DATA_TYPE>(result) && result.isOk() ? result.value : null
-
-  expect(resultIsEither).toBe(true)
-  expect(resultIsOk).toBe(true)
-  expect(resultValue).toMatchObject(DATA)
-})
-
-forCorrectMethods('# Should throw NetworkError if correct request is not OK', async (method) => {
-  mockFetch({
-    type: 'full',
-    ok: false,
-    status: 400,
-    statusText: 'Bad request',
-    json: async () => ({}),
+      cy.wrap(triggerMethod(request, method))
+        .its('foo')
+        .should('eq', DATA.foo)
+    })
   })
 
-  const request = new FetchRequest()
-  const result = triggerMethod(request, method)
+  context('checkable response body', () => {
+    forCheckableMethods('should convert checkable response to Either<NetworkError, DATA_TYPE>', (method) => {
+      cy.intercept('*', DATA).as('request')
+      const request = new FetchRequest()
 
-  await expect(result).rejects.toBeInstanceOf(NetworkError)
-})
+      cy.wrap(triggerMethod<DATA_TYPE>(request, method))
+        .then(result => {
+          const resultIsEither = isEither<unknown, DATA_TYPE>(result)
+          const resultIsOk = isEither<unknown, DATA_TYPE>(result) && result.isOk()
+          const resultValue = isEither<unknown, DATA_TYPE>(result) && result.isOk() ? result.value : null
 
-forCheckableMethods('# Should return Either<NetworkError, DATA_TYPE> if checkable request is not OK', async (method) => {
-  mockFetch({
-    type: 'full',
-    ok: false,
-    status: 400,
-    statusText: 'Bad request',
-    json: async () => ({}),
+          expect(resultIsEither).to.be.true
+          expect(resultIsOk).to.be.true
+          expect(resultValue).to.deep.equal(DATA)
+        })
+    })
   })
 
-  const request = new FetchRequest()
-  const result = await triggerMethod(request, method)
+  context.skip('network error check', () => {
+    beforeEach(() => {
+      cy.intercept('*', { status: 400 }).as('request')
+    })
 
-  const resultIsEither = isEither<NetworkError, unknown>(result)
-  const resultIsNotOk = isEither<NetworkError, unknown>(result) && result.isFail()
-  const resultValue = isEither<NetworkError, unknown>(result) && result.isFail() ? result.value : null
+    forCorrectMethods('should throw NetworkError if correct request is not OK', (method) => {
+      const request = new FetchRequest()
 
-  expect(resultIsEither).toBe(true)
-  expect(resultIsNotOk).toBe(true)
-  expect(resultValue).toBeInstanceOf(NetworkError)
+      cy.wrap(triggerMethod(request, method))
+        .should('throw', NetworkError)
+    })
+
+    forCheckableMethods('should return Either<NetworkError, DATA_TYPE> if checkable request is not OK', (method) => {
+      const request = new FetchRequest()
+      cy.wrap(triggerMethod(request, method))
+        .then(result => {
+          const resultIsEither = isEither<NetworkError, unknown>(result)
+          const resultIsNotOk = isEither<NetworkError, unknown>(result) && result.isFail()
+          const resultValue = isEither<NetworkError, unknown>(result) && result.isFail() ? result.value : null
+
+          expect(resultIsEither).to.be.true
+          expect(resultIsNotOk).to.be.true
+          expect(resultValue).to.be.instanceof(NetworkError)
+        })
+    })
+  })
 })
 
-describe('# Authorization header', () => {
+context('# Authorization header', () => {
   const TOKEN = 'token'
-  const OPTIONS = { headers: { Authorization: `Token ${TOKEN}` } }
+  const OPTIONS = { headers: { authorization: `Token ${TOKEN}` } }
 
-  forAllMethods('should add authorization header', async (method) => {
-    const request = new FetchRequest()
-    request.setAuthorizationHeader(TOKEN)
+  context('should add Authorization header', () => {
+    forAllMethods('should add authorization header', (method) => {
+      const request = new FetchRequest()
+      request.setAuthorizationHeader('T2')
 
-    await triggerMethod(request, method)
+      cy.wrap(triggerMethod(request, method))
 
-    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
+      // expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
+      cy.wait('@request')
+        .its('request.headers.authorization')
+        .should('eq', 'Token T2')
+    })
   })
 
-  forAllMethods('should remove authorization header', async (method) => {
-    const request = new FetchRequest(OPTIONS)
+  context('should remove Authorization header', () => {
+    forAllMethods('should remove authorization header', (method) => {
+      const request = new FetchRequest(OPTIONS)
 
-    await triggerMethod(request, method)
+      cy.wrap(triggerMethod(request, method))
 
-    expect(global.fetch).toBeCalledTimes(1)
-    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining(OPTIONS))
+      cy.wait('@request')
+        .its('request.headers')
+        .should('contain', OPTIONS.headers)
 
-    request.deleteAuthorizationHeader()
-    await triggerMethod(request, method)
+      request.deleteAuthorizationHeader()
 
-    expect(global.fetch).toBeCalledTimes(2)
-    expect(global.fetch).toBeCalledWith(PATH, expect.objectContaining({
-      headers: {},
-    }))
+      cy.wrap(triggerMethod(request, method))
+
+      cy.wait('@request')
+        .its('request.headers')
+        .should('not.contain', OPTIONS.headers)
+    })
   })
 })

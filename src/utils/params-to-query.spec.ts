@@ -9,6 +9,6 @@ describe('# params2query', () => {
 
     const result = params2query(params)
 
-    expect(result).toEqual('foo=bar&foo2=bar2')
+    expect(result).to.equal('foo=bar&foo2=bar2')
   })
 })

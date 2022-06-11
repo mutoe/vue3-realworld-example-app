@@ -1,7 +1,8 @@
 import { marked } from 'marked'
 import insane from 'insane'
 
-export default (markdown: string): string => {
+export default (markdown?: string): string => {
+  if (!markdown) return ''
   const html = marked(markdown, {
     // Fixme: ts-jest import.meta not support
     // baseUrl: import.meta.env.BASE_URL,

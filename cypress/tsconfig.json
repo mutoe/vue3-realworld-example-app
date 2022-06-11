@@ -1,0 +1,14 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["./**/*.{ts,json}", ".eslintrc.js", "../src/router.ts", "../src/plugins/global-components.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "isolatedModules": false,
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "@testing-library/cypress"],
+    "paths": {
+      "src/*": ["../src/*"],
+    }
+  }
+}

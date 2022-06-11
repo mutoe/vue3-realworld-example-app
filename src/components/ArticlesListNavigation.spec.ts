@@ -1,43 +1,37 @@
-import { render } from '@testing-library/vue'
-import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
+import { createPinia, setActivePinia } from 'pinia'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
 import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
 
 describe('# ArticlesListNavigation', () => {
-  const globalMountOptions: GlobalMountOptions = {
-    plugins: [registerGlobalComponents, router],
-  }
+  setActivePinia(createPinia())
   const userStore = useUserStore()
 
   beforeEach(async () => {
     userStore.updateUser(fixtures.user)
-    await router.push('/')
   })
 
   it('should render global feed item when passed global feed prop', () => {
-    const { container } = render(ArticlesListNavigation, {
-      global: globalMountOptions,
+    cy.mount(ArticlesListNavigation, {
       props: { tag: '', username: '', useGlobalFeed: true },
     })
 
-    const items = container.querySelectorAll('.nav-item')
-    expect(items).toHaveLength(1)
-    expect(items[0].textContent).toContain('Global Feed')
+    cy.get('.nav-item')
+      .should('have.length', 1)
+      .contains('Global Feed')
   })
 
   it('should render full item', () => {
-    const { container } = render(ArticlesListNavigation, {
-      global: globalMountOptions,
+    cy.mount(ArticlesListNavigation, {
       props: { tag: 'foo', username: '', useGlobalFeed: true, useMyFeed: true, useTagFeed: true },
     })
 
-    const items = container.querySelectorAll('.nav-item')
-    expect(items).toHaveLength(3)
-    expect(items[0].textContent).toContain('Global Feed')
-    expect(items[1].textContent).toContain('Your Feed')
-    expect(items[2].textContent).toContain('foo')
+    cy.get('.nav-item')
+      .should('have.length', 3)
+      .should(elements => {
+        expect(elements).to.contain('Global Feed')
+        expect(elements).to.contain('Your Feed')
+        expect(elements).to.contain('foo')
+      })
   })
 })

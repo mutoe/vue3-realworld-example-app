@@ -3,12 +3,14 @@ import { defineConfig } from 'cypress'
 export default defineConfig({
   projectId: 'j7s91r',
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
-    },
-    baseUrl: 'http://localhost:4173',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    baseUrl: 'http://localhost:4173',
+  },
+  component: {
+    specPattern: 'src/**/*.{cy,spec}.{js,ts,jsx,tsx}',
+    devServer: {
+      framework: 'vue',
+      bundler: 'vite',
+    },
   },
 })

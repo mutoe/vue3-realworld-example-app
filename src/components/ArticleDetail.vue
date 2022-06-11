@@ -4,6 +4,7 @@
       <h1>{{ article.title }}</h1>
 
       <ArticleDetailMeta
+        v-if="article"
         :article="article"
         @update="updateArticle"
       />
@@ -12,14 +13,14 @@
 
   <div class="container page">
     <div class="row article-content">
-      <!-- eslint-disable vue/no-v-html  -->
+      <!--       eslint-disable vue/no-v-html  -->
       <div
         class="col-md-12"
         v-html="articleHandledBody"
       />
-      <!-- eslint-enable vue/no-v-html  -->
+      <!--       eslint-enable vue/no-v-html  -->
 
-      <!-- TODO: abstract tag list component-->
+      <!--      TODO: abstract tag list component-->
       <ul class="tag-list">
         <li
           v-for="tag in article.tagList"
@@ -35,6 +36,7 @@
 
     <div class="article-actions">
       <ArticleDetailMeta
+        v-if="article"
         :article="article"
         @update="updateArticle"
       />

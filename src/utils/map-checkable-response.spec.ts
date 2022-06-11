@@ -1,4 +1,3 @@
-import wrapTests from 'src/utils/test/wrap-tests'
 import { ValidationError, AuthorizationError, NetworkError } from 'src/types/error'
 import type { Either } from './either'
 import { fail, isEither, success } from './either'
@@ -15,9 +14,9 @@ describe('# mapAuthorizationResponse', () => {
 
     const result = mapAuthorizationResponse<Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isOk()).toBe(true)
-    expect(result.value).toEqual(RESPONSE)
+    expect(isEither(result)).to.be.true
+    expect(result.isOk()).to.be.true
+    expect(result.value).to.equal(RESPONSE)
   })
 
   it('should return Either with AuthorizationError and failed Response', () => {
@@ -26,9 +25,9 @@ describe('# mapAuthorizationResponse', () => {
 
     const result = mapAuthorizationResponse<Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isFail()).toBe(true)
-    expect(result.value).toBeInstanceOf(AuthorizationError)
+    expect(isEither(result)).to.be.true
+    expect(result.isFail()).to.be.true
+    expect(result.value).to.be.instanceof(AuthorizationError)
   })
 
   it('should throw NetworkError when Response is failed with status != 401', () => {
@@ -37,7 +36,7 @@ describe('# mapAuthorizationResponse', () => {
 
     expect(() => {
       mapAuthorizationResponse<Partial<Response>>(response)
-    }).toThrowError(NetworkError)
+    }).to.throw('NETWORK_ERROR')
   })
 })
 
@@ -50,26 +49,26 @@ describe('# mapValidationResponse', () => {
 
     const result = mapValidationResponse<ValidationErrors, Partial<Response>>(response)
 
-    expect(isEither(result)).toBe(true)
-    expect(result.isOk()).toBe(true)
-    expect(result.value).toEqual(RESPONSE)
+    expect(isEither(result)).to.be.true
+    expect(result.isOk()).to.be.true
+    expect(result.value).to.equal(RESPONSE)
   })
 
-  wrapTests({
-    task: 'should return Either with ValidationError and failed Response',
-    list: [422, 403],
-    testName: (status) => `status code ${status}`,
-    fn: async (status) => {
-      const RESPONSE = { ok: false, status, json: () => Promise.resolve({ errors: { foo: 'bar' } }) }
+  ;[422, 403].forEach(status => {
+    it(`should return Either with ValidationError and failed Response when status is ${status}`, () => {
+      const responseBody = { errors: { foo: 'bar' } }
+      const RESPONSE = { ok: false, status, json: () => Promise.resolve(responseBody) }
       const response = createCheckableResponse(RESPONSE)
 
       const result = mapValidationResponse<ValidationErrors, Partial<Response>>(response)
 
-      expect(isEither(result)).toBe(true)
-      expect(result.isFail()).toBe(true)
-      expect(result.value).toBeInstanceOf(ValidationError)
-      expect(result.isFail() && await result.value.getErrors()).toEqual((await RESPONSE.json()).errors)
-    },
+      expect(isEither(result)).to.be.true
+      expect(result.isFail()).to.be.true
+      expect(result.value).to.be.instanceof(ValidationError)
+      cy.wrap(result.isFail() && result.value.getErrors())
+        .its('foo')
+        .should('equal', 'bar')
+    })
   })
 
   it('should throw NetworkError when Response is failed with status other than 422 and 403', () => {
@@ -78,6 +77,6 @@ describe('# mapValidationResponse', () => {
 
     expect(() => {
       mapValidationResponse<ValidationErrors, Partial<Response>>(response)
-    }).toThrowError(NetworkError)
+    }).to.throw('NETWORK_ERROR')
   })
 })

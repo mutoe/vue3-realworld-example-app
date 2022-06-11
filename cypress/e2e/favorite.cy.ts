@@ -1,4 +1,4 @@
-import { ROUTES } from '../constants'
+import { ROUTES } from './constant'
 
 describe('Favorite', () => {
   beforeEach(() => {

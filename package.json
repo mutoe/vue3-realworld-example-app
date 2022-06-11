@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview --port 4137",
-    "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.js}\"",
+    "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.ts}\"",
     "lint:tsc": "vue-tsc --noEmit",
     "lint": "concurrently \"yarn lint:tsc\" \"yarn lint:script\"",
-    "test:unit": "jest",
-    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"./node_modules/.bin/cypress run -c baseUrl=http://localhost:4137\"",
-    "test:e2e:ci": "./node_modules/.bin/cypress run -C cypress.prod.json",
+    "test:unit": "cypress open --component",
+    "test:unit:ci": "cypress run --component --quiet --reporter spec",
+    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
+    "test:e2e:ci": "cypress run --e2e -C cypress.prod.config.ts",
     "test": "yarn test:unit && yarn test:e2e"
   },
   "dependencies": {
@@ -23,64 +24,26 @@
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.2",
+    "@cypress/vue": "^3.1.2",
     "@mutoe/eslint-config-preset-vue": "~1.3.2",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/vue": "^6.4.2",
-    "@types/jest": "^28.1.1",
+    "@pinia/testing": "^0.0.12",
+    "@testing-library/cypress": "^8.0.3",
     "@types/marked": "^4.0.3",
     "@vitejs/plugin-vue": "^2.3.3",
-    "@vue/compiler-sfc": "^3.2.37",
     "@vue/tsconfig": "^0.1.3",
-    "babel-jest": "^28.1.1",
     "concurrently": "^7.2.1",
-    "cypress": "^10.0.3",
+    "cypress": "^10.1.0",
     "eslint": "^8.17.0",
     "eslint-plugin-cypress": "^2.12.1",
     "husky": "^8.0.0",
-    "jest": "^28.1.1",
-    "jsdom": "^19.0.0",
     "lint-staged": "^13.0.0",
     "rollup-plugin-analyzer": "^4.0.0",
-    "ts-jest": "^28.0.4",
     "typescript": "~4.7.2",
     "vite": "^2.9.10",
-    "vue-tsc": "^0.37.3",
-    "vue3-jest": "^27.0.0-alpha.2"
+    "vue-tsc": "^0.37.3"
   },
   "lint-staged": {
     "src/**/*.{ts,vue}": "eslint --fix",
-    "cypress/**/*.js": "eslint --fix"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {}
-    },
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.vue$": "vue3-jest",
-      "^.+\\js$": "babel-jest"
-    },
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{ts,vue}",
-      "!<rootDir>/src/config.ts"
-    ],
-    "moduleFileExtensions": [
-      "vue",
-      "ts",
-      "js",
-      "json",
-      "node"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/*.spec.ts"
-    ],
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-test.ts"
-    ]
+    "cypress/**/*.ts": "eslint --fix"
   }
 }

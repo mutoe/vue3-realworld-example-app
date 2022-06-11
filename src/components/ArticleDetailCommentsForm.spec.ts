@@ -1,54 +1,37 @@
-import { fireEvent, render } from '@testing-library/vue'
+import { createPinia, setActivePinia } from 'pinia'
 import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
-import { useProfile } from 'src/composable/useProfile'
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { postComment } from 'src/services/comment/postComment'
+import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
-import { ref } from 'vue'
-
-jest.mock('src/composable/useProfile')
-jest.mock('src/services/comment/postComment')
 
 describe('# ArticleDetailCommentsForm', () => {
-  const mockUseProfile = useProfile as jest.MockedFunction<typeof useProfile>
-  const mockPostComment = postComment as jest.MockedFunction<typeof postComment>
+  setActivePinia(createPinia())
+  const userStore = useUserStore()
 
-  beforeEach(async () => {
-    await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
-    mockPostComment.mockResolvedValue(fixtures.comment2)
-    mockUseProfile.mockReturnValue({
-      profile: ref(fixtures.author),
-      updateProfile: jest.fn(),
-    })
+  beforeEach(() => {
+    cy.intercept('/api/profiles/*', { profile: fixtures.author }).as('getProfile')
+    cy.intercept('POST', '/api/articles/*/comments', { comment: { body: 'some texts...' } }).as('postComment')
+    userStore.updateUser(fixtures.user)
   })
 
   it('should display sign in button when user not logged', () => {
-    mockUseProfile.mockReturnValue({ profile: ref(null), updateProfile: jest.fn() })
-    const { container } = render(ArticleDetailCommentsForm, {
-      global: { plugins: [registerGlobalComponents, router] },
+    userStore.updateUser(null)
+    cy.mount(ArticleDetailCommentsForm, {
       props: { articleSlug: fixtures.article.slug },
     })
 
-    expect(container.textContent).toContain('add comments on this article')
+    cy.contains('add comments on this article')
   })
 
-  it('should display form when user logged', async () => {
-    // given
-    const { getByRole, emitted } = render(ArticleDetailCommentsForm, {
-      global: { plugins: [registerGlobalComponents, router] },
+  it('should display form when user logged', () => {
+    cy.mount(ArticleDetailCommentsForm, {
       props: { articleSlug: fixtures.article.slug },
     })
 
-    // when
-    const inputElement = getByRole('textbox', { name: 'Write comment' })
-    await fireEvent.update(inputElement, 'some texts...')
-    await fireEvent.click(getByRole('button', { name: 'Submit' }))
+    cy.findByRole('textbox', { name: 'Write comment' }).type('some texts...')
+    cy.findByRole('button', { name: 'Submit' }).click()
 
-    // then
-    expect(mockPostComment).toBeCalledWith('article-foo', 'some texts...')
-
-    const { submit } = emitted()
-    expect(submit).toHaveLength(1)
+    cy.wait('@postComment')
+      .its('request.body')
+      .should('deep.equal', { comment: { body: 'some texts...' } })
   })
 })

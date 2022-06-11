@@ -1,10 +1,10 @@
-import { ROUTES } from '../constants'
+import { ROUTES } from './constant'
 
 describe('Article', () => {
   beforeEach(() => {
     cy.intercept('GET', /articles\?limit/, { fixture: 'articles.json' })
     cy.intercept('GET', /articles\/.+/, { fixture: 'article.json' })
-    cy.intercept('GET', /tags/, { fixture: 'articles_of_tag.json' })
+    cy.intercept('GET', /tags/, { fixture: 'articles-of-tag.json' })
     cy.intercept('GET', /profiles\/.+/, { fixture: 'profile.json' })
     cy.intercept('DELETE', /articles\/.+/, { statusCode: 200, body: {} }).as('deleteArticle')
   })

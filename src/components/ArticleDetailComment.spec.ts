@@ -1,46 +1,40 @@
-import { fireEvent, render } from '@testing-library/vue'
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 
 describe('# ArticleDetailComment', () => {
-  beforeEach(async () => {
-    await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
-  })
-
   it('should render correctly', () => {
-    const { container, queryByRole } = render(ArticleDetailComment, {
-      global: { plugins: [registerGlobalComponents, router] },
+    cy.mount(ArticleDetailComment, {
       props: { comment: fixtures.comment },
     })
 
-    expect(container.querySelector('.card-text')).toHaveTextContent('Comment body')
-    expect(container.querySelector('.date-posted')).toHaveTextContent('1/1/2020')
-    expect(queryByRole('button', { name: 'Delete comment' })).toBeNull()
+    cy.get('.card-text').should('have.text', 'Comment body')
+    cy.get('.date-posted').should('have.text', '1/1/2020')
+    cy.findByRole('button', { name: 'Delete comment' }).should('not.exist')
   })
 
   it('should delete comment button when comment author is same user', () => {
-    const { getByRole } = render(ArticleDetailComment, {
-      global: { plugins: [registerGlobalComponents, router] },
+    cy.mount(ArticleDetailComment, {
       props: {
         comment: fixtures.comment,
         username: fixtures.author.username,
       },
     })
 
-    expect(getByRole('button', { name: 'Delete comment' })).toBeInTheDocument()
+    cy.findByRole('button', { name: 'Delete comment' })
   })
 
-  it('should emit remove comment when click remove comment button', async () => {
-    const { getByRole, emitted } = render(ArticleDetailComment, {
-      global: { plugins: [registerGlobalComponents, router] },
-      props: { comment: fixtures.comment, username: fixtures.author.username },
+  it('should emit remove comment when click remove comment button', () => {
+    const onRemoveComment = cy.spy().as('onRemoveComment')
+    cy.mount(ArticleDetailComment, {
+      props: {
+        comment: fixtures.comment,
+        username: fixtures.author.username,
+        onRemoveComment,
+      },
     })
 
-    await fireEvent.click(getByRole('button', { name: 'Delete comment' }))
+    cy.findByRole('button', { name: 'Delete comment' }).click()
 
-    const events = emitted()
-    expect(events['remove-comment']).toHaveLength(1)
+    cy.get('@onRemoveComment').should('have.been.called')
   })
 })

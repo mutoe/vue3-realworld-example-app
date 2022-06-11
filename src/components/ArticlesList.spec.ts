@@ -1,32 +1,23 @@
-import { waitFor } from '@testing-library/vue'
-import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
+import { createPinia, setActivePinia } from 'pinia'
 import ArticlesList from 'src/components/ArticlesList.vue'
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { getArticles } from 'src/services/article/getArticles'
 import fixtures from 'src/utils/test/fixtures'
-import { renderAsync } from '../utils/test/render-async'
-
-jest.mock('src/services/article/getArticles')
+import { asyncWrapper } from 'src/utils/test/test.utils'
 
 describe('# ArticlesList', () => {
-  const globalMountOptions: GlobalMountOptions = {
-    plugins: [registerGlobalComponents, router],
-  }
+  const AsyncArticlesList = asyncWrapper(ArticlesList)
+  setActivePinia(createPinia())
 
-  const mockFetchArticles = getArticles as jest.MockedFunction<typeof getArticles>
-
-  beforeEach(async () => {
-    mockFetchArticles.mockResolvedValue({ articles: [fixtures.article], articlesCount: 1 })
-    await router.push('/')
+  beforeEach(() => {
+    cy.intercept('GET', '/api/articles*', { articles: [fixtures.article], articlesCount: 1 }).as('getArticles')
   })
 
-  it('should render correctly', async () => {
-    const wrapper = renderAsync(ArticlesList, {
-      global: globalMountOptions,
-    })
+  it('should render correctly', () => {
+    cy.mount(AsyncArticlesList)
 
-    expect(wrapper).toBeTruthy()
-    await waitFor(() => expect(mockFetchArticles).toBeCalledTimes(1))
+    cy.wait('@getArticles')
+
+    cy.contains(fixtures.article.title)
+    cy.contains('Article description')
+    cy.contains(fixtures.article.author.username)
   })
 })

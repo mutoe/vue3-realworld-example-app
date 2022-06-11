@@ -3,14 +3,14 @@
     <div class="article-meta">
       <AppLink
         name="profile"
-        :params="{username: article.author.username}"
+        :params="{username: props.article.author.username}"
       >
-        <img :src="article.author.image">
+        <img :src="article.author.image" :alt="props.article.author.username">
       </AppLink>
       <div class="info">
         <AppLink
           name="profile"
-          :params="{username: article.author.username}"
+          :params="{username: props.article.author.username}"
           class="author"
         >
           {{ article.author.username }}
@@ -31,7 +31,7 @@
 
     <AppLink
       name="article"
-      :params="{slug: article.slug}"
+      :params="{slug: props.article.slug}"
       class="preview-link"
     >
       <h1>{{ article.title }}</h1>

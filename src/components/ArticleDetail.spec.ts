@@ -1,46 +1,51 @@
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { getArticle } from 'src/services/article/getArticle'
+import { createPinia, setActivePinia } from 'pinia'
 import fixtures from 'src/utils/test/fixtures'
-import { renderAsync } from '../utils/test/render-async'
+import { asyncWrapper, createTestRouter } from 'src/utils/test/test.utils'
 import ArticleDetail from './ArticleDetail.vue'
 
-jest.mock('src/services/article/getArticle')
+describe('# ArticleDetail', () => {
+  const router = createTestRouter()
+  const AsyncArticleDetail = asyncWrapper(ArticleDetail)
 
-describe.skip('# ArticleDetail', () => {
-  const mockGetArticle = getArticle as jest.MockedFunction<typeof getArticle>
-
-  beforeEach(async () => {
-    await router.push({
-      name: 'article',
-      params: { slug: fixtures.article.slug },
-    })
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    cy.wrap(router.push({ name: 'article', params: { slug: fixtures.article.slug } }))
   })
 
-  it('should render markdown body correctly', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdown })
-    const { container } = await renderAsync(ArticleDetail, {
-      global: { plugins: [registerGlobalComponents, router] },
+  it('should render markdown body correctly', () => {
+    cy.fixture('article.json').then((res) => {
+      res.article.body = fixtures.markdown
+      cy.intercept('/api/articles/*', res).as('getArticle')
     })
 
-    expect(container.querySelector('.article-content')).toMatchSnapshot()
+    cy.mount(AsyncArticleDetail, { router })
+    cy.wait('@getArticle')
+
+    cy.get('.article-content').should('contain.text', 'h1 Heading 8-)')
   })
 
-  it('should render markdown (zh-CN) body correctly', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownCN })
-    const { container } = await renderAsync(ArticleDetail, {
-      global: { plugins: [registerGlobalComponents, router] },
+  // TODO: the markdown content should do the unit test for the markdown renderer
+  it.skip('should render markdown (zh-CN) body correctly', () => {
+    cy.fixture('article.json').then((body) => {
+      body.article.body = fixtures.markdownCN
+      cy.intercept('/api/articles/*', body).as('getArticle')
     })
 
-    expect(container.querySelector('.article-content')).toMatchSnapshot()
+    cy.mount(AsyncArticleDetail, { router })
+    cy.wait('@getArticle')
+
+    cy.get('.article-content').should('have.text', fixtures.markdownCN)
   })
 
-  it('should filter the xss content in Markdown body', async () => {
-    mockGetArticle.mockResolvedValue({ ...fixtures.article, body: fixtures.markdownXss })
-    const { container } = await renderAsync(ArticleDetail, {
-      global: { plugins: [registerGlobalComponents, router] },
+  it.skip('should filter the xss content in Markdown body', () => {
+    cy.fixture('article.json').then((body) => {
+      body.article.body = fixtures.markdownXss
+      cy.intercept('/api/articles/*', body).as('getArticle')
     })
 
-    expect(container.querySelector('.article-content')?.textContent).not.toContain('alert')
+    cy.mount(AsyncArticleDetail, { router })
+    cy.wait('@getArticle')
+
+    cy.get('.article-content').should('have.text', fixtures.markdownXss)
   })
 })

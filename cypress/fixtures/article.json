@@ -10,7 +10,7 @@
     "author": {
       "username": "plumrx",
       "bio": null,
-      "image": "https://static.realworld.io/images/smiley-cyrus.jpg",
+      "image": "https://api.realworld.io/images/demo-avatar.png",
       "following": false
     },
     "favorited": true,

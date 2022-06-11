@@ -1,26 +1,25 @@
-import { fireEvent, render } from '@testing-library/vue'
+import { mount } from 'cypress/vue'
 import AppPagination from './AppPagination.vue'
 
 describe('# AppPagination', () => {
   it('should highlight current active page', () => {
-    const { container } = render(AppPagination, {
+    cy.mount(AppPagination, {
       props: { page: 1, count: 15 },
     })
 
-    const pageItems = container.querySelectorAll('.page-item')
-    expect(pageItems).toHaveLength(2)
-    expect(pageItems[0]).toHaveClass('active')
+    cy.get('.page-item').should('have.length', 2)
+      .eq(0).should('have.class', 'active')
   })
 
-  it('should call onPageChange when click a page item', async () => {
-    const { getByRole, emitted } = render(AppPagination, {
-      props: { page: 1, count: 15 },
+  it('should call onPageChange when click a page item', () => {
+    const onPageChange = cy.spy().as('onPageChange')
+    mount(AppPagination, {
+      props: { page: 1, count: 15, onPageChange },
     })
 
-    await fireEvent.click(getByRole('link', { name: 'Go to page 2' }))
+    cy.findByRole('link', { name: 'Go to page 2' })
+      .click()
 
-    const events = emitted()
-    expect(events['page-change']).toHaveLength(1)
-    expect(events['page-change']?.[0]).toEqual([2])
+    cy.get('@onPageChange').should('have.been.calledWith', 2)
   })
 })

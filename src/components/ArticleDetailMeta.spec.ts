@@ -1,134 +1,118 @@
-import { fireEvent, render } from '@testing-library/vue'
-import type { GlobalMountOptions } from '@vue/test-utils/dist/types'
-import registerGlobalComponents from 'src/plugins/global-components'
-import { router } from 'src/router'
-import { deleteArticle } from 'src/services/article/deleteArticle'
-import { deleteFavoriteArticle, postFavoriteArticle } from 'src/services/article/favoriteArticle'
-import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/followProfile'
+import { createPinia, setActivePinia } from 'pinia'
 import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
-jest.mock('src/services/article/deleteArticle')
-jest.mock('src/services/profile/followProfile')
-jest.mock('src/services/article/favoriteArticle')
-
-const globalMountOptions: GlobalMountOptions = {
-  plugins: [registerGlobalComponents, router],
-}
+const editButton = 'Edit article'
+const deleteButton = 'Delete article'
+const followButton = 'Follow'
+const unfollowButton = 'Unfollow'
+const favoriteButton = 'Favorite article'
+const unfavoriteButton = 'Unfavorite article'
 
 describe('# ArticleDetailMeta', () => {
-  const editButton = 'Edit article'
-  const deleteButton = 'Delete article'
-  const followButton = 'Follow'
-  const unfollowButton = 'Unfollow'
-  const favoriteButton = 'Favorite article'
-  const unfavoriteButton = 'Unfavorite article'
-
-  const mockDeleteArticle = deleteArticle as jest.MockedFunction<typeof deleteArticle>
-  const mockFollowUser = postFollowProfile as jest.MockedFunction<typeof postFollowProfile>
-  const mockUnfollowUser = deleteFollowProfile as jest.MockedFunction<typeof deleteFollowProfile>
-  const mockFavoriteArticle = postFavoriteArticle as jest.MockedFunction<typeof postFavoriteArticle>
-  const mockUnfavoriteArticle = deleteFavoriteArticle as jest.MockedFunction<typeof deleteFavoriteArticle>
+  setActivePinia(createPinia())
   const userStore = useUserStore()
 
-  beforeEach(async () => {
-    mockFollowUser.mockResolvedValue({ isOk: () => true } as any)
-    mockUnfollowUser.mockResolvedValue({ isOk: () => true } as any)
-    mockFavoriteArticle.mockResolvedValue({ isOk: () => true, value: fixtures.article } as any)
-    mockUnfavoriteArticle.mockResolvedValue({ isOk: () => true, value: fixtures.article } as any)
+  beforeEach(() => {
     userStore.updateUser(fixtures.user)
-    await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
   })
 
   it('should display edit button when user is author', () => {
-    const { queryByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: fixtures.article },
     })
 
-    expect(queryByRole('link', { name: editButton })).toBeInTheDocument()
-    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
+    cy.findByRole('link', { name: editButton })
+    cy.findByRole('button', { name: followButton }).should('not.exist')
   })
 
   it('should display follow button when user not author', () => {
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const { queryByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: fixtures.article },
     })
 
-    expect(queryByRole('link', { name: editButton })).not.toBeInTheDocument()
-    expect(queryByRole('button', { name: followButton })).toBeInTheDocument()
+    cy.findByRole('link', { name: editButton }).should('not.exist')
+    cy.findByRole('button', { name: followButton })
   })
 
   it('should not display follow button and edit button when user not logged', () => {
     userStore.updateUser(null)
-    const { queryByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: fixtures.article },
     })
 
-    expect(queryByRole('button', { name: editButton })).not.toBeInTheDocument()
-    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
+    cy.findByRole('link', { name: editButton }).should('not.exist')
+    cy.findByRole('button', { name: followButton }).should('not.exist')
   })
 
-  it('should call delete article service when click delete button', async () => {
-    const { getByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+  it('should call delete article service when click delete button', () => {
+    cy.intercept('DELETE', '/api/articles/*', { status: 200 }).as('deleteArticle')
+    cy.mount(ArticleDetailMeta, {
       props: { article: fixtures.article },
     })
 
-    await fireEvent.click(getByRole('button', { name: deleteButton }))
+    cy.findByRole('button', { name: deleteButton }).click()
 
-    expect(mockDeleteArticle).toBeCalledWith('article-foo')
+    cy.wait('@deleteArticle')
+      .its('request.url')
+      .should('contain', '/api/articles/article-foo')
   })
 
-  it('should call follow service when click follow button', async () => {
+  it('should call follow service when click follow button', () => {
+    cy.intercept('POST', '/api/profiles/*/follow', { status: 200 }).as('followUser')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const { getByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: fixtures.article },
     })
 
-    await fireEvent.click(getByRole('button', { name: followButton }))
+    cy.findByRole('button', { name: followButton }).click()
 
-    expect(mockFollowUser).toBeCalledWith('Author name')
+    cy.get('@followUser')
+      .its('request.url')
+      .should('contain', '/api/profiles/Author%20name/follow')
   })
 
-  it('should call unfollow service when click follow button and not followed author', async () => {
+  it('should call unfollow service when click follow button and not followed author', () => {
+    cy.intercept('DELETE', '/api/profiles/*/follow', { status: 200 }).as('unfollowUser')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const { getByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } } },
     })
 
-    await fireEvent.click(getByRole('button', { name: unfollowButton }))
+    cy.findByRole('button', { name: unfollowButton }).click()
 
-    expect(mockUnfollowUser).toBeCalledWith('Author name')
+    cy.wait('@unfollowUser')
+      .its('request.url')
+      .should('contain', '/api/profiles/Author%20name/follow')
   })
 
-  it('should call favorite article service when click favorite button', async () => {
+  it('should call favorite article service when click favorite button', () => {
+    cy.intercept('POST', '/api/articles/*/favorite', { status: 200 }).as('favoriteArticle')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const { getByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: { ...fixtures.article, favorited: false } },
     })
 
-    await fireEvent.click(getByRole('button', { name: favoriteButton }))
+    cy.findByRole('button', { name: favoriteButton }).click()
 
-    expect(mockFavoriteArticle).toBeCalledWith('article-foo')
+    cy.wait('@favoriteArticle')
+      .its('request.url')
+      .should('contain', '/api/articles/article-foo/favorite')
   })
 
-  it('should call favorite article service when click unfavorite button', async () => {
+  it('should call favorite article service when click unfavorite button', () => {
+    cy.intercept('DELETE', '/api/articles/*/favorite', { status: 200 }).as('unfavoriteArticle')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const { getByRole } = render(ArticleDetailMeta, {
-      global: globalMountOptions,
+    cy.mount(ArticleDetailMeta, {
       props: { article: { ...fixtures.article, favorited: true } },
     })
 
-    await fireEvent.click(getByRole('button', { name: unfavoriteButton }))
+    cy.findByRole('button', { name: unfavoriteButton }).click()
 
-    expect(mockUnfavoriteArticle).toBeCalledWith('article-foo')
+    cy.wait('@unfavoriteArticle')
+      .its('request.url')
+      .should('contain', '/api/articles/article-foo/favorite')
   })
 })
