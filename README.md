@@ -29,12 +29,6 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] Component test ([Cypress component testing](https://docs.cypress.io/guides/component-testing))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
 
-#### What works in [ref-sugar branch](https://github.com/mutoe/vue3-realworld-example-app/tree/ref-sugar) (based on the master branch)
-
-- [x] [Script ref sugar (take 2)](https://github.com/vuejs/rfcs/discussions/369)
-
-> _[Why we have the second branch?](https://github.com/mutoe/vue3-realworld-example-app/commit/c0c983dba08cb31fc96bbc3eb7f15faf469d0624#commitcomment-47600736)_
-
 # Getting started
 
 ```shell script
