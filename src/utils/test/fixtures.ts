@@ -1,3 +1,5 @@
+import type { Comment, Article, Profile, User } from 'src/services/api'
+
 const author: Profile = {
   username: 'Author name',
   bio: 'Author bio',
@@ -7,7 +9,6 @@ const author: Profile = {
 
 const user: User = {
   ...author,
-  id: 1,
   email: 'foo@example.com',
   token: '',
 }
@@ -27,7 +28,7 @@ This is **Strong** content.`,
   updatedAt: '2020-01-01T00:00:00Z',
 }
 
-const comment: ArticleComment = {
+const comment: Comment = {
   id: 1,
   author,
   body: 'Comment body',
@@ -35,7 +36,7 @@ const comment: ArticleComment = {
   updatedAt: '2020-01-01T00:00:00Z',
 }
 
-const comment2: ArticleComment = {
+const comment2: Comment = {
   ...comment,
   id: 2,
   body: 'comment2',

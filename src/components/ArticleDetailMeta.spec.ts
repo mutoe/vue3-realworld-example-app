@@ -1,4 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia'
+import type { Profile } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
@@ -61,10 +62,12 @@ describe('# ArticleDetailMeta', () => {
   })
 
   it('should call follow service when click follow button', () => {
-    cy.intercept('POST', '/api/profiles/*/follow', { status: 200 }).as('followUser')
+    const newProfile: Profile = { ...fixtures.user, following: true }
+    cy.intercept('POST', '/api/profiles/*/follow', { profile: newProfile }).as('followUser')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
+    const onUpdate = cy.spy().as('onUpdate')
     cy.mount(ArticleDetailMeta, {
-      props: { article: fixtures.article },
+      props: { article: fixtures.article, onUpdate },
     })
 
     cy.findByRole('button', { name: followButton }).click()
@@ -72,13 +75,20 @@ describe('# ArticleDetailMeta', () => {
     cy.get('@followUser')
       .its('request.url')
       .should('contain', '/api/profiles/Author%20name/follow')
+
+    cy.get('@onUpdate').should('be.calledWith', { ...fixtures.article, author: newProfile })
   })
 
   it('should call unfollow service when click follow button and not followed author', () => {
-    cy.intercept('DELETE', '/api/profiles/*/follow', { status: 200 }).as('unfollowUser')
+    const newProfile: Profile = { ...fixtures.user, following: false }
+    cy.intercept('DELETE', '/api/profiles/*/follow', { profile: newProfile }).as('unfollowUser')
     userStore.updateUser({ ...fixtures.user, username: 'user2' })
+    const onUpdate = cy.spy().as('onUpdate')
     cy.mount(ArticleDetailMeta, {
-      props: { article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } } },
+      props: {
+        article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } },
+        onUpdate,
+      },
     })
 
     cy.findByRole('button', { name: unfollowButton }).click()
@@ -86,6 +96,8 @@ describe('# ArticleDetailMeta', () => {
     cy.wait('@unfollowUser')
       .its('request.url')
       .should('contain', '/api/profiles/Author%20name/follow')
+
+    cy.get('@onUpdate').should('be.calledWith', { ...fixtures.article, author: newProfile })
   })
 
   it('should call favorite article service when click favorite button', () => {
