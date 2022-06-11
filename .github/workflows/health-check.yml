@@ -1,0 +1,39 @@
+name: Check Swagger API
+
+on:
+  schedule:
+    - cron: '35 17 */4 * 4'
+
+jobs:
+  e2e_tests:
+    name: E2E test
+    env:
+      CI: true
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --skip-integrity-check --non-interactive --no-progress
+
+      - name: E2E test
+        run: yarn test:e2e:prod
