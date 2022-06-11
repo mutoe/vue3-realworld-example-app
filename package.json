@@ -12,9 +12,9 @@
     "lint": "concurrently \"yarn lint:tsc\" \"yarn lint:script\"",
     "test:unit": "cypress open --component",
     "test:unit:ci": "cypress run --component --quiet --reporter spec",
-    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
-    "test:e2e:ci": "cypress run --e2e -C cypress.prod.config.ts",
-    "test": "yarn test:unit && yarn test:e2e"
+    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress open --e2e -c baseUrl=http://localhost:4137\"",
+    "test:e2e:ci": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
+    "test": "yarn test:unit:ci && yarn test:e2e:ci"
   },
   "dependencies": {
     "insane": "^2.6.2",

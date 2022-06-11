@@ -76,7 +76,7 @@ jobs:
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
       - name: Unit test
-        run: yarn test:unit
+        run: yarn test:unit:ci
 
       - name: Update coverage report
         uses: codecov/codecov-action@v1
@@ -113,16 +113,5 @@ jobs:
       - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-      - name: Build
-        run: yarn build
-
       - name: E2E test
-        uses: cypress-io/github-action@v2
-        with:
-          record: true
-          config: baseUrl=http://localhost:5000
-          start: yarn serve
-          wait-on: http://localhost:5000
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        run: yarn test:e2e:ci
