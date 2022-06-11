@@ -1,17 +1,17 @@
 import { isRef } from 'vue'
-import createAsyncProcess from './create-async-process'
+import useAsync from 'src/utils/use-async'
 
 describe('# Create async process', () => {
   const someProcess = (): Promise<null> => Promise.resolve(null)
 
   it('should expect active as Vue Ref type', () => {
-    const { active } = createAsyncProcess(someProcess)
+    const { active } = useAsync(someProcess)
 
     expect(isRef(active)).to.be.true
   })
 
   it('should correctly test active functionality', async () => {
-    const { active, run } = createAsyncProcess(someProcess)
+    const { active, run } = useAsync(someProcess)
 
     expect(active.value).to.be.false
 
@@ -25,14 +25,14 @@ describe('# Create async process', () => {
   })
 
   it('should expect run as a function', () => {
-    const { run } = createAsyncProcess(someProcess)
+    const { run } = useAsync(someProcess)
 
     expect(run).to.be.instanceof(Function)
   })
 
   it('should expect original function called with correct params and return correct data', () => {
     const someProcess = cy.stub().returns(Promise.resolve({ a: 1, b: null }))
-    const { run } = createAsyncProcess(someProcess)
+    const { run } = useAsync(someProcess)
 
     cy.wrap(run(null))
       .its('a')

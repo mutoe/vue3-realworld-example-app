@@ -68,7 +68,8 @@ import { storeToRefs } from 'pinia'
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { routerPush } from 'src/router'
-import { deleteArticle } from 'src/services/article/deleteArticle'
+import { api } from 'src/services'
+import type { Article, Profile } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import { computed, toRefs } from 'vue'
 
@@ -94,7 +95,7 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
 })
 
 const onDelete = async () => {
-  await deleteArticle(article.value.slug)
+  await api.articles.deleteArticle(article.value.slug)
   await routerPush('global-feed')
 }
 

@@ -66,8 +66,8 @@
 </template>
 
 <script setup lang="ts">
-import { getArticle } from 'src/services/article/getArticle'
-import { postArticle, putArticle } from 'src/services/article/postArticle'
+import { api } from 'src/services'
+import type { Article } from 'src/services/api'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -99,7 +99,7 @@ const removeTag = (tag: string) => {
 }
 
 async function fetchArticle (slug: string) {
-  const article = await getArticle(slug)
+  const article = await api.articles.getArticle(slug).then(res => res.data.article)
 
   // FIXME: I always feel a little wordy here
   form.title = article.title
@@ -115,9 +115,9 @@ onMounted(() => {
 const onSubmit = async () => {
   let article: Article
   if (slug.value) {
-    article = await putArticle(slug.value, form)
+    article = await api.articles.updateArticle(slug.value, { article: form }).then(res => res.data.article)
   } else {
-    article = await postArticle(form)
+    article = await api.articles.createArticle({ article: form }).then(res => res.data.article)
   }
   return router.push({ name: 'article', params: { slug: article.slug } })
 }

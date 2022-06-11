@@ -1,8 +1,6 @@
-import { routerPush } from 'src/router'
-import { deleteFollowProfile, postFollowProfile } from 'src/services/profile/followProfile'
-import type { AuthorizationError } from 'src/types/error'
-import createAsyncProcess from 'src/utils/create-async-process'
-import type { Either } from 'src/utils/either'
+import { api } from 'src/services'
+import type { Profile } from 'src/services/api'
+import useAsync from 'src/utils/use-async'
 import type { ComputedRef } from 'vue'
 
 interface UseFollowProps {
@@ -11,22 +9,14 @@ interface UseFollowProps {
   onUpdate: (profile: Profile) => void
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
-  async function toggleFollow (): Promise<void> {
-    let response: Either<AuthorizationError, Profile>
-
-    if (following.value) {
-      response = await deleteFollowProfile(username.value)
-    } else {
-      response = await postFollowProfile(username.value)
-    }
-
-    if (response.isOk()) onUpdate(response.value)
-    else await routerPush('login')
+  async function toggleFollow () {
+    const requestor = following.value ? api.profiles.followUserByUsername : api.profiles.unfollowUserByUsername
+    const profile = await requestor(username.value).then(res => res.data.profile)
+    onUpdate(profile)
   }
 
-  const { active, run } = createAsyncProcess(toggleFollow)
+  const { active, run } = useAsync(toggleFollow)
 
   return {
     followProcessGoing: active,

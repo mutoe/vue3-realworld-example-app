@@ -1,4 +1,5 @@
-import { getProfile } from 'src/services/profile/getProfile'
+import { api } from 'src/services'
+import type { Profile } from 'src/services/api'
 import type { ComputedRef } from 'vue'
 import { ref, watch } from 'vue'
 
@@ -6,14 +7,13 @@ interface UseProfileProps {
   username: ComputedRef<string>
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export function useProfile ({ username }: UseProfileProps) {
   const profile = ref<Profile | null>(null)
 
   async function fetchProfile (): Promise<void> {
     updateProfile(null)
     if (!username.value) return
-    const profileData = await getProfile(username.value)
+    const profileData = await api.profiles.getProfileByUsername(username.value).then(res => res.data.profile)
     updateProfile(profileData)
   }
 

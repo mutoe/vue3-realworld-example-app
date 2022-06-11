@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { getCommentsByArticle } from 'src/services/comment/getComments'
-import { deleteComment } from 'src/services/comment/postComment'
+import { api } from 'src/services'
+import type { Comment } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -30,17 +30,17 @@ const { user } = storeToRefs(useUserStore())
 
 const username = computed(() => user.value?.username)
 
-const comments = ref<ArticleComment[]>([])
+const comments = ref<Comment[]>([])
 
-const addComment = async (comment: ArticleComment) => {
+const addComment = async (comment: Comment) => {
   comments.value.unshift(comment)
 }
 
 const removeComment = async (commentId: number) => {
-  await deleteComment(slug, commentId)
+  await api.articles.deleteArticleComment(slug, commentId)
   comments.value = comments.value.filter(c => c.id !== commentId)
 }
 
-comments.value = await getCommentsByArticle(slug)
+comments.value = await api.articles.getArticleComments(slug).then(res => res.data.comments)
 
 </script>

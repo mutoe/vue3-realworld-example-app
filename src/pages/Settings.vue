@@ -75,18 +75,18 @@
 
 <script setup lang="ts">
 import { routerPush } from 'src/router'
-import type { PutProfileForm } from 'src/services/profile/putProfile'
-import { putProfile } from 'src/services/profile/putProfile'
+import { api } from 'src/services'
+import type { UpdateUser } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 
-const form: PutProfileForm = reactive({})
+const form: UpdateUser = reactive({})
 
 const userStore = useUserStore()
 
 const onSubmit = async () => {
   const filteredForm = Object.entries(form).reduce((a, [k, v]) => v === null ? a : { ...a, [k]: v }, {})
-  const userData = await putProfile(filteredForm)
+  const userData = await api.user.updateCurrentUser({ user: filteredForm }).then(res => res.data.user)
   userStore.updateUser(userData)
   await routerPush('profile', { username: userData.username })
 }
@@ -110,7 +110,7 @@ const isButtonDisabled = computed(() =>
       form.username === userStore.user?.username &&
       form.bio === userStore.user?.bio &&
       form.email === userStore.user?.email &&
-      !form.password,
+      !form.token,
 )
 
 </script>

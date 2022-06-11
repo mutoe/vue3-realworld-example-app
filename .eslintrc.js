@@ -10,10 +10,19 @@ module.exports = {
   extends: [
     '@mutoe/eslint-config-preset-vue',
   ],
+  ignorePatterns: [
+    'src/services/api.ts',
+  ],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
   },
   overrides: [
+    {
+      files: ['src/composable/*.ts', 'src/**/use*.ts'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      },
+    },
     {
       files: [
         'src/**/*.{cy,spec}.{js,ts,jsx,tsx}',

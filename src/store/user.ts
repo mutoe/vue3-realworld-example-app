@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
+import { api } from 'src/services'
+import type { User } from 'src/services/api'
+import Storage from 'src/utils/storage'
 import { computed, ref } from 'vue'
-
-import { request } from '../services'
-import Storage from '../utils/storage'
 
 export const userStorage = new Storage<User>('user')
 
@@ -15,11 +15,11 @@ export const useUserStore = defineStore('user', () => {
   function updateUser (userData?: User | null) {
     if (userData === undefined || userData === null) {
       userStorage.remove()
-      request.deleteAuthorizationHeader()
+      api.setSecurityData(null)
       user.value = null
     } else {
       userStorage.set(userData)
-      request.setAuthorizationHeader(userData.token)
+      api.setSecurityData(userData.token)
       user.value = userData
     }
   }
