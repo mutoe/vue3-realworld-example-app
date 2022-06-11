@@ -3,7 +3,8 @@
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": ["src/**/*.spec.ts", "src/***/*.spec.tsx"],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
   },
   "references": [
     {
