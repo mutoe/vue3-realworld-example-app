@@ -8,7 +8,7 @@
     "build": "vite build",
     "serve": "vite preview --port 4137",
     "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.ts}\"",
-    "lint:tsc": "vue-tsc --noEmit",
+    "lint:tsc": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "concurrently \"yarn lint:tsc\" \"yarn lint:script\"",
     "test:unit": "cypress open --component",
     "test:unit:ci": "cypress run --component --quiet --reporter spec",

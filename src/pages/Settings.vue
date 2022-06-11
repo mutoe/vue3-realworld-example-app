@@ -43,7 +43,7 @@
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.password"
+                  v-model="form.token"
                   type="password"
                   class="form-control form-control-lg"
                   placeholder="New Password"

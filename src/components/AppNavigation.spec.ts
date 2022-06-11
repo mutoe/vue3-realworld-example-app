@@ -20,7 +20,7 @@ describe('# AppNavigation', () => {
 
   it('should render xxx when user logged', () => {
     const userStore = useUserStore()
-    userStore.updateUser({ id: 1, username: 'foo', email: '', token: '', bio: undefined, image: undefined })
+    userStore.updateUser({ username: 'foo', email: '', token: '', bio: '', image: '' })
     cy.mount(AppNavigation)
 
     cy.get('.nav-item').should('have.length', 4)

@@ -3,7 +3,6 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    project: ['./tsconfig.app.json', './tsconfig.config.json', './tsconfig.cypress-ct.json'],
     sourceType: 'module',
     extraFileExtensions: ['.vue'],
   },

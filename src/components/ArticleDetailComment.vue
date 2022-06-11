@@ -46,9 +46,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { Comment } from 'src/services/api'
 
 interface Props {
-  comment: ArticleComment
+  comment: Comment
   username?: string
 }
 

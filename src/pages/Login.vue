@@ -39,7 +39,7 @@
             </fieldset>
             <fieldset class=" form-group">
               <input
-                v-model="form.token"
+                v-model="form.password"
                 class="form-control form-control-lg"
                 type="password"
                 required
