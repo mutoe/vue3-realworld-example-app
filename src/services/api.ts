@@ -46,7 +46,8 @@ export interface UserResponse {
 
 export interface UpdateUser {
   email?: string;
-  token?: string;
+  // The correct field is password but not token. Refer https://github.com/gothinkster/realworld/issues/950
+  password?: string;
   username?: string;
   bio?: string;
   image?: string;

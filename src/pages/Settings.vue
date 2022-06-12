@@ -43,7 +43,7 @@
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.token"
+                  v-model="form.password"
                   type="password"
                   class="form-control form-control-lg"
                   placeholder="New Password"
@@ -111,7 +111,7 @@ const isButtonDisabled = computed(() =>
       form.username === userStore.user?.username &&
       form.bio === userStore.user?.bio &&
       form.email === userStore.user?.email &&
-      !form.token,
+      !form.password,
 )
 
 </script>
