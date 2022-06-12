@@ -15,10 +15,11 @@
 
 import './commands'
 
-import { ROUTES } from 'e2e/constant'
+import { ROUTES } from '../e2e/constant'
 
 declare global {
   namespace Cypress {
+    // noinspection JSUnusedGlobalSymbols
     interface Chainable {
       login(): void
     }

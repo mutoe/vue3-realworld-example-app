@@ -1,0 +1,17 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "./**/*",
+    "../fixtures/**/*",
+    "../support/commands.ts",
+    "../support/e2e.ts"
+  ],
+  "exclude": ["../../src"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "isolatedModules": false,
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "@testing-library/cypress"]
+  }
+}
