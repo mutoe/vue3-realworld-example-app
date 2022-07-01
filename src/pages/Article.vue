@@ -28,3 +28,9 @@
 import ArticleDetail from 'src/components/ArticleDetail.vue'
 import ArticleDetailComments from 'src/components/ArticleDetailComments.vue'
 </script>
+
+<style scoped>
+.row{
+  margin-right: 0;
+}
+</style>
