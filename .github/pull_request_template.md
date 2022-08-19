@@ -1,7 +1,10 @@
 <!--
 Add a descriptive
 feat: new feature / enhancement
-fix: bugs 
+fix: bugs fixes
+ci: ci actions
+chore: other changes
+docs: documentation changes
 -->
 
 <!--- briefly describe what you have done in this PR --->
