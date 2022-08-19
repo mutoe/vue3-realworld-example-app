@@ -7,18 +7,6 @@ on:
     branches: [master]
 
 jobs:
-  # test_pull_request:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install dependencies
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 13.x
-  #     - run: npm ci
-  #     - run: npm test
-  #     - run: npm run build
-
   lint:
     name: Lint
     runs-on: ubuntu-latest

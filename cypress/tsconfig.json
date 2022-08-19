@@ -8,7 +8,7 @@
     "lib": ["es5", "dom"],
     "types": ["cypress", "@testing-library/cypress"],
     "paths": {
-      "src/*": ["../src/*"],
+      "src/*": ["../src/*"]
     }
   }
 }
