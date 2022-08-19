@@ -1,5 +1,5 @@
 
-name: Continous Integration
+name: Continous Deployment
 
 on:
   push:
