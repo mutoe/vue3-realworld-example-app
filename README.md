@@ -3,11 +3,11 @@
 # Forked from [mutoe/vue3-realworld-example-app](https://github.com/mutoe/vue3-realworld-example-app)
 
 # Task Todo:
-- [] Set up repo 
-- [] Set up CI actions
-- [] Set up CD actions
-- [] Set up Code analysis action
-- [] Fix bugs
+- [ ] Set up repo 
+- [ ] Set up CI actions
+- [ ] Set up CD actions
+- [ ] Set up Code analysis action
+- [ ] Fix bugs
 
 # Getting started
 
