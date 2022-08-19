@@ -21,7 +21,13 @@ jobs:
     - name: Install dependencies
       run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-    - name: Deploy to netlify
+    - name: Run unit test
+      run: yarn test:unit:ci
+
+    - name: Run e2e test
+      run: yarn test:e2e:ci
+
+    - name: Build and Deploy to netlify
       uses: jsmrcaga/action-netlify-deploy@v1.1.0
       with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
