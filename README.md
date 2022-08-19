@@ -5,7 +5,7 @@
 # Task Todo:
 - [X] Set up repo 
 - [X] Set up CI actions
-- [X] Set up CD actions
+- [X] Set up CD actions (test before deploy)
 - [ ] Set up Code analysis action
 - [ ] Fix bugs
 
