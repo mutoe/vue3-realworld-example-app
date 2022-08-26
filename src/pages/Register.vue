@@ -90,12 +90,14 @@ const register = async () => {
 
   if (!formRef.value?.checkValidity()) return
 
-  const result = await api.users.createUser({ user: form })
-  if (result.ok) {
-    updateUser(result.data.user)
-    await routerPush('global-feed')
-  } else {
-    errors.value = await result.error
+  try{
+      const result = await api.users.createUser({ user: form })
+    if (result.ok) {
+      updateUser(result.data.user)
+      await routerPush('global-feed')
+    }
+  }catch (error) {
+    errors.value = error.error.errors
   }
 }
 </script>
