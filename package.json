@@ -22,7 +22,7 @@
     "insane": "^2.6.2",
     "marked": "^4.0.16",
     "pinia": "^2.0.14",
-    "vue": "^3.2.37",
+    "vue": "^3.2.38",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
