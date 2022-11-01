@@ -23,7 +23,7 @@
     "marked": "^4.1.0",
     "pinia": "^2.0.22",
     "vue": "^3.2.39",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@cypress/vue": "^4.2.0",
