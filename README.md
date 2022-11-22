@@ -24,7 +24,7 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [Suspense](https://v3.vuejs.org/guide/component-dynamic-async.html#using-with-suspense) (Experimental)
 - [x] [Vue router](https://next.router.vuejs.org/)
 - [x] [Pinia](https://pinia.vuejs.org/) for state management
-- [x] [TypeScript](https://www.typescriptlang.org/) and [Vue tsc](https://github.com/johnsoncodehk/vue-tsc) for static analysis
+- [x] [TypeScript](https://www.typescriptlang.org/) and [Vue tsc](https://github.com/johnsoncodehk/volar/tree/master/vue-language-tools/vue-tsc) for static analysis
 - [x] [ESLint](https://eslint.vuejs.org/) for syntax checking and code styling
 - [x] Component test ([Cypress component testing](https://docs.cypress.io/guides/component-testing))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
