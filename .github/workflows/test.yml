@@ -63,15 +63,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - id: cypress-version
-        run: pnpm info cypress version
+      - name: Get cypress version
+        id: cypress-version
+        run: echo "version=$(pnpm info cypress version)" >> $GITHUB_OUTPUT
 
       - name: Cache cypress binary
         id: cache-cypress-binary
         uses: actions/cache@v3
         with:
           path: ~/.cache/Cypress
-          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.stdout }}
+          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.version }}
 
       - name: Install cypress binary
         if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
@@ -109,15 +110,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - id: cypress-version
-        run: pnpm info cypress version
+      - name: Get cypress version
+        id: cypress-version
+        run: echo "version=$(pnpm info cypress version)" >> $GITHUB_OUTPUT
 
       - name: Cache cypress binary
         id: cache-cypress-binary
         uses: actions/cache@v3
         with:
           path: ~/.cache/Cypress
-          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.stdout }}
+          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.version }}
 
       - name: Install cypress binary
         if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
