@@ -28,6 +28,7 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [ESLint](https://eslint.vuejs.org/) for syntax checking and code styling
 - [x] Component test ([Cypress component testing](https://docs.cypress.io/guides/component-testing))
 - [x] E2E test ([Cypress](https://docs.cypress.io))
+- [x] [GitHub Actions](https://docs.github.com/en/actions) CI/CD
 
 # Getting started
 
