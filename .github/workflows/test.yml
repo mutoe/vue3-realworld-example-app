@@ -63,6 +63,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - id: cypress-version
+        run: pnpm info cypress version
+
+      - name: Cache cypress binary
+        id: cache-cypress-binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.stdout }}
+
+      - name: Install cypress binary
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        run: pnpm cypress install
+
       - name: Unit test
         run: pnpm test:unit:ci
 
@@ -94,6 +108,20 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - id: cypress-version
+        run: pnpm info cypress version
+
+      - name: Cache cypress binary
+        id: cache-cypress-binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.stdout }}
+
+      - name: Install cypress binary
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        run: pnpm cypress install
 
       - name: E2E test
         run: pnpm test:e2e:ci
