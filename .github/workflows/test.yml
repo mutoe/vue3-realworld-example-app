@@ -17,33 +17,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
 
-      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          node-version: 16.x
+          version: 7
+          run_install: false
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 18.x
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --skip-integrity-check --non-interactive --no-progress
+        run: pnpm install
 
       - name: TypeScript check
-        run: yarn lint:tsc
+        run: pnpm lint:tsc
 
       - name: Eslint check
-        run: yarn lint:script
+        run: pnpm lint:script
 
   unit_test:
     name: Unit test
@@ -53,30 +47,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
 
-      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          node-version: 16.x
+          version: 7
+          run_install: false
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 18.x
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --skip-integrity-check --non-interactive --no-progress
+        run: pnpm install
 
       - name: Unit test
-        run: yarn test:unit:ci
+        run: pnpm test:unit:ci
 
       - name: Update coverage report
         uses: codecov/codecov-action@v1
@@ -91,27 +79,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
 
-      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          node-version: 16.x
+          version: 7
+          run_install: false
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 18.x
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --skip-integrity-check --non-interactive --no-progress
+        run: pnpm install --skip-integrity-check --non-interactive --no-progress
 
       - name: E2E test
-        run: yarn test:e2e:ci
+        run: pnpm test:e2e:ci

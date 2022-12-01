@@ -32,21 +32,21 @@ For more information on how to this works with other frontends/backends, head ov
 # Getting started
 
 ```shell script
-yarn install
+pnpm install
 
 # Development
-yarn dev
+pnpm dev
 
 # Build dist
-yarn build
+pnpm build
 
 # Run unit tests
-yarn test:unit
-yarn test:unit:ci
+pnpm test:unit
+pnpm test:unit:ci
 
 # Run E2E tests
-yarn test:e2e
-yarn test:e2e:ci
+pnpm test:e2e
+pnpm test:e2e:ci
 ```
 
 # Contributors

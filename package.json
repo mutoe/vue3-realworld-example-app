@@ -9,13 +9,13 @@
     "serve": "vite preview --port 4137",
     "lint:script": "eslint \"{src/**/*.{ts,vue},cypress/**/*.ts}\"",
     "lint:tsc": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
-    "lint": "concurrently \"yarn lint:tsc\" \"yarn lint:script\"",
+    "lint": "concurrently \"npm run lint:tsc\" \"npm run lint:script\"",
     "test:unit": "cypress open --component",
     "test:unit:ci": "cypress run --component --quiet --reporter spec",
-    "test:e2e": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress open --e2e -c baseUrl=http://localhost:4137\"",
-    "test:e2e:ci": "yarn build && concurrently -rk -s first \"yarn serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
+    "test:e2e": "npm run build && concurrently -rk -s first \"npm run serve\" \"cypress open --e2e -c baseUrl=http://localhost:4137\"",
+    "test:e2e:ci": "npm run build && concurrently -rk -s first \"npm run serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
     "test:e2e:prod": "cypress run --e2e -c baseUrl=https://vue3-realworld-example-app-mutoe.vercel.app",
-    "test": "yarn test:unit:ci && yarn test:e2e:ci",
+    "test": "npm run test:unit:ci && npm run test:e2e:ci",
     "generate:api": "sta -p https://raw.githubusercontent.com/gothinkster/realworld/main/api/openapi.yml -o ./src/services -n api.ts"
   },
   "dependencies": {
