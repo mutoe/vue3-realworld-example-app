@@ -93,7 +93,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --skip-integrity-check --non-interactive --no-progress
+        run: pnpm install
 
       - name: E2E test
         run: pnpm test:e2e:ci
