@@ -13,6 +13,7 @@
     "test:unit": "cypress open --component",
     "test:unit:ci": "cypress run --component --quiet --reporter spec",
     "test:e2e": "npm run build && concurrently -rk -s first \"npm run serve\" \"cypress open --e2e -c baseUrl=http://localhost:4137\"",
+    "test:e2e:local": "cypress open --e2e -c baseUrl=http://localhost:5173",
     "test:e2e:ci": "npm run build && concurrently -rk -s first \"npm run serve\" \"cypress run --e2e -c baseUrl=http://localhost:4137\"",
     "test:e2e:prod": "cypress run --e2e -c baseUrl=https://vue3-realworld-example-app-mutoe.vercel.app",
     "test": "npm run test:unit:ci && npm run test:e2e:ci",

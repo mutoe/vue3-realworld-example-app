@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { routerPush } from 'src/router'
-import { api } from 'src/services'
+import { api, isFetchError } from 'src/services'
 import type { LoginUser } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import { reactive, ref } from 'vue'
@@ -82,12 +82,14 @@ const login = async () => {
 
   if (!formRef.value?.checkValidity()) return
 
-  const result = await api.users.login({ user: form })
-  if (result.ok) {
+  try {
+    const result = await api.users.login({ user: form })
     updateUser(result.data.user)
     await routerPush('global-feed')
-  } else {
-    errors.value = await result.error
+  } catch (e) {
+    if (isFetchError(e)) {
+      errors.value = e.error?.errors
+    }
   }
 }
 

@@ -1,3 +1,5 @@
+import { routerPush } from 'src/router'
+import { isFetchError } from 'src/services'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
@@ -11,9 +13,20 @@ export default function useAsync<T extends (...args: unknown[]) => unknown> (fn:
 
   const run: UseAsync<T>['run'] = async (...args) => {
     active.value = true
-    const result = await fn(...args)
-    active.value = false
-    return result as ReturnType<T>
+    try {
+      const result = await fn(...args)
+      return result as ReturnType<T>
+    } catch (e) {
+      if (isFetchError(e)) {
+        if (e.status === 401) {
+          await routerPush('login')
+          throw new Error('Need to login first')
+        }
+      }
+      throw e
+    } finally {
+      active.value = false
+    }
   }
 
   return { active, run }
