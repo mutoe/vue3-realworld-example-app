@@ -54,7 +54,9 @@ import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
 const route = useRoute()
 const slug = route.params.slug as string
-const article: Article = reactive(await api.articles.getArticle(slug).then(res => res.data.article))
+const article: Article = reactive(await api.articles.getArticle(slug).then(res => {
+  return res.data.article
+}))
 
 const articleHandledBody = computed(() => marked(article.body))
 

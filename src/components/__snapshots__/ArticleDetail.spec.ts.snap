@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
 exports[`# ArticleDetail should render markdown (zh-CN) body correctly 1`] = `
 "<div class=\\"row article-content\\"><!-- eslint-disable vue/no-v-html  --><div class=\\"col-md-12\\"><h1 id=\\"markdown-示例\\">Markdown 示例</h1>

@@ -1,9 +1,16 @@
+import { render } from '@testing-library/vue'
 import AppFooter from 'src/components/AppFooter.vue'
 
 describe('# AppFooter', () => {
   it('should render correctly', () => {
-    cy.mount(AppFooter)
+    const { html } = render(AppFooter, {
+      global: {
+        stubs: {
+          AppLink: true,
+        },
+      },
+    })
 
-    cy.contains('Real world app')
+    expect(html()).toContain('Real world app')
   })
 })

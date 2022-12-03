@@ -1,27 +1,36 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { createTestingPinia } from '@pinia/testing'
+import { render, waitFor } from '@testing-library/vue'
+import { flushPromises } from '@vue/test-utils'
 import fixtures from 'src/utils/test/fixtures'
-import { asyncWrapper, createTestRouter } from 'src/utils/test/test.utils'
+import { asyncWrapper, createTestRouter, mockFetch } from 'src/utils/test/test.utils'
+import { nextTick } from 'vue'
+import articleFixture from '../../cypress/fixtures/article.json'
 import ArticleDetail from './ArticleDetail.vue'
 
 describe('# ArticleDetail', () => {
-  const router = createTestRouter()
+  const { router, routerPlugin } = createTestRouter()
   const AsyncArticleDetail = asyncWrapper(ArticleDetail)
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
-    cy.wrap(router.push({ name: 'article', params: { slug: fixtures.article.slug } }))
+  beforeEach(async () => {
+    await router.push({ name: 'article', params: { slug: fixtures.article.slug } })
   })
 
-  it('should render markdown body correctly', () => {
-    cy.fixture('article.json').then((res) => {
-      res.article.body = fixtures.markdown
-      cy.intercept('/api/articles/*', res).as('getArticle')
+  it('should render markdown body correctly', async () => {
+    mockFetch.mockResponse(JSON.stringify(articleFixture), { status: 200 })
+    const { html, container } = render(AsyncArticleDetail, {
+      global: {
+        plugins: [routerPlugin, createTestingPinia()],
+        stubs: { AppLink: true },
+      },
     })
+    await waitFor(() => expect(mockFetch).toBeCalled())
+    expect(mockFetch.mock.calls[0][0]).toContain('article-foo')
 
-    cy.mount(AsyncArticleDetail, { router })
-    cy.wait('@getArticle')
+    await flushPromises()
+    await nextTick()
 
-    cy.get('.article-content').should('contain.text', 'h1 Heading 8-)')
+    expect(html()).toContain('Article body')
+    expect(container.querySelector('h1')).toContain('Strong')
   })
 
   // TODO: the markdown content should do the unit test for the markdown renderer
