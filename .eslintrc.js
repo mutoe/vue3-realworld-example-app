@@ -9,9 +9,6 @@ module.exports = {
   extends: [
     '@mutoe/eslint-config-preset-vue',
   ],
-  ignorePatterns: [
-    'src/services/api.ts',
-  ],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
   },

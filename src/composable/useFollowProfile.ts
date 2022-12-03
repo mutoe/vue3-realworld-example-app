@@ -11,8 +11,8 @@ interface UseFollowProps {
 
 export function useFollow ({ username, following, onUpdate }: UseFollowProps) {
   async function toggleFollow () {
-    const requestor = following.value ? api.profiles.unfollowUserByUsername : api.profiles.followUserByUsername
-    const profile = await requestor(username.value).then(res => res.data.profile)
+    const requester = following.value ? api.profiles.unfollowUserByUsername : api.profiles.followUserByUsername
+    const profile = await requester(username.value).then(res => res.data.profile)
     onUpdate(profile)
   }
 

@@ -6,7 +6,7 @@ export function useTags () {
 
   async function fetchTags (): Promise<void> {
     tags.value = []
-    tags.value = await api.tags.tagsList().then(({ data }) => data.tags)
+    tags.value = await api.tags.getTags().then(({ data }) => data.tags)
   }
 
   return {

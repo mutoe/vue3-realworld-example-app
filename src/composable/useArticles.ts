@@ -1,6 +1,6 @@
 import type { AppRouteNames } from 'src/router'
 import { pageToOffset, api } from 'src/services'
-import type { Article, MultipleArticlesResponse } from 'src/services/api'
+import type { Article } from 'src/services/api'
 import useAsync from 'src/utils/use-async'
 import type { ComputedRef } from 'vue'
 import { computed, ref, watch } from 'vue'
@@ -15,7 +15,7 @@ export function useArticles () {
 
   async function fetchArticles (): Promise<void> {
     articles.value = []
-    let responsePromise: null | Promise<MultipleArticlesResponse> = null
+    let responsePromise: null | Promise<{ articles: Article[], articlesCount: number }> = null
 
     if (articlesType.value === 'my-feed') {
       responsePromise = api.articles.getArticlesFeed(pageToOffset(page.value))

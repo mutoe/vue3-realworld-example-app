@@ -11,25 +11,15 @@
 
 export interface LoginUser {
   email: string;
-
   /** @format password */
   password: string;
-}
-
-export interface LoginUserRequest {
-  user: LoginUser;
 }
 
 export interface NewUser {
   username: string;
   email: string;
-
   /** @format password */
   password: string;
-}
-
-export interface NewUserRequest {
-  user: NewUser;
 }
 
 export interface User {
@@ -40,25 +30,12 @@ export interface User {
   image: string;
 }
 
-export interface UserResponse {
-  user: User;
-}
-
 export interface UpdateUser {
   email?: string;
-  // The correct field is password but not token. Refer https://github.com/gothinkster/realworld/issues/950
   password?: string;
   username?: string;
   bio?: string;
   image?: string;
-}
-
-export interface UpdateUserRequest {
-  user: UpdateUser;
-}
-
-export interface ProfileResponse {
-  profile: Profile;
 }
 
 export interface Profile {
@@ -74,24 +51,13 @@ export interface Article {
   description: string;
   body: string;
   tagList: string[];
-
   /** @format date-time */
   createdAt: string;
-
   /** @format date-time */
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
   author: Profile;
-}
-
-export interface SingleArticleResponse {
-  article: Article;
-}
-
-export interface MultipleArticlesResponse {
-  articles: Article[];
-  articlesCount: number;
 }
 
 export interface NewArticle {
@@ -101,54 +67,30 @@ export interface NewArticle {
   tagList?: string[];
 }
 
-export interface NewArticleRequest {
-  article: NewArticle;
-}
-
 export interface UpdateArticle {
   title?: string;
   description?: string;
   body?: string;
 }
 
-export interface UpdateArticleRequest {
-  article: UpdateArticle;
-}
-
 export interface Comment {
   id: number;
-
   /** @format date-time */
   createdAt: string;
-
   /** @format date-time */
   updatedAt: string;
   body: string;
   author: Profile;
 }
 
-export interface SingleCommentResponse {
-  comment: Comment;
-}
-
-export interface MultipleCommentsResponse {
-  comments: Comment[];
-}
-
 export interface NewComment {
   body: string;
 }
 
-export interface NewCommentRequest {
-  comment: NewComment;
-}
-
-export interface TagsResponse {
-  tags: string[];
-}
-
 export interface GenericErrorModel {
-  errors: { body: string[] };
+  errors: {
+    body: string[];
+  };
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -193,6 +135,7 @@ export enum ContentType {
   Json = "application/json",
   FormData = "multipart/form-data",
   UrlEncoded = "application/x-www-form-urlencoded",
+  Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
@@ -217,16 +160,16 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  private encodeQueryParam(key: string, value: any) {
+  protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
     return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
   }
 
-  private addQueryParam(query: QueryParamsType, key: string) {
+  protected addQueryParam(query: QueryParamsType, key: string) {
     return this.encodeQueryParam(key, query[key]);
   }
 
-  private addArrayQueryParam(query: QueryParamsType, key: string) {
+  protected addArrayQueryParam(query: QueryParamsType, key: string) {
     const value = query[key];
     return value.map((v: any) => this.encodeQueryParam(key, v)).join("&");
   }
@@ -247,6 +190,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
       input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
+    [ContentType.Text]: (input: any) => (input !== null && typeof input !== "string" ? JSON.stringify(input) : input),
     [ContentType.FormData]: (input: any) =>
       Object.keys(input || {}).reduce((formData, key) => {
         const property = input[key];
@@ -263,7 +207,7 @@ export class HttpClient<SecurityDataType = unknown> {
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
-  private mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
+  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
     return {
       ...this.baseApiParams,
       ...params1,
@@ -276,7 +220,7 @@ export class HttpClient<SecurityDataType = unknown> {
     };
   }
 
-  private createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
+  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
       if (abortController) {
@@ -323,10 +267,10 @@ export class HttpClient<SecurityDataType = unknown> {
     return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
       ...requestParams,
       headers: {
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
         ...(requestParams.headers || {}),
+        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
       },
-      signal: cancelToken ? this.createAbortSignal(cancelToken) : void 0,
+      signal: cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal,
       body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
     }).then(async (response) => {
       const r = response as HttpResponse<T, E>;
@@ -378,13 +322,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Existing user login
      * @request POST:/users/login
      */
-    login: (data: LoginUserRequest, params: RequestParams = {}) =>
-      this.request<UserResponse, void | GenericErrorModel>({
+    login: (
+      data: {
+        user: LoginUser;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          user: User;
+        },
+        GenericErrorModel
+      >({
         path: `/users/login`,
         method: "POST",
         body: data,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -393,16 +345,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User and Authentication
      * @name CreateUser
-     * @summary Register a new user
      * @request POST:/users
      */
-    createUser: (data: NewUserRequest, params: RequestParams = {}) =>
-      this.request<UserResponse, GenericErrorModel>({
+    createUser: (
+      data: {
+        user: NewUser;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          user: User;
+        },
+        GenericErrorModel
+      >({
         path: `/users`,
         method: "POST",
         body: data,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
   };
@@ -417,11 +376,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getCurrentUser: (params: RequestParams = {}) =>
-      this.request<UserResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          user: User;
+        },
+        GenericErrorModel
+      >({
         path: `/user`,
         method: "GET",
         secure: true,
-        format: "json",
         ...params,
       }),
 
@@ -434,14 +397,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/user
      * @secure
      */
-    updateCurrentUser: (data: UpdateUserRequest, params: RequestParams = {}) =>
-      this.request<UserResponse, void | GenericErrorModel>({
+    updateCurrentUser: (
+      data: {
+        user: UpdateUser;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          user: User;
+        },
+        GenericErrorModel
+      >({
         path: `/user`,
         method: "PUT",
         body: data,
         secure: true,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
   };
@@ -455,10 +426,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/profiles/{username}
      */
     getProfileByUsername: (username: string, params: RequestParams = {}) =>
-      this.request<ProfileResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          profile: Profile;
+        },
+        GenericErrorModel
+      >({
         path: `/profiles/${username}`,
         method: "GET",
-        format: "json",
         ...params,
       }),
 
@@ -472,11 +447,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     followUserByUsername: (username: string, params: RequestParams = {}) =>
-      this.request<ProfileResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          profile: Profile;
+        },
+        GenericErrorModel
+      >({
         path: `/profiles/${username}/follow`,
         method: "POST",
         secure: true,
-        format: "json",
         ...params,
       }),
 
@@ -490,11 +469,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     unfollowUserByUsername: (username: string, params: RequestParams = {}) =>
-      this.request<ProfileResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          profile: Profile;
+        },
+        GenericErrorModel
+      >({
         path: `/profiles/${username}/follow`,
         method: "DELETE",
         secure: true,
-        format: "json",
         ...params,
       }),
   };
@@ -508,13 +491,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/articles/feed
      * @secure
      */
-    getArticlesFeed: (query?: { limit?: number; offset?: number }, params: RequestParams = {}) =>
-      this.request<MultipleArticlesResponse, void | GenericErrorModel>({
+    getArticlesFeed: (
+      query?: {
+        /**
+         * The number of items to skip before starting to collect the result set.
+         * @min 0
+         */
+        offset?: number;
+        /**
+         * The numbers of items to return.
+         * @min 1
+         * @default 20
+         */
+        limit?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          articles: Article[];
+          articlesCount: number;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/feed`,
         method: "GET",
         query: query,
         secure: true,
-        format: "json",
         ...params,
       }),
 
@@ -527,14 +530,37 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/articles
      */
     getArticles: (
-      query?: { tag?: string; author?: string; favorited?: string; limit?: number; offset?: number },
+      query?: {
+        /** Filter by tag */
+        tag?: string;
+        /** Filter by author (username) */
+        author?: string;
+        /** Filter by favorites of a user (username) */
+        favorited?: string;
+        /**
+         * The number of items to skip before starting to collect the result set.
+         * @min 0
+         */
+        offset?: number;
+        /**
+         * The numbers of items to return.
+         * @min 1
+         * @default 20
+         */
+        limit?: number;
+      },
       params: RequestParams = {},
     ) =>
-      this.request<MultipleArticlesResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          articles: Article[];
+          articlesCount: number;
+        },
+        GenericErrorModel
+      >({
         path: `/articles`,
         method: "GET",
         query: query,
-        format: "json",
         ...params,
       }),
 
@@ -547,14 +573,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/articles
      * @secure
      */
-    createArticle: (data: NewArticleRequest, params: RequestParams = {}) =>
-      this.request<SingleArticleResponse, void | GenericErrorModel>({
+    createArticle: (
+      data: {
+        article: NewArticle;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          article: Article;
+        },
+        GenericErrorModel
+      >({
         path: `/articles`,
         method: "POST",
         body: data,
         secure: true,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -567,10 +601,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/articles/{slug}
      */
     getArticle: (slug: string, params: RequestParams = {}) =>
-      this.request<SingleArticleResponse, GenericErrorModel>({
+      this.request<
+        {
+          article: Article;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}`,
         method: "GET",
-        format: "json",
         ...params,
       }),
 
@@ -583,14 +621,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/articles/{slug}
      * @secure
      */
-    updateArticle: (slug: string, data: UpdateArticleRequest, params: RequestParams = {}) =>
-      this.request<SingleArticleResponse, void | GenericErrorModel>({
+    updateArticle: (
+      slug: string,
+      data: {
+        article: UpdateArticle;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          article: Article;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}`,
         method: "PUT",
         body: data,
         secure: true,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -604,7 +651,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     deleteArticle: (slug: string, params: RequestParams = {}) =>
-      this.request<void, void | GenericErrorModel>({
+      this.request<any, GenericErrorModel>({
         path: `/articles/${slug}`,
         method: "DELETE",
         secure: true,
@@ -620,10 +667,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/articles/{slug}/comments
      */
     getArticleComments: (slug: string, params: RequestParams = {}) =>
-      this.request<MultipleCommentsResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          comments: Comment[];
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}/comments`,
         method: "GET",
-        format: "json",
         ...params,
       }),
 
@@ -636,14 +687,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/articles/{slug}/comments
      * @secure
      */
-    createArticleComment: (slug: string, data: NewCommentRequest, params: RequestParams = {}) =>
-      this.request<SingleCommentResponse, void | GenericErrorModel>({
+    createArticleComment: (
+      slug: string,
+      data: {
+        comment: NewComment;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        {
+          comment: Comment;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}/comments`,
         method: "POST",
         body: data,
         secure: true,
-        type: ContentType.Json,
-        format: "json",
         ...params,
       }),
 
@@ -657,7 +717,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     deleteArticleComment: (slug: string, id: number, params: RequestParams = {}) =>
-      this.request<void, void | GenericErrorModel>({
+      this.request<any, GenericErrorModel>({
         path: `/articles/${slug}/comments/${id}`,
         method: "DELETE",
         secure: true,
@@ -674,11 +734,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     createArticleFavorite: (slug: string, params: RequestParams = {}) =>
-      this.request<SingleArticleResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          article: Article;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}/favorite`,
         method: "POST",
         secure: true,
-        format: "json",
         ...params,
       }),
 
@@ -692,11 +756,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     deleteArticleFavorite: (slug: string, params: RequestParams = {}) =>
-      this.request<SingleArticleResponse, void | GenericErrorModel>({
+      this.request<
+        {
+          article: Article;
+        },
+        GenericErrorModel
+      >({
         path: `/articles/${slug}/favorite`,
         method: "DELETE",
         secure: true,
-        format: "json",
         ...params,
       }),
   };
@@ -704,15 +772,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * @description Get tags. Auth not required
      *
-     * @name TagsList
+     * @tags Tags
+     * @name GetTags
      * @summary Get tags
      * @request GET:/tags
      */
-    tagsList: (params: RequestParams = {}) =>
-      this.request<TagsResponse, GenericErrorModel>({
+    getTags: (params: RequestParams = {}) =>
+      this.request<
+        {
+          tags: string[];
+        },
+        GenericErrorModel
+      >({
         path: `/tags`,
         method: "GET",
-        format: "json",
         ...params,
       }),
   };

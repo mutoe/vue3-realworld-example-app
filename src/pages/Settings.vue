@@ -80,7 +80,6 @@ import type { UpdateUser } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 import { computed, onMounted, reactive } from 'vue'
 
-// FIXME: UpdateUser['token'] should change to UpdateUser['password'] and report swagger bug
 const form: UpdateUser = reactive({})
 
 const userStore = useUserStore()
