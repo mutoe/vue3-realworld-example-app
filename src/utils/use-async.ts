@@ -16,14 +16,12 @@ export default function useAsync<T extends (...args: unknown[]) => unknown> (fn:
     try {
       const result = await fn(...args)
       return result as ReturnType<T>
-    } catch (e) {
-      if (isFetchError(e)) {
-        if (e.status === 401) {
-          await routerPush('login')
-          throw new Error('Need to login first')
-        }
+    } catch (error) {
+      if (isFetchError(error) && error.status === 401) {
+        await routerPush('login')
+        throw new Error('Need to login first')
       }
-      throw e
+      throw error
     } finally {
       active.value = false
     }

@@ -6,11 +6,12 @@
     "src/**/*.vue",
     "cypress/support/component.*",
     "cypress/support/commands.ts",
-    "cypress/fixtures/**/*",
+    "cypress/fixtures/**/*"
   ],
   "exclude": [],
   "compilerOptions": {
     "composite": true,
     "types": ["cypress", "@testing-library/cypress"],
+    "noEmit": true
   }
 }

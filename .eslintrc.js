@@ -28,11 +28,8 @@ module.exports = {
       ],
       extends: [
         'plugin:cypress/recommended',
+        'plugin:chai-friendly/recommended',
       ],
-      rules: {
-        // `expect(true).to.be.true` is a valid expression
-        'no-unused-expressions': 'off',
-      },
     },
   ],
 }

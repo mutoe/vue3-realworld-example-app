@@ -81,12 +81,10 @@ export const router = createRouter({
 })
 
 export function routerPush (name: AppRouteNames, params?: RouteParams): ReturnType<typeof router.push> {
-  if (params !== undefined) {
-    return router.push({
+  return params !== undefined
+    ? router.push({
       name,
       params,
     })
-  } else {
-    return router.push({ name })
-  }
+    : router.push({ name })
 }

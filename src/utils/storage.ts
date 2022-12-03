@@ -13,7 +13,7 @@ export default class Storage<T = unknown> {
     try {
       const value = window[this.storageType].getItem(this.key) ?? ''
       return JSON.parse(value)
-    } catch (e) {
+    } catch {
       return null
     }
   }

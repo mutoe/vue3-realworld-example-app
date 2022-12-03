@@ -13,11 +13,11 @@ function wrapTests<Item> ({ task, list, fn, testName, only = false }: WrapTestsP
   const descFn = only ? context.only : context
 
   descFn(task, () => {
-    list.forEach((item, index) => {
+    for (const [index, item] of list.entries()) {
       const name = testName !== undefined ? testName(item, index) : ''
       // @ts-ignore
       it(name, () => fn(item))
-    })
+    }
   })
 }
 wrapTests.only = function <Item> ({ task, list, fn, testName }: WrapTestsProps<Item>): ReturnType<typeof wrapTests> {
