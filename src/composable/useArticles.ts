@@ -39,7 +39,7 @@ export function useArticles () {
       articles.value = response.articles
       articlesCount.value = response.articlesCount
     } else {
-      throw new Error(`Articles type "${articlesType.value}" not supported`)
+      console.error(`Articles type "${articlesType.value}" not supported`)
     }
   }
 

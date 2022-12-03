@@ -11,6 +11,7 @@ export const api = new Api({
     headers: {
       'content-type': ContentType.Json,
     },
+    format: 'json',
   },
 })
 

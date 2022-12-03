@@ -89,7 +89,9 @@ const login = async () => {
   } catch (e) {
     if (isFetchError(e)) {
       errors.value = e.error?.errors
+      return
     }
+    console.error(e)
   }
 }
 
