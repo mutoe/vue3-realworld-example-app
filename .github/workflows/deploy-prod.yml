@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "pnpm"
+          cache: 'pnpm'
       - name: build the code
         run: |
           pnpm install
