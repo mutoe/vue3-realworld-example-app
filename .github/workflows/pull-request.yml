@@ -1,7 +1,7 @@
 name: Test
 
 on:
-  push:
+  pull_request:
     paths-ignore:
       - '**.md'
 
@@ -28,7 +28,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: TypeScript check
         run: pnpm lint:tsc
@@ -58,7 +58,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Get cypress version
         id: cypress-version
@@ -105,7 +105,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Get cypress version
         id: cypress-version
