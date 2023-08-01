@@ -1,6 +1,7 @@
 lockfileVersion: '6.0'
 
 settings:
+  autoInstallPeers: true
   excludeLinksFromLockfile: false
 
 dependencies:
@@ -8,8 +9,8 @@ dependencies:
     specifier: ^2.6.2
     version: 2.6.2
   marked:
-    specifier: ^4.2.5
-    version: 4.2.5
+    specifier: ^6.0.0
+    version: 6.0.0
   pinia:
     specifier: ^2.0.28
     version: 2.0.28(typescript@4.9.4)(vue@3.2.45)
@@ -2919,9 +2920,9 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /marked@4.2.5:
-    resolution: {integrity: sha512-jPueVhumq7idETHkb203WDD4fMA3yV9emQ5vLwop58lu8bTclMghBWcYAavlDqIEMaisADinV1TooIFCfqOsYQ==}
-    engines: {node: '>= 12'}
+  /marked@6.0.0:
+    resolution: {integrity: sha512-7E3m/xIlymrFL5gWswIT4CheIE3fDeh51NV09M4x8iOc7NDYlyERcQMLAIHcSlrvwliwbPQ4OGD+MpPSYiQcqw==}
+    engines: {node: '>= 16'}
     hasBin: true
     dev: false
 
