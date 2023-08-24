@@ -35,6 +35,12 @@ jobs:
 
       - name: Eslint check
         run: pnpm lint:script
+        
+      - name: build
+        run: pnpm build
+        
+      - name: dev
+        run: pnpm dev
 
   unit_test:
     name: Unit test
