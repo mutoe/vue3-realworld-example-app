@@ -79,7 +79,7 @@ jobs:
         run: pnpm cypress install
 
       - name: Unit test
-        run: pnpm test:unit:ci
+        run: npm run test:unit:ci --coverage
 
       - name: Update coverage report
         uses: codecov/codecov-action@v3
@@ -126,4 +126,4 @@ jobs:
         run: pnpm cypress install
 
       - name: E2E test
-        run: pnpm test:e2e:ci
+        run: npm run test:e2e:ci --coverage
