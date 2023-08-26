@@ -35,6 +35,9 @@ jobs:
 
       - name: Eslint check
         run: pnpm lint:script
+        
+      - name: build
+        run: pnpm build
 
   unit_test:
     name: Unit test
@@ -76,12 +79,12 @@ jobs:
         run: pnpm cypress install
 
       - name: Unit test
-        run: pnpm test:unit:ci
+        run: npm run test:unit:ci --coverage
 
       - name: Update coverage report
         uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} 
 
   e2e_tests:
     name: E2E test
@@ -123,4 +126,4 @@ jobs:
         run: pnpm cypress install
 
       - name: E2E test
-        run: pnpm test:e2e:ci
+        run: npm run test:e2e:ci --coverage
