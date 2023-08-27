@@ -63,9 +63,6 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Serve
-        run: pnpm serve 
-               
   unit_test:
     name: Unit test
     env:
