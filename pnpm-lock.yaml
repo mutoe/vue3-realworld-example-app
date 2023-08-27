@@ -1,5 +1,8 @@
 lockfileVersion: '6.0'
 
+settings:
+  excludeLinksFromLockfile: false
+  
 dependencies:
   insane:
     specifier: ^2.6.2
