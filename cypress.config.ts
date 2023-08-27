@@ -13,5 +13,9 @@ export default defineConfig({
       framework: 'vue',
       bundler: 'vite',
     },
+  setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config)
+      return config;
+    }
   },
 })
