@@ -17,6 +17,7 @@
 // ***********************************************************
 import './commands'
 import type { StyleOptions } from '@cypress/mount-utils'
+import '@cypress/code-coverage/support'
 import type { MountingOptions } from '@vue/test-utils'
 import { mount } from 'cypress/vue'
 import registerGlobalComponents from 'src/plugins/global-components'
