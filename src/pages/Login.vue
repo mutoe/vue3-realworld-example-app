@@ -29,6 +29,7 @@
               class="form-group"
               aria-required="true"
             >
+            <label>Email: </label>
               <input
                 v-model="form.email"
                 class="form-control form-control-lg"
@@ -38,6 +39,7 @@
               >
             </fieldset>
             <fieldset class=" form-group">
+              <label>Password: </label>
               <input
                 v-model="form.password"
                 class="form-control form-control-lg"
