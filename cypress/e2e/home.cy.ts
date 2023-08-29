@@ -52,4 +52,14 @@ describe('Homepage', () => {
       .its('request.url')
       .should('contain', 'limit=10&offset=10')
   })
+
+  it('should display popular tags in home page', () => {
+    cy.visit(ROUTES.HOME)
+    cy.wait('@getTags')
+
+    cy.contains('Popular Tags')
+      .parent('.popular-tags')
+      .find('.tag-pill')
+      .should('have.length', 8)
+  })
 })
