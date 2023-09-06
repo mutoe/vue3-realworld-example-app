@@ -7,11 +7,4 @@ export default defineConfig({
     baseUrl: 'http://localhost:4173',
     defaultCommandTimeout: 8000,
   },
-  component: {
-    specPattern: 'src/**/*.{cy,spec}.{js,ts,jsx,tsx}',
-    devServer: {
-      framework: 'vue',
-      bundler: 'vite',
-    },
-  },
 })
