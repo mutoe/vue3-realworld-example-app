@@ -32,6 +32,9 @@ describe('Article', () => {
     })
 
     it('should render markdown correctly', () => {
+      cy.login()
+      cy.visit(ROUTES.ARTICLE)
+
       cy.get('.article-content').within(() => {
         cy.get('h1')
           .should('contain', 'Article body')
