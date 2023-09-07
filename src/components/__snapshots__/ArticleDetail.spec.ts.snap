@@ -23,11 +23,11 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -41,10 +41,10 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span
@@ -120,11 +120,11 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -138,10 +138,10 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span
@@ -202,11 +202,11 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -220,10 +220,10 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span
@@ -1539,11 +1539,11 @@ D--&gt;&gt;A: Dashed open arrow
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -1557,10 +1557,10 @@ D--&gt;&gt;A: Dashed open arrow
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span
@@ -1621,11 +1621,11 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -1639,10 +1639,10 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span
@@ -2674,11 +2674,11 @@ Third paragraph of definition 2.
             aria-label="profile"
             class=""
             data-v-b9ba5d49=""
-            href="/profile/Author%20name"
+            href="/profile/mutoe"
           >
             
             <img
-              alt="Author name"
+              alt="mutoe"
               data-v-b9ba5d49=""
               src=""
             />
@@ -2692,10 +2692,10 @@ Third paragraph of definition 2.
               aria-label="profile"
               class="author"
               data-v-b9ba5d49=""
-              href="/profile/Author%20name"
+              href="/profile/mutoe"
             >
               
-              Author name
+              mutoe
               
             </a>
             <span

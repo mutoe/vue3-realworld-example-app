@@ -46,7 +46,7 @@
                   v-model="form.password"
                   type="password"
                   class="form-control form-control-lg"
-                  placeholder="New Password"
+                  placeholder="New password"
                 >
               </fieldset>
               <button
@@ -63,6 +63,7 @@
 
           <button
             class="btn btn-outline-danger"
+            aria-label="Logout"
             @click="onLogout"
           >
             Or click here to logout.
@@ -107,10 +108,10 @@ onMounted(async () => {
 
 const isButtonDisabled = computed(() =>
   form.image === userStore.user?.image &&
-      form.username === userStore.user?.username &&
-      form.bio === userStore.user?.bio &&
-      form.email === userStore.user?.email &&
-      !form.password,
+  form.username === userStore.user?.username &&
+  form.bio === userStore.user?.bio &&
+  form.email === userStore.user?.email &&
+  !form.password,
 )
 
 </script>

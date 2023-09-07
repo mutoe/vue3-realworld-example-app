@@ -20,8 +20,12 @@ export const createTestRouter = (base?: string): Router => createRouter({
 interface RenderOptionsArgs {
   props: Record<string, unknown>
   slots: Record<string, (...args: unknown[]) => unknown>
+
+  router?: Router
   initialRoute: RouteLocationRaw
+
   initialState: Record<string, unknown>
+  stubActions: boolean
 }
 
 const scheduler = typeof setImmediate === 'function' ? setImmediate : setTimeout
@@ -36,7 +40,7 @@ export function renderOptions (): RenderOptions
 export function renderOptions (args: Partial<Omit<RenderOptionsArgs, 'initialRoute'>>): RenderOptions
 export async function renderOptions (args: (Partial<RenderOptionsArgs> & {initialRoute: RouteLocationRaw})): Promise<RenderOptions>
 export function renderOptions (args: Partial<RenderOptionsArgs> = {}): RenderOptions | Promise<RenderOptions> {
-  const router = createTestRouter()
+  const router = args.router || createTestRouter()
 
   const result = {
     props: args.props,
@@ -49,6 +53,7 @@ export function renderOptions (args: Partial<RenderOptionsArgs> = {}): RenderOpt
             user: { user: null },
             ...args.initialState,
           },
+          stubActions: args.stubActions ?? false,
         })],
       components: { AppLink },
     },

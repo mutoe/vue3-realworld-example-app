@@ -1,7 +1,7 @@
 import type { Comment, Article, Profile, User } from 'src/services/api'
 
 const author: Profile = {
-  username: 'Author name',
+  username: 'mutoe',
   bio: 'Author bio',
   following: false,
   image: '',
