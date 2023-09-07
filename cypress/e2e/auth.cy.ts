@@ -9,6 +9,7 @@ describe('Auth', () => {
     })
 
     it('should logout when click logout button', () => {
+      cy.login()
       cy.get(`[href="${ROUTES.SETTINGS}"]`).click()
 
       cy.get('button.btn-outline-danger')

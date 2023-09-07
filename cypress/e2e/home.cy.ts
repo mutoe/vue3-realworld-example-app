@@ -16,18 +16,21 @@ describe('Homepage', () => {
   })
 
   it('should highlight Global Feed when home page loaded', () => {
+    cy.visit(ROUTES.HOME)
     cy.get('.articles-toggle > .nav')
       .contains('Global Feed')
       .should('have.class', 'active')
   })
 
   it('should display article when page loaded', () => {
+    cy.visit(ROUTES.HOME)
     cy.get('.article-preview:first')
       .find('h1')
       .should('contain.text', 'abc123')
   })
 
   it('should read more information of the first articles', () => {
+    cy.visit(ROUTES.HOME)
     cy.get('div.article-preview:first span')
       .contains('Read more...')
       .click()
@@ -45,6 +48,9 @@ describe('Homepage', () => {
   })
 
   it('should jump to next page when click page 2 in pagination', () => {
+    cy.visit(ROUTES.HOME)
+    cy.wait('@getArticles')
+
     cy.get('ul.pagination li.page-item:nth-child(2) a.page-link')
       .click()
 

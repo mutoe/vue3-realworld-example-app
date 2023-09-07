@@ -21,6 +21,9 @@ describe('Tag', () => {
   })
 
   it('should show right articles of tag', () => {
+    cy.visit(ROUTES.HOME)
+    cy.wait('@getTags')
+
     cy.get('a.tag-pill.tag-default:last').click()
     cy.wait('@getArticlesOfTag')
 
