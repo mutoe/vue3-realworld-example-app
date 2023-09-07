@@ -1,40 +1,43 @@
+import { fireEvent, render } from '@testing-library/vue'
 import fixtures from 'src/utils/test/fixtures'
+import { renderOptions } from 'src/utils/test/test.utils.ts'
+import { vi, describe, it, expect } from 'vitest'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 
 describe('# ArticleDetailComment', () => {
   it('should render correctly', () => {
-    cy.mount(ArticleDetailComment, {
+    const { container, queryByRole } = render(ArticleDetailComment, renderOptions({
       props: { comment: fixtures.comment },
-    })
+    }))
 
-    cy.get('.card-text').should('have.text', 'Comment body')
-    cy.get('.date-posted').should('have.text', '1/1/2020')
-    cy.findByRole('button', { name: 'Delete comment' }).should('not.exist')
+    expect(container).toHaveTextContent('Comment body')
+    expect(container).toHaveTextContent('1/1/2020')
+    expect(queryByRole('button', { name: 'Delete comment' })).not.toBeInTheDocument()
   })
 
   it('should delete comment button when comment author is same user', () => {
-    cy.mount(ArticleDetailComment, {
+    const { getByRole } = render(ArticleDetailComment, renderOptions({
       props: {
         comment: fixtures.comment,
         username: fixtures.author.username,
       },
-    })
+    }))
 
-    cy.findByRole('button', { name: 'Delete comment' })
+    expect(getByRole('button', { name: 'Delete comment' })).toBeInTheDocument()
   })
 
   it('should emit remove comment when click remove comment button', () => {
-    const onRemoveComment = cy.spy().as('onRemoveComment')
-    cy.mount(ArticleDetailComment, {
+    const onRemoveComment = vi.fn()
+    const { getByRole } = render(ArticleDetailComment, renderOptions({
       props: {
         comment: fixtures.comment,
         username: fixtures.author.username,
         onRemoveComment,
       },
-    })
+    }))
 
-    cy.findByRole('button', { name: 'Delete comment' }).click()
+    fireEvent.click(getByRole('button', { name: 'Delete comment' }))
 
-    cy.get('@onRemoveComment').should('have.been.called')
+    expect(onRemoveComment).toHaveBeenCalled()
   })
 })

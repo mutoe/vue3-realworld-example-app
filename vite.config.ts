@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
@@ -14,4 +16,12 @@ export default defineConfig({
     vue(),
     analyzer({ summaryOnly: true }),
   ],
+  test: {
+    environment: 'happy-dom',
+    setupFiles: './src/setupTests.ts',
+    globals: true,
+    snapshotFormat: {
+      escapeString: false,
+    },
+  },
 })

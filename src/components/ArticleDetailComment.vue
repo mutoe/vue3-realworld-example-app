@@ -29,7 +29,7 @@
         {{ comment.author.username }}
       </AppLink>
 
-      <span class="date-posted">{{ (new Date(comment.createdAt)).toLocaleDateString() }}</span>
+      <span class="date-posted">{{ (new Date(comment.createdAt)).toLocaleDateString('en-US') }}</span>
 
       <span class="mod-options">
         <i

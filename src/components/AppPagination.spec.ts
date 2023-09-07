@@ -1,25 +1,26 @@
-import { mount } from 'cypress/vue'
+import { fireEvent, render } from '@testing-library/vue'
+import { renderOptions } from 'src/utils/test/test.utils.ts'
+import { describe, it, vi, expect } from 'vitest'
 import AppPagination from './AppPagination.vue'
 
 describe('# AppPagination', () => {
   it('should highlight current active page', () => {
-    cy.mount(AppPagination, {
+    const { getByRole } = render(AppPagination, renderOptions({
       props: { page: 1, count: 15 },
-    })
+    }))
 
-    cy.get('.page-item').should('have.length', 2)
-      .eq(0).should('have.class', 'active')
+    expect(getByRole('link', { name: 'Go to page 1' }).parentNode).toHaveClass('active')
+    expect(getByRole('link', { name: 'Go to page 2' }).parentNode).not.toHaveClass('active')
   })
 
-  it('should call onPageChange when click a page item', () => {
-    const onPageChange = cy.spy().as('onPageChange')
-    mount(AppPagination, {
+  it('should call onPageChange when click a page item', async () => {
+    const onPageChange = vi.fn()
+    const { getByRole } = render(AppPagination, renderOptions({
       props: { page: 1, count: 15, onPageChange },
-    })
+    }))
 
-    cy.findByRole('link', { name: 'Go to page 2' })
-      .click()
+    await fireEvent.click(getByRole('link', { name: 'Go to page 2' }))
 
-    cy.get('@onPageChange').should('have.been.calledWith', 2)
+    expect(onPageChange).toHaveBeenCalledWith(2)
   })
 })

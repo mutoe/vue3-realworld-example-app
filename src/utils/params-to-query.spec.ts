@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import params2query from './params-to-query'
 
 describe('# params2query', () => {
@@ -9,6 +10,6 @@ describe('# params2query', () => {
 
     const result = params2query(params)
 
-    expect(result).to.equal('foo=bar&foo2=bar2')
+    expect(result).toEqual('foo=bar&foo2=bar2')
   })
 })
