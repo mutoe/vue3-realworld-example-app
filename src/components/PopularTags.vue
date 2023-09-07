@@ -7,6 +7,7 @@
       :key="tag"
       name="tag"
       :params="{tag}"
+      :aria-label="tag"
       class="tag-pill tag-default"
     >
       {{ tag }}
@@ -16,6 +17,7 @@
 
 <script setup lang="ts">
 import { useTags } from 'src/composable/useTags'
+
 const { tags, fetchTags } = useTags()
 
 await fetchTags()

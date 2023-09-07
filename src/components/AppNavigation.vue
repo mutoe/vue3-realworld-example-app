@@ -19,6 +19,7 @@
             active-class="active"
             :name="link.name"
             :params="link.params"
+            :aria-label="link.title"
           >
             <i
               v-if="link.icon"

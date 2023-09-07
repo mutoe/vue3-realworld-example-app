@@ -1,37 +1,34 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { fireEvent, render } from '@testing-library/vue'
 import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
-import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { describe, expect, it } from 'vitest'
 
 describe('# ArticleDetailCommentsForm', () => {
-  setActivePinia(createPinia())
-  const userStore = useUserStore()
-
-  beforeEach(() => {
-    cy.intercept('/api/profiles/*', { profile: fixtures.author }).as('getProfile')
-    cy.intercept('POST', '/api/articles/*/comments', { comment: { body: 'some texts...' } }).as('postComment')
-    userStore.updateUser(fixtures.user)
-  })
+  const server = setupMockServer(
+    ['POST', '/api/articles/*/comments', { comment: { body: 'some texts...' } }],
+  )
 
   it('should display sign in button when user not logged', () => {
-    userStore.updateUser(null)
-    cy.mount(ArticleDetailCommentsForm, {
+    const { container } = render(ArticleDetailCommentsForm, renderOptions({
+      initialState: { user: { user: null } },
       props: { articleSlug: fixtures.article.slug },
-    })
+    }))
 
-    cy.contains('add comments on this article')
+    expect(container).toHaveTextContent('add comments on this article')
   })
 
-  it('should display form when user logged', () => {
-    cy.mount(ArticleDetailCommentsForm, {
+  it('should display form when user logged', async () => {
+    server.use(['GET', '/api/profiles/*', { profile: fixtures.author }])
+    const { getByRole } = render(ArticleDetailCommentsForm, renderOptions({
+      initialState: { user: { user: fixtures.user } },
       props: { articleSlug: fixtures.article.slug },
-    })
+    }))
+    await server.waitForRequest('GET', '/api/profiles/*')
 
-    cy.findByRole('textbox', { name: 'Write comment' }).type('some texts...')
-    cy.findByRole('button', { name: 'Submit' }).click()
+    await fireEvent.update(getByRole('textbox', { name: 'Write comment' }), 'some texts...')
+    await fireEvent.click(getByRole('button', { name: 'Submit' }))
 
-    cy.wait('@postComment')
-      .its('request.body')
-      .should('deep.equal', { comment: { body: 'some texts...' } })
+    await server.waitForRequest('POST', '/api/articles/*/comments')
   })
 })

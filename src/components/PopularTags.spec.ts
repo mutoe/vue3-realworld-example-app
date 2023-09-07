@@ -1,18 +1,20 @@
+import { render } from '@testing-library/vue'
 import PopularTags from 'src/components/PopularTags.vue'
-import { asyncWrapper } from 'src/utils/test/test.utils'
+import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
+import { describe, expect, it } from 'vitest'
 
 describe('# PopularTags', () => {
-  const AsyncPopularTags = asyncWrapper(PopularTags)
+  const server = setupMockServer(
+    ['GET', '/api/tags', { tags: ['tag1', 'tag2'] }],
+  )
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api/tags', { tags: ['foo', 'bar'] }).as('getTags')
-  })
+  it('should render correctly', async () => {
+    const { getAllByRole } = render(asyncWrapper(PopularTags), renderOptions())
 
-  it('should render correctly', () => {
-    cy.mount(AsyncPopularTags)
+    await server.waitForRequest('GET', '/api/tags')
 
-    cy.get('.tag-pill')
-      .should('have.length', 2)
-      .contains('foo')
+    expect(getAllByRole('link')).toHaveLength(2)
+    expect(getAllByRole('link')[0]).toHaveTextContent('tag1')
+    expect(getAllByRole('link')[1]).toHaveTextContent('tag2')
   })
 })

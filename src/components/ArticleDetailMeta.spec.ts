@@ -1,7 +1,8 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { fireEvent, render } from '@testing-library/vue'
 import type { Profile } from 'src/services/api'
-import { useUserStore } from 'src/store/user'
 import fixtures from 'src/utils/test/fixtures'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { describe, expect, it, vi } from 'vitest'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
 const editButton = 'Edit article'
@@ -12,119 +13,105 @@ const favoriteButton = 'Favorite article'
 const unfavoriteButton = 'Unfavorite article'
 
 describe('# ArticleDetailMeta', () => {
-  setActivePinia(createPinia())
-  const userStore = useUserStore()
-
-  beforeEach(() => {
-    userStore.updateUser(fixtures.user)
-  })
+  const server = setupMockServer()
 
   it('should display edit button when user is author', () => {
-    cy.mount(ArticleDetailMeta, {
+    const { getByRole, queryByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: fixtures.user } },
       props: { article: fixtures.article },
-    })
+    }))
 
-    cy.findByRole('link', { name: editButton })
-    cy.findByRole('button', { name: followButton }).should('not.exist')
+    expect(getByRole('link', { name: editButton })).toBeInTheDocument()
+    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
   })
 
   it('should display follow button when user not author', () => {
-    userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    cy.mount(ArticleDetailMeta, {
+    const { getByRole, queryByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: { ...fixtures.user, username: 'user2' } } },
       props: { article: fixtures.article },
-    })
+    }))
 
-    cy.findByRole('link', { name: editButton }).should('not.exist')
-    cy.findByRole('button', { name: followButton })
+    expect(getByRole('button', { name: followButton })).toBeInTheDocument()
+    expect(queryByRole('link', { name: editButton })).not.toBeInTheDocument()
   })
 
   it('should not display follow button and edit button when user not logged', () => {
-    userStore.updateUser(null)
-    cy.mount(ArticleDetailMeta, {
+    const { queryByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: null } },
       props: { article: fixtures.article },
-    })
+    }))
 
-    cy.findByRole('link', { name: editButton }).should('not.exist')
-    cy.findByRole('button', { name: followButton }).should('not.exist')
+    expect(queryByRole('button', { name: editButton })).not.toBeInTheDocument()
+    expect(queryByRole('button', { name: followButton })).not.toBeInTheDocument()
   })
 
-  it('should call delete article service when click delete button', () => {
-    cy.intercept('DELETE', '/api/articles/*', { status: 200 }).as('deleteArticle')
-    cy.mount(ArticleDetailMeta, {
+  it('should call delete article service when click delete button', async () => {
+    server.use(['DELETE', '/api/articles/*'])
+    const { getByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: fixtures.user } },
       props: { article: fixtures.article },
-    })
+    }))
 
-    cy.findByRole('button', { name: deleteButton }).click()
+    await fireEvent.click(getByRole('button', { name: deleteButton }))
 
-    cy.wait('@deleteArticle')
-      .its('request.url')
-      .should('contain', '/api/articles/article-foo')
+    await server.waitForRequest('DELETE', '/api/articles/*')
   })
 
-  it('should call follow service when click follow button', () => {
+  it('should call follow service when click follow button', async () => {
     const newProfile: Profile = { ...fixtures.user, following: true }
-    cy.intercept('POST', '/api/profiles/*/follow', { profile: newProfile }).as('followUser')
-    userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const onUpdate = cy.spy().as('onUpdate')
-    cy.mount(ArticleDetailMeta, {
+    server.use(['POST', '/api/profiles/*/follow', { profile: newProfile }])
+    const onUpdate = vi.fn()
+    const { getByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: { ...fixtures.user, username: 'user2' } } },
       props: { article: fixtures.article, onUpdate },
-    })
+    }))
 
-    cy.findByRole('button', { name: followButton }).click()
+    await fireEvent.click(getByRole('button', { name: followButton }))
 
-    cy.get('@followUser')
-      .its('request.url')
-      .should('contain', '/api/profiles/Author%20name/follow')
-
-    cy.get('@onUpdate').should('be.calledWith', { ...fixtures.article, author: newProfile })
+    await server.waitForRequest('POST', '/api/profiles/*/follow')
+    expect(onUpdate).toHaveBeenCalledWith({ ...fixtures.article, author: newProfile })
   })
 
-  it('should call unfollow service when click follow button and not followed author', () => {
+  it('should call unfollow service when click follow button and not followed author', async () => {
     const newProfile: Profile = { ...fixtures.user, following: false }
-    cy.intercept('DELETE', '/api/profiles/*/follow', { profile: newProfile }).as('unfollowUser')
-    userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    const onUpdate = cy.spy().as('onUpdate')
-    cy.mount(ArticleDetailMeta, {
+    server.use(['DELETE', '/api/profiles/*/follow', { profile: newProfile }])
+    const onUpdate = vi.fn()
+    const { getByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: { ...fixtures.user, username: 'user2' } } },
       props: {
         article: { ...fixtures.article, author: { ...fixtures.article.author, following: true } },
         onUpdate,
       },
-    })
+    }))
 
-    cy.findByRole('button', { name: unfollowButton }).click()
+    await fireEvent.click(getByRole('button', { name: unfollowButton }))
 
-    cy.wait('@unfollowUser')
-      .its('request.url')
-      .should('contain', '/api/profiles/Author%20name/follow')
+    await server.waitForRequest('DELETE', '/api/profiles/*/follow')
 
-    cy.get('@onUpdate').should('be.calledWith', { ...fixtures.article, author: newProfile })
+    expect(onUpdate).toHaveBeenCalledWith({ ...fixtures.article, author: newProfile })
   })
 
-  it('should call favorite article service when click favorite button', () => {
-    cy.intercept('POST', '/api/articles/*/favorite', { status: 200 }).as('favoriteArticle')
-    userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    cy.mount(ArticleDetailMeta, {
+  it('should call favorite article service when click favorite button', async () => {
+    server.use(['POST', '/api/articles/*/favorite', { article: { ...fixtures.article, favorited: true } }])
+    const { getByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: { ...fixtures.user, username: 'user2' } } },
       props: { article: { ...fixtures.article, favorited: false } },
-    })
+    }))
 
-    cy.findByRole('button', { name: favoriteButton }).click()
+    await fireEvent.click(getByRole('button', { name: favoriteButton }))
 
-    cy.wait('@favoriteArticle')
-      .its('request.url')
-      .should('contain', '/api/articles/article-foo/favorite')
+    await server.waitForRequest('POST', '/api/articles/*/favorite')
   })
 
-  it('should call favorite article service when click unfavorite button', () => {
-    cy.intercept('DELETE', '/api/articles/*/favorite', { status: 200 }).as('unfavoriteArticle')
-    userStore.updateUser({ ...fixtures.user, username: 'user2' })
-    cy.mount(ArticleDetailMeta, {
+  it('should call favorite article service when click unfavorite button', async () => {
+    server.use(['DELETE', '/api/articles/*/favorite', { article: { ...fixtures.article, favorited: false } }])
+    const { getByRole } = render(ArticleDetailMeta, renderOptions({
+      initialState: { user: { user: { ...fixtures.user, username: 'user2' } } },
       props: { article: { ...fixtures.article, favorited: true } },
-    })
+    }))
 
-    cy.findByRole('button', { name: unfavoriteButton }).click()
+    await fireEvent.click(getByRole('button', { name: unfavoriteButton }))
 
-    cy.wait('@unfavoriteArticle')
-      .its('request.url')
-      .should('contain', '/api/articles/article-foo/favorite')
+    await server.waitForRequest('DELETE', '/api/articles/*/favorite')
   })
 })

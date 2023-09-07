@@ -1,9 +1,12 @@
-import AppFooter from 'src/components/AppFooter.vue'
+import { render } from '@testing-library/vue'
+import { describe, it, expect } from 'vitest'
+import { renderOptions } from 'src/utils/test/test.utils'
+import AppFooter from './AppFooter.vue'
 
 describe('# AppFooter', () => {
   it('should render correctly', () => {
-    cy.mount(AppFooter)
+    const { container } = render(AppFooter, renderOptions())
 
-    cy.contains('Real world app')
+    expect(container).toHaveTextContent('Real world app')
   })
 })

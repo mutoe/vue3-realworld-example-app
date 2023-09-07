@@ -1,23 +1,21 @@
-import { createPinia, setActivePinia } from 'pinia'
+import { render } from '@testing-library/vue'
 import ArticlesList from 'src/components/ArticlesList.vue'
 import fixtures from 'src/utils/test/fixtures'
-import { asyncWrapper } from 'src/utils/test/test.utils'
+import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
+import { describe, it, expect } from 'vitest'
 
 describe('# ArticlesList', () => {
-  const AsyncArticlesList = asyncWrapper(ArticlesList)
-  setActivePinia(createPinia())
+  const server = setupMockServer(
+    ['GET', '/api/articles*', { articles: [fixtures.article], articlesCount: 1 }],
+  )
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api/articles*', { articles: [fixtures.article], articlesCount: 1 }).as('getArticles')
-  })
+  it('should render correctly', async () => {
+    const { container } = render(asyncWrapper(ArticlesList), renderOptions())
 
-  it('should render correctly', () => {
-    cy.mount(AsyncArticlesList)
+    await server.waitForRequest('GET', '/api/articles*')
 
-    cy.wait('@getArticles')
-
-    cy.contains(fixtures.article.title)
-    cy.contains('Article description')
-    cy.contains(fixtures.article.author.username)
+    expect(container).toHaveTextContent(fixtures.article.title)
+    expect(container).toHaveTextContent('Article description')
+    expect(container).toHaveTextContent(fixtures.article.author.username)
   })
 })

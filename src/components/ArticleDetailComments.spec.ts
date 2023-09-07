@@ -1,61 +1,55 @@
-import { createPinia, setActivePinia } from 'pinia'
-import { useUserStore } from 'src/store/user'
+import { fireEvent, render } from '@testing-library/vue'
 import fixtures from 'src/utils/test/fixtures'
-import { asyncWrapper, createTestRouter } from 'src/utils/test/test.utils'
+import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
+import { describe, expect, it } from 'vitest'
 import ArticleDetailComments from './ArticleDetailComments.vue'
 
 describe('# ArticleDetailComments', () => {
   // const mockDeleteComment = deleteComment as jest.MockedFunction<typeof deleteComment>
-  const AsyncArticleDetailComments = asyncWrapper(ArticleDetailComments)
-  const router = createTestRouter()
-  setActivePinia(createPinia())
-  const userStore = useUserStore()
 
-  beforeEach(() => {
-    cy.intercept('GET', '/api/profiles/*', { profile: fixtures.author }).as('getProfile')
-    cy.intercept('GET', '/api/articles/*/comments', { comments: [fixtures.comment] }).as('getCommentsByArticle')
-    cy.intercept('POST', '/api/articles/*/comments', { comment: fixtures.comment2 }).as('postCommentsByArticle')
-    cy.wrap(router.push({ name: 'article', params: { slug: fixtures.article.slug } }))
+  const server = setupMockServer(
+    ['GET', '/api/profiles/*', { profile: fixtures.author }],
+    ['GET', '/api/articles/*/comments', { comments: [fixtures.comment] }],
+    ['POST', '/api/articles/*/comments', { comment: fixtures.comment2 }],
+    ['DELETE', '/api/articles/*/comments/*'],
+  )
+
+  it('should render correctly', async () => {
+    const { container } = render(asyncWrapper(ArticleDetailComments), await renderOptions({
+      initialRoute: { name: 'article', params: { slug: fixtures.article.slug } },
+      initialState: { user: { user: null } },
+    }))
+
+    await server.waitForRequest('GET', '/api/articles/article-foo/comments')
+
+    expect(container).toHaveTextContent('Comment body')
   })
 
-  it('should render correctly', () => {
-    cy.mount(AsyncArticleDetailComments, { router })
+  it('should display new comment when post new comment', async () => {
+    const { container, getByRole } = render(asyncWrapper(ArticleDetailComments), await renderOptions({
+      initialRoute: { name: 'article', params: { slug: fixtures.article.slug } },
+      initialState: { user: { user: fixtures.user } },
+    }))
+    await server.waitForRequest('GET', '/api/articles/*/comments')
+    expect(container).toHaveTextContent('Comment body')
 
-    cy.wait('@getCommentsByArticle')
-      .its('request.url')
-      .should('contain', '/api/articles/article-foo/comments')
+    await fireEvent.update(getByRole('textbox', { name: 'Write comment' }), fixtures.comment2.body)
+    await fireEvent.click(getByRole('button', { name: 'Submit' }))
 
-    cy.contains(fixtures.comment.body)
+    await server.waitForRequest('POST', '/api/articles/*/comments')
+    expect(container).toHaveTextContent(fixtures.comment2.body)
   })
 
-  it('should display new comment when post new comment', () => {
-    // given
-    userStore.updateUser(fixtures.user)
-    cy.mount(AsyncArticleDetailComments, { router })
-    cy.wait('@getProfile')
-    cy.wait('@getCommentsByArticle')
-    cy.contains(fixtures.comment.body)
+  it('should call remove comment service when click delete button', async () => {
+    const { container, getByRole } = render(asyncWrapper(ArticleDetailComments), await renderOptions({
+      initialRoute: { name: 'article', params: { slug: fixtures.article.slug } },
+      initialState: { user: { user: fixtures.user } },
+    }))
+    await server.waitForRequest('GET', '/api/articles/article-foo/comments')
 
-    // when
-    cy.findByRole('textbox', { name: 'Write comment' }).type(fixtures.comment2.body)
-    cy.findByRole('button', { name: 'Submit' }).click()
+    await fireEvent.click(getByRole('button', { name: 'Delete comment' }))
 
-    // then
-    cy.contains(fixtures.comment2.body)
-  })
-
-  it.only('should call remove comment service when click delete button', () => {
-    // given
-    cy.intercept('DELETE', '/api/articles/*/comments/*', { status: 200 }).as('deleteComment')
-    userStore.updateUser(fixtures.user)
-    cy.mount(AsyncArticleDetailComments, { router })
-    cy.wait('@getCommentsByArticle')
-
-    // when
-    cy.findByRole('button', { name: 'Delete comment' }).click()
-
-    // then
-    cy.wait('@deleteComment')
-    cy.contains(fixtures.comment.body).should('not.exist')
+    await server.waitForRequest('DELETE', '/api/articles/article-foo/comments/*')
+    expect(container).not.toHaveTextContent(fixtures.comment.body)
   })
 })

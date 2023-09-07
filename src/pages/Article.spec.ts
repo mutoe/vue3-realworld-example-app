@@ -1,26 +1,31 @@
-import { createPinia, setActivePinia } from 'pinia'
-import { createTestRouter } from 'src/utils/test/test.utils'
+import { render } from '@testing-library/vue'
+import fixtures from 'src/utils/test/fixtures.ts'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils'
+import { describe, expect, it } from 'vitest'
 import Article from './Article.vue'
 
 describe('# Article', () => {
-  const router = createTestRouter()
+  const server = setupMockServer(
+    ['GET', '/api/articles/foo', { article: fixtures.article }],
+    ['GET', '/api/articles/foo/comments', { comments: fixtures.articleComments }],
+  )
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
-    cy.wrap(router.push({ name: 'article', params: { slug: 'foo' } }))
-    cy.intercept('GET', '/api/articles/foo', { fixture: 'article.json' }).as('getArticle')
-    cy.intercept('GET', '/api/articles/foo/comments', { fixture: 'article-comments.json' }).as('getComments')
-  })
+  it('should render correctly', async () => {
+    const { container } = render(Article, await renderOptions({
+      initialRoute: { name: 'article', params: { slug: 'foo' } },
+    }))
 
-  it('should render correctly', () => {
-    cy.mount(Article, { router })
+    expect(container).toHaveTextContent('Article is downloading')
+    expect(container).toHaveTextContent('Comments are downloading')
 
-    cy.contains('Article is downloading')
-    cy.contains('Comments are downloading')
+    await server.waitForRequest('GET', '/api/articles/foo')
 
-    cy.wait('@getArticle')
-
-    cy.contains('Article title')
-    cy.contains('Before starting a new implementation')
+    expect(container).toHaveTextContent(fixtures.article.title)
+    expect(container).toHaveTextContent('Article body')
+    expect(container).toHaveTextContent(fixtures.article.author.username)
+    expect(container).toHaveTextContent(fixtures.articleComments[0].body)
+    expect(container).toHaveTextContent(fixtures.articleComments[0].author.username)
+    expect(container).toHaveTextContent(fixtures.articleComments[1].body)
+    expect(container).toHaveTextContent(fixtures.articleComments[1].author.username)
   })
 })
