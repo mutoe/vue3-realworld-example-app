@@ -23,6 +23,7 @@
 
           <form
             ref="formRef"
+            aria-label="Login form"
             @submit.prevent="login"
           >
             <fieldset

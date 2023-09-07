@@ -23,5 +23,20 @@ export default defineConfig({
     snapshotFormat: {
       escapeString: false,
     },
+    coverage: {
+      enabled: true,
+      provider: 'v8',
+      include: [
+        'src',
+      ],
+      exclude: [
+        'src/*.{ts,vue}',
+        'src/services/api.ts',
+        'src/setupTests.ts',
+        'src/utils/test',
+        '**/*.d.ts',
+      ],
+      all: true,
+    },
   },
 })

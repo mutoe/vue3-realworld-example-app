@@ -27,6 +27,7 @@
                 v-if="showEdit"
                 class="btn btn-sm btn-outline-secondary action-btn"
                 name="settings"
+                aria-label="Edit profile settings"
               >
                 <i class="ion-gear-a space" />
                 Edit profile settings
@@ -71,7 +72,7 @@ import ArticlesList from 'src/components/ArticlesList.vue'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { useProfile } from 'src/composable/useProfile'
 import type { Profile } from 'src/services/api'
-import { isAuthorized, useUserStore } from 'src/store/user'
+import { useUserStore } from 'src/store/user'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -86,9 +87,9 @@ const { followProcessGoing, toggleFollow } = useFollow({
   onUpdate: (newProfileData: Profile) => updateProfile(newProfileData),
 })
 
-const { user } = storeToRefs(useUserStore())
+const { user, isAuthorized } = storeToRefs(useUserStore())
 
-const showEdit = computed<boolean>(() => isAuthorized() && user.value?.username === username.value)
+const showEdit = computed<boolean>(() => isAuthorized && user.value?.username === username.value)
 const showFollow = computed<boolean>(() => user.value?.username !== username.value)
 
 </script>

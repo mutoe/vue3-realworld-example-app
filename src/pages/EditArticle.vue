@@ -45,6 +45,8 @@
                 >
                   <i
                     class="ion-close-round"
+                    role="button"
+                    :aria-label="`Remove tag: ${tag}`"
                     @click="removeTag(tag)"
                   />
                   {{ tag }}

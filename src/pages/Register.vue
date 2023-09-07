@@ -23,6 +23,7 @@
 
           <form
             ref="formRef"
+            aria-label="Registration form"
             @submit.prevent="register"
           >
             <fieldset class="form-group">

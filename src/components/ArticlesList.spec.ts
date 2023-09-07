@@ -1,8 +1,8 @@
 import { render } from '@testing-library/vue'
-import ArticlesList from 'src/components/ArticlesList.vue'
 import fixtures from 'src/utils/test/fixtures'
 import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 import { describe, it, expect } from 'vitest'
+import ArticlesList from './ArticlesList.vue'
 
 describe('# ArticlesList', () => {
   const server = setupMockServer(
