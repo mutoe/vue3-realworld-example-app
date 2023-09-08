@@ -139,7 +139,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "/api";
+  public baseUrl: string = "https://api.realworld.io/api";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
@@ -270,7 +270,7 @@ export class HttpClient<SecurityDataType = unknown> {
         ...(requestParams.headers || {}),
         ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
       },
-      signal: cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal,
+      signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
       body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
     }).then(async (response) => {
       const r = response as HttpResponse<T, E>;
@@ -304,13 +304,13 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title Conduit API
+ * @title RealWorld Conduit API
  * @version 1.0.0
  * @license MIT License (https://opensource.org/licenses/MIT)
- * @baseUrl /api
- * @contact RealWorld (https://realworld.io)
+ * @baseUrl https://api.realworld.io/api
+ * @contact RealWorld (https://realworld.how)
  *
- * Conduit API
+ * Conduit API documentation
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   users = {

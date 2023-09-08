@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
-  title: Conduit API
-  description: Conduit API
+  title: RealWorld Conduit API
+  description: Conduit API documentation
   contact:
     name: RealWorld
-    url: https://realworld.io
+    url: https://realworld.how
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
@@ -17,7 +17,7 @@ tags:
   - name: Tags
   - name: User and Authentication
 servers:
-  - url: /api
+  - url: https://api.realworld.io/api
 paths:
   /users/login:
     post:
@@ -451,13 +451,13 @@ components:
         - bio
         - email
         - image
-        - password
+        - token
         - username
       type: object
       properties:
         email:
           type: string
-        password:
+        token:
           type: string
         username:
           type: string
@@ -599,7 +599,7 @@ components:
             body:
               type: array
               items:
-                type: string    
+                type: string
   responses:
     TagsResponse:
       description: Tags
