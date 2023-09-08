@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event'
 import { fireEvent, render, waitFor } from '@testing-library/vue'
 import { describe, expect, it, vi } from 'vitest'
 import { router } from 'src/router.ts'
@@ -79,5 +80,17 @@ describe('# Settings Page', () => {
         },
       }
     `)
+  })
+
+  it('should display error message when api returned some errors', async () => {
+    server.use(['PUT', '/api/user', 400, { errors: { username: ['has already been taken'] } }])
+    const { getByRole, getByPlaceholderText, getByText } = render(Settings, renderOptions({
+      initialState: { user: { user: fixtures.user } },
+    }))
+
+    await userEvent.type(getByPlaceholderText('Your name'), 'new username')
+    await userEvent.click(getByRole('button', { name: 'Update Settings' }))
+
+    expect(getByText('username has already been taken')).toBeInTheDocument()
   })
 })

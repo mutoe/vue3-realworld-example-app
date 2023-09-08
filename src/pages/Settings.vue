@@ -7,6 +7,12 @@
             Your Settings
           </h1>
 
+          <ul class="error-messages">
+            <li v-for="(error, field) in errors" :key="field">
+              {{ field }} {{ error ? error[0] : '' }}
+            </li>
+          </ul>
+
           <form @submit.prevent="onSubmit">
             <fieldset>
               <fieldset class="form-group">
@@ -75,22 +81,31 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { routerPush } from 'src/router'
-import { api } from 'src/services'
+import { api, isFetchError } from 'src/services'
 import type { UpdateUser } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 
 const form: UpdateUser = reactive({})
 
 const userStore = useUserStore()
+const errors = ref()
 
 const onSubmit = async () => {
-  // eslint-disable-next-line unicorn/no-array-reduce
-  const filteredForm = Object.entries(form).reduce((form, [k, v]) => v === null ? form : Object.assign(form, { [k]: v }), {})
-  const userData = await api.user.updateCurrentUser({ user: filteredForm }).then(res => res.data.user)
-  userStore.updateUser(userData)
-  await routerPush('profile', { username: userData.username })
+  errors.value = {}
+
+  try {
+    // eslint-disable-next-line unicorn/no-array-reduce
+    const filteredForm = Object.entries(form).reduce((form, [k, v]) => v === null ? form : Object.assign(form, { [k]: v }), {})
+    const userData = await api.user.updateCurrentUser({ user: filteredForm }).then(res => res.data.user)
+    userStore.updateUser(userData)
+    await routerPush('profile', { username: userData.username })
+  } catch (error) {
+    if (isFetchError(error)) {
+      errors.value = error.error?.errors
+    }
+  }
 }
 
 const onLogout = async () => {
