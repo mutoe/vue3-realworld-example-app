@@ -43,11 +43,11 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "simple-git-hooks": "^2.9.0",
     "swagger-typescript-api": "^13.0.3",
-    "typescript": "~5.0.4",
+    "typescript": "~5.2.2",
     "vite": "^4.4.9",
     "vitest": "^0.34.3",
     "vitest-dom": "^0.1.0",
-    "vue-tsc": "^1.8.8"
+    "vue-tsc": "^1.8.10"
   },
   "lint-staged": {
     "src/**/*.{ts,vue,js}": "eslint --fix",
