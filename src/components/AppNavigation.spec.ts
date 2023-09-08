@@ -1,5 +1,5 @@
 import { render } from '@testing-library/vue'
-import { expect, describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { renderOptions } from 'src/utils/test/test.utils.ts'
 import AppNavigation from './AppNavigation.vue'
 

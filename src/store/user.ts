@@ -1,8 +1,8 @@
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { api } from 'src/services'
 import type { User } from 'src/services/api'
 import Storage from 'src/utils/storage'
-import { computed, ref } from 'vue'
 
 export const userStorage = new Storage<User>('user')
 

@@ -1,7 +1,7 @@
-import { api } from 'src/services'
-import type { Profile } from 'src/services/api'
 import type { ComputedRef } from 'vue'
 import { ref, watch } from 'vue'
+import { api } from 'src/services'
+import type { Profile } from 'src/services/api'
 
 interface UseProfileProps {
   username: ComputedRef<string>

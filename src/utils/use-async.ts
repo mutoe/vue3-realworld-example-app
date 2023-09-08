@@ -1,7 +1,7 @@
-import { routerPush } from 'src/router'
-import { isFetchError } from 'src/services'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
+import { routerPush } from 'src/router'
+import { isFetchError } from 'src/services'
 
 interface UseAsync<T extends (...args: unknown[]) => unknown> {
   active: Ref<boolean>

@@ -1,7 +1,7 @@
+import type { ComputedRef } from 'vue'
 import { api } from 'src/services'
 import type { Article } from 'src/services/api'
 import useAsync from 'src/utils/use-async'
-import type { ComputedRef } from 'vue'
 
 interface useFavoriteArticleProps {
   isFavorited: ComputedRef<boolean>

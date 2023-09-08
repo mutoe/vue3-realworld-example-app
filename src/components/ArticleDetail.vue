@@ -13,14 +13,11 @@
 
   <div class="container page">
     <div class="row article-content">
-      <!--       eslint-disable vue/no-v-html  -->
-      <div
-        class="col-md-12"
-        v-html="articleHandledBody"
-      />
-      <!--       eslint-enable vue/no-v-html  -->
+      <!-- eslint-disable vue/no-v-html -->
+      <div class="col-md-12" v-html="articleHandledBody" />
+      <!-- eslint-enable vue/no-v-html -->
 
-      <!--      TODO: abstract tag list component-->
+      <!-- TODO: abstract tag list component -->
       <ul class="tag-list">
         <li
           v-for="tag in article.tagList"
@@ -45,11 +42,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed, reactive } from 'vue'
+import { useRoute } from 'vue-router'
 import marked from 'src/plugins/marked'
 import { api } from 'src/services'
 import type { Article } from 'src/services/api'
-import { computed, reactive } from 'vue'
-import { useRoute } from 'vue-router'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
 const route = useRoute()

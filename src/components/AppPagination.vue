@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { limit } from 'src/services'
 import { computed, toRefs } from 'vue'
+import { limit } from 'src/services'
 
 interface Props {
   page: number

@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import { useFollow } from 'src/composable/useFollowProfile'
@@ -71,7 +72,6 @@ import { routerPush } from 'src/router'
 import { api } from 'src/services'
 import type { Article, Profile } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
-import { computed, toRefs } from 'vue'
 
 interface Props {
   article: Article

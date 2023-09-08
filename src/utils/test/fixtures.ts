@@ -1,4 +1,4 @@
-import type { Comment, Article, Profile, User } from 'src/services/api'
+import type { Article, Comment, Profile, User } from 'src/services/api'
 
 const author: Profile = {
   username: 'mutoe',

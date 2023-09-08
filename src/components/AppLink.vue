@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import type { AppRouteNames } from 'src/router'
 import type { RouteParams } from 'vue-router'
+import type { AppRouteNames } from 'src/router'
 
 export interface AppLinkProps {
   name: AppRouteNames

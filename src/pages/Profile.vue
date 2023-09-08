@@ -67,14 +67,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import ArticlesList from 'src/components/ArticlesList.vue'
 import { useFollow } from 'src/composable/useFollowProfile'
 import { useProfile } from 'src/composable/useProfile'
 import type { Profile } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const username = computed<string>(() => route.params.username as string)

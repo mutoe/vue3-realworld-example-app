@@ -1,16 +1,15 @@
-/* eslint-disable unicorn/no-nested-ternary */
-import type { MockedRequest, DefaultBodyType } from 'msw'
+import { Suspense, defineComponent, h } from 'vue'
+import type { RouteLocationRaw, Router } from 'vue-router'
+import { createMemoryHistory, createRouter } from 'vue-router'
+import { createTestingPinia } from '@pinia/testing'
+import type { RenderOptions } from '@testing-library/vue'
+import type { DefaultBodyType, MockedRequest } from 'msw'
 import { matchRequestUrl, rest } from 'msw'
 import type { SetupServer } from 'msw/node'
 import { setupServer } from 'msw/node'
-import { routes } from 'src/router'
 import { afterAll, afterEach, beforeAll } from 'vitest'
-import { defineComponent, h, Suspense } from 'vue'
-import type { RouteLocationRaw, Router } from 'vue-router'
-import { createMemoryHistory, createRouter } from 'vue-router'
-import type { RenderOptions } from '@testing-library/vue'
-import { createTestingPinia } from '@pinia/testing'
 import AppLink from 'src/components/AppLink.vue'
+import { routes } from 'src/router'
 
 export const createTestRouter = (base?: string): Router => createRouter({
   routes,
@@ -140,7 +139,7 @@ type Listener =
  *   await server.waitForRequest('GET', '/api/articles/markdown')
  * })
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export function setupMockServer (...listeners: Listener[]) {
   const parseArgs = (args: Listener): [string, string, number, (object | null)] => {
     if (args.length === 4) return args

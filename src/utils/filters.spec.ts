@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'vitest'
 import { dateFilter } from 'src/utils/filters'
-import { expect, describe, it } from 'vitest'
 
 describe('# Date filters', () => {
   it('should format date correctly', () => {

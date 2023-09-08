@@ -1,5 +1,6 @@
-import { marked } from 'marked'
+/* eslint-disable array-element-newline */
 import insane from 'insane'
+import { marked } from 'marked'
 
 export default (markdown?: string): string => {
   if (!markdown) return ''
@@ -7,9 +8,9 @@ export default (markdown?: string): string => {
 
   return insane(html, {
     allowedTags: ['a', 'article', 'b', 'blockquote', 'br', 'caption', 'code', 'del', 'details', 'div', 'em',
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'kbd', 'li', 'main', 'ol',
-      'p', 'pre', 'section', 'span', 'strike', 'strong', 'sub', 'summary', 'sup', 'table',
-      'tbody', 'td', 'th', 'thead', 'tr', 'u', 'ul', 'input'],
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'input', 'ins', 'kbd', 'li', 'main',
+      'ol', 'p', 'pre', 'section', 'span', 'strike', 'strong', 'sub', 'summary', 'sup',
+      'table', 'tbody', 'td', 'th', 'thead', 'tr', 'u', 'ul'],
     allowedAttributes: {
       a: ['href', 'name', 'target', 'title'],
       iframe: ['allowfullscreen', 'frameborder', 'src'],

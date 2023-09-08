@@ -1,8 +1,8 @@
 import { fireEvent, render } from '@testing-library/vue'
+import { describe, it } from 'vitest'
 import ArticlesListArticlePreview from 'src/components/ArticlesListArticlePreview.vue'
 import fixtures from 'src/utils/test/fixtures'
 import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
-import { describe, it } from 'vitest'
 
 const favoriteButton = 'Favorite article'
 

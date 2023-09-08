@@ -1,5 +1,5 @@
-import { api } from 'src/services'
 import { ref } from 'vue'
+import { api } from 'src/services'
 
 export function useTags () {
   const tags = ref<string[]>([])

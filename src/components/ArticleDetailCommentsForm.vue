@@ -39,12 +39,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useProfile } from 'src/composable/useProfile'
 import { api } from 'src/services'
-import { useUserStore } from 'src/store/user'
-import { computed, ref } from 'vue'
 import type { Comment } from 'src/services/api'
+import { useUserStore } from 'src/store/user'
 
 interface Props {
   articleSlug: string

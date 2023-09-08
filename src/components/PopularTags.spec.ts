@@ -1,7 +1,7 @@
 import { render } from '@testing-library/vue'
+import { describe, expect, it } from 'vitest'
 import PopularTags from 'src/components/PopularTags.vue'
 import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
-import { describe, expect, it } from 'vitest'
 
 describe('# PopularTags', () => {
   const server = setupMockServer(

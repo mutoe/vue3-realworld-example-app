@@ -1,8 +1,8 @@
 import { render } from '@testing-library/vue'
+import { describe, expect, it } from 'vitest'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import fixtures from 'src/utils/test/fixtures'
 import { renderOptions } from 'src/utils/test/test.utils.ts'
-import { describe, expect, it } from 'vitest'
 
 describe('# ArticlesListNavigation', () => {
   it('should render global feed item when passed global feed prop', () => {

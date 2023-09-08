@@ -1,8 +1,8 @@
 import { fireEvent, render } from '@testing-library/vue'
+import { describe, expect, it, vi } from 'vitest'
 import { useUserStore } from 'src/store/user.ts'
 import fixtures from 'src/utils/test/fixtures.ts'
 import { createTestRouter, renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
-import { describe, expect, it, vi } from 'vitest'
 import Login from './Login.vue'
 
 describe('# Login page', () => {

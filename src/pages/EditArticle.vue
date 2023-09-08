@@ -68,10 +68,10 @@
 </template>
 
 <script setup lang="ts">
-import { api } from 'src/services'
-import type { Article } from 'src/services/api'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { api } from 'src/services'
+import type { Article } from 'src/services/api'
 
 interface FormState {
   title: string

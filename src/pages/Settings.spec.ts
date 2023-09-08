@@ -1,9 +1,9 @@
 import { fireEvent, render, waitFor } from '@testing-library/vue'
+import { describe, expect, it, vi } from 'vitest'
 import { router } from 'src/router.ts'
 import { useUserStore } from 'src/store/user.ts'
 import fixtures from 'src/utils/test/fixtures.ts'
 import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
-import { describe, expect, it, vi } from 'vitest'
 import Settings from './Settings.vue'
 
 describe('# Settings Page', () => {

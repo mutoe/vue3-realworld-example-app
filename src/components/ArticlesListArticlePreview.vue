@@ -51,9 +51,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
 import type { Article } from 'src/services/api'
-import { computed } from 'vue'
 
 interface Props {
   article: Article

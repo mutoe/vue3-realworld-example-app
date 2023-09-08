@@ -1,7 +1,7 @@
 import { render } from '@testing-library/vue'
+import { describe, expect, it } from 'vitest'
 import fixtures from 'src/utils/test/fixtures.ts'
 import { renderOptions, setupMockServer } from 'src/utils/test/test.utils'
-import { describe, expect, it } from 'vitest'
 import Article from './Article.vue'
 
 describe('# Article', () => {

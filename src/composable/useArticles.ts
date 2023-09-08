@@ -1,10 +1,10 @@
-import type { AppRouteNames } from 'src/router'
-import { pageToOffset, api } from 'src/services'
-import type { Article } from 'src/services/api'
-import useAsync from 'src/utils/use-async'
 import type { ComputedRef } from 'vue'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import type { AppRouteNames } from 'src/router'
+import { api, pageToOffset } from 'src/services'
+import type { Article } from 'src/services/api'
+import useAsync from 'src/utils/use-async'
 
 export function useArticles () {
   const { articlesType, tag, username, metaChanged } = useArticlesMeta()
@@ -34,13 +34,14 @@ export function useArticles () {
         .then(res => res.data)
     }
 
-    if (responsePromise !== null) {
-      const response = await responsePromise
-      articles.value = response.articles
-      articlesCount.value = response.articlesCount
-    } else {
+    if (responsePromise === null) {
       console.error(`Articles type "${articlesType.value}" not supported`)
+      return
     }
+
+    const response = await responsePromise
+    articles.value = response.articles
+    articlesCount.value = response.articlesCount
   }
 
   const changePage = (value: number): void => {
@@ -54,8 +55,11 @@ export function useArticles () {
   const { active: articlesDownloading, run: runWrappedFetchArticles } = useAsync(fetchArticles)
 
   watch(metaChanged, async () => {
-    if (page.value !== 1) changePage(1)
-    else await runWrappedFetchArticles()
+    if (page.value === 1) {
+      await runWrappedFetchArticles()
+    } else {
+      changePage(1)
+    }
   })
 
   watch(page, runWrappedFetchArticles)
@@ -76,7 +80,7 @@ export function useArticles () {
 export type ArticlesType = 'global-feed' | 'my-feed' | 'tag-feed' | 'user-feed' | 'user-favorites-feed'
 
 export const articlesTypes: ArticlesType[] = ['global-feed', 'my-feed', 'tag-feed', 'user-feed', 'user-favorites-feed']
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+
 export const isArticlesType = (type: any): type is ArticlesType => articlesTypes.includes(type)
 
 const routeNameToArticlesType: Partial<Record<AppRouteNames, ArticlesType>> = {

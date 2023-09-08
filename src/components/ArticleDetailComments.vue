@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { api } from 'src/services'
 import type { Comment } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 import ArticleDetailCommentsForm from './ArticleDetailCommentsForm.vue'
 

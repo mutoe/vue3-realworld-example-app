@@ -1,6 +1,6 @@
 import { isRef } from 'vue'
+import { describe, expect, it, vi } from 'vitest'
 import useAsync from 'src/utils/use-async'
-import { vi, expect, it, describe } from 'vitest'
 
 describe('# Create async process', () => {
   const someProcess = (): Promise<null> => Promise.resolve(null)
