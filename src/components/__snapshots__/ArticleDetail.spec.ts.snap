@@ -266,9 +266,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
         <div
           class="col-md-12"
         >
-          <h1
-            id="markdown-示例"
-          >
+          <h1>
             Markdown 示例
           </h1>
           
@@ -281,9 +279,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           <hr />
           
 
-          <h3
-            id="1-斜体和粗体"
-          >
+          <h3>
             1. 斜体和粗体
           </h3>
           
@@ -311,9 +307,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="2-分级标题"
-          >
+          <h3>
             2. 分级标题
           </h3>
           
@@ -347,9 +341,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="3-外链接"
-          >
+          <h3>
             3. 外链接
           </h3>
           
@@ -375,9 +367,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="4-无序列表"
-          >
+          <h3>
             4. 无序列表
           </h3>
           
@@ -413,9 +403,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </ul>
           
 
-          <h3
-            id="5-有序列表"
-          >
+          <h3>
             5. 有序列表
           </h3>
           
@@ -451,9 +439,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </ol>
           
 
-          <h3
-            id="6-文字引用"
-          >
+          <h3>
             6. 文字引用
           </h3>
           
@@ -479,9 +465,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </blockquote>
           
 
-          <h3
-            id="7-行内代码块"
-          >
+          <h3>
             7. 行内代码块
           </h3>
           
@@ -509,9 +493,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="8--代码块"
-          >
+          <h3>
             8.  代码块
           </h3>
           
@@ -534,9 +516,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </pre>
           
 
-          <h3
-            id="9--插入图像"
-          >
+          <h3>
             9.  插入图像
           </h3>
           
@@ -559,16 +539,12 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h1
-            id="cmd-markdown-高阶语法手册"
-          >
+          <h1>
             Cmd Markdown 高阶语法手册
           </h1>
           
 
-          <h3
-            id="1-内容目录"
-          >
+          <h3>
             1. 内容目录
           </h3>
           
@@ -587,9 +563,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="2-标签分类"
-          >
+          <h3>
             2. 标签分类
           </h3>
           
@@ -614,9 +588,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="3-删除线"
-          >
+          <h3>
             3. 删除线
           </h3>
           
@@ -633,9 +605,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="4-注脚"
-          >
+          <h3>
             4. 注脚
           </h3>
           
@@ -655,9 +625,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="5-latex-公式"
-          >
+          <h3>
             5. LaTeX 公式
           </h3>
           
@@ -707,9 +675,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
           </p>
           
 
-          <h3
-            id="6-加强的代码块"
-          >
+          <h3>
             6. 加强的代码块
           </h3>
           
@@ -789,16 +755,12 @@ document.write(fib(10));
           </pre>
           
 
-          <h3
-            id="7-流程图"
-          >
+          <h3>
             7. 流程图
           </h3>
           
 
-          <h4
-            id="示例"
-          >
+          <h4>
             示例
           </h4>
           
@@ -822,9 +784,7 @@ cond(no)-&gt;sub-&gt;io
           </pre>
           
 
-          <h4
-            id="更多语法参考：流程图语法参考"
-          >
+          <h4>
             更多语法参考：
             <a
               href="http://adrai.github.io/flowchart.js/"
@@ -834,16 +794,12 @@ cond(no)-&gt;sub-&gt;io
           </h4>
           
 
-          <h3
-            id="8-序列图"
-          >
+          <h3>
             8. 序列图
           </h3>
           
 
-          <h4
-            id="示例-1"
-          >
+          <h4>
             示例 1
           </h4>
           
@@ -860,9 +816,7 @@ Bob--&gt;Alice: I am good thanks!
           </pre>
           
 
-          <h4
-            id="示例-2"
-          >
+          <h4>
             示例 2
           </h4>
           
@@ -881,9 +835,7 @@ D--&gt;&gt;A: Dashed open arrow
           </pre>
           
 
-          <h4
-            id="更多语法参考：序列图语法参考"
-          >
+          <h4>
             更多语法参考：
             <a
               href="http://bramp.github.io/js-sequence-diagrams/"
@@ -893,9 +845,7 @@ D--&gt;&gt;A: Dashed open arrow
           </h4>
           
 
-          <h3
-            id="9-甘特图"
-          >
+          <h3>
             9. 甘特图
           </h3>
           
@@ -927,9 +877,7 @@ D--&gt;&gt;A: Dashed open arrow
           </pre>
           
 
-          <h4
-            id="更多语法参考：甘特图语法参考"
-          >
+          <h4>
             更多语法参考：
             <a
               href="https://knsv.github.io/mermaid/#gant-diagrams"
@@ -939,9 +887,7 @@ D--&gt;&gt;A: Dashed open arrow
           </h4>
           
 
-          <h3
-            id="10-mermaid-流程图"
-          >
+          <h3>
             10. Mermaid 流程图
           </h3>
           
@@ -959,9 +905,7 @@ D--&gt;&gt;A: Dashed open arrow
           </pre>
           
 
-          <h4
-            id="更多语法参考：mermaid-流程图语法参考"
-          >
+          <h4>
             更多语法参考：
             <a
               href="https://knsv.github.io/mermaid/#flowcharts-basic-syntax"
@@ -971,9 +915,7 @@ D--&gt;&gt;A: Dashed open arrow
           </h4>
           
 
-          <h3
-            id="11-mermaid-序列图"
-          >
+          <h3>
             11. Mermaid 序列图
           </h3>
           
@@ -991,9 +933,7 @@ D--&gt;&gt;A: Dashed open arrow
           </pre>
           
 
-          <h4
-            id="更多语法参考：mermaid-序列图语法参考"
-          >
+          <h4>
             更多语法参考：
             <a
               href="https://knsv.github.io/mermaid/#sequence-diagrams"
@@ -1003,9 +943,7 @@ D--&gt;&gt;A: Dashed open arrow
           </h4>
           
 
-          <h3
-            id="12-表格支持"
-          >
+          <h3>
             12. 表格支持
           </h3>
           
@@ -1124,9 +1062,7 @@ D--&gt;&gt;A: Dashed open arrow
           </table>
           
 
-          <h3
-            id="13-定义型列表"
-          >
+          <h3>
             13. 定义型列表
           </h3>
           
@@ -1151,9 +1087,7 @@ D--&gt;&gt;A: Dashed open arrow
           </pre>
           
 
-          <h3
-            id="14-html-标签"
-          >
+          <h3>
             14. Html 标签
           </h3>
           
@@ -1239,9 +1173,7 @@ D--&gt;&gt;A: Dashed open arrow
           
 
 
-          <h3
-            id="15-内嵌图标"
-          >
+          <h3>
             15. 内嵌图标
           </h3>
           
@@ -1307,9 +1239,7 @@ D--&gt;&gt;A: Dashed open arrow
           </p>
           
 
-          <h3
-            id="16-待办事宜-todo-列表"
-          >
+          <h3>
             16. 待办事宜 Todo 列表
           </h3>
           
@@ -1685,51 +1615,37 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
         <div
           class="col-md-12"
         >
-          <h1
-            id="h1-heading-8-"
-          >
+          <h1>
             h1 Heading 8-)
           </h1>
           
 
-          <h2
-            id="h2-heading"
-          >
+          <h2>
             h2 Heading
           </h2>
           
 
-          <h3
-            id="h3-heading"
-          >
+          <h3>
             h3 Heading
           </h3>
           
 
-          <h4
-            id="h4-heading"
-          >
+          <h4>
             h4 Heading
           </h4>
           
 
-          <h5
-            id="h5-heading"
-          >
+          <h5>
             h5 Heading
           </h5>
           
 
-          <h6
-            id="h6-heading"
-          >
+          <h6>
             h6 Heading
           </h6>
           
 
-          <h2
-            id="horizontal-rules"
-          >
+          <h2>
             Horizontal Rules
           </h2>
           
@@ -1743,9 +1659,7 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
           <hr />
           
 
-          <h2
-            id="typographic-replacements"
-          >
+          <h2>
             Typographic replacements
           </h2>
           
@@ -1775,9 +1689,7 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
           </p>
           
 
-          <h2
-            id="emphasis"
-          >
+          <h2>
             Emphasis
           </h2>
           
@@ -1817,9 +1729,7 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
           </p>
           
 
-          <h2
-            id="blockquotes"
-          >
+          <h2>
             Blockquotes
           </h2>
           
@@ -1857,9 +1767,7 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
           </blockquote>
           
 
-          <h2
-            id="lists"
-          >
+          <h2>
             Lists
           </h2>
           
@@ -2027,9 +1935,7 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
           </ol>
           
 
-          <h2
-            id="code"
-          >
+          <h2>
             Code
           </h2>
           
@@ -2090,9 +1996,7 @@ console.log(foo(5));
           </pre>
           
 
-          <h2
-            id="tables"
-          >
+          <h2>
             Tables
           </h2>
           
@@ -2274,9 +2178,7 @@ console.log(foo(5));
           </table>
           
 
-          <h2
-            id="links"
-          >
+          <h2>
             Links
           </h2>
           
@@ -2311,9 +2213,7 @@ console.log(foo(5));
           </p>
           
 
-          <h2
-            id="images"
-          >
+          <h2>
             Images
           </h2>
           
@@ -2352,9 +2252,7 @@ console.log(foo(5));
           </p>
           
 
-          <h2
-            id="plugins"
-          >
+          <h2>
             Plugins
           </h2>
           
@@ -2375,9 +2273,7 @@ console.log(foo(5));
           </p>
           
 
-          <h3
-            id="emojies"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-emoji"
             >
@@ -2413,9 +2309,7 @@ console.log(foo(5));
           </p>
           
 
-          <h3
-            id="subscript--superscript"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-sub"
             >
@@ -2450,9 +2344,7 @@ console.log(foo(5));
           </ul>
           
 
-          <h3
-            id="ins"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-ins"
             >
@@ -2466,9 +2358,7 @@ console.log(foo(5));
           </p>
           
 
-          <h3
-            id="mark"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-mark"
             >
@@ -2482,9 +2372,7 @@ console.log(foo(5));
           </p>
           
 
-          <h3
-            id="footnotes"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-footnote"
             >
@@ -2534,9 +2422,7 @@ console.log(foo(5));
           </p>
           
 
-          <h3
-            id="definition-lists"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-deflist"
             >
@@ -2599,9 +2485,7 @@ Third paragraph of definition 2.
           </p>
           
 
-          <h3
-            id="abbreviations"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-abbr"
             >
@@ -2625,9 +2509,7 @@ Third paragraph of definition 2.
           </p>
           
 
-          <h3
-            id="custom-containers"
-          >
+          <h3>
             <a
               href="https://github.com/markdown-it/markdown-it-container"
             >

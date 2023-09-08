@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.6.2
     version: 2.6.2
   marked:
-    specifier: ^4.2.5
-    version: 4.2.5
+    specifier: ^8.0.1
+    version: 8.0.1
   pinia:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.0.4)(vue@3.3.4)
@@ -37,9 +37,6 @@ devDependencies:
   '@testing-library/vue':
     specifier: ^7.0.0
     version: 7.0.0(@vue/compiler-sfc@3.3.4)(vue@3.3.4)
-  '@types/marked':
-    specifier: ^4.0.8
-    version: 4.0.8
   '@vitejs/plugin-vue':
     specifier: ^4.3.4
     version: 4.3.4(vite@4.4.9)(vue@3.3.4)
@@ -717,10 +714,6 @@ packages:
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-    dev: true
-
-  /@types/marked@4.0.8:
-    resolution: {integrity: sha512-HVNzMT5QlWCOdeuBsgXP8EZzKUf0+AXzN+sLmjvaB3ZlLqO+e4u0uXrdw9ub69wBKFs+c6/pA4r9sy6cCDvImw==}
     dev: true
 
   /@types/ms@0.7.31:
@@ -3539,9 +3532,9 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /marked@4.2.5:
-    resolution: {integrity: sha512-jPueVhumq7idETHkb203WDD4fMA3yV9emQ5vLwop58lu8bTclMghBWcYAavlDqIEMaisADinV1TooIFCfqOsYQ==}
-    engines: {node: '>= 12'}
+  /marked@8.0.1:
+    resolution: {integrity: sha512-eEbeEb/mJwh+sNLEhHOWtxMgjN/NEwZUBs1nkiIH2sTQTq07KmPMQ48ihyvo5+Ya56spVOPhunfGr6406crCVA==}
+    engines: {node: '>= 16'}
     hasBin: true
     dev: false
 
