@@ -17,7 +17,7 @@ describe('# ArticleDetail', () => {
     }))
     await server.waitForRequest('GET', '/api/articles/markdown')
 
-    expect(container).toMatchSnapshot()
+    expect(container.querySelector('#article-content')).toMatchSnapshot()
   })
 
   it('should render markdown (zh-CN) body correctly', async () => {
@@ -26,7 +26,7 @@ describe('# ArticleDetail', () => {
     }))
     await server.waitForRequest('GET', '/api/articles/markdown-cn')
 
-    expect(container).toMatchSnapshot()
+    expect(container.querySelector('#article-content')).toMatchSnapshot()
   })
 
   it('should filter the xss content in Markdown body', async () => {
@@ -35,6 +35,6 @@ describe('# ArticleDetail', () => {
     }))
     await server.waitForRequest('GET', '/api/articles/markdown-xss')
 
-    expect(container).toMatchSnapshot()
+    expect(container.querySelector('#article-content')).toMatchSnapshot()
   })
 })

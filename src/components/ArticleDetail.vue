@@ -14,7 +14,7 @@
   <div class="container page">
     <div class="row article-content">
       <!-- eslint-disable vue/no-v-html -->
-      <div class="col-md-12" v-html="articleHandledBody" />
+      <div id="article-content" class="col-md-12" v-html="articleHandledBody" />
       <!-- eslint-enable vue/no-v-html -->
 
       <!-- TODO: abstract tag list component -->
