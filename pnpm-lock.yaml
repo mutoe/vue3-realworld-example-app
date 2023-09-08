@@ -58,9 +58,6 @@ devDependencies:
   happy-dom:
     specifier: ^11.0.2
     version: 11.0.2
-  husky:
-    specifier: ^8.0.2
-    version: 8.0.2
   lint-staged:
     specifier: ^13.1.0
     version: 13.1.0
@@ -70,6 +67,9 @@ devDependencies:
   rollup-plugin-analyzer:
     specifier: ^4.0.0
     version: 4.0.0
+  simple-git-hooks:
+    specifier: ^2.9.0
+    version: 2.9.0
   swagger-typescript-api:
     specifier: ^13.0.3
     version: 13.0.3
@@ -3010,12 +3010,6 @@ packages:
     engines: {node: '>=12.20.0'}
     dev: true
 
-  /husky@8.0.2:
-    resolution: {integrity: sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: true
-
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -4649,6 +4643,12 @@ packages:
 
   /signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+    dev: true
+
+  /simple-git-hooks@2.9.0:
+    resolution: {integrity: sha512-waSQ5paUQtyGC0ZxlHmcMmD9I1rRXauikBwX31bX58l5vTOhCEcBC5Bi+ZDkPXTjDnZAF8TbCqKBY+9+sVPScw==}
+    hasBin: true
+    requiresBuild: true
     dev: true
 
   /skin-tone@2.0.0:
