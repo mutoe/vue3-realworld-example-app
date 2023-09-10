@@ -18,6 +18,7 @@
               <fieldset class="form-group">
                 <input
                   v-model="form.image"
+                  aria-label="Avatar picture url"
                   type="text"
                   class="form-control"
                   placeholder="URL of profile picture"
@@ -26,6 +27,7 @@
               <fieldset class="form-group">
                 <input
                   v-model="form.username"
+                  aria-label="Username"
                   type="text"
                   class="form-control form-control-lg"
                   placeholder="Your name"
@@ -34,6 +36,7 @@
               <fieldset class="form-group">
                 <textarea
                   v-model="form.bio"
+                  aria-label="Bio"
                   class="form-control form-control-lg"
                   :rows="8"
                   placeholder="Short bio about you"
@@ -42,6 +45,7 @@
               <fieldset class="form-group">
                 <input
                   v-model="form.email"
+                  aria-label="Email"
                   type="email"
                   class="form-control form-control-lg"
                   placeholder="Email"
@@ -50,6 +54,7 @@
               <fieldset class="form-group">
                 <input
                   v-model="form.password"
+                  aria-label="Password"
                   type="password"
                   class="form-control form-control-lg"
                   placeholder="New password"

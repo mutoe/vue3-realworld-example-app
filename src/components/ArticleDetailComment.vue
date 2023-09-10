@@ -34,10 +34,12 @@
       <span class="mod-options">
         <i
           v-if="showRemove"
+          tabindex="0"
           role="button"
           aria-label="Delete comment"
           class="ion-trash-a"
           @click="emit('remove-comment')"
+          @keypress.enter="emit('remove-comment')"
         />
       </span>
     </div>
@@ -45,19 +47,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { Comment } from 'src/services/api'
+import { computed } from 'vue'
 
 interface Props {
   comment: Comment
   username?: string
 }
+const props = defineProps<Props>()
 
 interface Emits {
   (e: 'remove-comment'): boolean
 }
-
-const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const showRemove = computed(() => props.username !== undefined && props.username === props.comment.author.username)

@@ -7,6 +7,7 @@
             <fieldset class="form-group">
               <input
                 v-model="form.title"
+                aria-label="Title"
                 type="text"
                 class="form-control form-control-lg"
                 placeholder="Article Title"
@@ -15,6 +16,7 @@
             <fieldset class="form-group">
               <input
                 v-model="form.description"
+                aria-label="Description"
                 type="text"
                 class="form-control form-control-lg"
                 placeholder="What's this article about?"
@@ -23,6 +25,7 @@
             <fieldset class="form-group">
               <textarea
                 v-model="form.body"
+                aria-label="Body"
                 :rows="8"
                 class="form-control"
                 placeholder="Write your article (in markdown)"
@@ -31,6 +34,7 @@
             <fieldset class="form-group">
               <input
                 v-model="newTag"
+                aria-label="Tags"
                 type="text"
                 class="form-control"
                 placeholder="Enter tags"
@@ -44,10 +48,12 @@
                   class="tag-default tag-pill"
                 >
                   <i
-                    class="ion-close-round"
                     role="button"
-                    :aria-label="`Remove tag: ${tag}`"
+                    tabindex="0"
+                    :aria-label="`Delete tag ${tag}`"
+                    class="ion-close-round"
                     @click="removeTag(tag)"
+                    @keypress.enter="removeTag(tag)"
                   />
                   {{ tag }}
                 </span>

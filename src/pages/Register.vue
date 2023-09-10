@@ -29,6 +29,7 @@
             <fieldset class="form-group">
               <input
                 v-model="form.username"
+                aria-label="Username"
                 class="form-control form-control-lg"
                 type="text"
                 required
@@ -38,6 +39,7 @@
             <fieldset class="form-group">
               <input
                 v-model="form.email"
+                aria-label="Email"
                 class="form-control form-control-lg"
                 type="email"
                 required
@@ -47,6 +49,7 @@
             <fieldset class="form-group">
               <input
                 v-model="form.password"
+                aria-label="Password"
                 class="form-control form-control-lg"
                 type="password"
                 :minLength="8"
