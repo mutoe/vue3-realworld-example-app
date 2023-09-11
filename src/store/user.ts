@@ -13,14 +13,14 @@ export const useUserStore = defineStore('user', () => {
   const isAuthorized = computed(() => !!user.value)
 
   function updateUser (userData?: User | null) {
-    if (userData === undefined || userData === null) {
-      userStorage.remove()
-      api.setSecurityData(null)
-      user.value = null
-    } else {
+    if (userData) {
       userStorage.set(userData)
       api.setSecurityData(userData.token)
       user.value = userData
+    } else {
+      userStorage.remove()
+      api.setSecurityData(null)
+      user.value = null
     }
   }
 

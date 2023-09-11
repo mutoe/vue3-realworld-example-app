@@ -54,7 +54,7 @@
               <fieldset class="form-group">
                 <input
                   v-model="form.password"
-                  aria-label="Password"
+                  aria-label="New password"
                   type="password"
                   class="form-control form-control-lg"
                   placeholder="New password"
