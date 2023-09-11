@@ -50,7 +50,7 @@
                   <i
                     role="button"
                     tabindex="0"
-                    :aria-label="`Delete tag ${tag}`"
+                    :aria-label="`Delete tag: ${tag}`"
                     class="ion-close-round"
                     @click="removeTag(tag)"
                     @keypress.enter="removeTag(tag)"

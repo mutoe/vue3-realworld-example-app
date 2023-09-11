@@ -91,7 +91,7 @@ describe('# EditArticle page', () => {
     await server.waitForRequest('GET', '/api/articles/*')
 
     await userEvent.type(getByPlaceholderText('Enter tags'), 'tag1{Enter}tag2{Enter}')
-    await userEvent.click(getByRole('button', { name: 'Remove tag: tag1' }))
+    await userEvent.click(getByRole('button', { name: 'Delete tag: tag1' }))
 
     await fireEvent.click(getByRole('button', { name: 'Publish Article' }))
 
