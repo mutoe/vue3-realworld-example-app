@@ -47,8 +47,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Comment } from 'src/services/api'
 import { computed } from 'vue'
+import type { Comment } from 'src/services/api'
 
 interface Props {
   comment: Comment
