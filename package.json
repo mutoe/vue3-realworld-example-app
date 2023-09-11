@@ -54,7 +54,7 @@
     "cypress/**/*.{ts,js}": "eslint --fix"
   },
   "simple-git-hooks": {
-    "pre-commit": "lint-staged",
+    "pre-commit": "npm exec lint-staged",
     "pre-push": "npm run lint && npm run build"
   }
 }
