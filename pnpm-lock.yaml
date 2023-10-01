@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.6.2
     version: 2.6.2
   marked:
-    specifier: ^8.0.1
-    version: 8.0.1
+    specifier: ^9.0.3
+    version: 9.0.3
   pinia:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.2.2)(vue@3.3.4)
@@ -3696,8 +3696,8 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /marked@8.0.1:
-    resolution: {integrity: sha512-eEbeEb/mJwh+sNLEhHOWtxMgjN/NEwZUBs1nkiIH2sTQTq07KmPMQ48ihyvo5+Ya56spVOPhunfGr6406crCVA==}
+  /marked@9.0.3:
+    resolution: {integrity: sha512-pI/k4nzBG1PEq1J3XFEHxVvjicfjl8rgaMaqclouGSMPhk7Q3Ejb2ZRxx/ZQOcQ1909HzVoWCFYq6oLgtL4BpQ==}
     engines: {node: '>= 16'}
     hasBin: true
     dev: false
