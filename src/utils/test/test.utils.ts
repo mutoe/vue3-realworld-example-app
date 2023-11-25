@@ -3,8 +3,7 @@ import type { RouteLocationRaw, Router } from 'vue-router'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { createTestingPinia } from '@pinia/testing'
 import type { RenderOptions } from '@testing-library/vue'
-import type { DefaultBodyType, MockedRequest } from 'msw'
-import { matchRequestUrl, rest } from 'msw'
+import { HttpResponse, http, matchRequestUrl } from 'msw'
 import type { SetupServer } from 'msw/node'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll } from 'vitest'
@@ -84,26 +83,26 @@ export function asyncWrapper (component: ReturnType<typeof defineComponent>, pro
   })
 }
 
-async function waitForServerRequest (server: SetupServer, method: string, url: string, flush = true) {
-  let requestId = ''
-  let request: MockedRequest
+async function waitForServerRequest (server: SetupServer, method: string, url: string, flush = true): Promise<Request> {
+  let expectedRequestId = ''
+  let expectedRequest: Request
 
-  const result = await new Promise<MockedRequest>((resolve, reject) => {
-    server.events.on('request:start', (req) => {
-      const matchesMethod = req.method.toLowerCase() === method.toLowerCase()
-      const matchesUrl = matchRequestUrl(req.url, url).matches
+  const result = await new Promise<Request>((resolve, reject) => {
+    server.events.on('request:match', ({ request, requestId }) => {
+      const matchesMethod = request.method.toLowerCase() === method.toLowerCase()
+      const matchesUrl = matchRequestUrl(new URL(request.url), url)
       if (matchesMethod && matchesUrl) {
-        requestId = req.id
-        request = req
+        expectedRequestId = requestId
+        expectedRequest = request
       }
     })
 
-    server.events.on('response:mocked', (_res, reqId) => {
-      if (reqId === requestId) resolve(request)
+    server.events.on('response:mocked', ({ requestId: reqId }) => {
+      if (reqId === expectedRequestId) resolve(expectedRequest)
     })
 
-    server.events.on('request:unhandled', (req) => {
-      if (req.id === requestId) reject(new Error(`The ${req.method} ${req.url.href} request was unhandled.`))
+    server.events.on('request:unhandled', ({ request: req, requestId: reqId }) => {
+      if (reqId === expectedRequestId) reject(new Error(`The ${req.method} ${req.url} request was unhandled.`))
     })
   })
   flush && await flushPromises()
@@ -131,7 +130,7 @@ type Listener =
  *   ['GET', '/api/articles/markdown', { article }],
  *   ['GET', '/api/articles/markdown', 200, { article }],
  *   ['DELETE', '/api/articles/comment'],
- *   ['DELETE', '/api/articles/comment', 204],
+ *   ['DELETE', '/api/articles/comment', 204]
  * )
  *
  * it('...', async () => {
@@ -159,8 +158,8 @@ export function setupMockServer (...listeners: Listener[]) {
     ...listeners.map((args) => {
       let [method, path, status, response] = parseArgs(args)
       method = method.toLowerCase()
-      return rest[method as 'all'](`${import.meta.env.VITE_API_HOST}${path}`, (_req, res, ctx) => {
-        return res(ctx.status(status), ctx.json(response))
+      return http[method as 'all'](`${import.meta.env.VITE_API_HOST}${path}`, () => {
+        return HttpResponse.json(response, { status })
       })
     }),
   )
@@ -169,11 +168,11 @@ export function setupMockServer (...listeners: Listener[]) {
   afterEach(() => void server.resetHandlers())
   afterAll(() => void server.close())
 
-  async function waitForRequest (path: string): Promise<MockedRequest<DefaultBodyType>>
-  async function waitForRequest (path: string, flush: boolean): Promise<MockedRequest<DefaultBodyType>>
-  async function waitForRequest (method: HttpMethod, path: string): Promise<MockedRequest<DefaultBodyType>>
-  async function waitForRequest (method: HttpMethod, path: string, flush: boolean): Promise<MockedRequest<DefaultBodyType>>
-  async function waitForRequest (...args: [string] | [string, boolean] | [HttpMethod, string] | [HttpMethod, string, boolean]): Promise<MockedRequest<DefaultBodyType>> {
+  async function waitForRequest (path: string): Promise<Request>
+  async function waitForRequest (path: string, flush: boolean): Promise<Request>
+  async function waitForRequest (method: HttpMethod, path: string): Promise<Request>
+  async function waitForRequest (method: HttpMethod, path: string, flush: boolean): Promise<Request>
+  async function waitForRequest (...args: [string] | [string, boolean] | [HttpMethod, string] | [HttpMethod, string, boolean]): Promise<Request> {
     const [method, path, flush] = args.length === 1
       ? ['all', args[0]] // ['all', path]
       : args.length === 2 && typeof args[1] === 'boolean'
@@ -191,8 +190,8 @@ export function setupMockServer (...listeners: Listener[]) {
       ...listeners.map((args) => {
         let [method, path, status, response] = parseArgs(args)
         method = method.toLowerCase()
-        return rest[method as 'all'](`${import.meta.env.VITE_API_HOST}${path}`, (_req, res, ctx) => {
-          return res(ctx.status(status), ctx.json(response))
+        return http[method as 'all'](`${import.meta.env.VITE_API_HOST}${path}`, () => {
+          return HttpResponse.json(response, { status })
         })
       }),
     )
