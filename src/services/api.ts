@@ -308,7 +308,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version 1.0.0
  * @license MIT License (https://opensource.org/licenses/MIT)
  * @baseUrl https://api.realworld.io/api
- * @contact RealWorld (https://realworld.how)
+ * @contact RealWorld (https://www.realworld.how)
  *
  * Conduit API documentation
  */
