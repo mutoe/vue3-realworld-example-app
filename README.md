@@ -1,8 +1,8 @@
 # ![RealWorld Example App](logo.png)
 
 [![Codecov branch](https://img.shields.io/codecov/c/github/mutoe/vue3-realworld-example-app/master?logo=codecov&style=for-the-badge)](https://app.codecov.io/gh/mutoe/vue3-realworld-example-app/branch/master)
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/mutoe/vue3-realworld-example-app/test.yml?label=master&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Amaster)
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/mutoe/vue3-realworld-example-app/test.yml?branch=script-setup&label=ref-sugar&logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Aref-sugar)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/mutoe/vue3-realworld-example-app/test.yml?logo=github&style=for-the-badge)](https://github.com/mutoe/vue3-realworld-example-app/actions?query=branch%3Amaster)
+[![code style](https://img.shields.io/badge/Code_Style-Anthony_Fu-333?style=for-the-badge&logo=eslint)](https://github.com/anthony/eslint-config)
 
 > ### [Vue3](https://v3.vuejs.org/) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
@@ -24,10 +24,16 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [Vue router](https://next.router.vuejs.org/)
 - [x] [Pinia](https://pinia.vuejs.org/) for state management
 - [x] [TypeScript](https://www.typescriptlang.org/) and [Vue tsc](https://github.com/johnsoncodehk/volar/tree/master/vue-language-tools/vue-tsc) for static analysis
-- [x] [ESLint](https://eslint.vuejs.org/) for syntax checking and code styling
-- [x] Component test ([Cypress component testing](https://docs.cypress.io/guides/component-testing))
-- [x] E2E test ([Cypress](https://docs.cypress.io))
+- [x] [swagger-typescript-api](https://github.com/acacode/swagger-typescript-api) for auto generate interface from swagger
+- [x] [ESLint](https://eslint.vuejs.org/) and [@mutoe/eslint-config](https://github.com/mutoe/eslint-config) for linting and styling (based on [@anthony/eslint-config](https://github.com/anthony/eslint-config))
+- [x] [Vitest](https://vitest.dev/) for unit testing
+- [x] [Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) for component testing
+- [x] [Cypress](https://docs.cypress.io) for E2E testing
 - [x] [GitHub Actions](https://docs.github.com/en/actions) CI/CD
+
+> Basically, some of they are necessary features for the development of medium to large projects, and you can also use this repository as a starter.
+>
+> Enjoy it! 😄
 
 # Getting started
 
