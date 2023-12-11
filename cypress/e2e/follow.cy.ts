@@ -1,6 +1,6 @@
 import { ROUTES } from './constant'
 
-describe.only('follow', () => {
+describe('follow', () => {
   beforeEach(() => {
     cy.intercept('GET', /articles\?/, { fixture: 'articles.json' }).as('getArticles')
     cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
