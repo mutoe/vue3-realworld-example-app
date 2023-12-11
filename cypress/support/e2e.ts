@@ -1,3 +1,5 @@
+/* eslint-disable ts/no-unsafe-member-access,ts/no-unsafe-assignment */
+
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -27,7 +29,7 @@ declare global {
 }
 
 Cypress.Commands.add('login', (username = 'plumrx') => {
-  cy.fixture('user.json').then(authResponse => {
+  cy.fixture('user.json').then((authResponse) => {
     authResponse.user.username = username
     cy.intercept('POST', /users\/login$/, { statusCode: 200, body: authResponse })
   })

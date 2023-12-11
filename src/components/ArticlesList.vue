@@ -52,5 +52,4 @@ const {
 } = useArticles()
 
 await fetchArticles()
-
 </script>

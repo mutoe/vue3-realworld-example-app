@@ -34,7 +34,6 @@ Instead of having the Bootstrap theme included locally, we recommend loading the
 
 Alternatively, if you want to make modifications to the theme, check out the [theme's repo](https://github.com/gothinkster/conduit-bootstrap-template).
 
-
 # Templates
 
 - [Layout](#layout)
@@ -48,9 +47,7 @@ Alternatively, if you want to make modifications to the theme, check out the [th
   - [Create/Edit Article](#createedit-article)
   - [Article](#article)
 
-
 ## Layout
-
 
 ### Header
 
@@ -92,7 +89,6 @@ Alternatively, if you want to make modifications to the theme, check out the [th
         </ul>
       </div>
     </nav>
-
 
 ```
 
@@ -319,7 +315,6 @@ Alternatively, if you want to make modifications to the theme, check out the [th
           </a>
         </div>
 
-
       </div>
 
     </div>
@@ -399,7 +394,6 @@ Alternatively, if you want to make modifications to the theme, check out the [th
     </div>
   </div>
 </div>
-
 
 ```
 

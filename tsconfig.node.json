@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "composite": true,
-    "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "include": [
     "vite.config.ts",
     "cypress.config.ts",
-    ".eslintrc.js"
+    "eslint.config.js"
   ]
 }

@@ -6,7 +6,7 @@
       v-for="tag in tags"
       :key="tag"
       name="tag"
-      :params="{tag}"
+      :params="{ tag }"
       :aria-label="tag"
       class="tag-pill tag-default"
     >

@@ -56,7 +56,7 @@ describe('# Register form', () => {
 
   it('should not trigger api call when user submit a invalid form', async () => {
     const { getByRole, getByPlaceholderText } = render(Register, renderOptions())
-    const formElement = getByRole('form', { name: 'Registration form' }) as HTMLFormElement
+    const formElement = getByRole<HTMLFormElement>('form', { name: 'Registration form' })
     vi.spyOn(formElement, 'checkValidity')
 
     expect(getByRole('button', { name: 'Sign up' })).toHaveProperty('disabled', true)

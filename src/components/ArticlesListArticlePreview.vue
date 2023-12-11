@@ -3,14 +3,14 @@
     <div class="article-meta">
       <AppLink
         name="profile"
-        :params="{username: props.article.author.username}"
+        :params="{ username: props.article.author.username }"
       >
         <img :src="article.author.image" :alt="props.article.author.username">
       </AppLink>
       <div class="info">
         <AppLink
           name="profile"
-          :params="{username: props.article.author.username}"
+          :params="{ username: props.article.author.username }"
           class="author"
         >
           {{ article.author.username }}
@@ -21,9 +21,9 @@
       <button
         :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm pull-xs-right"
-        :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
+        :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
-        @click="() =>favoriteArticle()"
+        @click="() => favoriteArticle()"
       >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
@@ -31,7 +31,7 @@
 
     <AppLink
       name="article"
-      :params="{slug: props.article.slug}"
+      :params="{ slug: props.article.slug }"
       class="preview-link"
     >
       <h1>{{ article.title }}</h1>
@@ -73,5 +73,4 @@ const {
   articleSlug: computed(() => props.article.slug),
   onUpdate: (newArticle: Article): void => emit('update', newArticle),
 })
-
 </script>

@@ -97,29 +97,30 @@ const form: UpdateUser = reactive({})
 const userStore = useUserStore()
 const errors = ref()
 
-const onSubmit = async () => {
+async function onSubmit() {
   errors.value = {}
 
   try {
-    // eslint-disable-next-line unicorn/no-array-reduce
+    // eslint-disable-next-line unicorn/no-array-reduce, ts/no-unsafe-assignment
     const filteredForm = Object.entries(form).reduce((form, [k, v]) => v === null ? form : Object.assign(form, { [k]: v }), {})
     const userData = await api.user.updateCurrentUser({ user: filteredForm }).then(res => res.data.user)
     userStore.updateUser(userData)
     await routerPush('profile', { username: userData.username })
-  } catch (error) {
-    if (isFetchError(error)) {
+  }
+  catch (error) {
+    if (isFetchError(error))
       errors.value = error.error?.errors
-    }
   }
 }
 
-const onLogout = async () => {
+async function onLogout() {
   userStore.updateUser(null)
   await routerPush('global-feed')
 }
 
 onMounted(async () => {
-  if (!userStore.isAuthorized) return await routerPush('login')
+  if (!userStore.isAuthorized)
+    return await routerPush('login')
 
   form.image = userStore.user?.image
   form.username = userStore.user?.username
@@ -134,5 +135,4 @@ const isButtonDisabled = computed(() =>
   && form.email === userStore.user?.email
   && !form.password,
 )
-
 </script>

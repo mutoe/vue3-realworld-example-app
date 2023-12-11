@@ -89,19 +89,20 @@ const { updateUser } = useUserStore()
 
 const errors = ref()
 
-const register = async () => {
+async function register() {
   errors.value = {}
 
-  if (!formRef.value?.checkValidity()) return
+  if (!formRef.value?.checkValidity())
+    return
 
   try {
     const result = await api.users.createUser({ user: form })
     updateUser(result.data.user)
     await routerPush('global-feed')
-  } catch (error) {
-    if (isFetchError(error)) {
+  }
+  catch (error) {
+    if (isFetchError(error))
       errors.value = error.error?.errors
-    }
   }
 }
 </script>

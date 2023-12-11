@@ -80,16 +80,18 @@ const { updateUser } = useUserStore()
 
 const errors = ref()
 
-const login = async () => {
+async function login() {
   errors.value = {}
 
-  if (!formRef.value?.checkValidity()) return
+  if (!formRef.value?.checkValidity())
+    return
 
   try {
     const result = await api.users.login({ user: form })
     updateUser(result.data.user)
     await routerPush('global-feed')
-  } catch (error) {
+  }
+  catch (error) {
     if (isFetchError(error)) {
       errors.value = error.error?.errors
       return
@@ -97,5 +99,4 @@ const login = async () => {
     console.error(error)
   }
 }
-
 </script>

@@ -9,7 +9,7 @@ interface UseAsync<T extends (...args: unknown[]) => unknown> {
   run: (...args: Parameters<T>) => Promise<ReturnType<T>>
 }
 
-export default function useAsync<T extends (...args: unknown[]) => unknown> (fn: T): UseAsync<T> {
+export default function useAsync<T extends (...args: unknown[]) => unknown>(fn: T): UseAsync<T> {
   const active: UseAsync<T>['active'] = ref(false)
 
   const run: UseAsync<T>['run'] = async (...args) => {
@@ -17,14 +17,16 @@ export default function useAsync<T extends (...args: unknown[]) => unknown> (fn:
     try {
       const result = await fn(...args)
       return result as ReturnType<T>
-    } catch (error) {
+    }
+    catch (error) {
       if (isFetchError(error) && error.status === 401) {
         userStorage.remove()
         await routerPush('login')
         throw new Error('Unauthorized or token expired')
       }
       throw error
-    } finally {
+    }
+    finally {
       active.value = false
     }
   }

@@ -98,15 +98,15 @@ const form: FormState = reactive({
 })
 
 const newTag = ref<string>('')
-const addTag = () => {
+function addTag() {
   form.tagList.push(newTag.value.trim())
   newTag.value = ''
 }
-const removeTag = (tag: string) => {
+function removeTag(tag: string) {
   form.tagList = form.tagList.filter(t => t !== tag)
 }
 
-async function fetchArticle (slug: string) {
+async function fetchArticle(slug: string) {
   const article = await api.articles.getArticle(slug).then(res => res.data.article)
 
   // FIXME: I always feel a little wordy here
@@ -116,18 +116,18 @@ async function fetchArticle (slug: string) {
   form.tagList = article.tagList
 }
 
-onMounted(() => {
-  if (slug.value) fetchArticle(slug.value)
+onMounted(async () => {
+  if (slug.value)
+    await fetchArticle(slug.value)
 })
 
-const onSubmit = async () => {
+async function onSubmit() {
   let article: Article
-  if (slug.value) {
+  if (slug.value)
     article = await api.articles.updateArticle(slug.value, { article: form }).then(res => res.data.article)
-  } else {
+  else
     article = await api.articles.createArticle({ article: form }).then(res => res.data.article)
-  }
+
   return router.push({ name: 'article', params: { slug: article.slug } })
 }
-
 </script>

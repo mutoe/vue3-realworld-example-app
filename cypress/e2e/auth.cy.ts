@@ -1,13 +1,13 @@
 import { ROUTES } from './constant'
 
-describe('Auth', () => {
+describe('auth', () => {
   beforeEach(() => {
     cy.intercept('GET', /users/, { fixture: 'user.json' }).as('getUser')
     cy.intercept('GET', /tags/, { fixture: 'tags.json' }).as('getTags')
     cy.intercept('GET', /articles/, { fixture: 'articles.json' }).as('getArticles')
   })
 
-  describe('Login and logout', () => {
+  describe('login and logout', () => {
     it('should login success when submit a valid login form', () => {
       cy.login()
 
@@ -75,7 +75,7 @@ describe('Auth', () => {
     })
   })
 
-  describe('Register', () => {
+  describe('register', () => {
     it('should call register API and jump to home page when submit a valid form', () => {
       cy.intercept('POST', /users$/, { fixture: 'user.json' }).as('registerRequest')
       cy.visit(ROUTES.REGISTER)

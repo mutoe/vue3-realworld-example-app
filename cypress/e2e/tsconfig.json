@@ -1,17 +1,19 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "baseUrl": ".",
+    "types": ["cypress", "@testing-library/cypress"],
+    "isolatedModules": false
+  },
   "include": [
     "./**/*",
     "../fixtures/**/*",
     "../support/commands.ts",
     "../support/e2e.ts"
   ],
-  "exclude": ["../../src"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "isolatedModules": false,
-    "target": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "types": ["cypress", "@testing-library/cypress"]
-  }
+  "exclude": [
+    "../../src"
+  ]
 }

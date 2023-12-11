@@ -55,7 +55,7 @@ const article: Article = reactive(await api.articles.getArticle(slug).then(res =
 
 const articleHandledBody = computed(() => marked(article.body))
 
-const updateArticle = (newArticle: Article) => {
+function updateArticle(newArticle: Article) {
   Object.assign(article, newArticle)
 }
 </script>

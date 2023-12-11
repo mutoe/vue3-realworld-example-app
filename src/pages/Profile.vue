@@ -91,7 +91,6 @@ const { user, isAuthorized } = storeToRefs(useUserStore())
 
 const showEdit = computed<boolean>(() => isAuthorized && user.value?.username === username.value)
 const showFollow = computed<boolean>(() => user.value?.username !== username.value)
-
 </script>
 
 <style scoped>

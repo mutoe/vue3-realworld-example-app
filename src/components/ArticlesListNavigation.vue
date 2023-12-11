@@ -99,5 +99,4 @@ const show = computed<Record<ArticlesType, boolean>>(() => ({
 }))
 
 const links = computed<ArticlesListNavLink[]>(() => allLinks.value.filter(link => show.value[link.name]))
-
 </script>

@@ -1,6 +1,6 @@
 import { ROUTES } from './constant'
 
-describe('Homepage', () => {
+describe('homepage', () => {
   beforeEach(() => {
     cy.intercept('GET', /articles\?tag=butt/, { fixture: 'articles-of-tag.json' }).as('getArticlesOfTag')
     cy.intercept('GET', /articles\?limit/, { fixture: 'articles.json' }).as('getArticles')

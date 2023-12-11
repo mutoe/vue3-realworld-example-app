@@ -26,7 +26,7 @@ describe('# ArticleDetailComment', () => {
     expect(getByRole('button', { name: 'Delete comment' })).toBeInTheDocument()
   })
 
-  it('should emit remove comment when click remove comment button', () => {
+  it('should emit remove comment when click remove comment button', async () => {
     const onRemoveComment = vi.fn()
     const { getByRole } = render(ArticleDetailComment, renderOptions({
       props: {
@@ -36,7 +36,7 @@ describe('# ArticleDetailComment', () => {
       },
     }))
 
-    fireEvent.click(getByRole('button', { name: 'Delete comment' }))
+    await fireEvent.click(getByRole('button', { name: 'Delete comment' }))
 
     expect(onRemoveComment).toHaveBeenCalled()
   })

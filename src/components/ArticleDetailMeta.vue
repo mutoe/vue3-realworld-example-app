@@ -2,7 +2,7 @@
   <div class="article-meta">
     <AppLink
       name="profile"
-      :params="{username: article.author.username}"
+      :params="{ username: article.author.username }"
     >
       <img :src="article.author.image" :alt="article.author.username">
     </AppLink>
@@ -10,7 +10,7 @@
     <div class="info">
       <AppLink
         name="profile"
-        :params="{username: article.author.username}"
+        :params="{ username: article.author.username }"
         class="author"
       >
         {{ article.author.username }}
@@ -33,7 +33,7 @@
     <button
       :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
       class="btn btn-sm space"
-      :class="[article.favorited ? 'btn-primary':'btn-outline-primary']"
+      :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
       :disabled="favoriteProcessGoing"
       @click="favoriteArticle"
     >
@@ -47,7 +47,7 @@
       aria-label="Edit article"
       class="btn btn-outline-secondary btn-sm space"
       name="edit-article"
-      :params="{slug: article.slug}"
+      :params="{ slug: article.slug }"
     >
       <i class="ion-edit space" /> Edit Article
     </AppLink>
@@ -94,7 +94,7 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   onUpdate: newArticle => emit('update', newArticle),
 })
 
-const onDelete = async () => {
+async function onDelete() {
   await api.articles.deleteArticle(article.value.slug)
   await routerPush('global-feed')
 }

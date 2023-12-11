@@ -10,10 +10,12 @@ import { afterAll, afterEach, beforeAll } from 'vitest'
 import AppLink from 'src/components/AppLink.vue'
 import { routes } from 'src/router'
 
-export const createTestRouter = (base?: string): Router => createRouter({
-  routes,
-  history: createMemoryHistory(base),
-})
+export function createTestRouter(base?: string): Router {
+  return createRouter({
+    routes,
+    history: createMemoryHistory(base),
+  })
+}
 
 interface RenderOptionsArgs {
   props: Record<string, unknown>
@@ -28,16 +30,16 @@ interface RenderOptionsArgs {
 
 const scheduler = typeof setImmediate === 'function' ? setImmediate : setTimeout
 
-export function flushPromises (): Promise<void> {
+export function flushPromises(): Promise<void> {
   return new Promise((resolve) => {
     scheduler(resolve, 0)
   })
 }
 
-export function renderOptions (): RenderOptions
-export function renderOptions (args: Partial<Omit<RenderOptionsArgs, 'initialRoute'>>): RenderOptions
-export async function renderOptions (args: (Partial<RenderOptionsArgs> & {initialRoute: RouteLocationRaw})): Promise<RenderOptions>
-export function renderOptions (args: Partial<RenderOptionsArgs> = {}): RenderOptions | Promise<RenderOptions> {
+export function renderOptions(): RenderOptions
+export function renderOptions(args: Partial<Omit<RenderOptionsArgs, 'initialRoute'>>): RenderOptions
+export async function renderOptions(args: (Partial<RenderOptionsArgs> & { initialRoute: RouteLocationRaw })): Promise<RenderOptions>
+export function renderOptions(args: Partial<RenderOptionsArgs> = {}): RenderOptions | Promise<RenderOptions> {
   const router = args.router || createTestRouter()
 
   const result = {
@@ -52,28 +54,31 @@ export function renderOptions (args: Partial<RenderOptionsArgs> = {}): RenderOpt
             ...args.initialState,
           },
           stubActions: args.stubActions ?? false,
-        })],
+        }),
+      ],
       components: { AppLink },
     },
   }
 
   const { initialRoute } = args
 
-  if (!initialRoute) return result
+  if (!initialRoute)
+    return result
 
   return new Promise((resolve) => {
-    router.replace(initialRoute).then(() => resolve(result))
+    void router.replace(initialRoute).then(() => resolve(result))
   })
 }
 
-export function asyncWrapper (component: ReturnType<typeof defineComponent>, props?: Record<string, unknown>): ReturnType<typeof defineComponent> {
+export function asyncWrapper(component: ReturnType<typeof defineComponent>, props?: Record<string, unknown>): ReturnType<typeof defineComponent> {
   return defineComponent({
-    render () {
+    render() {
       return h(
         'div',
         { id: 'root' },
         h(Suspense, null, {
-          default () {
+          default() {
+            // eslint-disable-next-line ts/no-unsafe-argument
             return h(component, props)
           },
           fallback: h('div', 'Loading...'),
@@ -83,7 +88,7 @@ export function asyncWrapper (component: ReturnType<typeof defineComponent>, pro
   })
 }
 
-async function waitForServerRequest (server: SetupServer, method: string, url: string, flush = true): Promise<Request> {
+async function waitForServerRequest(server: SetupServer, method: string, url: string, flush = true): Promise<Request> {
   let expectedRequestId = ''
   let expectedRequest: Request
 
@@ -98,11 +103,13 @@ async function waitForServerRequest (server: SetupServer, method: string, url: s
     })
 
     server.events.on('response:mocked', ({ requestId: reqId }) => {
-      if (reqId === expectedRequestId) resolve(expectedRequest)
+      if (reqId === expectedRequestId)
+        resolve(expectedRequest)
     })
 
     server.events.on('request:unhandled', ({ request: req, requestId: reqId }) => {
-      if (reqId === expectedRequestId) reject(new Error(`The ${req.method} ${req.url} request was unhandled.`))
+      if (reqId === expectedRequestId)
+        reject(new Error(`The ${req.method} ${req.url} request was unhandled.`))
     })
   })
   flush && await flushPromises()
@@ -139,16 +146,20 @@ type Listener =
  * })
  */
 
-export function setupMockServer (...listeners: Listener[]) {
+export function setupMockServer(...listeners: Listener[]) {
   const parseArgs = (args: Listener): [string, string, number, (object | null)] => {
-    if (args.length === 4) return args
+    if (args.length === 4)
+      return args
     if (args.length === 3) {
-      if (typeof args[1] === 'number') return ['all', args[0], args[1], args[2] as object] // ['all', path, 200, object]
-      if (typeof args[2] === 'number') return [args[0], args[1], args[2], null] // [method, path, status, null]
+      if (typeof args[1] === 'number')
+        return ['all', args[0], args[1], args[2] as object] // ['all', path, 200, object]
+      if (typeof args[2] === 'number')
+        return [args[0], args[1], args[2], null] // [method, path, status, null]
       return [args[0], args[1], 200, args[2]] // [method, path, 200, object]
     }
     if (args.length === 2) {
-      if (typeof args[1] === 'string') return [args[0], args[1], 200, null]
+      if (typeof args[1] === 'string')
+        return [args[0], args[1], 200, null]
       return ['all', args[0], 200, args[1]]
     }
     return ['all', args[0], 200, null]
@@ -168,11 +179,11 @@ export function setupMockServer (...listeners: Listener[]) {
   afterEach(() => void server.resetHandlers())
   afterAll(() => void server.close())
 
-  async function waitForRequest (path: string): Promise<Request>
-  async function waitForRequest (path: string, flush: boolean): Promise<Request>
-  async function waitForRequest (method: HttpMethod, path: string): Promise<Request>
-  async function waitForRequest (method: HttpMethod, path: string, flush: boolean): Promise<Request>
-  async function waitForRequest (...args: [string] | [string, boolean] | [HttpMethod, string] | [HttpMethod, string, boolean]): Promise<Request> {
+  async function waitForRequest(path: string): Promise<Request>
+  async function waitForRequest(path: string, flush: boolean): Promise<Request>
+  async function waitForRequest(method: HttpMethod, path: string): Promise<Request>
+  async function waitForRequest(method: HttpMethod, path: string, flush: boolean): Promise<Request>
+  async function waitForRequest(...args: [string] | [string, boolean] | [HttpMethod, string] | [HttpMethod, string, boolean]): Promise<Request> {
     const [method, path, flush] = args.length === 1
       ? ['all', args[0]] // ['all', path]
       : args.length === 2 && typeof args[1] === 'boolean'
@@ -185,7 +196,7 @@ export function setupMockServer (...listeners: Listener[]) {
 
   const originalUse = server.use.bind(server)
 
-  function use (...listeners: Listener[]) {
+  function use(...listeners: Listener[]) {
     originalUse(
       ...listeners.map((args) => {
         let [method, path, status, response] = parseArgs(args)

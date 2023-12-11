@@ -9,7 +9,7 @@ interface useFavoriteArticleProps {
   onUpdate: (newArticle: Article) => void
 }
 
-export const useFavoriteArticle = ({ isFavorited, articleSlug, onUpdate }: useFavoriteArticleProps) => {
+export function useFavoriteArticle({ isFavorited, articleSlug, onUpdate }: useFavoriteArticleProps) {
   const favoriteArticle = async () => {
     const requestor = isFavorited.value ? api.articles.deleteArticleFavorite : api.articles.createArticleFavorite
     const article = await requestor(articleSlug.value).then(res => res.data.article)

@@ -92,5 +92,4 @@ const allNavLinks = computed<NavLink[]>(() => [
 const navLinks = computed(() => allNavLinks.value.filter(
   l => l.display === displayStatus.value || l.display === 'all',
 ))
-
 </script>

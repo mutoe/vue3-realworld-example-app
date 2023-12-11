@@ -9,7 +9,7 @@
     <div class="card-footer">
       <AppLink
         name="profile"
-        :params="{username: comment.author.username}"
+        :params="{ username: comment.author.username }"
         class="comment-author"
       >
         <img
@@ -23,7 +23,7 @@
 
       <AppLink
         name="profile"
-        :params="{username: comment.author.username}"
+        :params="{ username: comment.author.username }"
         class="comment-author"
       >
         {{ comment.author.username }}
@@ -54,12 +54,11 @@ interface Props {
   comment: Comment
   username?: string
 }
-const props = defineProps<Props>()
 
-interface Emits {
+const props = defineProps<Props>()
+const emit = defineEmits<{
   (e: 'remove-comment'): boolean
-}
-const emit = defineEmits<Emits>()
+}>()
 
 const showRemove = computed(() => props.username !== undefined && props.username === props.comment.author.username)
 </script>
