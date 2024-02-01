@@ -21,7 +21,7 @@ jobs:
           cache: "pnpm"
       - name: build the code
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm build
       - name: copy file to server
         uses: appleboy/scp-action@master
