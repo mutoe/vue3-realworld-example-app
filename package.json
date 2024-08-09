@@ -20,14 +20,14 @@
   },
   "dependencies": {
     "insane": "^2.6.2",
-    "marked": "^12.0.0",
-    "pinia": "^2.1.7",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.0"
+    "marked": "^14.0.0",
+    "pinia": "^2.2.1",
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.3"
   },
   "devDependencies": {
     "@mutoe/eslint-config": "^2.8.3",
-    "@pinia/testing": "0.1.3",
+    "@pinia/testing": "^0.1.5",
     "@testing-library/cypress": "^10.0.2",
     "@testing-library/user-event": "^14.5.2",
     "@testing-library/vue": "^8.1.0",
@@ -44,7 +44,7 @@
     "msw": "^2.3.5",
     "rollup-plugin-analyzer": "^4.0.0",
     "simple-git-hooks": "^2.11.1",
-    "swagger-typescript-api": "^13.0.3",
+    "swagger-typescript-api": "^13.0.16",
     "typescript": "~5.5.4",
     "vite": "^5.4.0",
     "vitest": "^2.0.5",
