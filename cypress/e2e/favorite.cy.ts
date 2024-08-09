@@ -10,8 +10,8 @@ describe('favorite', () => {
     cy.intercept('POST', /articles\/\S+\/favorite$/, { statusCode: 401, body: {} }).as('favoriteArticle')
     cy.visit(ROUTES.HOME)
 
-    Cypress.on('uncaught:exception', (err) => {
-      expect(err.message).to.contain('Need to login')
+    Cypress.on('uncaught:exception', error => {
+      expect(error.message).to.contain('Need to login')
       return false
     })
     cy.get('i.ion-heart:first').click()

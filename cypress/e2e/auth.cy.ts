@@ -49,7 +49,7 @@ describe('auth', () => {
       cy.get('[type="password"]').type('123456')
       cy.get('[type="submit"]').click()
 
-      cy.get('form').then(($el) => {
+      cy.get('form').then($el => {
         cy.wrap($el[0].checkValidity()).should('to.be', false)
       })
     })

@@ -109,7 +109,7 @@ function useArticlesMeta(): UseArticlesMetaReturn {
 
   watch(
     () => route.name,
-    (routeName) => {
+    routeName => {
       const possibleArticlesType = routeNameToArticlesType[routeName as AppRouteNames]
       if (!isArticlesType(possibleArticlesType))
         return
@@ -121,7 +121,7 @@ function useArticlesMeta(): UseArticlesMetaReturn {
 
   watch(
     () => route.params.username,
-    (usernameParam) => {
+    usernameParam => {
       if (usernameParam !== username.value)
         username.value = typeof usernameParam === 'string' ? usernameParam : ''
     },
@@ -130,7 +130,7 @@ function useArticlesMeta(): UseArticlesMetaReturn {
 
   watch(
     () => route.params.tag,
-    (tagParam) => {
+    tagParam => {
       if (tagParam !== tag.value)
         tag.value = typeof tagParam === 'string' ? tagParam : ''
     },

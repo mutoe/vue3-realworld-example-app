@@ -16,9 +16,15 @@ export default defineConfig({
     },
   },
   test: {
+    vitest: true,
     cypress: true,
   },
   ignores: [
     'src/services/api.ts',
   ],
+}, {
+  files: ['cypress/support/**/*.ts'],
+  rules: {
+    'ts/method-signature-style': 'off',
+  },
 })

@@ -31,7 +31,7 @@ describe('tag', () => {
       .should('have.class', 'router-link-active')
       .should('have.class', 'router-link-exact-active')
 
-    cy.get('a.tag-pill.tag-default:last').invoke('text').then((tag) => {
+    cy.get('a.tag-pill.tag-default:last').invoke('text').then(tag => {
       const path = `#/tag/${tag}`
 
       cy.url()

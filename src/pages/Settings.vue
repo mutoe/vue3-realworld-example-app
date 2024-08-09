@@ -101,7 +101,7 @@ async function onSubmit() {
   errors.value = {}
 
   try {
-    // eslint-disable-next-line unicorn/no-array-reduce, ts/no-unsafe-assignment
+    // eslint-disable-next-line unicorn/no-array-reduce
     const filteredForm = Object.entries(form).reduce((form, [k, v]) => v === null ? form : Object.assign(form, { [k]: v }), {})
     const userData = await api.user.updateCurrentUser({ user: filteredForm }).then(res => res.data.user)
     userStore.updateUser(userData)
