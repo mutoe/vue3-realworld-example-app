@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "insane": "^2.6.2",
-    "marked": "^12.0.0",
+    "marked": "^14.0.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.27",
     "vue-router": "^4.3.0"
