@@ -6,6 +6,7 @@ export default defineConfig({
       'tsconfig.json',
       'tsconfig.node.json',
       'cypress/e2e/tsconfig.json',
+      'playwright/tsconfig.json',
     ],
   },
   vue: {
@@ -26,5 +27,13 @@ export default defineConfig({
   files: ['cypress/support/**/*.ts'],
   rules: {
     'ts/method-signature-style': 'off',
+  },
+}, {
+  files: [
+    '*.config.ts',
+    'playwright/**/*',
+  ],
+  rules: {
+    'node/prefer-global/process': 'off',
   },
 })
