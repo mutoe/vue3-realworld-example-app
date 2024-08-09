@@ -5,20 +5,19 @@ on:
     paths-ignore:
       - '**.md'
 
+env:
+  CI: true
+
 jobs:
   lint:
     name: Lint
-    env:
-      CI: true
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
           run_install: false
 
       - name: Use Node.js 20.x
@@ -38,17 +37,13 @@ jobs:
 
   unit_test:
     name: Unit test
-    env:
-      CI: true
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
           run_install: false
 
       - name: Use Node.js 20.x
@@ -85,17 +80,13 @@ jobs:
 
   e2e_tests:
     name: E2E test
-    env:
-      CI: true
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
           run_install: false
 
       - name: Use Node.js 20.x

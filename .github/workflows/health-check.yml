@@ -4,20 +4,19 @@ on:
   schedule:
     - cron: '35 17 */4 * 4'
 
+env:
+  CI: true
+
 jobs:
   e2e_tests:
     name: E2E test
-    env:
-      CI: true
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
           run_install: false
 
       # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
