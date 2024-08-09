@@ -26,4 +26,12 @@ export default defineConfig({
   rules: {
     'ts/method-signature-style': 'off',
   },
+}, {
+  files: [
+    '*.config.ts',
+    'playwright/**/*',
+  ],
+  rules: {
+    'node/prefer-global/process': 'off',
+  },
 })

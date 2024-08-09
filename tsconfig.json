@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "jsx": "preserve",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "ESNext",
@@ -18,7 +18,8 @@
   },
   "references": [
     { "path": "./tsconfig.node.json" },
-    { "path": "./cypress/e2e/tsconfig.json" }
+    { "path": "./cypress/e2e/tsconfig.json" },
+    { "path": "./playwright.config.ts" }
   ],
   "include": [
     "src/**/*.ts",

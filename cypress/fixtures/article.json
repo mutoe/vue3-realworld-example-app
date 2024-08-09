@@ -5,7 +5,7 @@
     "body": "# Article body\n\nThis is **Strong** text",
     "createdAt": "2020-11-01T14:59:39.404Z",
     "updatedAt": "2020-11-01T14:59:39.404Z",
-    "tagList": [],
+    "tagList": ["foo", "bar"],
     "description": "this is descripion",
     "author": {
       "username": "plumrx",

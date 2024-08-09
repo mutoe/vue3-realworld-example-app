@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="banner" data-testid="article-banner">
     <div class="container">
       <h1>{{ article.title }}</h1>
 
@@ -14,7 +14,12 @@
   <div class="container page">
     <div class="row article-content">
       <!-- eslint-disable vue/no-v-html -->
-      <div id="article-content" class="col-md-12" v-html="articleHandledBody" />
+      <div
+        id="article-content"
+        class="col-md-12"
+        data-testid="article-body"
+        v-html="articleHandledBody"
+      />
       <!-- eslint-enable vue/no-v-html -->
 
       <!-- TODO: abstract tag list component -->
@@ -23,6 +28,7 @@
           v-for="tag in article.tagList"
           :key="tag"
           class="tag-default tag-pill tag-outline"
+          data-testid="article-tag"
         >
           {{ tag }}
         </li>
@@ -31,7 +37,7 @@
 
     <hr>
 
-    <div class="article-actions">
+    <div class="article-actions" data-testid="article-actions">
       <ArticleDetailMeta
         v-if="article"
         :article="article"
