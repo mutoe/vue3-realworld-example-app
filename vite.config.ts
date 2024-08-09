@@ -17,6 +17,9 @@ export default defineConfig({
     analyzer({ summaryOnly: true }),
   ],
   test: {
+    include: [
+      'src/**/*.spec.ts',
+    ],
     environment: 'happy-dom',
     setupFiles: './src/setup-tests.ts',
     globals: true,
