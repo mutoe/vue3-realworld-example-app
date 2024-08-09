@@ -36,10 +36,10 @@ export function flushPromises(): Promise<void> {
   })
 }
 
-export function renderOptions(): RenderOptions
-export function renderOptions(args: Partial<Omit<RenderOptionsArgs, 'initialRoute'>>): RenderOptions
-export async function renderOptions(args: (Partial<RenderOptionsArgs> & { initialRoute: RouteLocationRaw })): Promise<RenderOptions>
-export function renderOptions(args: Partial<RenderOptionsArgs> = {}): RenderOptions | Promise<RenderOptions> {
+export function renderOptions<C>(): RenderOptions<C>
+export function renderOptions<C>(args: Partial<Omit<RenderOptionsArgs, 'initialRoute'>>): RenderOptions<C>
+export async function renderOptions<C>(args: (Partial<RenderOptionsArgs> & { initialRoute: RouteLocationRaw })): Promise<RenderOptions<C>>
+export function renderOptions<C>(args: Partial<RenderOptionsArgs> = {}): RenderOptions<C> | Promise<RenderOptions<C>> {
   const router = args.router || createTestRouter()
 
   const result = {
@@ -63,10 +63,10 @@ export function renderOptions(args: Partial<RenderOptionsArgs> = {}): RenderOpti
   const { initialRoute } = args
 
   if (!initialRoute)
-    return result
+    return result as RenderOptions<C>
 
   return new Promise(resolve => {
-    void router.replace(initialRoute).then(() => resolve(result))
+    void router.replace(initialRoute).then(() => resolve(result as RenderOptions<C>))
   })
 }
 

@@ -1040,133 +1040,133 @@ D--&gt;&gt;A: Dashed open arrow
       <ul>
         
 
-      </ul>
-    </li>
-    <li>
-      <input
-        disabled=""
-        type="checkbox"
-      />
-       改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率
-    </li>
-    
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率
+        </li>
+        
 
-    <li>
-      <input
-        disabled=""
-        type="checkbox"
-      />
-       支持以 PDF 格式导出文稿
-    </li>
-    
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           支持以 PDF 格式导出文稿
+        </li>
+        
 
-    <li>
-      <input
-        checked=""
-        disabled=""
-        type="checkbox"
-      />
-       新增Todo列表功能 
-      <a
-        href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments"
-      >
-        语法参考
-      </a>
-    </li>
-    
+        <li>
+          <input
+            checked=""
+            disabled=""
+            type="checkbox"
+          />
+           新增Todo列表功能 
+          <a
+            href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments"
+          >
+            语法参考
+          </a>
+        </li>
+        
 
-    <li>
-      <input
-        checked=""
-        disabled=""
-        type="checkbox"
-      />
-       改进 LaTex 功能
-      <ul>
+        <li>
+          <input
+            checked=""
+            disabled=""
+            type="checkbox"
+          />
+           改进 LaTex 功能
+          <ul>
+            
+
+            <li>
+              <input
+                checked=""
+                disabled=""
+                type="checkbox"
+              />
+               修复 LaTex 公式渲染问题
+            </li>
+            
+
+            <li>
+              <input
+                checked=""
+                disabled=""
+                type="checkbox"
+              />
+               新增 LaTex 公式编号功能 
+              <a
+                href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers"
+              >
+                语法参考
+              </a>
+            </li>
+            
+
+          </ul>
+          
+
+        </li>
         
 
       </ul>
-    </li>
-    <li>
-      <input
-        checked=""
-        disabled=""
-        type="checkbox"
-      />
-       修复 LaTex 公式渲染问题
+      
+
     </li>
     
 
     <li>
       <input
-        checked=""
         disabled=""
         type="checkbox"
       />
-       新增 LaTex 公式编号功能 
-      <a
-        href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers"
-      >
-        语法参考
-      </a>
+       
+      <strong>
+        七月旅行准备
+      </strong>
+      <ul>
+        
+
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           准备邮轮上需要携带的物品
+        </li>
+        
+
+        <li>
+          <input
+            disabled=""
+            type="checkbox"
+          />
+           浏览日本免税店的物品
+        </li>
+        
+
+        <li>
+          <input
+            checked=""
+            disabled=""
+            type="checkbox"
+          />
+           购买蓝宝石公主号七月一日的船票
+        </li>
+        
+
+      </ul>
+      
+
     </li>
     
 
   </ul>
-  
-
-  
-
-  
-
-  
-
-  <li>
-    <input
-      disabled=""
-      type="checkbox"
-    />
-     
-    <strong>
-      七月旅行准备
-    </strong>
-    <ul>
-      
-
-    </ul>
-  </li>
-  <li>
-    <input
-      disabled=""
-      type="checkbox"
-    />
-     准备邮轮上需要携带的物品
-  </li>
-  
-
-  <li>
-    <input
-      disabled=""
-      type="checkbox"
-    />
-     浏览日本免税店的物品
-  </li>
-  
-
-  <li>
-    <input
-      checked=""
-      disabled=""
-      type="checkbox"
-    />
-     购买蓝宝石公主号七月一日的船票
-  </li>
-  
-
-  
-
-  
-
   
 
   <p>
@@ -1389,56 +1389,56 @@ exports[`# ArticleDetail > should render markdown body correctly 1`] = `
       <ul>
         
 
-      </ul>
-    </li>
-    <li>
-      Marker character change forces new list start:
-      <ul>
+        <li>
+          Marker character change forces new list start:
+          <ul>
+            
+
+            <li>
+              Ac tristique libero volutpat at
+            </li>
+            
+
+          </ul>
+          
+
+          <ul>
+            
+
+            <li>
+              Facilisis in pretium nisl aliquet
+            </li>
+            
+
+          </ul>
+          
+
+          <ul>
+            
+
+            <li>
+              Nulla volutpat aliquam velit
+            </li>
+            
+
+          </ul>
+          
+
+        </li>
         
 
       </ul>
+      
+
     </li>
+    
+
     <li>
-      Ac tristique libero volutpat at
+      Very easy!
     </li>
     
 
   </ul>
-  
-
-  <ul>
-    
-
-    <li>
-      Facilisis in pretium nisl aliquet
-    </li>
-    
-
-  </ul>
-  
-
-  <ul>
-    
-
-    <li>
-      Nulla volutpat aliquam velit
-    </li>
-    
-
-  </ul>
-  
-
-  
-
-  
-
-  
-
-  <li>
-    Very easy!
-  </li>
-  
-
   
 
   <p>
