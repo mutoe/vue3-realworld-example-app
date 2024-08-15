@@ -1,11 +1,11 @@
 import { test as base } from '@playwright/test'
-import { ConductPageObject } from './conduct.page-object.ts'
+import { ConduitPageObject } from 'page-objects/conduit.page-object'
 
 export const test = base.extend<{
-  conduct: ConductPageObject
+  conduit: ConduitPageObject
 }>({
-  conduct: async ({ page }, use) => {
-    const buyscoutPageObject = new ConductPageObject(page)
+  conduit: async ({ page }, use) => {
+    const buyscoutPageObject = new ConduitPageObject(page)
     await use(buyscoutPageObject)
   },
 })

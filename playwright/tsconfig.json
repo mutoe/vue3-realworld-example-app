@@ -3,6 +3,12 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
+    "baseUrl": "..",
+    "paths": {
+      "src/*": ["./src/*"],
+      "page-objects/*": ["./playwright/page-objects/*"]
+    },
+    "noEmit": true,
     "isolatedModules": false
   },
   "include": [
