@@ -1,5 +1,5 @@
 <template>
-  <div class="article-preview">
+  <div data-testid="article-preview" class="article-preview">
     <div class="article-meta">
       <AppLink
         name="profile"
@@ -34,7 +34,7 @@
       :params="{ slug: props.article.slug }"
     >
       <h1>{{ article.title }}</h1>
-      <p>{{ article.description }}</p>
+      <p data-testid="article-description">{{ article.description }}</p>
       <span>Read more...</span>
       <ul class="tag-list">
         <li

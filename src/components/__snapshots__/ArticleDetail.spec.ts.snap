@@ -3,6 +3,7 @@
 exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = `
 <div
   class="col-md-12"
+  data-testid="article-body"
   id="article-content"
 >
   
@@ -17,6 +18,7 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
 exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
 <div
   class="col-md-12"
+  data-testid="article-body"
   id="article-content"
 >
   <h1>
@@ -1203,6 +1205,7 @@ D--&gt;&gt;A: Dashed open arrow
 exports[`# ArticleDetail > should render markdown body correctly 1`] = `
 <div
   class="col-md-12"
+  data-testid="article-body"
   id="article-content"
 >
   <h1>
