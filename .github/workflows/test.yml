@@ -4,6 +4,9 @@ on:
   push:
     paths-ignore:
       - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 env:
   CI: true
@@ -63,8 +66,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-  e2e_tests:
-    name: E2E test
+  cypress_e2e_tests:
+    name: Cypress E2E test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -99,4 +102,37 @@ jobs:
         run: pnpm cypress install
 
       - name: E2E test
-        run: pnpm test:e2e:ci
+        run: pnpm test:cypress
+
+  playwright_e2e_tests:
+    name: Playwright E2E test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install playwright binary
+        run: pnpm playwright install --with-deps
+
+      - name: E2E test
+        run: pnpm test:playwright
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
