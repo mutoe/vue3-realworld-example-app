@@ -1,6 +1,21 @@
+<template>
+  <teleport to="body">
+    <div class="toaster">
+      <div
+        v-for="t in list"
+        :key="t.id"
+        class="toast"
+        :class="t.type"
+      >
+        {{ t.message }}
+      </div>
+    </div>
+  </teleport>
+</template>
+
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import { bus, type ToastPayload } from './bus'
+import { onMounted, reactive } from 'vue'
+import { type ToastPayload, bus } from './bus'
 
 type Toast = { id: number } & Required<ToastPayload>
 const list = reactive<Toast[]>([])
@@ -11,30 +26,21 @@ function push(p: ToastPayload) {
     id: idc++,
     type: p.type ?? 'info',
     message: p.message,
-    duration: p.duration ?? 2500
+    duration: p.duration ?? 2500,
   }
   list.push(t)
   setTimeout(() => remove(t.id), t.duration)
 }
 function remove(id: number) {
   const i = list.findIndex(x => x.id === id)
-  if (i >= 0) list.splice(i, 1)
+  if (i >= 0)
+    list.splice(i, 1)
 }
 
 onMounted(() => {
   bus.on<ToastPayload>('toast', push)
 })
 </script>
-
-<template>
-  <teleport to="body">
-    <div class="toaster">
-      <div v-for="t in list" :key="t.id" class="toast" :class="t.type">
-        {{ t.message }}
-      </div>
-    </div>
-  </teleport>
-</template>
 
 <style scoped>
 .toaster{

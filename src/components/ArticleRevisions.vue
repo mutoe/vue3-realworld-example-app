@@ -1,117 +1,3 @@
-<script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { api } from 'src/services'
-import type { Article } from 'src/services/api'
-import { bus } from 'src/ui/bus'
-
-
-const props = defineProps<{ articleId: number; canRevert?: boolean }>()
-const emit = defineEmits<{ (e: 'reverted', article: Article): void }>()
-
-
-type Revision = {
-  id: number
-  title: string
-  slug: string
-  description: string
-  body: string
-  created_at: string
-}
-
-
-const loading = ref(true)
-const error = ref<string | null>(null)
-const revisions = ref<Revision[]>([])
-const revertingId = ref<number | null>(null)
-
-
-async function load() {
-  loading.value = true
-  error.value = null
-  try {
-    const res = await api.articles.getArticleRevisions(props.articleId)
-    revisions.value = res.data.data.revisions
-  } catch (e: any) {
-    error.value = e?.message ?? 'Failed to load history'
-    bus.emit('toast', { type: 'error', message: 'Failed to load history' })
-  } finally {
-    loading.value = false
-  }
-}
-
-
-function askConfirm(message: string, confirmText = 'OK', cancelText = 'Cancel'): Promise<boolean> {
-  return new Promise(resolve => {
-    bus.emit('confirm', {
-      message,
-      confirmText,
-      cancelText,
-      onConfirm: () => resolve(true),
-      onCancel: () => resolve(false),
-    })
-  })
-}
-
-
-async function handleRevert(revId: number) {
-  if (!props.canRevert || revertingId.value) return
-
-  const ok = await askConfirm('Revert the article to this revision?', 'Revert', 'Cancel')
-  if (!ok) {
-    bus.emit('toast', { type: 'info', message: 'Revert cancelled' })
-    return
-  }
-
-  try {
-    revertingId.value = revId
-    const res = await api.articles.revertArticleRevision(props.articleId, revId)
-    bus.emit('toast', { type: 'success', message: `Reverted to revision #${revId}` })
-    emit('reverted', res.data.article)
-  
-    load()
-  } catch (e: any) {
-    const msg = e?.message ?? 'Failed to revert'
-    error.value = msg
-    bus.emit('toast', { type: 'error', message: msg })
-  } finally {
-    revertingId.value = null
-  }
-}
-
-
-function formatShortDate(iso: string) {
-  const d = new Date(iso)
-  return d.toLocaleString(undefined, {
-    year: 'numeric', month: 'short', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  })
-}
-function relative(iso: string): string {
-  const now = new Date()
-  const then = new Date(iso)
-  const sec = Math.round((then.getTime() - now.getTime()) / 1000)
-  const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' })
-  const ranges = [
-    ['year', 60 * 60 * 24 * 365],
-    ['month', 60 * 60 * 24 * 30],
-    ['day', 60 * 60 * 24],
-    ['hour', 60 * 60],
-    ['minute', 60],
-    ['second', 1],
-  ] as const
-  for (const [unit, secondsInUnit] of ranges) {
-    if (Math.abs(sec) >= secondsInUnit || unit === 'second') {
-      return rtf.format(Math.round(sec / secondsInUnit), unit as Intl.RelativeTimeFormatUnit)
-    }
-  }
-  return ''
-}
-
-
-onMounted(load)
-watch(() => props.articleId, load)
-</script>
-
 <template>
   <section class="revs">
     <header class="revs__header">
@@ -121,10 +7,8 @@ watch(() => props.articleId, load)
       </span>
     </header>
 
-
     <div v-if="loading" class="state muted">Loading history…</div>
 
-  
     <div v-else-if="error" class="state error" role="alert">
       {{ error }}
     </div>
@@ -133,7 +17,6 @@ watch(() => props.articleId, load)
       No revisions yet.
     </div>
 
-  
     <ul v-else class="revs__list">
       <li v-for="rev in revisions" :key="rev.id" class="rev">
         <div class="rev__head">
@@ -146,8 +29,8 @@ watch(() => props.articleId, load)
             v-if="canRevert"
             class="btn btn-sm btn-outline-danger"
             :disabled="revertingId === rev.id"
-            @click="handleRevert(rev.id)"
             :title="revertingId === rev.id ? 'Reverting…' : 'Revert to this revision'"
+            @click="handleRevert(rev.id)"
           >
             <i class="ion-refresh mr-6" />
             {{ revertingId === rev.id ? 'Reverting…' : 'Revert' }}
@@ -182,8 +65,120 @@ watch(() => props.articleId, load)
   </section>
 </template>
 
-<style scoped>
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
+import { api } from 'src/services'
+import type { Article } from 'src/services/api'
+import { bus } from 'src/ui/bus'
 
+const props = defineProps<{ articleId: number, canRevert?: boolean }>()
+const emit = defineEmits<{ (e: 'reverted', article: Article): void }>()
+
+interface Revision {
+  id: number
+  title: string
+  slug: string
+  description: string
+  body: string
+  created_at: string
+}
+
+const loading = ref(true)
+const error = ref<string | null>(null)
+const revisions = ref<Revision[]>([])
+const revertingId = ref<number | null>(null)
+
+async function load() {
+  loading.value = true
+  error.value = null
+  try {
+    const res = await api.articles.getArticleRevisions(props.articleId)
+    revisions.value = res.data.data.revisions
+  }
+  catch (error_: any) {
+    error.value = error_?.message ?? 'Failed to load history'
+    bus.emit('toast', { type: 'error', message: 'Failed to load history' })
+  }
+  finally {
+    loading.value = false
+  }
+}
+
+function askConfirm(message: string, confirmText = 'OK', cancelText = 'Cancel'): Promise<boolean> {
+  return new Promise(resolve => {
+    bus.emit('confirm', {
+      message,
+      confirmText,
+      cancelText,
+      onConfirm: () => resolve(true),
+      onCancel: () => resolve(false),
+    })
+  })
+}
+
+async function handleRevert(revId: number) {
+  if (!props.canRevert || revertingId.value)
+    return
+
+  const ok = await askConfirm('Revert the article to this revision?', 'Revert', 'Cancel')
+  if (!ok) {
+    bus.emit('toast', { type: 'info', message: 'Revert cancelled' })
+    return
+  }
+
+  try {
+    revertingId.value = revId
+    const res = await api.articles.revertArticleRevision(props.articleId, revId)
+    bus.emit('toast', { type: 'success', message: `Reverted to revision #${revId}` })
+    emit('reverted', res.data.article)
+
+    load()
+  }
+  catch (error_: any) {
+    const msg = error_?.message ?? 'Failed to revert'
+    error.value = msg
+    bus.emit('toast', { type: 'error', message: msg })
+  }
+  finally {
+    revertingId.value = null
+  }
+}
+
+function formatShortDate(iso: string) {
+  const d = new Date(iso)
+  return d.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+function relative(iso: string): string {
+  const now = new Date()
+  const then = new Date(iso)
+  const sec = Math.round((then.getTime() - now.getTime()) / 1000)
+  const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' })
+  const ranges = [
+    ['year', 60 * 60 * 24 * 365],
+    ['month', 60 * 60 * 24 * 30],
+    ['day', 60 * 60 * 24],
+    ['hour', 60 * 60],
+    ['minute', 60],
+    ['second', 1],
+  ] as const
+  for (const [unit, secondsInUnit] of ranges) {
+    if (Math.abs(sec) >= secondsInUnit || unit === 'second')
+      return rtf.format(Math.round(sec / secondsInUnit), unit as Intl.RelativeTimeFormatUnit)
+  }
+  return ''
+}
+
+onMounted(load)
+watch(() => props.articleId, load)
+</script>
+
+<style scoped>
 .revs{ margin-top: 28px; }
 .revs__header{
   display:flex; align-items:center; gap:10px; margin-bottom:10px;
@@ -196,14 +191,12 @@ watch(() => props.articleId, load)
   background:#f1f5f9; color:#475569; border:1px solid #e2e8f0;
 }
 
-
 .state{ padding:10px 0; }
 .state.muted{ color:#6b7280; }
 .state.error{
   color:#b91c1c; background:#fff1f2; border:1px solid #fecaca;
   padding:10px 12px; border-radius:10px;
 }
-
 
 .revs__list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
 .rev{
@@ -231,17 +224,14 @@ watch(() => props.articleId, load)
 .rev__desc{ margin-top:8px; }
 .rev__body{ margin-top:6px; color:#111827; }
 
-
 .btn{ padding:6px 10px; border-radius:8px; border:1px solid #e5e7eb; cursor:pointer; background:#fff; }
 .btn-sm{ font-size:.88rem; }
 .btn-outline-danger{ color:#b91c1c; border-color:#fecaca; }
 .btn-outline-danger:hover{ background:#fff1f2; }
 .btn:disabled{ opacity:.6; cursor:not-allowed; }
 
-
 .mr-6{ margin-right:6px; }
 .mr-4{ margin-right:4px; }
-
 
 @media (prefers-color-scheme: dark){
   .rev{ background:#0f1115; border-color:#1f2937; box-shadow:none; }

@@ -1,4 +1,3 @@
-
 import { bus } from './bus'
 
 export function useToast() {

@@ -1,6 +1,5 @@
 <template>
   <section class="meta-card" role="region" aria-label="Article header actions">
-
     <div class="author-side">
       <AppLink
         class="avatar-link"
@@ -12,7 +11,7 @@
           class="avatar"
           :src="article.author.image || defaultAvatar"
           :alt="article.author.username"
-        />
+        >
       </AppLink>
 
       <div class="author-info">
@@ -68,35 +67,31 @@
       </div>
     </div>
 
- 
     <div class="actions">
-   
       <button
         :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm"
         :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
-        @click="favoriteArticle"
         title="Love this post"
+        @click="favoriteArticle"
       >
         <i class="ion-heart mr-6" />
         {{ article.favorited ? 'Unfavorite' : 'Favorite' }}
         <span class="counter">({{ article.favoritesCount }})</span>
       </button>
 
-
       <button
         v-if="displayFollowButton"
         :aria-label="article.author.following ? 'Unfollow' : 'Follow'"
         class="btn btn-sm btn-outline-secondary"
         :disabled="followProcessGoing"
-        @click="toggleFollow"
         title="Follow author"
+        @click="toggleFollow"
       >
         <i class="ion-plus-round mr-6" />
         {{ article.author.following ? "Unfollow" : "Follow" }}
       </button>
-
 
       <AppLink
         v-if="displayEditButton"
@@ -113,19 +108,18 @@
         v-if="displayEditButton"
         aria-label="Delete article"
         class="btn btn-outline-danger btn-sm"
-        @click="onDelete"
         title="Delete this article"
+        @click="onDelete"
       >
         <i class="ion-trash-a mr-6" /> Delete
       </button>
 
-
       <button
         v-if="showHistoryLink"
         class="btn btn-outline-secondary btn-sm"
-        @click="emit('show-history')"
         aria-label="View article history"
         title="Show revision history"
+        @click="emit('show-history')"
       >
         <i class="ion-clock mr-6" /> History
       </button>
@@ -152,9 +146,9 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 const { article } = toRefs(props)
 
-const defaultAvatar =
-  'https://api.dicebear.com/7.x/initials/svg?radius=50&chars=2&bold=1&seed=' +
-  encodeURIComponent(article.value.author.username || 'U')
+const defaultAvatar
+  = `https://api.dicebear.com/7.x/initials/svg?radius=50&chars=2&bold=1&seed=${
+   encodeURIComponent(article.value.author.username || 'U')}`
 
 const { user, isAuthorized } = storeToRefs(useUserStore())
 const isOwner = computed(() => isAuthorized.value && user.value?.username === article.value.author.username)
@@ -170,7 +164,8 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
 })
 
 async function onDelete() {
-  if (!confirm('Delete this article?')) return
+  if (!confirm('Delete this article?'))
+    return
   await api.articles.deleteArticle(article.value.slug)
   await routerPush('global-feed')
 }
@@ -184,20 +179,26 @@ const { followProcessGoing, toggleFollow } = useFollow({
   },
 })
 
-
 function formatShortDate(iso: string): string {
   const d = new Date(iso)
   return d.toLocaleString(undefined, {
-    year: 'numeric', month: 'short', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   })
 }
 function formatFullDate(iso: string): string {
   const d = new Date(iso)
   return d.toLocaleString(undefined, {
     weekday: 'short',
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit', second: '2-digit'
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
   })
 }
 function relative(iso: string): string {
@@ -214,16 +215,14 @@ function relative(iso: string): string {
     ['second', 1],
   ] as const
   for (const [unit, secondsInUnit] of ranges) {
-    if (Math.abs(sec) >= secondsInUnit || unit === 'second') {
+    if (Math.abs(sec) >= secondsInUnit || unit === 'second')
       return rtf.format(Math.round(sec / secondsInUnit), unit as Intl.RelativeTimeFormatUnit)
-    }
   }
   return ''
 }
 </script>
 
 <style scoped>
-
 .meta-card{
   display:flex;
   align-items:center;
@@ -285,14 +284,12 @@ function relative(iso: string): string {
 }
 .muted{ opacity:.8; font-size:.82em; }
 
-
 .actions{
   display:flex; align-items:center; gap:8px;
   flex-wrap:wrap;
 }
 .btn:focus { outline: 3px solid rgba(59,130,246,.35); outline-offset: 1px; }
 .counter { margin-left: 4px; }
-
 
 .badge{
   font-size:.72rem;
@@ -317,9 +314,7 @@ function relative(iso: string): string {
   border-color:#e5e7eb;
 }
 
-
 .mr-6{ margin-right:6px; }
-
 
 @media (prefers-color-scheme: dark){
   .meta-card{ background:#0f1115; border-color:#1f2937; box-shadow:none; }
@@ -327,7 +322,6 @@ function relative(iso: string): string {
   .timechip{ background:#0b1220; border-color:#1f2937; color:#9ca3af; }
   .badge-neutral{ background:#111827; border-color:#1f2937; color:#9ca3af; }
 }
-
 
 @media (max-width: 640px){
   .meta-card{

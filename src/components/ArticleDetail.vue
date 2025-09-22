@@ -1,49 +1,3 @@
-<script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import marked from 'src/plugins/marked'
-import { api } from 'src/services'
-import type { Article } from 'src/services/api'
-import ArticleDetailMeta from './ArticleDetailMeta.vue'
-import ArticleRevisions from './ArticleRevisions.vue'
-import { useUserStore } from 'src/store/user'
-
-const route = useRoute()
-const router = useRouter()
-const slug = route.params.slug as string
-
-const article: Article = reactive(
-  await api.articles.getArticle(slug).then(res => res.data.article)
-)
-
-const { user, isAuthorized } = storeToRefs(useUserStore())
-const canRevert = computed(() =>
-  Boolean(isAuthorized.value && user.value?.username === article.author.username)
-)
-
-const showHistory = ref(false)
-function toggleHistory() { showHistory.value = !showHistory.value }
-
-const articleHandledBody = computed(() => marked(article.body))
-function updateArticle(newArticle: Article) {
-  Object.assign(article, newArticle)
-}
-
-async function onReverted(newArticle: Article) {
-  const slugChanged = newArticle.slug !== article.slug
-  Object.assign(article, newArticle)   
-  showHistory.value = false
-
-  if (slugChanged) {
- 
-    await router.replace({ name: 'article', params: { slug: newArticle.slug } })
-    const fresh = await api.articles.getArticle(newArticle.slug).then(r => r.data.article)
-    Object.assign(article, fresh)
-  }
-}
-</script>
-
 <template>
   <div class="banner">
     <div class="container">
@@ -85,3 +39,48 @@ async function onReverted(newArticle: Article) {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import marked from 'src/plugins/marked'
+import { api } from 'src/services'
+import type { Article } from 'src/services/api'
+import { useUserStore } from 'src/store/user'
+import ArticleDetailMeta from './ArticleDetailMeta.vue'
+import ArticleRevisions from './ArticleRevisions.vue'
+
+const route = useRoute()
+const router = useRouter()
+const slug = route.params.slug as string
+
+const article: Article = reactive(
+  await api.articles.getArticle(slug).then(res => res.data.article),
+)
+
+const { user, isAuthorized } = storeToRefs(useUserStore())
+const canRevert = computed(() =>
+  Boolean(isAuthorized.value && user.value?.username === article.author.username),
+)
+
+const showHistory = ref(false)
+function toggleHistory() { showHistory.value = !showHistory.value }
+
+const articleHandledBody = computed(() => marked(article.body))
+function updateArticle(newArticle: Article) {
+  Object.assign(article, newArticle)
+}
+
+async function onReverted(newArticle: Article) {
+  const slugChanged = newArticle.slug !== article.slug
+  Object.assign(article, newArticle)
+  showHistory.value = false
+
+  if (slugChanged) {
+    await router.replace({ name: 'article', params: { slug: newArticle.slug } })
+    const fresh = await api.articles.getArticle(newArticle.slug).then(r => r.data.article)
+    Object.assign(article, fresh)
+  }
+}
+</script>

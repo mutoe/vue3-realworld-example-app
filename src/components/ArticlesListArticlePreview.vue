@@ -1,6 +1,5 @@
 <template>
   <div class="article-preview card">
-
     <AppLink
       name="article"
       :params="{ slug: props.article.slug }"
@@ -14,7 +13,7 @@
         loading="lazy"
         decoding="async"
         @error="onCoverError"
-      />
+      >
     </AppLink>
 
     <div class="article-meta">
@@ -32,7 +31,7 @@
           decoding="async"
           referrerpolicy="no-referrer"
           @error="onAvatarError"
-        />
+        >
       </AppLink>
 
       <div class="info">
@@ -51,8 +50,8 @@
         class="btn btn-sm pull-xs-right"
         :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
         :disabled="favoriteProcessGoing"
-        @click="favoriteArticle"
         title="Favorite"
+        @click="favoriteArticle"
       >
         <i class="ion-heart" /> {{ article.favoritesCount }}
       </button>
@@ -95,21 +94,19 @@ const { article } = toRefs(props)
 
 const { user, isAuthorized } = storeToRefs(useUserStore())
 
-
-
 function avatarUrl(username?: string | null, image?: string | null) {
-  if (image && image.trim() !== '') return image
+  if (image && image.trim() !== '')
+    return image
   const seed = encodeURIComponent(username || 'U')
   return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&fontWeight=700&backgroundType=gradientLinear`
 }
 
 const authorAvatar = computed(() =>
-  avatarUrl(article.value.author.username, article.value.author.image)
+  avatarUrl(article.value.author.username, article.value.author.image),
 )
 
-
 const coverUrl = computed(
-  () => `https://picsum.photos/seed/${encodeURIComponent(article.value.slug)}/640/360`
+  () => `https://picsum.photos/seed/${encodeURIComponent(article.value.slug)}/640/360`,
 )
 
 function onAvatarError(e: Event) {
@@ -118,7 +115,6 @@ function onAvatarError(e: Event) {
 function onCoverError(e: Event) {
   ;(e.target as HTMLImageElement).src = `https://picsum.photos/seed/${Date.now()}/640/360`
 }
-
 
 const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   isFavorited: computed(() => article.value.favorited),
@@ -135,7 +131,6 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   overflow: hidden;
   box-shadow: 0 4px 14px rgba(0,0,0,.04);
 }
-
 
 .cover-link { display: block; }
 .cover {
@@ -161,7 +156,6 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
 .info .author { font-weight: 600; }
 .info .date { font-size: .82rem; color: #6b7280; }
 
-
 .preview-link {
   display: block;
   padding: 12px;
@@ -177,7 +171,6 @@ const { favoriteProcessGoing, favoriteArticle } = useFavoriteArticle({
   color: #374151;
 }
 .tag-list { margin-top: 8px; }
-
 
 .card:hover .cover { filter: brightness(0.98); }
 </style>

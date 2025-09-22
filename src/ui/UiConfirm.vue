@@ -1,6 +1,26 @@
+<template>
+  <teleport to="body">
+    <div v-if="open" class="cfm__wrap" @click.self="cancel">
+      <div
+        class="cfm__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cfm-title"
+      >
+        <h3 id="cfm-title" class="cfm__title">Confirm</h3>
+        <p class="cfm__msg">{{ state.message }}</p>
+        <div class="cfm__actions">
+          <button class="btn btn-light" @click="cancel">{{ state.cancelText }}</button>
+          <button class="btn btn-danger" @click="confirm">{{ state.confirmText }}</button>
+        </div>
+      </div>
+    </div>
+  </teleport>
+</template>
+
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, reactive, ref } from 'vue'
-import { bus, type ConfirmPayload } from './bus'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { type ConfirmPayload, bus } from './bus'
 
 const open = ref(false)
 const state = reactive<Required<ConfirmPayload>>({
@@ -24,17 +44,21 @@ function close() { open.value = false }
 function confirm() {
   const cb = state.onConfirm
   close()
-  try { cb() } catch {}
+  try { cb() }
+  catch {}
 }
 function cancel() {
   const cb = state.onCancel
   close()
-  try { cb() } catch {}
+  try { cb() }
+  catch {}
 }
 
 function onKey(e: KeyboardEvent) {
-  if (!open.value) return
-  if (e.key === 'Escape') cancel()
+  if (!open.value)
+    return
+  if (e.key === 'Escape')
+    cancel()
 }
 
 onMounted(() => {
@@ -45,21 +69,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKey)
 })
 </script>
-
-<template>
-  <teleport to="body">
-    <div v-if="open" class="cfm__wrap" @click.self="cancel">
-      <div class="cfm__box" role="dialog" aria-modal="true" aria-labelledby="cfm-title">
-        <h3 id="cfm-title" class="cfm__title">Confirm</h3>
-        <p class="cfm__msg">{{ state.message }}</p>
-        <div class="cfm__actions">
-          <button class="btn btn-light" @click="cancel">{{ state.cancelText }}</button>
-          <button class="btn btn-danger" @click="confirm">{{ state.confirmText }}</button>
-        </div>
-      </div>
-    </div>
-  </teleport>
-</template>
 
 <style scoped>
 .cfm__wrap{

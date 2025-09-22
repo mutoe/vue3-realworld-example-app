@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { api } from 'src/services'
 
@@ -21,9 +21,11 @@ export const useRevisionStore = defineStore('revision', () => {
     try {
       const res = await api.articles.getArticleRevisions(articleId)
       revisions.value = res.data.revisions
-      if (revisions.value.length) currentRevision.value = revisions.value[0]
-    } catch (error) {
-      console.error("Failed to fetch revisions:", error)
+      if (revisions.value.length)
+        currentRevision.value = revisions.value[0]
+    }
+    catch (error) {
+      console.error('Failed to fetch revisions:', error)
       revisions.value = []
       currentRevision.value = null
     }
@@ -34,8 +36,9 @@ export const useRevisionStore = defineStore('revision', () => {
       // dummy revert endpoint, adjust with real API call
       await api.articles.updateArticle(slug, { article: { body: revisions.value.find(r => r.id === revisionId)?.body } })
       return true
-    } catch (err) {
-      console.error(err)
+    }
+    catch (error) {
+      console.error(error)
       return false
     }
   }

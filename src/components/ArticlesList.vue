@@ -1,6 +1,5 @@
 <template>
   <section class="feed">
- 
     <ArticlesListNavigation
       v-bind="$attrs"
       :tag="tag"
@@ -8,31 +7,28 @@
       class="feed__nav"
     />
 
-
     <div v-if="articlesDownloading" class="cards">
-      <div class="card skeleton" v-for="n in 3" :key="n">
+      <div v-for="n in 3" :key="n" class="card skeleton">
         <div class="skeleton__header">
-          <div class="skeleton__avatar"></div>
+          <div class="skeleton__avatar" />
           <div class="skeleton__lines">
-            <div class="skeleton__line w-60"></div>
-            <div class="skeleton__line w-40 mt-6"></div>
+            <div class="skeleton__line w-60" />
+            <div class="skeleton__line w-40 mt-6" />
           </div>
         </div>
-        <div class="skeleton__line w-90 mt-14"></div>
-        <div class="skeleton__line w-80 mt-8"></div>
+        <div class="skeleton__line w-90 mt-14" />
+        <div class="skeleton__line w-80 mt-8" />
         <div class="skeleton__tags mt-14">
-          <span class="skeleton__tag" v-for="i in 3" :key="i"></span>
+          <span v-for="i in 3" :key="i" class="skeleton__tag" />
         </div>
       </div>
     </div>
-
 
     <div v-else-if="articles.length === 0" class="empty">
       <div class="empty__icon">🗞️</div>
       <h3 class="empty__title">No articles yet</h3>
       <p class="empty__sub">Try switching tabs or create your first post.</p>
     </div>
-
 
     <div v-else class="cards">
       <article
@@ -79,7 +75,6 @@ await fetchArticles()
 </script>
 
 <style scoped>
-
 .feed{
   display: grid;
   gap: 16px;
@@ -115,7 +110,6 @@ await fetchArticles()
   padding-top: 8px;
 }
 
-
 .empty{
   border: 1px dashed #e2e8f0;
   border-radius: 14px;
@@ -139,7 +133,6 @@ await fetchArticles()
   margin: 0;
   color: #6b7280;
 }
-
 
 .skeleton{
   overflow: hidden;
@@ -182,7 +175,6 @@ await fetchArticles()
   width:64px; height:22px; border-radius:999px; background:#eaeef4;
 }
 
-
 @media (prefers-color-scheme: dark){
   :root{ --bg:#0f1115; }
   .card{ background:#0f1115; border-color:#1f2937; box-shadow:none; }
@@ -197,7 +189,6 @@ await fetchArticles()
     rgba(255,255,255,.08) 50%, rgba(15,17,21,0) 100%);
   }
 }
-
 
 @media (min-width: 768px){
   .cards{

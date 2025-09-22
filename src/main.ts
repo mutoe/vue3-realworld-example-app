@@ -1,10 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { initApiAuthBridge } from 'src/services/auth-bridge'
 import App from './App.vue'
 import registerGlobalComponents from './plugins/global-components'
 import setAuthorizationToken from './plugins/set-authorization-token'
-import { initApiAuthBridge } from 'src/services/auth-bridge'
-
 import { router } from './router'
 
 const app = createApp(App)

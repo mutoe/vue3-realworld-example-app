@@ -15,12 +15,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useRevisionStore } from '../store/revision' 
 import { api } from 'src/services'
+import { useRevisionStore } from '../store/revision'
 
 const route = useRoute()
 const revisionStore = useRevisionStore()
-
 
 const articleId = Number(route.params.articleId)
 
@@ -32,15 +31,16 @@ const slug = route.params.slug as string
 
 onMounted(async () => {
   if (!slug) {
-    console.error("Invalid article slug in route params")
+    console.error('Invalid article slug in route params')
     return
   }
   try {
     const res = await api.articles.getArticle(slug)
-    const articleId = res.data.article.id  
+    const articleId = res.data.article.id
     await revisionStore.fetchRevisions(articleId)
-  } catch (error) {
-    console.error("Failed to fetch revisions:", error)
+  }
+  catch (error) {
+    console.error('Failed to fetch revisions:', error)
   }
 })
 </script>
