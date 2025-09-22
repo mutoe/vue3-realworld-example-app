@@ -27,6 +27,14 @@ export const routes: RouteRecordRaw[] = [
     path: '/my-feeds',
     component: Home,
   },
+
+  {
+    name: 'article-history',
+    path: '/articles/:id/history',
+    component: () => import('./pages/ArticleHistory.vue'),
+  }
+
+  ,
   {
     name: 'tag',
     path: '/tag/:tag',
@@ -69,6 +77,18 @@ export const routes: RouteRecordRaw[] = [
     path: '/profile/:username/favorites',
     component: () => import('./pages/Profile.vue'),
   },
+
+
+  {
+    path: '/article/:slug/history',
+    name: 'article-history',
+    component: () => import('src/pages/ArticleHistory.vue'),
+    props: route => ({
+      articleId: Number(route.query.id),  
+      slug: route.params.slug as string,
+    }),
+  }
+,
   {
     name: 'settings',
     path: '/settings',

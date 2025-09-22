@@ -3,6 +3,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import registerGlobalComponents from './plugins/global-components'
 import setAuthorizationToken from './plugins/set-authorization-token'
+import { initApiAuthBridge } from 'src/services/auth-bridge'
+
 import { router } from './router'
 
 const app = createApp(App)
@@ -13,4 +15,5 @@ app.use(router)
 setAuthorizationToken()
 registerGlobalComponents(app)
 
+initApiAuthBridge()
 app.mount('#app')

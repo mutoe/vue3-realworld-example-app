@@ -6,7 +6,8 @@ export const limit = 10
 
 export const api = new Api({
   baseUrl: `${CONFIG.API_HOST}/api`,
-  securityWorker: token => token ? { headers: { Authorization: `Token ${String(token)}` } } : {},
+  securityWorker: token => token ? { headers: { Authorization: `Bearer ${String(token)}` } } : {},
+
   baseApiParams: {
     headers: {
       'content-type': ContentType.Json,
