@@ -66,8 +66,8 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useFavoriteArticle } from 'src/composable/use-favorite-article.ts'
-import { useFollow } from 'src/composable/use-follow-profile.ts'
+import { useFavoriteArticle } from 'src/composable/use-favorite-article'
+import { useFollow } from 'src/composable/use-follow-profile'
 import { routerPush } from 'src/router'
 import { api } from 'src/services'
 import type { Article, Profile } from 'src/services/api'

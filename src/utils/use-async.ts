@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { routerPush } from 'src/router'
 import { isFetchError } from 'src/services'
-import { userStorage } from 'src/store/user.ts'
+import { userStorage } from 'src/store/user'
 
 interface UseAsync<T extends (...args: unknown[]) => unknown> {
   active: Ref<boolean>

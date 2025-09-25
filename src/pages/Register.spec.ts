@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/vue'
-import { createTestRouter, renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { createTestRouter, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 import Register from './Register.vue'
 
 describe('# Register form', () => {

@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useProfile } from 'src/composable/use-profile.ts'
+import { useProfile } from 'src/composable/use-profile'
 import { api } from 'src/services'
 import type { Comment } from 'src/services/api'
 import { useUserStore } from 'src/store/user'

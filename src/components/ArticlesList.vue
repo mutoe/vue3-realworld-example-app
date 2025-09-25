@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { useArticles } from 'src/composable/use-articles.ts'
+import { useArticles } from 'src/composable/use-articles'
 import AppPagination from './AppPagination.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import ArticlesListNavigation from './ArticlesListNavigation.vue'

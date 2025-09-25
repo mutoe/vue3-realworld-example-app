@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/vue'
 import type { Profile } from 'src/services/api'
 import fixtures from 'src/utils/test/fixtures'
-import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 import ArticleDetailMeta from './ArticleDetailMeta.vue'
 
 const editButton = 'Edit article'

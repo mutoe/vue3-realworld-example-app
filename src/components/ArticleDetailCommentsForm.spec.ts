@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { fireEvent, render } from '@testing-library/vue'
 import ArticleDetailCommentsForm from 'src/components/ArticleDetailCommentsForm.vue'
 import fixtures from 'src/utils/test/fixtures'
-import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 
 describe('# ArticleDetailCommentsForm', () => {
   const server = setupMockServer(

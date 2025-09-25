@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useFavoriteArticle } from 'src/composable/use-favorite-article.ts'
+import { useFavoriteArticle } from 'src/composable/use-favorite-article'
 import type { Article } from 'src/services/api'
 
 interface Props {

@@ -557,19 +557,7 @@ export class Api<
     ) =>
       this.request<
         {
-          articles: {
-            slug: string;
-            title: string;
-            description: string;
-            tagList: string[];
-            /** @format date-time */
-            createdAt: string;
-            /** @format date-time */
-            updatedAt: string;
-            favorited: boolean;
-            favoritesCount: number;
-            author: Profile;
-          }[];
+          articles: Article[];
           articlesCount: number;
         },
         GenericErrorModel
@@ -613,19 +601,7 @@ export class Api<
     ) =>
       this.request<
         {
-          articles: {
-            slug: string;
-            title: string;
-            description: string;
-            tagList: string[];
-            /** @format date-time */
-            createdAt: string;
-            /** @format date-time */
-            updatedAt: string;
-            favorited: boolean;
-            favoritesCount: number;
-            author: Profile;
-          }[];
+          articles: Article[];
           articlesCount: number;
         },
         GenericErrorModel

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/vue'
-import { renderOptions } from 'src/utils/test/test.utils.ts'
+import { renderOptions } from 'src/utils/test/test.utils'
 import AppPagination from './AppPagination.vue'
 
 describe('# AppPagination', () => {

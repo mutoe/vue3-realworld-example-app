@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/vue'
 import fixtures from 'src/utils/test/fixtures'
-import { renderOptions } from 'src/utils/test/test.utils.ts'
+import { renderOptions } from 'src/utils/test/test.utils'
 import ArticleDetailComment from './ArticleDetailComment.vue'
 
 describe('# ArticleDetailComment', () => {

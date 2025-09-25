@@ -51,7 +51,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npm exec lint-staged",
-    "pre-push": "npm run lint && npm run build"
+    "pre-push": "npm run type-check && npm run build"
   },
   "lint-staged": {
     "*": "eslint --fix"

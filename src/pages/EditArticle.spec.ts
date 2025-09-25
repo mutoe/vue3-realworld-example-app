@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { fireEvent, render } from '@testing-library/vue'
-import { router } from 'src/router.ts'
-import fixtures from 'src/utils/test/fixtures.ts'
-import { renderOptions, setupMockServer } from 'src/utils/test/test.utils.ts'
+import { router } from 'src/router'
+import fixtures from 'src/utils/test/fixtures'
+import { renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 import EditArticle from './EditArticle.vue'
 
 describe('# EditArticle page', () => {

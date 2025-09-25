@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTags } from 'src/composable/use-tags.ts'
+import { useTags } from 'src/composable/use-tags'
 
 const { tags, fetchTags } = useTags()
 
