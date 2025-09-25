@@ -1,5 +1,5 @@
-import { render } from '@testing-library/vue'
 import { describe, expect, it } from 'vitest'
+import { render } from '@testing-library/vue'
 import ArticlesListNavigation from 'src/components/ArticlesListNavigation.vue'
 import fixtures from 'src/utils/test/fixtures'
 import { renderOptions } from 'src/utils/test/test.utils.ts'

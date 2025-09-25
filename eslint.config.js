@@ -2,10 +2,10 @@ import defineConfig from '@mutoe/eslint-config'
 
 export default defineConfig({
   typescript: {
-    tsconfigPath: [
-      'tsconfig.json',
-      'tsconfig.node.json',
-      'cypress/e2e/tsconfig.json',
+    tsconfigPath: 'tsconfig.json',
+    ignoresTypeAware: [
+      'cypress/**',
+      '**/*.cy.ts',
     ],
   },
   vue: {
@@ -15,9 +15,8 @@ export default defineConfig({
       },
     },
   },
-  test: {
-    vitest: true,
-    cypress: true,
+  rules: {
+    'vue/custom-event-name-casing': ['error', 'kebab-case'],
   },
   ignores: [
     'src/services/api.ts',

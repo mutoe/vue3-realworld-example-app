@@ -18,7 +18,8 @@
     "skipLibCheck": true
   },
   "references": [
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.node.json" },
+    { "path": "./cypress/e2e/tsconfig.json" }
   ],
   "include": [
     "src/**/*.ts",

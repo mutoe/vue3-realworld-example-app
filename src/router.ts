@@ -80,8 +80,8 @@ export const router = createRouter({
   routes,
 })
 
-export function routerPush(name: AppRouteNames, params?: RouteParams): ReturnType<typeof router.push> {
+export async function routerPush(name: AppRouteNames, params?: RouteParams): ReturnType<typeof router.push> {
   return params === undefined
-    ? router.push({ name })
-    : router.push({ name, params })
+    ? await router.push({ name })
+    : await router.push({ name, params })
 }

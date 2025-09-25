@@ -11,12 +11,14 @@
   >
     Articles are downloading...
   </div>
+
   <div
     v-else-if="articles.length === 0"
     class="article-preview"
   >
     No articles are here... yet.
   </div>
+
   <template v-else>
     <ArticlesListArticlePreview
       v-for="(article, index) in articles"
@@ -34,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { useArticles } from 'src/composable/useArticles'
+import { useArticles } from 'src/composable/use-articles.ts'
 import AppPagination from './AppPagination.vue'
 import ArticlesListArticlePreview from './ArticlesListArticlePreview.vue'
 import ArticlesListNavigation from './ArticlesListNavigation.vue'

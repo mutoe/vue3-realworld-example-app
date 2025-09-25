@@ -1,12 +1,12 @@
-import { Suspense, defineComponent, h } from 'vue'
+import { defineComponent, h, Suspense } from 'vue'
 import type { RouteLocationRaw, Router } from 'vue-router'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { createTestingPinia } from '@pinia/testing'
-import type { RenderOptions } from '@testing-library/vue'
-import { HttpResponse, http, matchRequestUrl } from 'msw'
+import { http, HttpResponse, matchRequestUrl } from 'msw'
 import type { SetupServer } from 'msw/node'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll } from 'vitest'
+import type { RenderOptions } from '@testing-library/vue'
 import AppLink from 'src/components/AppLink.vue'
 import { routes } from 'src/router'
 
@@ -30,8 +30,8 @@ interface RenderOptionsArgs {
 
 const scheduler = typeof setImmediate === 'function' ? setImmediate : setTimeout
 
-export function flushPromises(): Promise<void> {
-  return new Promise(resolve => {
+export async function flushPromises(): Promise<void> {
+  return await new Promise(resolve => {
     scheduler(resolve, 0)
   })
 }
@@ -102,8 +102,7 @@ async function waitForServerRequest(server: SetupServer, method: string, url: st
     })
 
     server.events.on('response:mocked', ({ requestId: reqId }) => {
-      if (reqId === expectedRequestId)
-        resolve(expectedRequest)
+      if (reqId === expectedRequestId) resolve(expectedRequest)
     })
 
     server.events.on('request:unhandled', ({ request: req, requestId: reqId }) => {
@@ -147,18 +146,14 @@ type Listener =
 
 export function setupMockServer(...listeners: Listener[]) {
   const parseArgs = (args: Listener): [string, string, number, (object | null)] => {
-    if (args.length === 4)
-      return args
+    if (args.length === 4) return args
     if (args.length === 3) {
-      if (typeof args[1] === 'number')
-        return ['all', args[0], args[1], args[2] as object] // ['all', path, 200, object]
-      if (typeof args[2] === 'number')
-        return [args[0], args[1], args[2], null] // [method, path, status, null]
+      if (typeof args[1] === 'number') return ['all', args[0], args[1], args[2] as object] // ['all', path, 200, object]
+      if (typeof args[2] === 'number') return [args[0], args[1], args[2], null] // [method, path, status, null]
       return [args[0], args[1], 200, args[2]] // [method, path, 200, object]
     }
     if (args.length === 2) {
-      if (typeof args[1] === 'string')
-        return [args[0], args[1], 200, null]
+      if (typeof args[1] === 'string') return [args[0], args[1], 200, null]
       return ['all', args[0], 200, args[1]]
     }
     return ['all', args[0], 200, null]
@@ -187,10 +182,11 @@ export function setupMockServer(...listeners: Listener[]) {
       ? ['all', args[0]] // ['all', path]
       : args.length === 2 && typeof args[1] === 'boolean'
         ? ['all', args[0], args[1]] // ['all', path, flush]
+        // eslint-disable-next-line unicorn/no-nested-ternary
         : args.length === 2
           ? [args[0], args[1]] // [method, path]
           : args // [method, path, flush]
-    return waitForServerRequest(server, method, path, flush)
+    return await waitForServerRequest(server, method, path, flush)
   }
 
   const originalUse = server.use.bind(server)

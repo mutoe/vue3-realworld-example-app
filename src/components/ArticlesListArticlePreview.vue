@@ -5,23 +5,22 @@
         name="profile"
         :params="{ username: props.article.author.username }"
       >
-        <img :src="article.author.image" :alt="props.article.author.username">
+        <img :alt="props.article.author.username" :src="article.author.image">
       </AppLink>
       <div class="info">
         <AppLink
+          class="author"
           name="profile"
           :params="{ username: props.article.author.username }"
-          class="author"
         >
           {{ article.author.username }}
         </AppLink>
         <span class="date">{{ new Date(article.createdAt).toDateString() }}</span>
       </div>
-
       <button
-        :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm pull-xs-right"
         :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+        :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         :disabled="favoriteProcessGoing"
         @click="() => favoriteArticle()"
       >
@@ -30,9 +29,9 @@
     </div>
 
     <AppLink
+      class="preview-link"
       name="article"
       :params="{ slug: props.article.slug }"
-      class="preview-link"
     >
       <h1>{{ article.title }}</h1>
       <p>{{ article.description }}</p>
@@ -52,7 +51,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
+import { useFavoriteArticle } from 'src/composable/use-favorite-article.ts'
 import type { Article } from 'src/services/api'
 
 interface Props {

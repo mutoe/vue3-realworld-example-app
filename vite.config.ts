@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import { URL, fileURLToPath } from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import analyzer from 'rollup-plugin-analyzer'
 import { defineConfig } from 'vite'
@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   test: {
     environment: 'happy-dom',
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/setup-tests.ts',
     globals: true,
     snapshotFormat: {
       escapeString: false,
@@ -32,7 +32,7 @@ export default defineConfig({
       exclude: [
         'src/*.{ts,vue}',
         'src/services/api.ts',
-        'src/setupTests.ts',
+        'src/setup-tests.ts',
         'src/utils/test',
         '**/*.d.ts',
       ],

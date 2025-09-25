@@ -8,23 +8,23 @@
 
     <div class="card-footer">
       <AppLink
+        class="comment-author"
         name="profile"
         :params="{ username: comment.author.username }"
-        class="comment-author"
       >
         <img
-          :src="comment.author.image"
           class="comment-author-img"
           :alt="comment.author.username"
+          :src="comment.author.image"
         >
       </AppLink>
 
       &nbsp;
 
       <AppLink
+        class="comment-author"
         name="profile"
         :params="{ username: comment.author.username }"
-        class="comment-author"
       >
         {{ comment.author.username }}
       </AppLink>
@@ -34,10 +34,10 @@
       <span class="mod-options">
         <i
           v-if="showRemove"
-          tabindex="0"
+          class="ion-trash-a"
           role="button"
           aria-label="Delete comment"
-          class="ion-trash-a"
+          tabindex="0"
           @click="emit('remove-comment')"
           @keypress.enter="emit('remove-comment')"
         />

@@ -1,5 +1,5 @@
-import { render } from '@testing-library/vue'
 import { describe, expect, it } from 'vitest'
+import { render } from '@testing-library/vue'
 import PopularTags from 'src/components/PopularTags.vue'
 import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 

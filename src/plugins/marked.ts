@@ -2,12 +2,11 @@
 import insane from 'insane'
 import { marked } from 'marked'
 
-export default (markdown?: string): string => {
-  if (!markdown)
-    return ''
-  const html = marked(markdown)
+function renderMarkdown(markdown?: string): string {
+  if (!markdown) return ''
 
-  // eslint-disable-next-line ts/no-unsafe-return,ts/no-unsafe-call
+  const html = marked(markdown, { async: false })
+
   return insane(html, {
     allowedTags: ['a', 'article', 'b', 'blockquote', 'br', 'caption', 'code', 'del', 'details', 'div', 'em',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'input', 'ins', 'kbd', 'li', 'main',
@@ -18,12 +17,7 @@ export default (markdown?: string): string => {
       iframe: ['allowfullscreen', 'frameborder', 'src'],
       img: ['src', 'alt', 'title'],
       i: ['class'],
-      h1: ['id'],
-      h2: ['id'],
-      h3: ['id'],
-      h4: ['id'],
-      h5: ['id'],
-      h6: ['id'],
+      h1: ['id'], h2: ['id'], h3: ['id'], h4: ['id'], h5: ['id'], h6: ['id'],
       ol: ['start'],
       code: ['class'],
       th: ['align', 'rowspan'],
@@ -39,3 +33,5 @@ export default (markdown?: string): string => {
     },
   })
 }
+
+export default renderMarkdown

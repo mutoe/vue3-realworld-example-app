@@ -2,9 +2,9 @@ import { isRef } from 'vue'
 import { describe, expect, it, vi } from 'vitest'
 import useAsync from 'src/utils/use-async'
 
-describe('# Create async process', () => {
-  const someProcess = (): Promise<null> => Promise.resolve(null)
+const someProcess = (): Promise<null> => Promise.resolve(null)
 
+describe('# Create async process', () => {
   it('should expect active as Vue Ref type', () => {
     const { active } = useAsync(someProcess)
 

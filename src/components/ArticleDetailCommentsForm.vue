@@ -13,24 +13,24 @@
   >
     <div class="card-block">
       <textarea
-        v-model="comment"
-        aria-label="Write comment"
         class="form-control"
+        aria-label="Write comment"
+        v-model="comment"
         placeholder="Write a comment..."
         :rows="3"
       />
     </div>
     <div class="card-footer">
       <img
-        :src="profile.image"
         class="comment-author-img"
         :alt="profile.username"
+        :src="profile.image"
       >
       <button
-        aria-label="Submit"
         type="submit"
-        :disabled="comment === ''"
         class="btn btn-sm btn-primary"
+        aria-label="Submit"
+        :disabled="comment === ''"
       >
         Post Comment
       </button>
@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useProfile } from 'src/composable/useProfile'
+import { useProfile } from 'src/composable/use-profile.ts'
 import { api } from 'src/services'
 import type { Comment } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
@@ -52,7 +52,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  (e: 'addComment', comment: Comment): void
+  (e: 'add-comment', comment: Comment): void
 }>()
 
 const { user } = storeToRefs(useUserStore())
@@ -66,7 +66,7 @@ async function submitComment() {
   const newComment = await api.articles
     .createArticleComment(props.articleSlug, { comment: { body: comment.value } })
     .then(res => res.data.comment)
-  emit('addComment', newComment)
+  emit('add-comment', newComment)
   comment.value = ''
 }
 </script>

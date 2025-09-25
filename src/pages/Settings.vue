@@ -17,53 +17,53 @@
             <fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.image"
-                  aria-label="Avatar picture url"
                   type="text"
                   class="form-control"
+                  aria-label="Avatar picture url"
+                  v-model="form.image"
                   placeholder="URL of profile picture"
                 >
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.username"
-                  aria-label="Username"
                   type="text"
                   class="form-control form-control-lg"
+                  aria-label="Username"
+                  v-model="form.username"
                   placeholder="Your name"
                 >
               </fieldset>
               <fieldset class="form-group">
                 <textarea
-                  v-model="form.bio"
-                  aria-label="Bio"
                   class="form-control form-control-lg"
-                  :rows="8"
+                  aria-label="Bio"
+                  v-model="form.bio"
                   placeholder="Short bio about you"
+                  :rows="8"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.email"
-                  aria-label="Email"
                   type="email"
                   class="form-control form-control-lg"
+                  aria-label="Email"
+                  v-model="form.email"
                   placeholder="Email"
                 >
               </fieldset>
               <fieldset class="form-group">
                 <input
-                  v-model="form.password"
-                  aria-label="New password"
                   type="password"
                   class="form-control form-control-lg"
+                  aria-label="New password"
+                  v-model="form.password"
                   placeholder="New password"
                 >
               </fieldset>
               <button
+                type="submit"
                 class="btn btn-lg btn-primary pull-xs-right"
                 :disabled="isButtonDisabled"
-                type="submit"
               >
                 Update Settings
               </button>

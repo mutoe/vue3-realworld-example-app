@@ -5,10 +5,10 @@
     <AppLink
       v-for="tag in tags"
       :key="tag"
+      class="tag-pill tag-default"
+      :aria-label="tag"
       name="tag"
       :params="{ tag }"
-      :aria-label="tag"
-      class="tag-pill tag-default"
     >
       {{ tag }}
     </AppLink>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTags } from 'src/composable/useTags'
+import { useTags } from 'src/composable/use-tags.ts'
 
 const { tags, fetchTags } = useTags()
 

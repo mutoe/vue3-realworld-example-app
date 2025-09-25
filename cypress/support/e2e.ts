@@ -1,5 +1,3 @@
-/* eslint-disable ts/no-unsafe-member-access,ts/no-unsafe-assignment */
-
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -15,11 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+import { ROUTES } from '../e2e/constant'
 import './commands'
 
-import { ROUTES } from '../e2e/constant'
-
 declare global {
+  // eslint-disable-next-line ts/no-namespace
   namespace Cypress {
     // noinspection JSUnusedGlobalSymbols
     interface Chainable {

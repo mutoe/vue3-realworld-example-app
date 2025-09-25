@@ -7,8 +7,8 @@
       :class="[{ active: isActive(pageNumber) }]"
     >
       <a
-        :aria-label="`Go to page ${pageNumber}`"
         class="page-link"
+        :aria-label="`Go to page ${pageNumber}`"
         href="javascript:"
         @click="onPageChange(pageNumber)"
       >{{ pageNumber }}</a>
@@ -28,11 +28,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'pageChange', index: number): void
+  (e: 'page-change', index: number): void
 }>()
 
 const { count, page } = toRefs(props)
 const pagesCount = computed(() => Math.ceil(count.value / limit))
 const isActive = (index: number) => page.value === index
-const onPageChange = (index: number) => emit('pageChange', index)
+const onPageChange = (index: number) => emit('page-change', index)
 </script>

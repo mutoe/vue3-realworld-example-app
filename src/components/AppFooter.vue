@@ -2,8 +2,8 @@
   <footer>
     <div class="container">
       <AppLink
-        name="global-feed"
         class="logo-font"
+        name="global-feed"
       >
         conduit
       </AppLink>

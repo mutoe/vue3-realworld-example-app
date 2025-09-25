@@ -11,7 +11,6 @@
               Need an account?
             </AppLink>
           </p>
-
           <ul class="error-messages">
             <li
               v-for="(error, field) in errors"
@@ -20,7 +19,6 @@
               {{ field }} {{ error ? error[0] : '' }}
             </li>
           </ul>
-
           <form
             ref="formRef"
             aria-label="Login form"
@@ -31,28 +29,28 @@
               aria-required="true"
             >
               <input
-                v-model="form.email"
-                aria-label="Email"
-                class="form-control form-control-lg"
                 type="email"
+                class="form-control form-control-lg"
+                aria-label="Email"
+                v-model="form.email"
                 required
                 placeholder="Email"
               >
             </fieldset>
             <fieldset class=" form-group">
               <input
-                v-model="form.password"
-                aria-label="Password"
-                class="form-control form-control-lg"
                 type="password"
+                class="form-control form-control-lg"
+                aria-label="Password"
+                v-model="form.password"
                 required
                 placeholder="Password"
               >
             </fieldset>
             <button
+              type="submit"
               class="btn btn-lg btn-primary pull-xs-right"
               :disabled="!form.email || !form.password"
-              type="submit"
             >
               Sign in
             </button>

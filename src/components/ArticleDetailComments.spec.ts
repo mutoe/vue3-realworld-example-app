@@ -1,5 +1,5 @@
-import { fireEvent, render } from '@testing-library/vue'
 import { describe, expect, it } from 'vitest'
+import { fireEvent, render } from '@testing-library/vue'
 import fixtures from 'src/utils/test/fixtures'
 import { asyncWrapper, renderOptions, setupMockServer } from 'src/utils/test/test.utils'
 import ArticleDetailComments from './ArticleDetailComments.vue'

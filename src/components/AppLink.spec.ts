@@ -1,5 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/vue'
 import { describe, expect, it } from 'vitest'
+import { fireEvent, render, waitFor } from '@testing-library/vue'
 import { renderOptions } from 'src/utils/test/test.utils.ts'
 import AppLink from './AppLink.vue'
 

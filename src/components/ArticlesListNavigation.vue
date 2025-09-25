@@ -8,8 +8,8 @@
       >
         <AppLink
           class="nav-link"
-          active-class="active"
           :name="link.routeName"
+          active-class="active"
           :params="link.routeParams"
         >
           <i
@@ -26,7 +26,7 @@
 import { computed } from 'vue'
 import type { RouteParams } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import type { ArticlesType } from 'src/composable/useArticles'
+import type { ArticlesType } from 'src/composable/use-articles.ts'
 import type { AppRouteNames } from 'src/router'
 import { useUserStore } from '../store/user'
 

@@ -1,4 +1,10 @@
-declare module 'insane';
+declare module 'insane' {
+  export default function insane(html: string, options: {
+    allowedTags: string[]
+    allowedAttributes: Record<string, string[]>
+    filter: (arg0: { tag: string, attrs: Record<string, string> }) => boolean
+  }): string
+}
 
 interface ImportMeta {
   env: {

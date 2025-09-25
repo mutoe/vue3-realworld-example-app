@@ -4,14 +4,14 @@
       name="profile"
       :params="{ username: article.author.username }"
     >
-      <img :src="article.author.image" :alt="article.author.username">
+      <img :alt="article.author.username" :src="article.author.image">
     </AppLink>
 
     <div class="info">
       <AppLink
+        class="author"
         name="profile"
         :params="{ username: article.author.username }"
-        class="author"
       >
         {{ article.author.username }}
       </AppLink>
@@ -21,8 +21,8 @@
 
     <button
       v-if="displayFollowButton"
-      :aria-label="article.author.following ? 'Unfollow' : 'Follow'"
       class="btn btn-sm btn-outline-secondary space"
+      :aria-label="article.author.following ? 'Unfollow' : 'Follow'"
       :disabled="followProcessGoing"
       @click="toggleFollow"
     >
@@ -31,9 +31,9 @@
     </button>
 
     <button
-      :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
       class="btn btn-sm space"
       :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+      :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
       :disabled="favoriteProcessGoing"
       @click="favoriteArticle"
     >
@@ -44,8 +44,8 @@
 
     <AppLink
       v-if="displayEditButton"
-      aria-label="Edit article"
       class="btn btn-outline-secondary btn-sm space"
+      aria-label="Edit article"
       name="edit-article"
       :params="{ slug: article.slug }"
     >
@@ -54,8 +54,8 @@
 
     <button
       v-if="displayEditButton"
-      aria-label="Delete article"
       class="btn btn-outline-danger btn-sm"
+      aria-label="Delete article"
       @click="onDelete"
     >
       <i class="ion-trash-a" /> Delete Article
@@ -66,8 +66,8 @@
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useFavoriteArticle } from 'src/composable/useFavoriteArticle'
-import { useFollow } from 'src/composable/useFollowProfile'
+import { useFavoriteArticle } from 'src/composable/use-favorite-article.ts'
+import { useFollow } from 'src/composable/use-follow-profile.ts'
 import { routerPush } from 'src/router'
 import { api } from 'src/services'
 import type { Article, Profile } from 'src/services/api'

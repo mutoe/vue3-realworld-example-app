@@ -16,10 +16,10 @@
         >
           <AppLink
             class="nav-link"
-            active-class="active"
-            :name="link.name"
-            :params="link.params"
             :aria-label="link.title"
+            :name="link.name"
+            active-class="active"
+            :params="link.params"
           >
             <i
               v-if="link.icon"

@@ -12,9 +12,9 @@
             </div>
             <template v-else>
               <img
-                :src="profile.image"
                 class="user-img"
                 :alt="profile.username"
+                :src="profile.image"
               >
 
               <h4>{{ profile.username }}</h4>
@@ -26,8 +26,8 @@
               <AppLink
                 v-if="showEdit"
                 class="btn btn-sm btn-outline-secondary action-btn"
-                name="settings"
                 aria-label="Edit profile settings"
+                name="settings"
               >
                 <i class="ion-gear-a space" />
                 Edit profile settings
@@ -53,8 +53,8 @@
         <div class="col-xs-12 col-md-10 offset-md-1">
           <Suspense>
             <ArticlesList
-              use-user-feed
               use-user-favorited
+              use-user-feed
             />
             <template #fallback>
               Articles are downloading...
@@ -71,8 +71,8 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import ArticlesList from 'src/components/ArticlesList.vue'
-import { useFollow } from 'src/composable/useFollowProfile'
-import { useProfile } from 'src/composable/useProfile'
+import { useFollow } from 'src/composable/use-follow-profile.ts'
+import { useProfile } from 'src/composable/use-profile.ts'
 import type { Profile } from 'src/services/api'
 import { useUserStore } from 'src/store/user'
 

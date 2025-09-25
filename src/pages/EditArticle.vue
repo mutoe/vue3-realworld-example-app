@@ -6,37 +6,37 @@
           <form @submit.prevent="onSubmit">
             <fieldset class="form-group">
               <input
-                v-model="form.title"
-                aria-label="Title"
                 type="text"
                 class="form-control form-control-lg"
+                aria-label="Title"
+                v-model="form.title"
                 placeholder="Article Title"
               >
             </fieldset>
             <fieldset class="form-group">
               <input
-                v-model="form.description"
-                aria-label="Description"
                 type="text"
                 class="form-control form-control-lg"
+                aria-label="Description"
+                v-model="form.description"
                 placeholder="What's this article about?"
               >
             </fieldset>
             <fieldset class="form-group">
               <textarea
-                v-model="form.body"
-                aria-label="Body"
-                :rows="8"
                 class="form-control"
+                aria-label="Body"
+                v-model="form.body"
                 placeholder="Write your article (in markdown)"
+                :rows="8"
               />
             </fieldset>
             <fieldset class="form-group">
               <input
-                v-model="newTag"
-                aria-label="Tags"
                 type="text"
                 class="form-control"
+                aria-label="Tags"
+                v-model="newTag"
                 placeholder="Enter tags"
                 @change="addTag"
                 @keypress.enter.prevent="addTag"
@@ -48,10 +48,10 @@
                   class="tag-default tag-pill"
                 >
                   <i
-                    role="button"
-                    tabindex="0"
-                    :aria-label="`Delete tag: ${tag}`"
                     class="ion-close-round"
+                    role="button"
+                    :aria-label="`Delete tag: ${tag}`"
+                    tabindex="0"
                     @click="removeTag(tag)"
                     @keypress.enter="removeTag(tag)"
                   />
@@ -60,8 +60,8 @@
               </div>
             </fieldset>
             <button
-              class="btn btn-lg pull-xs-right btn-primary"
               type="submit"
+              class="btn btn-lg pull-xs-right btn-primary"
               :disabled="!(form.title && form.description && form.body)"
             >
               Publish Article
