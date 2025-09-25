@@ -51,7 +51,7 @@ const articleComments = [
     author: {
       username: 'Gerome',
       bio: null,
-      image: 'https://api.realworld.io/images/demo-avatar.png',
+      image: 'https://api.realworld.show/images/demo-avatar.png',
       following: false,
     },
   },
@@ -63,7 +63,7 @@ const articleComments = [
     author: {
       username: 'Gerome',
       bio: null,
-      image: 'https://api.realworld.io/images/demo-avatar.png',
+      image: 'https://api.realworld.show/images/demo-avatar.png',
       following: false,
     },
   },

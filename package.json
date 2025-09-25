@@ -16,7 +16,7 @@
     "test:e2e:local": "cypress open --e2e -c baseUrl=http://localhost:5173",
     "test:e2e:prod": "cypress run --e2e -c baseUrl=https://vue3-realworld-example-app-mutoe.vercel.app",
     "test:unit": "vitest run",
-    "generate:api": "curl -sL https://raw.githubusercontent.com/gothinkster/realworld/main/api/openapi.yml -o ./src/services/openapi.yml && sta -p ./src/services/openapi.yml -o ./src/services -n api.ts"
+    "generate:api": "curl -sL https://raw.githubusercontent.com/gothinkster/realworld/refs/heads/main/api/openapi.yml -o ./src/services/openapi.yml && sta generate -p ./src/services/openapi.yml -o ./src/services -n api.ts"
   },
   "dependencies": {
     "insane": "^2.6.2",
@@ -42,7 +42,7 @@
     "msw": "^2.11.3",
     "rollup-plugin-analyzer": "^4.0.0",
     "simple-git-hooks": "^2.13.1",
-    "swagger-typescript-api": "^13.0.16",
+    "swagger-typescript-api": "^13.2.13",
     "typescript": "~5.9.2",
     "vite": "^7.1.7",
     "vitest": "^3.2.4",
