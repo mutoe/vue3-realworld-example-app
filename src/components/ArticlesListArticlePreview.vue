@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="article-preview" class="article-preview">
+  <div class="article-preview" data-testid="article-preview">
     <div class="article-meta">
       <AppLink
         name="profile"

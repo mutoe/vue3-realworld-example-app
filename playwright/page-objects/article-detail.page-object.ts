@@ -16,7 +16,7 @@ export class ArticleDetailPageObject extends ConduitPageObject {
   }
 
   async clickEditArticle(position: keyof typeof this.positionMap = 'banner') {
-    return this.clickOperationButton(position, 'Edit Article')
+    return await this.clickOperationButton(position, 'Edit Article')
   }
 
   async clickDeleteArticle(position: keyof typeof this.positionMap = 'banner') {
