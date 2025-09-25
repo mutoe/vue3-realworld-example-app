@@ -16,14 +16,13 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
           run_install: false
 
       # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
-      - name: Use Node.js 22.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: pnpm
 
       - name: Install dependencies
