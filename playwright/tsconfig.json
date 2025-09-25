@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "baseUrl": "..",
@@ -8,7 +9,7 @@
       "src/*": ["./src/*"],
       "page-objects/*": ["./playwright/page-objects/*"]
     },
-    "noEmit": true,
+    "noEmit": false,
     "isolatedModules": false
   },
   "include": [

@@ -1,5 +1,5 @@
 <template>
-  <ul data-testid="pagination" class="pagination">
+  <ul class="pagination" data-testid="pagination">
     <li
       v-for="pageNumber in pagesCount"
       :key="pageNumber"
