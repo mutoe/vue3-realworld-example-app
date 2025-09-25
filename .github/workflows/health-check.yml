@@ -21,7 +21,7 @@ jobs:
 
       # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
       - name: Use Node.js 24.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24.x
           cache: pnpm
