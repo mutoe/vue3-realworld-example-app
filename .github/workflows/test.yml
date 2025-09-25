@@ -23,10 +23,10 @@ jobs:
           version: 10
           run_install: false
 
-      - name: Use Node.js 24.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v5
         with:
-          node-version: 24.x
+          node-version: 22.x
           cache: pnpm
 
       - name: Install dependencies
@@ -49,10 +49,10 @@ jobs:
           version: 10
           run_install: false
 
-      - name: Use Node.js 24.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v5
         with:
-          node-version: 24.x
+          node-version: 22.x
           cache: pnpm
 
       - name: Install dependencies
@@ -77,10 +77,10 @@ jobs:
           version: 10
           run_install: false
 
-      - name: Use Node.js 24.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v5
         with:
-          node-version: 24.x
+          node-version: 22.x
           cache: pnpm
 
       - name: Install dependencies
@@ -112,7 +112,7 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
           run_install: false
 
       - name: Use Node.js 22.x
