@@ -2,6 +2,10 @@
   "name": "vue3-realworld-example-app",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">= 20"
+  },
+  "packageManager": "pnpm@10.17.1",
   "type": "module",
   "scripts": {
     "prepare": "simple-git-hooks",
@@ -10,11 +14,11 @@
     "serve": "vite preview --port 4173",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint --fix .",
-    "test": "npm run test:unit && npm run test:playwright",
-    "test:cypress": "npm run build && concurrently -rk -s first \"npm run serve\" \"cypress run --e2e\"",
+    "test": "pnpm test:unit && pnpm test:playwright",
+    "test:cypress": "pnpm build && concurrently -rk -s first \"pnpm serve\" \"cypress run --e2e\"",
     "test:cypress:ui": "cypress open --e2e",
     "test:cyprsss:prod": "cypress run --e2e -c baseUrl=https://vue3-realworld-example-app-mutoe.vercel.app",
-    "test:playwright": "npm run build && cross-env CI=true playwright test",
+    "test:playwright": "pnpm build && cross-env CI=true playwright test",
     "test:playwright:prod": "cross-env E2E_BASE_URL='https://vue3-realworld-example-app-mutoe.vercel.app' playwright test",
     "test:playwright:ui": "playwright test --ui",
     "test:playwright:ui:debug": "playwright test --ui --headed --debug",
@@ -60,7 +64,7 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npm exec lint-staged",
-    "pre-push": "npm run type-check && npm run build"
+    "pre-push": "pnpm type-check && pnpm build"
   },
   "lint-staged": {
     "*": "eslint --fix"
