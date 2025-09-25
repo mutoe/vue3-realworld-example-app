@@ -286,7 +286,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
 
   <p>
     <img
-      alt="我的头像"
+      alt="&#x6211;&#x7684;&#x5934;&#x50CF;"
       src="https://www.zybuluo.com/static/img/my_head.jpg"
     />
   </p>
@@ -873,55 +873,57 @@ D--&gt;&gt;A: Dashed open arrow
   <table>
     
     
-    <tr>
-      
+    <tbody>
+      <tr>
         
-      <th
-        rowspan="2"
-      >
-        值班人员
-      </th>
-      
         
-      <th>
-        星期一
-      </th>
-      
+        <th
+          rowspan="2"
+        >
+          值班人员
+        </th>
         
-      <th>
-        星期二
-      </th>
-      
         
-      <th>
-        星期三
-      </th>
+        <th>
+          星期一
+        </th>
+        
+        
+        <th>
+          星期二
+        </th>
+        
+        
+        <th>
+          星期三
+        </th>
+        
+    
+      </tr>
       
     
-    </tr>
-    
-    
-    <tr>
-      
+      <tr>
         
-      <td>
-        李强
-      </td>
-      
         
-      <td>
-        张明
-      </td>
-      
+        <td>
+          李强
+        </td>
         
-      <td>
-        王平
-      </td>
+        
+        <td>
+          张明
+        </td>
+        
+        
+        <td>
+          王平
+        </td>
+        
+    
+      </tr>
       
-    
-    </tr>
-    
 
+    </tbody>
   </table>
   
 
