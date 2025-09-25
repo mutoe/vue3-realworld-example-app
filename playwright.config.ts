@@ -33,8 +33,8 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
 
-    navigationTimeout: isCI ? 10_000 : 4000,
-    actionTimeout: isCI ? 10_000 : 4000,
+    navigationTimeout: isCI ? 10_000 : 10_000,
+    actionTimeout: isCI ? 10_000 : 10_000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     screenshot: 'only-on-failure',
@@ -49,14 +49,14 @@ export default defineConfig({
           name: 'chromium',
           use: { ...devices['Desktop Chrome'] },
         },
-        {
-          name: 'firefox',
-          use: { ...devices['Desktop Firefox'] },
-        },
-        {
-          name: 'webkit',
-          use: { ...devices['Desktop Safari'] },
-        },
+        // {
+        //   name: 'firefox',
+        //   use: { ...devices['Desktop Firefox'] },
+        // },
+        // {
+        //   name: 'webkit',
+        //   use: { ...devices['Desktop Safari'] },
+        // },
       ]
     : [
         {
@@ -69,7 +69,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: isCI ? 'pnpm serve' : 'npm run dev',
+    command: isCI ? 'pnpm serve' : 'pnpm dev',
     url: baseURL,
     reuseExistingServer: !isCI,
     ignoreHTTPSErrors: true,

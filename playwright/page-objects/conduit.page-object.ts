@@ -2,10 +2,10 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import url from 'node:url'
 import type { Page, Response } from '@playwright/test'
-import type { User } from 'src/services/api.ts'
+import type { User } from 'src/services/api'
 import { Route } from '../constant'
-import { expect } from '../extends.ts'
-import { boxedStep } from '../utils/test-decorators.ts'
+import { expect } from '../extends'
+import { boxedStep } from '../utils/test-decorators'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const fixtureDir = path.join(__dirname, '../../cypress/fixtures')
@@ -23,6 +23,8 @@ export class ConduitPageObject {
     timeout?: number
   } = {}): Promise<() => Promise<Response>> {
     await this.page.route(url, async route => {
+      if (route.request().url().endsWith('.ts'))
+        return await route.continue()
       if (route.request().method() !== method)
         return await route.continue()
 
