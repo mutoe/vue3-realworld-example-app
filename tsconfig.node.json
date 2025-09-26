@@ -8,7 +8,6 @@
   },
   "include": [
     "vite.config.ts",
-    "cypress.config.ts",
     "playwright.config.ts",
     "eslint.config.js"
   ]

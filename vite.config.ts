@@ -5,6 +5,8 @@ import vue from '@vitejs/plugin-vue'
 import analyzer from 'rollup-plugin-analyzer'
 import { defineConfig } from 'vite'
 
+const isTesting = process.env.NODE_ENV === 'testing'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -14,7 +16,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    analyzer({ summaryOnly: true }),
+    !isTesting && analyzer({ summaryOnly: true }),
   ],
   test: {
     include: [

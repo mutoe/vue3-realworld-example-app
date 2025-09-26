@@ -28,7 +28,7 @@ For more information on how to this works with other frontends/backends, head ov
 - [x] [ESLint](https://eslint.vuejs.org/) and [@mutoe/eslint-config](https://github.com/mutoe/eslint-config) for linting and styling (based on [@anthony/eslint-config](https://github.com/anthony/eslint-config))
 - [x] [Vitest](https://vitest.dev/) for unit testing
 - [x] [Testing Library](https://testing-library.com/docs/vue-testing-library/intro/) for component testing
-- [x] [Cypress](https://docs.cypress.io) for E2E testing
+- [x] [Playwright](https://playwright.dev) for E2E and visual testing
 - [x] [GitHub Actions](https://docs.github.com/en/actions) CI/CD
 
 > Basically, some of they are necessary features for the development of medium to large projects, and you can also use this repository as a starter.

@@ -8,7 +8,7 @@ import { expect } from '../extends'
 import { boxedStep } from '../utils/test-decorators'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-const fixtureDir = path.join(__dirname, '../../cypress/fixtures')
+const fixtureDir = path.join(__dirname, '../fixtures')
 
 export class ConduitPageObject {
   constructor(

@@ -18,7 +18,6 @@
   },
   "references": [
     { "path": "./tsconfig.node.json" },
-    { "path": "./cypress/e2e/tsconfig.json" },
     { "path": "./playwright/tsconfig.json" }
   ],
   "include": [

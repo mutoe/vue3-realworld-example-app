@@ -64,45 +64,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-  cypress_e2e_tests:
-    name: Cypress E2E test
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22.x
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Get cypress version
-        id: cypress-version
-        run: echo "version=$(pnpm info cypress version)" >> $GITHUB_OUTPUT
-
-      - name: Cache cypress binary
-        id: cache-cypress-binary
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-binary-${{ runner.os }}-${{ steps.cypress-version.outputs.version }}
-
-      - name: Install cypress binary
-        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
-        run: pnpm cypress install
-
-      - name: E2E test
-        run: pnpm test:cypress
-
-  playwright_e2e_tests:
+  e2e_tests:
     name: Playwright E2E test
     timeout-minutes: 10
     runs-on: macos-latest
@@ -138,7 +100,7 @@ jobs:
         run: pnpm playwright install --with-deps
 
       - name: E2E test
-        run: pnpm test:playwright
+        run: pnpm test:e2e
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
