@@ -28,13 +28,17 @@ export default defineConfig({
     ['html', { open: 'never' }],
     isCI ? ['github'] : ['list'],
   ],
+
+  globalSetup: './playwright/global.setup.ts',
+  globalTeardown: './playwright/global.teardown.ts',
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
 
-    navigationTimeout: isCI ? 10_000 : 10_000,
-    actionTimeout: isCI ? 10_000 : 10_000,
+    navigationTimeout: isCI ? 10_000 : 20_000,
+    actionTimeout: isCI ? 10_000 : 20_000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     screenshot: 'only-on-failure',

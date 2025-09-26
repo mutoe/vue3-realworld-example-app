@@ -14,6 +14,9 @@ export default defineConfig({
       src: fileURLToPath(new URL('src', import.meta.url)),
     },
   },
+  build: {
+    sourcemap: isTesting,
+  },
   plugins: [
     vue(),
     !isTesting && analyzer({ summaryOnly: true }),
@@ -30,6 +33,8 @@ export default defineConfig({
     },
     coverage: {
       enabled: true,
+      reportsDirectory: './coverage/unit',
+      reporter: ['lcovonly', 'json', 'html', 'text'],
       provider: 'v8',
       include: [
         'src',
