@@ -66,6 +66,7 @@ jobs:
 
   cypress_e2e_tests:
     name: Cypress E2E test
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -103,11 +104,8 @@ jobs:
 
   playwright_e2e_tests:
     name: Playwright E2E test
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.55.1-noble
-      options: --user 1001
+    timeout-minutes: 10
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
 
@@ -123,6 +121,21 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Get playwright version
+        id: playwright-version
+        run: echo "version=$(pnpm info @playwright/test version)" >> $GITHUB_OUTPUT
+
+      - name: Cache playwright binary
+        id: cache-playwright-binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-binary-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright binary
+        if: steps.cache-playwright-binary.outputs.cache-hit != 'true'
+        run: pnpm playwright install --with-deps
 
       - name: E2E test
         run: pnpm test:playwright
