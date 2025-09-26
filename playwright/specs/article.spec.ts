@@ -1,22 +1,21 @@
-import { ArticleDetailPageObject } from 'page-objects/article-detail.page-object.ts'
-import { EditArticlePageObject } from 'page-objects/edit-article.page-object.ts'
-import type { Article } from 'src/services/api.ts'
-import { Route } from '../constant.ts'
+import { ArticleDetailPageObject } from 'page-objects/article-detail.page-object'
+import { EditArticlePageObject } from 'page-objects/edit-article.page-object'
+import type { Article } from 'src/services/api'
+import { Route } from '../constant'
 import { expect, test } from '../extends'
-import { formatHTML, formatJSON } from '../utils/prettify.ts'
+import { formatHTML, formatJSON } from '../utils/prettify'
 
 test.beforeEach(async ({ conduit }) => {
   await conduit.intercept('GET', /articles\?limit/, { fixture: 'articles.json' })
   await conduit.intercept('GET', /tags/, { fixture: 'tags.json' })
   await conduit.intercept('GET', /profiles\/.+/, { fixture: 'profile.json' })
-
-  await conduit.login()
 })
 
 test.describe('post article', () => {
   let editArticlePage!: EditArticlePageObject
 
-  test.beforeEach(({ page }) => {
+  test.beforeEach(async ({ conduit, page }) => {
+    await conduit.login()
     editArticlePage = new EditArticlePageObject(page)
   })
 
@@ -56,6 +55,7 @@ test.describe('post article', () => {
 test.describe('delete article', () => {
   for (const position of ['banner', 'article footer'] as const) {
     test(`delete article from ${position}`, async ({ page, conduit }) => {
+      await conduit.login()
       const articlePage = new ArticleDetailPageObject(page)
       const waitForArticle = await articlePage.intercept('GET', /articles\/.+/, { fixture: 'article.json' })
       await conduit.goto(Route.ArticleDetail)
@@ -102,12 +102,13 @@ test.describe('favorite article', () => {
       page.getByRole('button', { name: 'Favorite article' }).first().click(),
     ])
 
-    await expect(page.getByRole('button', { name: 'Favorite article' }).first()).toHaveClass('btn-primary')
+    await expect(page.getByRole('button', { name: 'Favorite article' }).first()).toContainClass('btn-primary')
   })
 })
 
 test.describe('tag', () => {
   test.beforeEach(async ({ conduit }) => {
+    await conduit.login()
     await conduit.intercept('GET', /articles\?tag=butt/, { fixture: 'articles-of-tag.json' })
   })
 
