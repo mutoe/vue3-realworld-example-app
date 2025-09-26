@@ -37,6 +37,9 @@ jobs:
       - name: Eslint check
         run: pnpm lint
 
+      - name: Build check
+        run: pnpm build
+
   unit_test:
     name: Unit test
     runs-on: ubuntu-latest

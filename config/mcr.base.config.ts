@@ -39,6 +39,7 @@ const coverageOptions = {
     const excludeList = [
       'node_modules',
       'src/services/api.ts',
+      'src/config.ts',
       'src/setup-tests.ts',
       'src/utils/test',
       '.(spec|test).ts$',

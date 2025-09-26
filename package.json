@@ -30,6 +30,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@codecov/vite-plugin": "^1.9.1",
     "@mutoe/eslint-config": "^4.11.0-2",
     "@pinia/testing": "^1.0.2",
     "@playwright/test": "1.55.1",

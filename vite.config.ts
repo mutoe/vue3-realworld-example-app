@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import { fileURLToPath, URL } from 'node:url'
+import { codecovVitePlugin } from '@codecov/vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import analyzer from 'rollup-plugin-analyzer'
 import { defineConfig } from 'vite'
@@ -21,6 +22,11 @@ export default defineConfig({
   plugins: [
     vue(),
     !isTesting && analyzer({ summaryOnly: true }),
+    !isTesting && codecovVitePlugin({
+      enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
+      bundleName: 'vue3-realworld-example-app',
+      uploadToken: process.env.CODECOV_TOKEN,
+    }),
   ],
   test: {
     include: [
