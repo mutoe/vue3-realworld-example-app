@@ -1,15 +1,13 @@
 import type { CoverageReportOptions } from 'monocart-coverage-reports'
 
 // https://github.com/cenfun/monocart-coverage-reports
-const coverageOptions: CoverageReportOptions = {
-
-  name: 'Playwright Coverage Report',
-
+const coverageOptions = {
   reports: [
     'text',
     'v8',
     'v8-json',
     'lcovonly',
+    'raw',
   ],
 
   /**
@@ -38,11 +36,18 @@ const coverageOptions: CoverageReportOptions = {
    * @example node_modules/.pnpm/@vue+devtools-kit@7.7.7/node_modules/@vue/devtools-kit/dist/index.js
    */
   sourceFilter: sourcePath => {
-    if (sourcePath.includes('node_modules/')) return false
+    const excludeList = [
+      'node_modules',
+      'src/services/api.ts',
+      'src/setup-tests.ts',
+      'src/utils/test',
+      '.(spec|test).ts$',
+    ]
+    for (const regexp of excludeList) {
+      if (new RegExp(regexp).test(sourcePath)) return false
+    }
     return true
   },
-
-  outputDir: './coverage/e2e',
-}
+} satisfies CoverageReportOptions
 
 export default coverageOptions

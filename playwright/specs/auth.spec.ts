@@ -1,6 +1,6 @@
-import { LoginPageObject } from 'page-objects/login.page-object.ts'
-import { RegisterPageObject } from 'page-objects/register.page-object.ts'
-import { Route } from '../constant.ts'
+import { LoginPageObject } from 'page-objects/login.page-object'
+import { RegisterPageObject } from 'page-objects/register.page-object'
+import { Route } from '../constant'
 import { expect, test } from '../extends'
 
 test.beforeEach(async ({ conduit }) => {

@@ -1,7 +1,7 @@
-import type { Article, Profile } from 'src/services/api.ts'
+import type { Article, Profile } from 'src/services/api'
 import { Route } from '../constant'
 import { expect, test } from '../extends'
-import { ArticleDetailPageObject } from '../page-objects/article-detail.page-object.ts'
+import { ArticleDetailPageObject } from '../page-objects/article-detail.page-object'
 
 test.beforeEach(async ({ conduit }) => {
   await conduit.intercept('GET', /articles\?/, { fixture: 'articles.json' })

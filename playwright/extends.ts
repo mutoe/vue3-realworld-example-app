@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test'
 import { test as base } from '@playwright/test'
 import MCR from 'monocart-coverage-reports'
 import { ConduitPageObject } from 'page-objects/conduit.page-object'
-import coverageOptions from './mcr.config'
+import coverageOptions from '../config/mcr.e2e.config'
 
 export const test = base.extend<{
   conduit: ConduitPageObject

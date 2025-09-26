@@ -1,5 +1,5 @@
-import { Route } from '../constant.ts'
-import { expect, test } from '../extends.ts'
+import { Route } from '../constant'
+import { expect, test } from '../extends'
 
 test.beforeEach(async ({ conduit }) => {
   await conduit.intercept('GET', /articles\?tag=butt/, { fixture: 'articles-of-tag.json' })

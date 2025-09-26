@@ -1,9 +1,10 @@
 /// <reference types="vitest" />
-
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import analyzer from 'rollup-plugin-analyzer'
 import { defineConfig } from 'vite'
+import type { CoverageOptions } from 'vitest/node'
+import mcrOptions from './config/mcr.unit.config'
 
 const isTesting = process.env.NODE_ENV === 'testing'
 
@@ -34,19 +35,19 @@ export default defineConfig({
     coverage: {
       enabled: true,
       reportsDirectory: './coverage/unit',
-      reporter: ['lcovonly', 'json', 'html', 'text'],
-      provider: 'v8',
+      provider: 'custom',
+      customProviderModule: 'vitest-monocart-coverage',
+      coverageReportOptions: mcrOptions,
       include: [
         'src',
       ],
       exclude: [
-        'src/*.{ts,vue}',
         'src/services/api.ts',
         'src/setup-tests.ts',
         'src/utils/test',
         '**/*.d.ts',
       ],
       all: true,
-    },
+    } as CoverageOptions,
   },
 })

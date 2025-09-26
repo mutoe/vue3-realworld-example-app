@@ -11,13 +11,14 @@ node_modules
 .DS_Store
 dist
 dist-ssr
-coverage
 *.local
 
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/coverage-reports
+/coverage
 
 # Editor directories and files
 .vscode/*

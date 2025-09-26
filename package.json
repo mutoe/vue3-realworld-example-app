@@ -14,7 +14,7 @@
     "serve": "vite preview --port 4173",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint --fix .",
-    "test": "pnpm test:unit && pnpm test:e2e",
+    "test": "pnpm test:unit && pnpm test:e2e && tsx scripts/merge-coverage.ts",
     "test:e2e": "cross-env NODE_ENV=testing pnpm build && cross-env CI=true playwright test",
     "test:e2e:prod": "cross-env E2E_BASE_URL='https://vue3-realworld-example-app-mutoe.vercel.app' playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -48,10 +48,12 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "simple-git-hooks": "^2.13.1",
     "swagger-typescript-api": "^13.2.13",
+    "tsx": "^4.20.6",
     "typescript": "~5.9.2",
     "vite": "^7.1.7",
     "vitest": "^3.2.4",
     "vitest-dom": "^0.1.1",
+    "vitest-monocart-coverage": "^3.0.2",
     "vue-tsc": "^3.0.8"
   },
   "simple-git-hooks": {

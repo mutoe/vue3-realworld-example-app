@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test'
-import { ConduitPageObject } from './conduit.page-object.ts'
+import { ConduitPageObject } from './conduit.page-object'
 
 export class RegisterPageObject extends ConduitPageObject {
   constructor(public page: Page) {

@@ -9,6 +9,8 @@
   "include": [
     "vite.config.ts",
     "playwright.config.ts",
-    "eslint.config.js"
+    "eslint.config.js",
+    "scripts/*.ts",
+    "config/*.ts"
   ]
 }
