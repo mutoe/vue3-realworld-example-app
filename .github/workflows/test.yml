@@ -37,6 +37,19 @@ jobs:
       - name: Eslint check
         run: pnpm lint
 
+      - name: Build check
+        if: github.event_name == 'push'
+        run: pnpm build
+
+      - name: Bundle check
+        if: github.event_name == 'pull_request'
+        uses: andresz1/size-limit-action@v1
+        env:
+          ANALYZE: true
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_step: install
+
   unit_test:
     name: Unit test
     runs-on: ubuntu-latest

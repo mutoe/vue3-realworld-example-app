@@ -7,6 +7,7 @@ import type { CoverageOptions } from 'vitest/node'
 import mcrOptions from './config/mcr.unit.config'
 
 const isTesting = process.env.NODE_ENV === 'testing'
+const allowAnalysis = process.env.ANALYZE === 'true'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,7 +21,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    !isTesting && analyzer({ summaryOnly: true }),
+    allowAnalysis && analyzer({ summaryOnly: true }),
   ],
   test: {
     include: [

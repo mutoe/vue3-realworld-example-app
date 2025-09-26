@@ -11,11 +11,12 @@
     "prepare": "simple-git-hooks",
     "dev": "vite --port 4173",
     "build": "vite build",
+    "build:analyze": "cross-env ANALYZE=1 vite build && size-limit",
     "serve": "vite preview --port 4173",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint --fix .",
     "test": "pnpm test:unit && pnpm test:e2e && tsx scripts/merge-coverage.ts",
-    "test:e2e": "cross-env NODE_ENV=testing pnpm build && cross-env CI=true playwright test",
+    "test:e2e": "pnpm build && cross-env CI=true playwright test",
     "test:e2e:prod": "cross-env E2E_BASE_URL='https://vue3-realworld-example-app-mutoe.vercel.app' playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:ui:debug": "playwright test --ui --headed --debug",
@@ -33,20 +34,22 @@
     "@mutoe/eslint-config": "^4.11.0-2",
     "@pinia/testing": "^1.0.2",
     "@playwright/test": "1.55.1",
+    "@size-limit/preset-app": "^11.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@testing-library/vue": "^8.1.0",
     "@types/node": "^24.5.2",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitest/coverage-v8": "^3.2.4",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.0.0",
     "eslint": "^9.36.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "happy-dom": "^18.0.1",
-    "lint-staged": "^16.2.0",
+    "lint-staged": "^16.2.1",
     "monocart-coverage-reports": "^2.12.9",
     "msw": "^2.11.3",
     "rollup-plugin-analyzer": "^4.0.0",
     "simple-git-hooks": "^2.13.1",
+    "size-limit": "^11.2.0",
     "swagger-typescript-api": "^13.2.13",
     "tsx": "^4.20.6",
     "typescript": "~5.9.2",
@@ -62,5 +65,10 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "dist/**/*.js"
+    }
+  ]
 }
