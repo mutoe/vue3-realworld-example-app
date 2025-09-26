@@ -3,7 +3,6 @@ import { EditArticlePageObject } from 'page-objects/edit-article.page-object'
 import type { Article } from 'src/services/api'
 import { Route } from '../constant'
 import { expect, test } from '../extends'
-import { formatHTML, formatJSON } from '../utils/prettify'
 
 test.beforeEach(async ({ conduit }) => {
   await conduit.intercept('GET', /articles\?limit/, { fixture: 'articles.json' })
@@ -47,8 +46,8 @@ test.describe('post article', () => {
       waitForArticleRequest(),
       conduit.goto(Route.ArticleDetail),
     ])
-    const innerHTML = await page.locator('.article-content').innerHTML()
-    expect(formatHTML(innerHTML)).toMatchSnapshot('markdown-render.html')
+    const articleContent = page.locator('.article-content')
+    await expect(articleContent).toMatchAriaSnapshot({ name: 'article-content.yml' })
   })
 })
 
@@ -115,13 +114,11 @@ test.describe('tag', () => {
   test('should display popular tags in home page', async ({ page, conduit }) => {
     await conduit.goto(Route.Home)
 
-    const tagItems = await page.getByText('Popular Tags')
+    const tagItemsWrapper = page.getByText('Popular Tags')
       .locator('..')
       .locator('.tag-pill')
-      .all()
-      .then(items => Promise.all(items.map(item => item.textContent())))
-    expect(tagItems).toHaveLength(8)
-    expect(formatJSON(tagItems)).toMatchSnapshot('popular-tags-in-home-page.json')
+      .locator('..')
+    await expect(tagItemsWrapper).toMatchAriaSnapshot({ name: 'popular-tags.yml' })
   })
 
   test('should show right articles of tag', async ({ page, conduit }) => {

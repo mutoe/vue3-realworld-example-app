@@ -1,0 +1,8 @@
+- heading "Article body" [level=1]
+- paragraph:
+    - text: This is
+    - strong: Strong
+    - text: text
+- list:
+    - listitem: foo
+    - listitem: bar
