@@ -68,7 +68,20 @@
   },
   "size-limit": [
     {
-      "path": "dist/**/*.js"
+      "name": "html",
+      "path": "dist/index.html"
+    },
+    {
+      "name": "css",
+      "path": "dist/**/*.css"
+    },
+    {
+      "name": "bundle",
+      "path": "dist/**/index-*.js"
+    },
+    {
+      "name": "others(pages, hooks, etc)",
+      "path": "dist/**/!(index-*.js|*.css)"
     }
   ]
 }
