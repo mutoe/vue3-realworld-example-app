@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "cenfun.monocart-coverage-vscode",
+    "vue.volar",
+    "dbaeumer.vscode-eslint",
+    "antfu.vite",
+    "vitest.explorer",
+    "ms-playwright.playwright"
+  ]
+}
