@@ -28,7 +28,7 @@
     "marked": "^16.3.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@mutoe/eslint-config": "^4.11.0-2",
