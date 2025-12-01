@@ -16,7 +16,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v4
         with:
@@ -54,7 +54,7 @@ jobs:
     name: Unit test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v4
         with:
@@ -91,7 +91,7 @@ jobs:
     timeout-minutes: 10
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v4
         with:
