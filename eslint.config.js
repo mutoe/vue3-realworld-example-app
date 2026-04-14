@@ -13,9 +13,11 @@ export default defineConfig({
   },
   rules: {
     'vue/custom-event-name-casing': ['error', 'kebab-case'],
+    'vue/block-order': 'off',
   },
   ignores: [
     'src/services/api.ts',
+    '**/*.md',
   ],
 }, {
   files: [

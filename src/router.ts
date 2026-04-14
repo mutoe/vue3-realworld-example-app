@@ -2,18 +2,18 @@ import type { RouteParams, RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { isAuthorized } from './store/user'
 
-export type AppRouteNames =
-  | 'global-feed'
-  | 'my-feed'
-  | 'tag'
-  | 'article'
-  | 'create-article'
-  | 'edit-article'
-  | 'login'
-  | 'register'
-  | 'profile'
-  | 'profile-favorites'
-  | 'settings'
+export type AppRouteNames
+  = | 'global-feed'
+    | 'my-feed'
+    | 'tag'
+    | 'article'
+    | 'create-article'
+    | 'edit-article'
+    | 'login'
+    | 'register'
+    | 'profile'
+    | 'profile-favorites'
+    | 'settings'
 
 export const routes: RouteRecordRaw[] = [
   {

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/prefer-top-level-await */
-
 import path from 'node:path'
 import type { CoverageReportOptions } from 'monocart-coverage-reports'
 import { CoverageReport } from 'monocart-coverage-reports'

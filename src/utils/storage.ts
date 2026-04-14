@@ -9,9 +9,13 @@ export default class Storage<T = unknown> {
     this.storageType = storageType
   }
 
+  get storage() {
+    return window[this.storageType]
+  }
+
   get(): T | null {
     try {
-      const value = window[this.storageType].getItem(this.key) ?? ''
+      const value = this.storage.getItem(this.key) ?? ''
       return JSON.parse(value) as T
     }
     catch {
@@ -21,10 +25,10 @@ export default class Storage<T = unknown> {
 
   set(value: T): void {
     const strValue = JSON.stringify(value)
-    window[this.storageType].setItem(this.key, strValue)
+    this.storage.setItem(this.key, strValue)
   }
 
   remove(): void {
-    window[this.storageType].removeItem(this.key)
+    this.storage.removeItem(this.key)
   }
 }

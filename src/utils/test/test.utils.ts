@@ -116,14 +116,14 @@ async function waitForServerRequest(server: SetupServer, method: string, url: st
 
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'all' | 'ALL'
 
-type Listener =
-  | [HttpMethod, string, number, object]
-  | [HttpMethod, string, number]
-  | [HttpMethod, string, object]
-  | [string, number, object]
-  | [HttpMethod, string]
-  | [string, object]
-  | [string]
+type Listener
+  = | [HttpMethod, string, number, object]
+    | [HttpMethod, string, number]
+    | [HttpMethod, string, object]
+    | [string, number, object]
+    | [HttpMethod, string]
+    | [string, object]
+    | [string]
 
 /**
  * Sets up a mock server with provided listeners.
