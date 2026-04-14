@@ -9,6 +9,7 @@
       "src/*": ["./src/*"],
       "page-objects/*": ["./playwright/page-objects/*"]
     },
+    "types": ["node"],
     "noEmit": false,
     "isolatedModules": false
   },
