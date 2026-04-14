@@ -14,6 +14,7 @@ export type AppRouteNames
     | 'profile'
     | 'profile-favorites'
     | 'settings'
+    | 'not-found'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -50,13 +51,13 @@ export const routes: RouteRecordRaw[] = [
     name: 'login',
     path: '/login',
     component: () => import('./pages/Login.vue'),
-    beforeEnter: () => !isAuthorized(),
+    beforeEnter: () => isAuthorized() ? { name: 'global-feed' as const } : true,
   },
   {
     name: 'register',
     path: '/register',
     component: () => import('./pages/Register.vue'),
-    beforeEnter: () => !isAuthorized(),
+    beforeEnter: () => isAuthorized() ? { name: 'global-feed' as const } : true,
   },
   {
     name: 'profile',
@@ -72,6 +73,11 @@ export const routes: RouteRecordRaw[] = [
     name: 'settings',
     path: '/settings',
     component: () => import('./pages/Settings.vue'),
+  },
+  {
+    name: 'not-found',
+    path: '/:pathMatch(.*)*',
+    component: () => import('./pages/NotFound.vue'),
   },
 ]
 export const router = createRouter({
