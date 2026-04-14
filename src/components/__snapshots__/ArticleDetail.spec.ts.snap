@@ -6,9 +6,6 @@ exports[`# ArticleDetail > should filter the xss content in Markdown body 1`] = 
   data-testid="article-body"
   id="article-content"
 >
-  
-
-
   <img
     src="1"
   />
@@ -288,7 +285,7 @@ exports[`# ArticleDetail > should render markdown (zh-CN) body correctly 1`] = `
 
   <p>
     <img
-      alt="&#x6211;&#x7684;&#x5934;&#x50CF;"
+      alt="我的头像"
       src="https://www.zybuluo.com/static/img/my_head.jpg"
     />
   </p>
@@ -927,9 +924,6 @@ D--&gt;&gt;A: Dashed open arrow
 
     </tbody>
   </table>
-  
-
-
   <h3>
     15. 内嵌图标
   </h3>

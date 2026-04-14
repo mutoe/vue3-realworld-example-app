@@ -4,10 +4,9 @@
     "composite": true,
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "baseUrl": "..",
     "paths": {
-      "src/*": ["./src/*"],
-      "page-objects/*": ["./playwright/page-objects/*"]
+      "src/*": ["../src/*"],
+      "page-objects/*": ["./page-objects/*"]
     },
     "types": ["node"],
     "noEmit": false,

@@ -28,11 +28,9 @@ interface RenderOptionsArgs {
   stubActions: boolean
 }
 
-const scheduler = typeof setImmediate === 'function' ? setImmediate : setTimeout
-
 export async function flushPromises(): Promise<void> {
   return await new Promise(resolve => {
-    scheduler(resolve, 0)
+    setTimeout(resolve, 0)
   })
 }
 
