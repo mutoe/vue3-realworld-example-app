@@ -73,7 +73,7 @@ jobs:
         run: pnpm test:unit
 
       - name: Update coverage report
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/unit/lcov.info
@@ -125,7 +125,7 @@ jobs:
         run: pnpm test:e2e
 
       - name: Update coverage report
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/e2e/lcov.info
